@@ -127,7 +127,6 @@
         .more-news-link i { color: var(--discord-color); font-size: 1.1rem; }
         .more-news-link:hover { color: var(--text-main); transform: translateY(-2px); border-color: var(--discord-color); box-shadow: 0 5px 15px rgba(88, 101, 242, 0.2);}
 
-        /* القادة العرب والقادة العالميين بنظام Grid */
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; width: 100%; max-width: 900px; justify-items: center; }
         .card { width: 100%; padding: 35px 20px; text-align: center; transition: 0.4s; position: relative; overflow: hidden; border-radius: 16px;}
         .card:hover { transform: translateY(-8px); }
@@ -208,21 +207,8 @@
             .section-title { font-size: 1.4rem; margin-bottom: 25px; }
             .featured-news { padding: 25px 20px; } .news-headline { font-size: 1.25rem; } .news-body { font-size: 0.9rem; }
             
-            /* القادة العرب: يظهرون بشكل عمودي (واحد تحت الثاني) */
-            .grid-container { 
-                display: grid !important; 
-                grid-template-columns: 1fr !important; 
-                gap: 15px; 
-                width: 100%; 
-            }
-            
-            /* قادة السيرفرات العالمية: يظهرون (2 بجوار بعض) */
-            .global-leaders-grid { 
-                display: grid !important; 
-                grid-template-columns: repeat(2, 1fr) !important; 
-                gap: 10px; 
-                width: 100%; 
-            }
+            .grid-container { display: grid !important; grid-template-columns: 1fr !important; gap: 15px; width: 100%; }
+            .global-leaders-grid { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 10px; width: 100%; }
 
             .card { padding: 15px 10px; width: 100%; max-width: none; }
             .card img { width: 70px; height: 70px; margin-bottom: 10px; }
@@ -340,13 +326,15 @@
         </div>
 
         <div class="global-leaders-grid" id="global-leaders-grid">
-            </div>
+            <!-- Dynamic Server Leaders -->
+        </div>
     </section>
 
     <div class="cyber-divider"><div class="center-node"></div></div>
 
     <section id="tournaments">
         <h2 class="section-title" data-aos="fade-right" data-i18n="tournaments_title">مركز البطولات المعتمدة</h2>
+        <!-- البطولات ستظهر هنا تلقائياً من الشيت -->
         <div class="tournaments-grid" id="tournaments-container" data-aos="fade-up"></div>
     </section>
 
@@ -354,46 +342,13 @@
 
     <section id="top-spending">
         <h2 class="section-title" data-aos="fade-right" data-i18n="spending_title">ترتيب المجموعات الأكثر إنفاقًا</h2>
-        <div class="premium-list" data-aos="fade-up">
-            <div class="list-row glass-panel rank-1">
-                <div class="rank-num num-font">01</div>
-                <div class="list-info">
-                    <img src="https://ui-avatars.com/api/?name=Y1&background=ffd700&color=000" class="list-img group-img">
-                    <div class="progress-container">
-                        <div class="list-name" data-i18n="group_1">يوسف تجربة 1</div>
-                        <div class="progress-track"><div class="progress-fill" style="width: 100%; background: var(--glow-yyy);"></div></div>
-                    </div>
-                </div>
-                <div class="score-val num-font" style="color: var(--glow-yyy);">500K</div>
-            </div>
-            <div class="list-row glass-panel rank-2">
-                <div class="rank-num num-font">02</div>
-                <div class="list-info">
-                    <img src="https://ui-avatars.com/api/?name=Y2&background=c0c0c0&color=000" class="list-img group-img">
-                    <div class="progress-container">
-                        <div class="list-name" data-i18n="group_2">يوسف تجربة 2</div>
-                        <div class="progress-track"><div class="progress-fill" style="width: 70%; background: silver;"></div></div>
-                    </div>
-                </div>
-                <div class="score-val num-font" style="color: silver;">350K</div>
-            </div>
-            <div class="list-row glass-panel rank-3">
-                <div class="rank-num num-font">03</div>
-                <div class="list-info">
-                    <img src="https://ui-avatars.com/api/?name=Y3&background=cd7f32&color=000" class="list-img group-img">
-                    <div class="progress-container">
-                        <div class="list-name" data-i18n="group_3">يوسف تجربة 3</div>
-                        <div class="progress-track"><div class="progress-fill" style="width: 40%; background: #cd7f32;"></div></div>
-                    </div>
-                </div>
-                <div class="score-val num-font" style="color: #cd7f32;">200K</div>
-            </div>
-        </div>
+        <!-- المجموعات وقيم الإنفاق ستظهر هنا تلقائياً بناءً على البطولات -->
+        <div class="premium-list" id="spenders-container" data-aos="fade-up"></div>
     </section>
 
     <div class="cyber-divider"><div class="center-node"></div></div>
 
-        <section id="accounts" style="padding-bottom: 120px;">
+    <section id="accounts" style="padding-bottom: 120px;">
         <h2 class="section-title" data-aos="fade-right" data-i18n="players_title">اللاعبين الاقدم</h2>
         <div class="premium-list" data-aos="fade-up">
             
@@ -552,19 +507,66 @@
             });
         }
 
-        // دالة جلب البطولات المعتمدة من جوجل شيت
-        async function loadDynamicTournaments() {
+        const translations = {
+            ar: {
+                menu_home: "الرئيسية", menu_leaders: "القادة", menu_news: "الأخبار", menu_players: "اللاعبين", menu_spending: "الإنفاق", menu_tournaments: "البطولات",
+                news_text: "احدث اخبار بلاتو: سيتم تنظيف المتجر من عناصر الكوينز كليًا",
+                hero_title_sub: "المجتمع العربي", hero_desc: "يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.",
+                leaders_title: "القادة العرب", global_leaders_title: "قادة السيرفرات العالمية", news_board_title: "لوحة أخبار المجتمع", players_title: "اللاعبين الاقدم", spending_title: "ترتيب المجموعات الأكثر إنفاقًا", tournaments_title: "مركز البطولات المعتمدة",
+                desc_yyy: "صانع الأثر، يقود برؤية مستقبلية لخلق بيئة إيجابية لا تعرف المستحيل.", desc_hat: "حضور راسخ، تقود المجتمع بثقة راسخة وترسم معايير الرقي.", desc_bbb: "الحكمة في اتخاذ القرار، يوازن بين الحزم والهدوء لإدارة الأزمات باحترافية.",
+                news_1_title: "إطلاق ألعاب وميزات جديدة قريباً!", news_1_body: "لدينا لعبتان جديدتان نأمل أن نُطلقهما خلال الشهر المقبل أو نحو ذلك، إلى جانب العديد من الميزات الجديدة التي لم نُعلن عنها بعد. ستكون الأشهر القادمة حافلة بالتحديثات، ونستعد لتقديم المزيد لكم حتى نهاية هذا العام. ترقبوا الإعلانات القادمة!",
+                discord_more: "للمزيد من الأخبار انضموا إلى الديسكورد", tag_update: "خبر هام",
+                th_player: "اللاعب", th_days: "يوم", th_group: "المجموعة", th_coins: "الإنفاق",
+                tab_english: "الإنجليزي", tab_persian: "الفارسي", tab_french: "الفرنسي", tab_melayu: "الماليزي", tab_turkish: "التركي", tab_spanish: "الإسباني", tab_thai: "التايلندي", tab_brazil: "البرازيلي", tab_desi: "الهندي"
+            },
+            en: {
+                menu_home: "HOME", menu_leaders: "LEADERS", menu_news: "NEWS", menu_players: "PLAYERS", menu_spending: "SPENDING", menu_tournaments: "TOURNAMENTS",
+                news_text: "LATEST PLATO NEWS: The store will be completely cleared of coin items.",
+                hero_title_sub: "COMMUNITY", hero_desc: "Where gaming enthusiasts meet to experience thrilling moments, build true friendships, and create eternal memories.",
+                leaders_title: "ARABIC LEADERS", global_leaders_title: "GLOBAL SERVERS LEADERS", news_board_title: "COMMUNITY NEWS BOARD", players_title: "OLDEST PLAYERS", spending_title: "TOP SPENDING GROUPS", tournaments_title: "APPROVED TOURNAMENTS",
+                desc_yyy: "The Impact Maker, leading with a futuristic vision to create a positive environment.", desc_hat: "A grounded presence, leading the community with solid confidence and setting standards.", desc_bbb: "Wisdom in decision making, balancing firmness and calmness in management.",
+                news_1_title: "New Games & Features Launch!", news_1_body: "We have two new games that we hope to release within the next month or so, along with many other new features that we haven't announced yet. The coming months will be packed with new updates, and we're getting ready to bring you even more through the end of this year.",
+                discord_more: "For more news, join our Discord server", tag_update: "HOT NEWS",
+                th_player: "PLAYER", th_days: "DAYS", th_group: "GROUP", th_coins: "SPENDING",
+                tab_english: "English", tab_persian: "Persian", tab_french: "Français", tab_melayu: "Melayu", tab_turkish: "Turkish", tab_spanish: "Español", tab_thai: "Thai", tab_brazil: "Brasil", tab_desi: "Desi"
+            }
+        };
+
+        function changeLang(lang) {
+            document.documentElement.setAttribute('lang', lang); document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+            
+            document.getElementById('btn-ar').classList.toggle('active', lang === 'ar');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => { if(translations[lang][el.getAttribute('data-i18n')]) el.innerText = translations[lang][el.getAttribute('data-i18n')]; });
+            document.getElementById('news-text').innerText = translations[lang]['news_text'];
+            
+            if(typeof loadDynamicData === 'function') loadDynamicData();
+            localStorage.setItem('lang', lang);
+            
+            const animatedElements = document.querySelectorAll('[data-aos]');
+            animatedElements.forEach(el => { el.classList.remove('aos-animate'); void el.offsetWidth; });
+            setTimeout(() => { animatedElements.forEach(el => el.classList.add('aos-animate')); }, 50);
+        }
+
+        // الدالة الشاملة لجلب البطولات وحساب الإنفاق معاً من الشيت
+        async function loadDynamicData() {
             const sheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/export?format=csv"; 
             try {
                 const response = await fetch(sheetURL);
                 const data = await response.text();
                 
                 const rows = data.split('\n').slice(1);
-                const container = document.getElementById('tournaments-container');
-                container.innerHTML = '';
+                const tourContainer = document.getElementById('tournaments-container');
+                const spendContainer = document.getElementById('spenders-container');
+                
+                tourContainer.innerHTML = '';
+                spendContainer.innerHTML = '';
                 
                 const currentLang = document.documentElement.getAttribute('lang') || 'ar';
                 const isLtr = currentLang === 'en';
+
+                let groupsSpending = {}; 
 
                 rows.forEach((row) => {
                     const cols = row.split(','); 
@@ -574,14 +576,15 @@
                     const nameAr = cols[1].replace(/"/g, '').trim();
                     const nameEn = cols[2].replace(/"/g, '').trim();
                     const image = cols[3].replace(/"/g, '').trim();
-                    const prize = cols[4].replace(/"/g, '').trim();
+                    const prizeStr = cols[4].replace(/"/g, '').trim();
                     const game = cols[5].replace(/"/g, '').trim();
                     const admin = cols[6].replace(/"/g, '').trim();
 
                     const displayName = currentLang === 'ar' ? nameAr : nameEn;
                     const borderStyle = isLtr ? `border-left-color: var(--primary);` : `border-right-color: var(--primary);`;
 
-                    container.innerHTML += `
+                    // 1. إضافة بطاقة البطولة
+                    tourContainer.innerHTML += `
                         <div class="tour-card glass-panel" style="${borderStyle}">
                             <div class="tour-header">
                                 <div class="tour-title-box">
@@ -594,11 +597,57 @@
                             </div>
                             <div class="tour-footer" style="margin-top: 15px;">
                                 <div class="info-badge"><i class="fa-solid fa-gamepad"></i> <span>${game}</span></div>
-                                <div class="info-badge prize-badge"><i class="fa-solid fa-trophy"></i> <span class="num-font">${prize}</span></div>
+                                <div class="info-badge prize-badge"><i class="fa-solid fa-trophy"></i> <span class="num-font">${prizeStr}</span></div>
                                 <div class="info-badge admin-copy-btn" onclick="copyAdminID('${admin}')" title="انسخ اليوزر">
                                     <i class="fa-solid fa-copy"></i> <span class="num-font">${admin}</span>
                                 </div>
                             </div>
+                        </div>
+                    `;
+
+                    // 2. حساب رصيد المجموعات للإنفاق
+                    let numValue = 0;
+                    let cleanStr = prizeStr.toUpperCase().replace(/[^0-9.K]/g, '');
+                    if (cleanStr.includes('K')) {
+                        numValue = parseFloat(cleanStr.replace('K', '')) * 1000;
+                    } else {
+                        numValue = parseFloat(cleanStr) || 0;
+                    }
+
+                    if (!groupsSpending[nameAr]) {
+                        groupsSpending[nameAr] = { nameAr, nameEn, image, total: 0 };
+                    }
+                    groupsSpending[nameAr].total += numValue;
+                });
+
+                // 3. ترتيب وعرض قائمة المجموعات الأكثر إنفاقاً
+                let sortedGroups = Object.values(groupsSpending).sort((a, b) => b.total - a.total);
+                let highestTotal = sortedGroups.length > 0 ? sortedGroups[0].total : 1;
+
+                sortedGroups.forEach((group, index) => {
+                    const displayName = currentLang === 'ar' ? group.nameAr : group.nameEn;
+                    const rankNum = (index + 1).toString();
+                    const rank = rankNum.padStart(2, '0');
+                    const percent = Math.min(100, Math.max(5, (group.total / highestTotal) * 100));
+
+                    let rankClass = '', color = 'var(--text-muted)', barBg = 'rgba(255,255,255,0.2)';
+                    if (rankNum === '1') { rankClass = 'rank-1'; color = 'var(--glow-yyy)'; barBg = 'var(--glow-yyy)'; }
+                    else if (rankNum === '2') { rankClass = 'rank-2'; color = '#cbd5e1'; barBg = 'silver'; }
+                    else if (rankNum === '3') { rankClass = 'rank-3'; color = '#cd7f32'; barBg = '#cd7f32'; }
+
+                    let displayScore = group.total >= 1000 ? (group.total / 1000) + 'K' : group.total;
+
+                    spendContainer.innerHTML += `
+                        <div class="list-row glass-panel ${rankClass}">
+                            <div class="rank-num num-font">${rank}</div>
+                            <div class="list-info">
+                                <img src="${group.image}" class="list-img group-img" style="object-fit:cover;">
+                                <div class="progress-container">
+                                    <div class="list-name">${displayName}</div>
+                                    <div class="progress-track"><div class="progress-fill" style="width: ${percent}%; background: ${barBg};"></div></div>
+                                </div>
+                            </div>
+                            <div class="score-val num-font" style="color: ${color};">${displayScore}</div>
                         </div>
                     `;
                 });
@@ -609,7 +658,7 @@
             }
         }
 
-        // دالة تحديث عدادات البطولات من الشيت
+        // دالة العداد التنازلي المباشر للبطولات
         function updateSheetTimers() {
             const nowTime = new Date().getTime();
             document.querySelectorAll('.sheet-timer').forEach(el => {
@@ -633,50 +682,6 @@
                 }
             });
         }
-        
-        const translations = {
-            ar: {
-                menu_home: "الرئيسية", menu_leaders: "القادة", menu_news: "الأخبار", menu_players: "اللاعبين", menu_spending: "الإنفاق", menu_tournaments: "البطولات",
-                news_text: "احدث اخبار بلاتو: سيتم تنظيف المتجر من عناصر الكوينز كليًا",
-                hero_title_sub: "المجتمع العربي", hero_desc: "يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.",
-                leaders_title: "القادة العرب", global_leaders_title: "قادة السيرفرات العالمية", news_board_title: "لوحة أخبار المجتمع", players_title: "اللاعبين الاقدم", spending_title: "ترتيب المجموعات الأكثر إنفاقًا", tournaments_title: "مركز البطولات المعتمدة",
-                desc_yyy: "صانع الأثر، يقود برؤية مستقبلية لخلق بيئة إيجابية لا تعرف المستحيل.", desc_hat: "حضور راسخ، تقود المجتمع بثقة راسخة وترسم معايير الرقي.", desc_bbb: "الحكمة في اتخاذ القرار، يوازن بين الحزم والهدوء لإدارة الأزمات باحترافية.",
-                news_1_title: "إطلاق ألعاب وميزات جديدة قريباً!", news_1_body: "لدينا لعبتان جديدتان نأمل أن نُطلقهما خلال الشهر المقبل أو نحو ذلك، إلى جانب العديد من الميزات الجديدة التي لم نُعلن عنها بعد. ستكون الأشهر القادمة حافلة بالتحديثات، ونستعد لتقديم المزيد لكم حتى نهاية هذا العام. ترقبوا الإعلانات القادمة!",
-                discord_more: "للمزيد من الأخبار انضموا إلى الديسكورد", tag_update: "خبر هام",
-                th_player: "اللاعب", th_days: "يوم", th_group: "المجموعة", th_coins: "الإنفاق",
-                group_1: "مجموعة يوسف 1", group_2: "مجموعة يوسف 2", group_3: "مجموعة يوسف 3",
-                tab_english: "الإنجليزي", tab_persian: "الفارسي", tab_french: "الفرنسي", tab_melayu: "الماليزي", tab_turkish: "التركي", tab_spanish: "الإسباني", tab_thai: "التايلندي", tab_brazil: "البرازيلي", tab_desi: "الهندي"
-            },
-            en: {
-                menu_home: "HOME", menu_leaders: "LEADERS", menu_news: "NEWS", menu_players: "PLAYERS", menu_spending: "SPENDING", menu_tournaments: "TOURNAMENTS",
-                news_text: "LATEST PLATO NEWS: The store will be completely cleared of coin items.",
-                hero_title_sub: "COMMUNITY", hero_desc: "Where gaming enthusiasts meet to experience thrilling moments, build true friendships, and create eternal memories.",
-                leaders_title: "ARABIC LEADERS", global_leaders_title: "GLOBAL SERVERS LEADERS", news_board_title: "COMMUNITY NEWS BOARD", players_title: "OLDEST PLAYERS", spending_title: "TOP SPENDING GROUPS", tournaments_title: "APPROVED TOURNAMENTS",
-                desc_yyy: "The Impact Maker, leading with a futuristic vision to create a positive environment.", desc_hat: "A grounded presence, leading the community with solid confidence and setting standards.", desc_bbb: "Wisdom in decision making, balancing firmness and calmness in management.",
-                news_1_title: "New Games & Features Launch!", news_1_body: "We have two new games that we hope to release within the next month or so, along with many other new features that we haven't announced yet. The coming months will be packed with new updates, and we're getting ready to bring you even more through the end of this year.",
-                discord_more: "For more news, join our Discord server", tag_update: "HOT NEWS",
-                th_player: "PLAYER", th_days: "DAYS", th_group: "GROUP", th_coins: "SPENDING",
-                group_1: "Yousef Group 1", group_2: "Yousef Group 2", group_3: "Yousef Group 3",
-                tab_english: "English", tab_persian: "Persian", tab_french: "Français", tab_melayu: "Melayu", tab_turkish: "Turkish", tab_spanish: "Español", tab_thai: "Thai", tab_brazil: "Brasil", tab_desi: "Desi"
-            }
-        };
-
-        function changeLang(lang) {
-            document.documentElement.setAttribute('lang', lang); document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
-            
-            document.getElementById('btn-ar').classList.toggle('active', lang === 'ar');
-            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-            
-            document.querySelectorAll('[data-i18n]').forEach(el => { if(translations[lang][el.getAttribute('data-i18n')]) el.innerText = translations[lang][el.getAttribute('data-i18n')]; });
-            document.getElementById('news-text').innerText = translations[lang]['news_text'];
-            
-            if(typeof loadDynamicTournaments === 'function') loadDynamicTournaments();
-            localStorage.setItem('lang', lang);
-            
-            const animatedElements = document.querySelectorAll('[data-aos]');
-            animatedElements.forEach(el => { el.classList.remove('aos-animate'); void el.offsetWidth; });
-            setTimeout(() => { animatedElements.forEach(el => el.classList.add('aos-animate')); }, 50);
-        }
 
         window.onload = () => {
             const savedTheme = localStorage.getItem('theme') || 'dark'; 
@@ -695,7 +700,7 @@
             const savedLang = localStorage.getItem('lang') || 'ar'; 
             changeLang(savedLang);
             
-            loadDynamicTournaments();
+            loadDynamicData();
             setInterval(updateSheetTimers, 1000);
         }
     </script>
