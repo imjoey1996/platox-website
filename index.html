@@ -574,7 +574,7 @@
                 else if(lowerText.match(/(فلوس|كوينز|متجر|شراء|coin|money|store|shop)/)) {
                     reply = isAr ? "مثل ما تم الإعلان في لوحة الأخبار: المتجر بيتنظف من الكوينز كلياً في التحديث القادم." : "As announced in the news board, the store will be completely cleared of coin items soon.";
                 }
-                else if(lowerText.match(/(منو انت|شنو انت|شسمك|who are you|name)/)) {
+                else if(lowerText.match(/(مين انت|وش انت|وش اسمك|who are you|name)/)) {
                     reply = isAr ? "أنا PlatoBot 🤖! الذكاء الاصطناعي الخاص بهذا المجتمع، مهمتي أجاوب أسئلتك وأرشدك بالموقع." : "I am PlatoBot 🤖! The AI assistant for this community.";
                 }
                 else if(lowerText.match(/(جائز|جوائز|هدية|فوز|prize|win|reward)/)) {
@@ -615,50 +615,49 @@
 
         /* قادة السيرفرات العالمية Data */
                 const globalLeadersData = [
-            // السيرفر الإنجليزي
-            { name: "abc", server: "english", color: "0a2a75", img: "abc.WEBP" }, 
-            { name: "Fear", server: "english", color: "0a2a75", img: "fear.webp" }, 
-            { name: "Rose", server: "english", color: "0a2a75", img: "rose.webp" }, 
-            { name: "Risk", server: "english", color: "0a2a75", img: "risk.webp" },
-            
-            // السيرفر الفارسي
-            { name: "77777777", server: "persian", color: "10b981", img: "IMG_9665.webp" }, 
-            { name: "Reza", server: "persian", color: "10b981", img: "reza.webp" }, 
-            { name: "Armin", server: "persian", color: "10b981", img: "armin.webp" }, 
-            { name: "NarGc", server: "persian", color: "10b981", img: "nargc.webp" },
-            
-            // السيرفر الفرنسي
-            { name: "Mdame", server: "french", color: "3b82f6", img: "mdame.webp" }, 
-            { name: "Love_hope", server: "french", color: "3b82f6", img: "love_hope.webp" }, 
-            { name: "Algerian", server: "french", color: "3b82f6", img: "algerian.webp" }, 
-            { name: "H22", server: "french", color: "3b82f6", img: "h22.webp" },
-            
-            // السيرفر الماليزي
-            { name: "abo", server: "melayu", color: "8b5cf6", img: "abo.webp" }, 
-            { name: "fyy", server: "melayu", color: "8b5cf6", img: "fyy.webp" }, 
-            { name: "Lyn", server: "melayu", color: "8b5cf6", img: "lyn.webp" },
-            
-            // السيرفر التركي
-            { name: "esthell", server: "turkish", color: "ef4444", img: "esthell.webp" }, 
-            { name: "nefya", server: "turkish", color: "ef4444", img: "nefya.webp" },
-            
-            // السيرفر الإسباني
-            { name: "marito", server: "spanish", color: "f59e0b", img: "marito.webp" }, 
-            { name: "kroxtar", server: "spanish", color: "f59e0b", img: "kroxtar.webp" },
-            
-            // السيرفر البرازيلي
-            { name: "morango", server: "brazil", color: "22c55e", img: "morango.webp" }, 
-            { name: "vsf", server: "brazil", color: "22c55e", img: "vsf.webp" },
-            
-            // السيرفر التايلندي
-            { name: "sroti", server: "thai", color: "ec4899", img: "sroti.webp" }, 
-            { name: "nrasl", server: "thai", color: "ec4899", img: "nrasl.webp" },
-            
-            // السيرفر الهندي
-            { name: "Mellisssaaa", server: "desi", color: "d97706", img: "mellisssaaa.webp" }, 
-            { name: "Frequency", server: "desi", color: "d97706", img: "frequency.webp" }
-        ];
-
+    // السيرفر الإنجليزي
+    { name: "abc", server: "english", color: "0a2a75", img: "abc.WEBP" }, 
+    { name: "Fear", server: "english", color: "0a2a75", img: "fear.WEBP" }, 
+    { name: "Rose", server: "english", color: "0a2a75", img: "rose.WEBP" }, 
+    { name: "Risk", server: "english", color: "0a2a75", img: "risk.WEBP" },
+    
+    // السيرفر الفارسي
+    { name: "77777777", server: "persian", color: "10b981", img: "IMG_9665.WEBP" }, 
+    { name: "Reza", server: "persian", color: "10b981", img: "reza.WEBP" }, 
+    { name: "Armin", server: "persian", color: "10b981", img: "armin.WEBP" }, 
+    { name: "NarGc", server: "persian", color: "10b981", img: "nargc.WEBP" },
+    
+    // السيرفر الفرنسي
+    { name: "Mdame", server: "french", color: "3b82f6", img: "mdame.WEBP" }, 
+    { name: "Love_hope", server: "french", color: "3b82f6", img: "love_hope.WEBP" }, 
+    { name: "Algerian", server: "french", color: "3b82f6", img: "algerian.WEBP" }, 
+    { name: "H22", server: "french", color: "3b82f6", img: "h22.WEBP" },
+    
+    // السيرفر الماليزي
+    { name: "abo", server: "melayu", color: "8b5cf6", img: "abo.WEBP" }, 
+    { name: "fyy", server: "melayu", color: "8b5cf6", img: "fyy.WEBP" }, 
+    { name: "Lyn", server: "melayu", color: "8b5cf6", img: "lyn.WEBP" },
+    
+    // السيرفر التركي
+    { name: "esthell", server: "turkish", color: "ef4444", img: "esthell.WEBP" }, 
+    { name: "nefya", server: "turkish", color: "ef4444", img: "nefya.WEBP" },
+    
+    // السيرفر الإسباني
+    { name: "marito", server: "spanish", color: "f59e0b", img: "marito.WEBP" }, 
+    { name: "kroxtar", server: "spanish", color: "f59e0b", img: "kroxtar.WEBP" },
+    
+    // السيرفر البرازيلي
+    { name: "morango", server: "brazil", color: "22c55e", img: "mornago.WEBP" }, 
+    { name: "vsf", server: "brazil", color: "22c55e", img: "vsf.WEBP" },
+    
+    // السيرفر التايلندي
+    { name: "sroti", server: "thai", color: "ec4899", img: "sroti.WEBP" }, 
+    { name: "nrasl", server: "thai", color: "ec4899", img: "nrasl.WEBP" },
+    
+    // السيرفر الهندي
+    { name: "Mellisssaaa", server: "desi", color: "d97706", img: "mellisssaaa.WEBP" }, 
+    { name: "Frequency", server: "desi", color: "d97706", img: "frequency.WEBP" } 
+];
         function renderGlobalLeaders() {
             const container = document.getElementById('global-leaders-grid');
             container.innerHTML = '';
