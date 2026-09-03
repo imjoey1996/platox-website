@@ -340,8 +340,7 @@
         </div>
 
         <div class="global-leaders-grid" id="global-leaders-grid">
-            <!-- Dynamic Server Leaders -->
-        </div>
+            </div>
     </section>
 
     <div class="cyber-divider"><div class="center-node"></div></div>
@@ -483,18 +482,6 @@
             });
         }
 
-        const now = new Date(); const dateString = now.toISOString().split('T')[0];
-        const tournamentsData = [
-            { 
-                id: 1, time: `${dateString}T21:00:00`, img: "https://ui-avatars.com/api/?name=Y1&background=ffd700&color=000", 
-                titleKey: "tour_1_title", descKey: "tour_1_desc", groupKey: "group_1", gameKey: "game_pool", prize: "50K - 30K", admin: "YYY", borderColor: "var(--primary)" 
-            },
-            { 
-                id: 2, time: `${dateString}T22:00:00`, img: "https://ui-avatars.com/api/?name=Y2&background=00b4d8&color=fff", 
-                titleKey: "tour_2_title", descKey: "tour_2_desc", groupKey: "group_2", gameKey: "game_werewolf", prize: "40K", admin: "BBB", borderColor: "var(--glow-bbb)" 
-            }
-        ];
-
         const globalLeadersData = [
             // 1. English
             { name: "Fear", server: "english", color: "0a2a75", img: "55fb9c5469409aa250bb7f2eeae0fbea.png" }, 
@@ -565,47 +552,84 @@
             });
         }
 
-        function renderTournaments() {
-            const container = document.getElementById('tournaments-container');
-            container.innerHTML = '';
-            tournamentsData.sort((a, b) => new Date(a.time) - new Date(b.time));
-            tournamentsData.forEach(tour => {
-                const isLtr = document.documentElement.getAttribute('dir') === 'ltr';
-                const borderStyle = isLtr ? `border-left-color: ${tour.borderColor};` : `border-right-color: ${tour.borderColor};`;
-                container.innerHTML += `
-                    <div class="tour-card glass-panel" style="${borderStyle}">
-                        <div class="tour-header">
-                            <div class="tour-title-box">
-                                <img src="${tour.img}" class="entity-img" style="border-radius:8px;">
-                                <div class="tour-title" data-i18n="${tour.titleKey}">...</div>
+        // دالة جلب البطولات المعتمدة من جوجل شيت
+        async function loadDynamicTournaments() {
+            const sheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/export?format=csv"; 
+            try {
+                const response = await fetch(sheetURL);
+                const data = await response.text();
+                
+                const rows = data.split('\n').slice(1);
+                const container = document.getElementById('tournaments-container');
+                container.innerHTML = '';
+                
+                const currentLang = document.documentElement.getAttribute('lang') || 'ar';
+                const isLtr = currentLang === 'en';
+
+                rows.forEach((row) => {
+                    const cols = row.split(','); 
+                    if(cols.length < 7 || !cols[0].trim()) return;
+
+                    const targetTime = cols[0].replace(/"/g, '').trim(); 
+                    const nameAr = cols[1].replace(/"/g, '').trim();
+                    const nameEn = cols[2].replace(/"/g, '').trim();
+                    const image = cols[3].replace(/"/g, '').trim();
+                    const prize = cols[4].replace(/"/g, '').trim();
+                    const game = cols[5].replace(/"/g, '').trim();
+                    const admin = cols[6].replace(/"/g, '').trim();
+
+                    const displayName = currentLang === 'ar' ? nameAr : nameEn;
+                    const borderStyle = isLtr ? `border-left-color: var(--primary);` : `border-right-color: var(--primary);`;
+
+                    container.innerHTML += `
+                        <div class="tour-card glass-panel" style="${borderStyle}">
+                            <div class="tour-header">
+                                <div class="tour-title-box">
+                                    <img src="${image}" class="entity-img" style="border-radius:8px; width:35px; height:35px; object-fit:cover;">
+                                    <div class="tour-title">${displayName}</div>
+                                </div>
+                                <div class="countdown-box sheet-timer" data-time="${targetTime}">
+                                    <i class="fa-regular fa-clock"></i> <span class="num-font countdown-val">00:00:00</span>
+                                </div>
                             </div>
-                            <div class="countdown-box" id="timer-${tour.id}"><i class="fa-regular fa-clock"></i> <span class="num-font countdown-val">00:00:00</span></div>
+                            <div class="tour-footer" style="margin-top: 15px;">
+                                <div class="info-badge"><i class="fa-solid fa-gamepad"></i> <span>${game}</span></div>
+                                <div class="info-badge prize-badge"><i class="fa-solid fa-trophy"></i> <span class="num-font">${prize}</span></div>
+                                <div class="info-badge admin-copy-btn" onclick="copyAdminID('${admin}')" title="انسخ اليوزر">
+                                    <i class="fa-solid fa-copy"></i> <span class="num-font">${admin}</span>
+                                </div>
+                            </div>
                         </div>
-                        <p class="tour-desc" data-i18n="${tour.descKey}">...</p>
-                        <div class="tour-footer">
-                            <div class="info-badge"><i class="fa-solid fa-users"></i> <span data-i18n="${tour.groupKey}">...</span></div>
-                            <div class="info-badge"><i class="fa-solid fa-gamepad"></i> <span data-i18n="${tour.gameKey}">...</span></div>
-                            <div class="info-badge prize-badge"><i class="fa-solid fa-trophy"></i> <span class="num-font">${tour.prize}</span></div>
-                            <div class="info-badge admin-copy-btn" onclick="copyAdminID('${tour.admin}')" title="انسخ اليوزر"><i class="fa-solid fa-copy"></i> <span class="num-font">${tour.admin}</span></div>
-                        </div>
-                    </div>
-                `;
-            });
+                    `;
+                });
+                
+                updateSheetTimers(); 
+            } catch (error) {
+                console.error("حدث خطأ أثناء جلب البيانات:", error);
+            }
         }
 
-        function updateTimers() {
+        // دالة تحديث عدادات البطولات من الشيت
+        function updateSheetTimers() {
             const nowTime = new Date().getTime();
-            tournamentsData.forEach(tour => {
-                const diff = new Date(tour.time).getTime() - nowTime;
-                const el = document.querySelector(`#timer-${tour.id} .countdown-val`);
-                if(el) {
-                    if (diff < 0) el.innerText = document.documentElement.getAttribute('lang') === 'ar' ? 'بدأت!' : 'STARTED!';
-                    else {
-                        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-                        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-                        const s = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
-                        el.innerText = `${h}:${m}:${s}`;
-                    }
+            document.querySelectorAll('.sheet-timer').forEach(el => {
+                const targetStr = el.getAttribute('data-time');
+                const diff = new Date(targetStr).getTime() - nowTime;
+                const valSpan = el.querySelector('.countdown-val');
+                if(!valSpan) return;
+                
+                if (diff <= 0) {
+                    valSpan.innerText = document.documentElement.getAttribute('lang') === 'ar' ? 'بدأت!' : 'STARTED!';
+                    el.style.color = '#10b981'; 
+                    el.style.backgroundColor = 'rgba(16, 185, 129, 0.1)';
+                    el.style.borderColor = 'rgba(16, 185, 129, 0.3)';
+                } else {
+                    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+                    const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+                    const s = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+                    
+                    valSpan.innerText = d > 0 ? `${d}d ${h}:${m}:${s}` : `${h}:${m}:${s}`;
                 }
             });
         }
@@ -621,9 +645,6 @@
                 discord_more: "للمزيد من الأخبار انضموا إلى الديسكورد", tag_update: "خبر هام",
                 th_player: "اللاعب", th_days: "يوم", th_group: "المجموعة", th_coins: "الإنفاق",
                 group_1: "مجموعة يوسف 1", group_2: "مجموعة يوسف 2", group_3: "مجموعة يوسف 3",
-                tour_1_title: "بطولة يوسف 1", tour_1_desc: "مجموعة يوسف الاولى ترحب بكم في بطولة بلياردو الليلة الساعة ٩ بتوقيت السعودية بجوائز للمركز الاولى ٥٠ك للمركز الثاني ٣٠ك للدخول الى القروب يرجى نسخ يوزر الاداري واضافته على بلاتو",
-                tour_2_title: "بطولة يوسف 2", tour_2_desc: "ندعوكم للمشاركة في تحدي ذئاب (Werewolf) الليلة الساعة 10 بتوقيت السعودية. الأماكن محدودة.",
-                game_pool: "بلياردو", game_werewolf: "ذئاب (Werewolf)",
                 tab_english: "الإنجليزي", tab_persian: "الفارسي", tab_french: "الفرنسي", tab_melayu: "الماليزي", tab_turkish: "التركي", tab_spanish: "الإسباني", tab_thai: "التايلندي", tab_brazil: "البرازيلي", tab_desi: "الهندي"
             },
             en: {
@@ -636,9 +657,6 @@
                 discord_more: "For more news, join our Discord server", tag_update: "HOT NEWS",
                 th_player: "PLAYER", th_days: "DAYS", th_group: "GROUP", th_coins: "SPENDING",
                 group_1: "Yousef Group 1", group_2: "Yousef Group 2", group_3: "Yousef Group 3",
-                tour_1_title: "Yousef 1 Tournament", tour_1_desc: "Yousef First Group welcomes you to the Pool tournament tonight at 9 PM KSA. Prizes: 1st place 50K, 2nd place 30K. To join, copy the admin's ID and add them on Plato.",
-                tour_2_title: "Yousef 2 Tournament", tour_2_desc: "Join us for a Werewolf challenge tonight at 10 PM KSA. Limited seats available.",
-                game_pool: "Pool", game_werewolf: "Werewolf",
                 tab_english: "English", tab_persian: "Persian", tab_french: "Français", tab_melayu: "Melayu", tab_turkish: "Turkish", tab_spanish: "Español", tab_thai: "Thai", tab_brazil: "Brasil", tab_desi: "Desi"
             }
         };
@@ -652,7 +670,9 @@
             document.querySelectorAll('[data-i18n]').forEach(el => { if(translations[lang][el.getAttribute('data-i18n')]) el.innerText = translations[lang][el.getAttribute('data-i18n')]; });
             document.getElementById('news-text').innerText = translations[lang]['news_text'];
             
-            renderTournaments(); localStorage.setItem('lang', lang);
+            if(typeof loadDynamicTournaments === 'function') loadDynamicTournaments();
+            localStorage.setItem('lang', lang);
+            
             const animatedElements = document.querySelectorAll('[data-aos]');
             animatedElements.forEach(el => { el.classList.remove('aos-animate'); void el.offsetWidth; });
             setTimeout(() => { animatedElements.forEach(el => el.classList.add('aos-animate')); }, 50);
@@ -675,7 +695,8 @@
             const savedLang = localStorage.getItem('lang') || 'ar'; 
             changeLang(savedLang);
             
-            setInterval(updateTimers, 1000);
+            loadDynamicTournaments();
+            setInterval(updateSheetTimers, 1000);
         }
     </script>
 </body>
