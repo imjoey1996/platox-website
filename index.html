@@ -327,7 +327,6 @@
     <section id="global-leaders">
         <h2 class="section-title" data-aos="fade-right" data-i18n="global_leaders_title">قادة السيرفرات العالمية</h2>
         
-        <!-- تم ترتيب الأزرار لتبدأ من الإنجليزي وتطابق طلبك -->
         <div class="server-tabs" data-aos="fade-up" dir="ltr">
             <button class="server-tab active" data-target="english" onclick="filterServer('english')">English</button>
             <button class="server-tab" data-target="persian" onclick="filterServer('persian')">Persian</button>
@@ -496,13 +495,13 @@
             }
         ];
 
-        /* تم ترتيب القادة وتحديث صور abc, NarGc, 7777777, Mdame كما طلبت */
+        /* تم تحديث الصور الجديدة بناءً على القائمة المرفقة */
         const globalLeadersData = [
             // 1. English
             { name: "Fear", server: "english", color: "0a2a75", img: "55fb9c5469409aa250bb7f2eeae0fbea.png" }, 
             { name: "abc", server: "english", color: "0a2a75", img: "84fbda49d60a3ab730108bb40c635feb.png" }, 
             { name: "Rose", server: "english", color: "0a2a75", img: "rose.WEBP" }, 
-            { name: "Risk", server: "english", color: "0a2a75", img: "risk.WEBP" },
+            { name: "Risk", server: "english", color: "0a2a75", img: "57914b7385432b7831bcc1470723baa7.png" },
             // 2. Persian
             { name: "7777777", server: "persian", color: "10b981", img: "03cdd5503fd8725e76641fb8e06c2937.png" }, 
             { name: "Armin", server: "persian", color: "10b981", img: "armin.WEBP" }, 
@@ -510,22 +509,22 @@
             { name: "NarGc", server: "persian", color: "10b981", img: "13b8f453f2ee334ab01a7e53fc4c23fb.png" },
             // 3. French
             { name: "H22", server: "french", color: "3b82f6", img: "h22.WEBP" },
-            { name: "love_hope", server: "french", color: "3b82f6", img: "love_hope.WEBP" }, 
+            { name: "love_hope", server: "french", color: "3b82f6", img: "f74613af2e55aecdde0d31ff33964698.png" }, 
             { name: "Mdame", server: "french", color: "3b82f6", img: "de6ac96df41f0d3378e934e467ccee32.png" }, 
             { name: "Algerien", server: "french", color: "3b82f6", img: "algerian.WEBP" }, 
             // 4. Turkish
             { name: "Nefya", server: "turkish", color: "ef4444", img: "nefya.WEBP" },
-            { name: "esthell", server: "turkish", color: "ef4444", img: "esthell.WEBP" }, 
+            { name: "esthell", server: "turkish", color: "ef4444", img: "8b85aa900d60b226406c24f3fef88da0.png" }, 
             // 5. Malay
-            { name: "Fyy", server: "melayu", color: "8b5cf6", img: "fyy.WEBP" }, 
-            { name: "Lyn", server: "melayu", color: "8b5cf6", img: "lyn.WEBP" },
+            { name: "Fyy", server: "melayu", color: "8b5cf6", img: "f36561c947960941324127485f6b5886.png" }, 
+            { name: "Lyn", server: "melayu", color: "8b5cf6", img: "92202278eed703e1100a0b963a8834c6.png" },
             { name: "abo", server: "melayu", color: "8b5cf6", img: "abo.WEBP" }, 
             // 6. Brazilian
-            { name: "morango", server: "brazil", color: "22c55e", img: "mornago.WEBP" }, 
-            { name: "vsf", server: "brazil", color: "22c55e", img: "vsf.WEBP" },
+            { name: "morango", server: "brazil", color: "22c55e", img: "c5d766cb9eefad03e43d5c60b6663f68.png" }, 
+            { name: "vsf", server: "brazil", color: "22c55e", img: "5d6814526ccd5b04a915127d03325e4b.png" },
             // 7. Spanish
             { name: "Marito", server: "spanish", color: "f59e0b", img: "marito.WEBP" }, 
-            { name: "kroxtar", server: "spanish", color: "f59e0b", img: "kroxtar.WEBP" },
+            { name: "kroxtar", server: "spanish", color: "f59e0b", img: "8a2638546f3cb1961c3e198fc5817b45.png" },
             // 8. Thai
             { name: "sroti", server: "thai", color: "ec4899", img: "sroti.WEBP" }, 
             { name: "nrasl", server: "thai", color: "ec4899", img: "nrasl.WEBP" },
@@ -672,7 +671,7 @@
             });
             
             renderGlobalLeaders();
-            filterServer('english'); // تم ضبط الإنجليزي ليكون السيرفر الافتراضي لأنه الأول 
+            filterServer('english'); 
             
             const savedLang = localStorage.getItem('lang') || 'ar'; 
             changeLang(savedLang);
