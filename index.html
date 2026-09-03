@@ -9,22 +9,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* الوضع الليلي المحسن (مضيء قليلاً مع حركة واضحة) */
+        /* الوضع الليلي المحسن (قاتم ومريح للعين مع حركة واضحة) */
         :root {
-            --bg-main: #0b0b12; 
-            --bg-card: rgba(20, 20, 26, 0.85); 
+            --bg-main: #050508; 
+            --bg-card: rgba(15, 15, 20, 0.85); 
             --primary: #9d4edd;
-            --primary-glow: rgba(157, 78, 221, 0.4);
+            --primary-glow: rgba(157, 78, 221, 0.3);
             --border-color: rgba(255, 255, 255, 0.08);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --ticker-bg: #15151e;
+            --ticker-bg: #111118;
             --ticker-text: #e2e8f0;
             --glow-yyy: #e3b341;
             --glow-hat: #9d4edd;
             --glow-bbb: #00c3e3;
-            --bot-bg: #15151e;
+            --bot-bg: #111118;
             --bot-header: #9d4edd;
+            --discord-color: #5865F2;
         }
 
         /* الوضع النهاري الساطع */
@@ -47,17 +48,17 @@
         body { color: var(--text-main); font-family: 'Cairo', sans-serif; overflow-x: hidden; transition: background 0.4s, color 0.4s; }
         html[dir="ltr"] body, .num-font, .navbar h1 { font-family: 'Rajdhani', sans-serif; }
 
-        /* الخلفية المتحركة (تم توضيح الحركة في الوضع الليلي) */
-        .animated-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; background: linear-gradient(45deg, var(--bg-main), rgba(157, 78, 221, 0.12), var(--bg-main)); background-size: 400% 400%; animation: gradientBG 15s ease infinite; transition: background 0.5s ease; }
+        /* الخلفية المتحركة */
+        .animated-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; background: linear-gradient(45deg, var(--bg-main), rgba(157, 78, 221, 0.08), var(--bg-main)); background-size: 400% 400%; animation: gradientBG 15s ease infinite; transition: background 0.5s ease; }
         @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         
         .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; pointer-events: none; }
-        .particle { position: absolute; color: var(--primary); opacity: 0.25; animation: floatUp infinite linear; } /* رفعنا الشفافية لتبدو الألعاب بوضوح */
-        [data-theme="light"] .particle { opacity: 0.1; }
-        @keyframes floatUp { 0% { transform: translateY(100vh) rotate(0deg) scale(0.8); opacity: 0; } 10% { opacity: 0.25; } 90% { opacity: 0.25; } 100% { transform: translateY(-10vh) rotate(360deg) scale(1.5); opacity: 0; } }
+        .particle { position: absolute; color: var(--primary); opacity: 0.15; animation: floatUp infinite linear; } 
+        [data-theme="light"] .particle { opacity: 0.08; }
+        @keyframes floatUp { 0% { transform: translateY(100vh) rotate(0deg) scale(0.8); opacity: 0; } 10% { opacity: 0.15; } 90% { opacity: 0.15; } 100% { transform: translateY(-10vh) rotate(360deg) scale(1.5); opacity: 0; } }
 
         /* شريط التنقل */
-        .navbar { position: fixed; top: 0; width: 100%; padding: 12px 25px; display: flex; justify-content: space-between; align-items: center; background: rgba(11, 11, 18, 0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color); z-index: 1000; }
+        .navbar { position: fixed; top: 0; width: 100%; padding: 12px 25px; display: flex; justify-content: space-between; align-items: center; background: rgba(5, 5, 8, 0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color); z-index: 1000; }
         [data-theme="light"] .navbar { background: rgba(255, 255, 255, 0.9); }
         .navbar h1 { font-size: 24px; font-weight: 900; letter-spacing: 1px; }
         .navbar h1 span { color: var(--primary); }
@@ -79,9 +80,13 @@
         html[dir="ltr"] .sidebar.active { left: 0; right: auto; }
         .close-btn { align-self: flex-end; font-size: 26px; cursor: pointer; margin-bottom: 15px; }
         html[dir="ltr"] .close-btn { align-self: flex-start; }
-        .lang-switch { display: flex; justify-content: center; gap: 15px; margin: 15px 0 25px 0; }
-        .lang-switch img { width: 35px; cursor: pointer; border-radius: 4px; opacity: 0.3; transition: 0.3s; filter: grayscale(100%); }
-        .lang-switch img:hover, .lang-switch img.active { opacity: 1; filter: grayscale(0); }
+        
+        /* أزرار اللغة (النصية بدلاً من الأعلام) */
+        .lang-switch { display: flex; justify-content: center; gap: 10px; margin: 15px 0 25px 0; }
+        .lang-btn { background: transparent; color: var(--text-muted); border: 1px solid var(--border-color); padding: 6px 15px; border-radius: 20px; cursor: pointer; transition: 0.3s; font-family: 'Cairo', sans-serif; font-weight: 700; font-size: 0.9rem;}
+        .lang-btn:hover { color: var(--primary); border-color: var(--primary); }
+        .lang-btn.active { color: #fff; background: var(--primary); border-color: var(--primary); }
+
         .sidebar a { color: var(--text-main); text-decoration: none; font-size: 1.05rem; font-weight: 700; padding: 12px 0; border-bottom: 1px solid var(--border-color); transition: 0.3s; text-transform: uppercase; }
         .sidebar a:hover { color: var(--primary); padding-right: 8px; }
         html[dir="ltr"] .sidebar a:hover { padding-right: 0; padding-left: 8px; }
@@ -100,25 +105,29 @@
         .section-title::before { content: ''; position: absolute; right: -12px; top: 12px; width: 6px; height: 6px; background: var(--primary); transform: rotate(45deg); }
         html[dir="ltr"] .section-title::before { right: auto; left: -12px; }
 
-        /* لوحة الأخبار (فائقة الاحترافية) */
+        /* لوحة الأخبار (محدثة مع رابط بالأسفل) */
         .featured-news {
             width: 100%; max-width: 750px; background: var(--bg-card); border: 1px solid var(--border-color);
             border-radius: 12px; padding: 35px; position: relative; overflow: hidden; backdrop-filter: blur(15px);
             display: flex; flex-direction: column; gap: 15px; transition: 0.3s;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2); margin-bottom: 15px;
         }
-        [data-theme="light"] .featured-news { box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
-        .featured-news::before {
-            content: ''; position: absolute; top: -50%; right: -50%; width: 100%; height: 100%;
-            background: radial-gradient(circle, rgba(157, 78, 221, 0.1) 0%, transparent 60%); z-index: -1; pointer-events: none;
-        }
+        [data-theme="light"] .featured-news { box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         
         .news-header-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; }
-        .news-badge { background: rgba(157, 78, 221, 0.15); color: var(--primary); border: 1px solid var(--primary); padding: 5px 12px; border-radius: 6px; font-weight: 900; font-size: 0.8rem; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px;}
+        .news-badge { background: rgba(157, 78, 221, 0.15); color: var(--primary); border: 1px solid var(--primary); padding: 5px 12px; border-radius: 6px; font-weight: 900; font-size: 0.8rem; display: flex; align-items: center; gap: 8px;}
         .news-date-sub { font-family: 'Rajdhani', sans-serif; font-size: 0.85rem; color: var(--text-muted); font-weight: bold;}
         
-        .news-headline { font-size: 1.5rem; font-weight: 900; line-height: 1.4; color: var(--text-main); margin-top: 10px;}
-        .news-body { color: var(--text-muted); line-height: 1.8; font-size: 1rem; }
+        .news-headline { font-size: 1.4rem; font-weight: 900; line-height: 1.4; color: var(--text-main); margin-top: 5px;}
+        .news-body { color: var(--text-muted); line-height: 1.8; font-size: 0.95rem; }
+
+        /* رابط الديسكورد خارج الخبر */
+        .more-news-link {
+            display: inline-flex; align-items: center; gap: 8px; color: var(--text-muted); 
+            font-size: 0.9rem; text-decoration: none; transition: 0.3s; font-weight: bold;
+        }
+        .more-news-link i { color: var(--discord-color); font-size: 1.1rem; }
+        .more-news-link:hover { color: var(--text-main); transform: translateY(-2px); }
 
         /* القادة العرب */
         .grid-container { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; max-width: 900px; }
@@ -242,10 +251,13 @@
     
     <div class="sidebar" id="sidebar">
         <i class="fa-solid fa-xmark close-btn" onclick="toggleMenu()"></i>
+        
+        <!-- أزرار اللغة النصية الاحترافية -->
         <div class="lang-switch">
-            <img src="https://flagcdn.com/w80/ae.png" alt="Arabic" onclick="changeLang('ar')" id="flag-ar" class="active" title="العربية">
-            <img src="https://flagcdn.com/w80/us.png" alt="English" onclick="changeLang('en')" id="flag-en" title="English">
+            <button class="lang-btn active" onclick="changeLang('ar')" id="btn-ar">اللغة العربية</button>
+            <button class="lang-btn" onclick="changeLang('en')" id="btn-en">English</button>
         </div>
+
         <a href="#hero" onclick="toggleMenu()" data-i18n="menu_home">الرئيسية</a>
         <a href="#news" onclick="toggleMenu()" data-i18n="menu_news">الأخبار</a>
         <a href="#leaders" onclick="toggleMenu()" data-i18n="menu_leaders">القادة</a>
@@ -275,7 +287,7 @@
         <p data-aos="fade-up" data-aos-delay="200" data-i18n="hero_desc">يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.</p>
     </section>
 
-    <!-- لوحة الأخبار (Ultra Pro - بدون زر المزيد) -->
+    <!-- لوحة الأخبار (Ultra Pro - نص الديسكورد بالخارج) -->
     <section id="news" style="padding-top: 10px;">
         <h2 class="section-title" data-aos="fade-right" data-i18n="news_board_title">لوحة أخبار المجتمع</h2>
         <div class="featured-news" data-aos="zoom-in">
@@ -286,6 +298,10 @@
             <h3 class="news-headline" data-i18n="news_1_title">إطلاق ألعاب وميزات جديدة قريباً!</h3>
             <p class="news-body" data-i18n="news_1_body">لدينا لعبتان جديدتان نأمل أن نُطلقهما خلال الشهر المقبل أو نحو ذلك، إلى جانب العديد من الميزات الجديدة التي لم نُعلن عنها بعد. ستكون الأشهر القادمة حافلة بالتحديثات، ونستعد لتقديم المزيد لكم حتى نهاية هذا العام. ترقبوا الإعلانات القادمة!</p>
         </div>
+        <!-- رابط الديسكورد خارج البطاقة بخط صغير احترافي -->
+        <a href="https://discord.gg/plato" target="_blank" class="more-news-link" data-aos="fade-up" data-aos-delay="100">
+            <i class="fa-brands fa-discord"></i> <span data-i18n="discord_more">للمزيد من الأخبار انضموا إلى الديسكورد</span>
+        </a>
     </section>
 
     <div class="cyber-divider"><div class="center-node"></div></div>
@@ -313,7 +329,6 @@
 
     <div class="cyber-divider"><div class="center-node"></div></div>
 
-    <!-- اللاعبين الأقدم -->
     <section id="accounts">
         <h2 class="section-title" data-aos="fade-right" data-i18n="players_title">اللاعبين الاقدم</h2>
         <div class="premium-list" data-aos="fade-up">
@@ -368,7 +383,6 @@
 
     <div class="cyber-divider"><div class="center-node"></div></div>
 
-    <!-- ترتيب الإنفاق (Top 3) -->
     <section id="top-spending">
         <h2 class="section-title" data-aos="fade-right" data-i18n="spending_title">ترتيب المجموعات الأكثر إنفاقًا</h2>
         <div class="premium-list" data-aos="fade-up">
@@ -432,7 +446,7 @@
             <div class="bot-msg" data-i18n="bot_welcome">مرحباً بك! أنا PlatoBot، مساعدك الذكي في مجتمعنا. كيف أقدر أساعدك اليوم؟ 🎮</div>
         </div>
         <div class="bot-input">
-            <input type="text" id="botInput" data-i18n-placeholder="bot_placeholder" placeholder="اسألني عن البطولات، المتجر..." autocomplete="off" onkeypress="handleBotEnter(event)">
+            <input type="text" id="botInput" data-i18n-placeholder="bot_placeholder" placeholder="اسألني عن البطولات، القوانين..." autocomplete="off" onkeypress="handleBotEnter(event)">
             <button onclick="processBotMessage()"><i class="fa-solid fa-paper-plane"></i></button>
         </div>
     </div>
@@ -446,14 +460,13 @@
         function toggleMenu() { document.getElementById('sidebar').classList.toggle('active'); document.querySelector('.overlay').classList.toggle('active'); }
         function toggleBot() { document.getElementById('botWindow').classList.toggle('active'); }
 
-        // إنشاء جزيئات الألعاب المتحركة في الخلفية
         const icons = ['fa-gamepad', 'fa-dice', 'fa-chess-knight', 'fa-bowling-ball', 'fa-ghost', 'fa-futbol'];
         const particlesContainer = document.getElementById('particles');
         for(let i=0; i<18; i++){
             let icon = document.createElement('i');
             icon.className = 'fa-solid ' + icons[Math.floor(Math.random() * icons.length)] + ' particle';
             icon.style.left = Math.random() * 100 + 'vw';
-            icon.style.fontSize = Math.random() * 1.5 + 1.2 + 'rem'; // تكبير الأيقونات قليلاً
+            icon.style.fontSize = Math.random() * 1.5 + 1.2 + 'rem'; 
             icon.style.animationDuration = Math.random() * 10 + 15 + 's';
             icon.style.animationDelay = Math.random() * 5 + 's';
             particlesContainer.appendChild(icon);
@@ -476,7 +489,6 @@
             });
         }
 
-        /* برمجة الذكاء الاصطناعي (PlatoBot - Smart NLP Simulation) */
         function handleBotEnter(e) { if(e.key === 'Enter') processBotMessage(); }
         
         function processBotMessage() {
@@ -500,7 +512,6 @@
                 let reply = "";
                 const lowerText = text.toLowerCase();
                 
-                // خوارزمية التعرف المتقدمة
                 if(lowerText.match(/(سلام|مرحبا|هلا|شلونك|كيفك|hi|hello|hey|sup)/)) {
                     const replies = isAr ? ["يا أهلاً وسهلاً! نورت PlatoX، تفضل كيف أساعدك؟", "وعليكم السلام! جاهز للعب والمنافسة؟ اسألني اللي تحتاجه."] : ["Hello there! Ready to game?", "Hi! Welcome to PlatoX, how can I help?"];
                     reply = replies[Math.floor(Math.random() * replies.length)];
@@ -544,7 +555,7 @@
 
                 body.innerHTML += `<div class="bot-msg">${reply}</div>`;
                 body.scrollTop = body.scrollHeight;
-            }, 1000 + Math.random() * 1000); // 1 to 2 seconds delay
+            }, 1000 + Math.random() * 1000); 
         }
 
         const now = new Date(); const dateString = now.toISOString().split('T')[0];
@@ -612,7 +623,7 @@
                 leaders_title: "القادة العرب", news_board_title: "لوحة أخبار المجتمع", players_title: "اللاعبين الاقدم", spending_title: "ترتيب المجموعات الأكثر إنفاقًا", tournaments_title: "مركز البطولات المعتمدة",
                 desc_yyy: "صانع الأثر، يقود برؤية مستقبلية لخلق بيئة إيجابية لا تعرف المستحيل.", desc_hat: "رمز الكاريزما والقوة، تقود المجتمع بثقة راسخة وترسم معايير الرقي.", desc_bbb: "الحكمة في اتخاذ القرار، يوازن بين الحزم والهدوء لإدارة الأزمات باحترافية.",
                 news_1_title: "إطلاق ألعاب وميزات جديدة قريباً!", news_1_body: "لدينا لعبتان جديدتان نأمل أن نُطلقهما خلال الشهر المقبل أو نحو ذلك، إلى جانب العديد من الميزات الجديدة التي لم نُعلن عنها بعد. ستكون الأشهر القادمة حافلة بالتحديثات، ونستعد لتقديم المزيد لكم حتى نهاية هذا العام. ترقبوا الإعلانات القادمة!",
-                tag_update: "خبر هام",
+                discord_more: "للمزيد من الأخبار انضموا إلى الديسكورد", tag_update: "خبر هام",
                 th_player: "اللاعب", th_days: "يوم", th_group: "المجموعة", th_coins: "الإنفاق",
                 group_1: "يوسف تجربة 1", group_2: "يوسف تجربة 2", group_3: "يوسف تجربة 3",
                 tour_1_title: "بطولة يوسف تجربة 1", tour_1_desc: "مجموعة يوسف الاولى ترحب بكم في بطولة بلياردو الليلة الساعة ٩ بتوقيت السعودية بجوائز للمركز الاولى ٥٠ك للمركز الثاني ٣٠ك للدخول الى القروب يرجى نسخ يوزر الاداري واضافته على بلاتو",
@@ -627,7 +638,7 @@
                 leaders_title: "ARABIC LEADERS", news_board_title: "COMMUNITY NEWS BOARD", players_title: "OLDEST PLAYERS", spending_title: "TOP SPENDING GROUPS", tournaments_title: "APPROVED TOURNAMENTS",
                 desc_yyy: "The Impact Maker, leading with a futuristic vision to create a positive environment.", desc_hat: "Symbol of Charisma, leading the community with solid confidence and setting standards.", desc_bbb: "Wisdom in decision making, balancing firmness and calmness in management.",
                 news_1_title: "New Games & Features Launch!", news_1_body: "We have two new games that we hope to release within the next month or so, along with many other new features that we haven't announced yet. The coming months will be packed with new updates, and we're getting ready to bring you even more through the end of this year.",
-                tag_update: "HOT NEWS",
+                discord_more: "For more news, join our Discord server", tag_update: "HOT NEWS",
                 th_player: "PLAYER", th_days: "DAYS", th_group: "GROUP", th_coins: "SPENDING",
                 group_1: "Yousef Test 1", group_2: "Yousef Test 2", group_3: "Yousef Test 3",
                 tour_1_title: "Yousef Test 1 Tournament", tour_1_desc: "Yousef Test 1 group welcomes you to the Pool tournament tonight at 9 PM KSA. Prizes: 1st place 50K, 2nd place 30K. To join, copy the admin's ID and add them on Plato.",
@@ -639,7 +650,10 @@
 
         function changeLang(lang) {
             document.documentElement.setAttribute('lang', lang); document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
-            document.getElementById('flag-ar').classList.toggle('active', lang === 'ar'); document.getElementById('flag-en').classList.toggle('active', lang === 'en');
+            
+            // تحديث الأزرار النصية للغة
+            document.getElementById('btn-ar').classList.toggle('active', lang === 'ar');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
             
             document.querySelectorAll('[data-i18n]').forEach(el => { if(translations[lang][el.getAttribute('data-i18n')]) el.innerText = translations[lang][el.getAttribute('data-i18n')]; });
             document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { if(translations[lang][el.getAttribute('data-i18n-placeholder')]) el.placeholder = translations[lang][el.getAttribute('data-i18n-placeholder')]; });
