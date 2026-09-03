@@ -671,21 +671,27 @@
             });
         }
 
-        function filterServer(serverName) {
+                function filterServer(serverName) {
             document.querySelectorAll('.server-tab').forEach(tab => {
                 tab.classList.toggle('active', tab.dataset.target === serverName);
             });
+            
             document.querySelectorAll('.global-leader').forEach(card => {
                 if(card.dataset.server === serverName) {
                     card.style.display = 'block';
-                    card.style.animation = 'none';
-                    card.offsetHeight; 
-                    card.style.animation = null; 
+                    card.style.animation = 'none'; 
+                    
+                    // استخدام المؤقت بدلاً من فرض التحديث الثقيل لتجنب أي تعليق
+                    setTimeout(() => {
+                        card.style.animation = 'fadeScale 0.4s ease-out forwards';
+                    }, 10);
+                    
                 } else {
                     card.style.display = 'none';
                 }
             });
         }
+
 
         function renderTournaments() {
             const container = document.getElementById('tournaments-container');
