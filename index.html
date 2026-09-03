@@ -418,13 +418,22 @@
 
         <!-- 6. اللاعبين الأقدم -->
     <section id="accounts" style="padding-bottom: 120px;">
+        <style>
+            /* تنسيق أوسمة المراكز */
+            .rank-badge { width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; border: 2px solid rgba(255,255,255,0.1); box-shadow: 0 0 10px rgba(0,0,0,0.3); }
+            .badge-gold { background: rgba(227, 179, 65, 0.2); color: var(--glow-yyy); border-color: var(--glow-yyy); }
+            .badge-silver { background: rgba(192, 192, 192, 0.2); color: #cbd5e1; border-color: #cbd5e1; }
+            .badge-bronze { background: rgba(205, 127, 50, 0.2); color: #cd7f32; border-color: #cd7f32; }
+            .badge-normal { background: rgba(255, 255, 255, 0.05); color: var(--text-muted); }
+        </style>
+        
         <h2 class="section-title" data-aos="fade-right" data-i18n="players_title">اللاعبين الاقدم</h2>
         <div class="premium-list" data-aos="fade-up">
             
             <div class="list-row glass-panel rank-1">
                 <div class="rank-num num-font">01</div>
                 <div class="list-info">
-                    <img src="https://ui-avatars.com/api/?name=abc&background=9d4edd&color=fff" class="list-img">
+                    <div class="rank-badge badge-gold"><i class="fa-solid fa-trophy"></i></div>
                     <div class="list-name num-font">abc</div>
                 </div>
                 <div class="score-val num-font"><span class="auto-days" data-base-days="3563"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
@@ -433,7 +442,7 @@
             <div class="list-row glass-panel rank-2">
                 <div class="rank-num num-font">02</div>
                 <div class="list-info">
-                    <img src="https://ui-avatars.com/api/?name=RIP&background=27272a&color=fff" class="list-img">
+                    <div class="rank-badge badge-silver"><i class="fa-solid fa-medal"></i></div>
                     <div class="list-name num-font">RIP</div>
                 </div>
                 <div class="score-val num-font"><span class="auto-days" data-base-days="3491"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
@@ -442,7 +451,7 @@
             <div class="list-row glass-panel rank-3">
                 <div class="rank-num num-font">03</div>
                 <div class="list-info">
-                    <img src="https://ui-avatars.com/api/?name=BBB&background=27272a&color=fff" class="list-img">
+                    <div class="rank-badge badge-bronze"><i class="fa-solid fa-award"></i></div>
                     <div class="list-name num-font">BBB</div>
                 </div>
                 <div class="score-val num-font"><span class="auto-days" data-base-days="3005"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
@@ -451,7 +460,7 @@
             <div class="list-row glass-panel">
                 <div class="rank-num num-font">04</div>
                 <div class="list-info">
-                    <img src="https://ui-avatars.com/api/?name=MMM&background=111&color=fff" class="list-img">
+                    <div class="rank-badge badge-normal"><i class="fa-solid fa-star"></i></div>
                     <div class="list-name num-font">MMM</div>
                 </div>
                 <div class="score-val num-font"><span class="auto-days" data-base-days="3005"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
@@ -460,7 +469,7 @@
             <div class="list-row glass-panel">
                 <div class="rank-num num-font">05</div>
                 <div class="list-info">
-                    <img src="https://ui-avatars.com/api/?name=Alive&background=111&color=fff" class="list-img">
+                    <div class="rank-badge badge-normal"><i class="fa-solid fa-star"></i></div>
                     <div class="list-name num-font">Alive</div>
                 </div>
                 <div class="score-val num-font"><span class="auto-days" data-base-days="2981"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
@@ -468,7 +477,6 @@
 
         </div>
     </section>
-
     <div class="bot-fab" onclick="toggleBot()">
         <i class="fa-solid fa-robot"></i>
     </div>
