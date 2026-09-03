@@ -9,26 +9,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* الوضع الليلي القاتم (Ultra Dark) */
+        /* الوضع الليلي المحسن (مضيء قليلاً مع حركة واضحة) */
         :root {
-            --bg-main: #000000; 
-            --bg-card: rgba(15, 15, 18, 0.85); 
+            --bg-main: #0b0b12; 
+            --bg-card: rgba(20, 20, 26, 0.85); 
             --primary: #9d4edd;
-            --primary-glow: rgba(157, 78, 221, 0.3);
-            --border-color: rgba(255, 255, 255, 0.06);
+            --primary-glow: rgba(157, 78, 221, 0.4);
+            --border-color: rgba(255, 255, 255, 0.08);
             --text-main: #f8fafc;
-            --text-muted: #8b949e;
-            --ticker-bg: #1a1a24;
-            --ticker-text: #c9d1d9;
+            --text-muted: #94a3b8;
+            --ticker-bg: #15151e;
+            --ticker-text: #e2e8f0;
             --glow-yyy: #e3b341;
             --glow-hat: #9d4edd;
             --glow-bbb: #00c3e3;
-            --bot-bg: #111114;
-            --bot-header: #0a2a75;
-            --discord-color: #5865F2;
+            --bot-bg: #15151e;
+            --bot-header: #9d4edd;
         }
 
-        /* الوضع النهاري الساطع (Bright Light) */
+        /* الوضع النهاري الساطع */
         [data-theme="light"] {
             --bg-main: #f3f4f6; 
             --bg-card: rgba(255, 255, 255, 0.95); 
@@ -41,22 +40,24 @@
             --glow-yyy: #d4af37; 
             --glow-bbb: #0096b4;
             --bot-bg: #ffffff; 
-            --bot-header: #0a2a75;
+            --bot-header: #7b2cbf;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { color: var(--text-main); font-family: 'Cairo', sans-serif; overflow-x: hidden; transition: background 0.4s, color 0.4s; }
         html[dir="ltr"] body, .num-font, .navbar h1 { font-family: 'Rajdhani', sans-serif; }
 
-        /* الخلفية */
-        .animated-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; background: var(--bg-main); transition: background 0.5s ease; }
+        /* الخلفية المتحركة (تم توضيح الحركة في الوضع الليلي) */
+        .animated-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; background: linear-gradient(45deg, var(--bg-main), rgba(157, 78, 221, 0.12), var(--bg-main)); background-size: 400% 400%; animation: gradientBG 15s ease infinite; transition: background 0.5s ease; }
+        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        
         .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; pointer-events: none; }
-        .particle { position: absolute; color: var(--primary); opacity: 0.08; animation: floatUp infinite linear; }
-        [data-theme="light"] .particle { opacity: 0.04; }
-        @keyframes floatUp { 0% { transform: translateY(100vh) rotate(0deg) scale(0.8); opacity: 0; } 10% { opacity: 0.08; } 90% { opacity: 0.08; } 100% { transform: translateY(-10vh) rotate(360deg) scale(1.5); opacity: 0; } }
+        .particle { position: absolute; color: var(--primary); opacity: 0.25; animation: floatUp infinite linear; } /* رفعنا الشفافية لتبدو الألعاب بوضوح */
+        [data-theme="light"] .particle { opacity: 0.1; }
+        @keyframes floatUp { 0% { transform: translateY(100vh) rotate(0deg) scale(0.8); opacity: 0; } 10% { opacity: 0.25; } 90% { opacity: 0.25; } 100% { transform: translateY(-10vh) rotate(360deg) scale(1.5); opacity: 0; } }
 
         /* شريط التنقل */
-        .navbar { position: fixed; top: 0; width: 100%; padding: 12px 25px; display: flex; justify-content: space-between; align-items: center; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color); z-index: 1000; }
+        .navbar { position: fixed; top: 0; width: 100%; padding: 12px 25px; display: flex; justify-content: space-between; align-items: center; background: rgba(11, 11, 18, 0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color); z-index: 1000; }
         [data-theme="light"] .navbar { background: rgba(255, 255, 255, 0.9); }
         .navbar h1 { font-size: 24px; font-weight: 900; letter-spacing: 1px; }
         .navbar h1 span { color: var(--primary); }
@@ -85,11 +86,11 @@
         .sidebar a:hover { color: var(--primary); padding-right: 8px; }
         html[dir="ltr"] .sidebar a:hover { padding-right: 0; padding-left: 8px; }
 
-        /* الأقسام الأساسية (مضغوطة) */
+        /* الأقسام الأساسية */
         section { padding: 70px 15px 30px; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; }
         .hero { height: 50vh; justify-content: center; text-align: center; padding: 0 15px; margin-top: 40px;}
-        .hero h2 { font-size: 2.8rem; font-weight: 900; margin-bottom: 10px; color: var(--primary); }
-        .hero p { font-size: 1.1rem; max-width: 600px; line-height: 1.7; margin: 0 auto; color: var(--text-muted);}
+        .hero h2 { font-size: 2.8rem; font-weight: 900; margin-bottom: 10px; color: var(--primary); text-shadow: 0 0 20px var(--primary-glow); }
+        .hero p { font-size: 1.1rem; max-width: 600px; line-height: 1.7; margin: 0 auto; color: var(--text-main);}
 
         .cyber-divider { display: flex; align-items: center; justify-content: center; width: 100%; max-width: 600px; margin: 10px auto; opacity: 0.4; }
         .cyber-divider::before, .cyber-divider::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--border-color), transparent); }
@@ -99,29 +100,25 @@
         .section-title::before { content: ''; position: absolute; right: -12px; top: 12px; width: 6px; height: 6px; background: var(--primary); transform: rotate(45deg); }
         html[dir="ltr"] .section-title::before { right: auto; left: -12px; }
 
-        /* لوحة الأخبار (Ultra Pro - Patch Notes Style) */
+        /* لوحة الأخبار (فائقة الاحترافية) */
         .featured-news {
             width: 100%; max-width: 750px; background: var(--bg-card); border: 1px solid var(--border-color);
-            border-right: 3px solid var(--primary); border-radius: 6px; padding: 30px; 
-            display: flex; flex-direction: column; gap: 12px; transition: 0.3s;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.4);
+            border-radius: 12px; padding: 35px; position: relative; overflow: hidden; backdrop-filter: blur(15px);
+            display: flex; flex-direction: column; gap: 15px; transition: 0.3s;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
         }
-        [data-theme="light"] .featured-news { box-shadow: 0 5px 25px rgba(0,0,0,0.05); }
-        html[dir="ltr"] .featured-news { border-right: 1px solid var(--border-color); border-left: 3px solid var(--primary); }
-        
-        .news-header-top { display: flex; justify-content: space-between; align-items: center; }
-        .news-badge { background: rgba(157, 78, 221, 0.1); color: var(--primary); border: 1px solid var(--primary); padding: 3px 10px; border-radius: 4px; font-weight: 900; font-size: 0.75rem; letter-spacing: 0.5px;}
-        .news-date-sub { font-family: 'Rajdhani', sans-serif; font-size: 0.8rem; color: var(--text-muted); }
-        
-        .news-headline { font-size: 1.4rem; font-weight: 900; line-height: 1.4; color: var(--text-main); margin-top: 5px;}
-        .news-body { color: var(--text-muted); line-height: 1.7; font-size: 0.95rem; }
-        
-        .discord-btn {
-            align-self: flex-start; background: transparent; color: var(--discord-color); border: 1px solid var(--discord-color);
-            text-decoration: none; padding: 8px 18px; border-radius: 4px; font-weight: bold; font-family: 'Cairo', sans-serif;
-            display: flex; align-items: center; gap: 8px; transition: 0.3s; margin-top: 10px; font-size: 0.9rem;
+        [data-theme="light"] .featured-news { box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
+        .featured-news::before {
+            content: ''; position: absolute; top: -50%; right: -50%; width: 100%; height: 100%;
+            background: radial-gradient(circle, rgba(157, 78, 221, 0.1) 0%, transparent 60%); z-index: -1; pointer-events: none;
         }
-        .discord-btn:hover { background: var(--discord-color); color: #fff; box-shadow: 0 5px 15px rgba(88, 101, 242, 0.2); }
+        
+        .news-header-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; }
+        .news-badge { background: rgba(157, 78, 221, 0.15); color: var(--primary); border: 1px solid var(--primary); padding: 5px 12px; border-radius: 6px; font-weight: 900; font-size: 0.8rem; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px;}
+        .news-date-sub { font-family: 'Rajdhani', sans-serif; font-size: 0.85rem; color: var(--text-muted); font-weight: bold;}
+        
+        .news-headline { font-size: 1.5rem; font-weight: 900; line-height: 1.4; color: var(--text-main); margin-top: 10px;}
+        .news-body { color: var(--text-muted); line-height: 1.8; font-size: 1rem; }
 
         /* القادة العرب */
         .grid-container { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; max-width: 900px; }
@@ -135,10 +132,10 @@
         .card-bbb { border-color: rgba(0, 195, 227, 0.2); } .card-bbb::after { background: var(--glow-bbb); } .card-bbb:hover img { border-color: var(--glow-bbb); filter: grayscale(0%); } .card-bbb h3 { color: var(--glow-bbb); font-size: 1.3rem; margin-bottom:8px;}
         .card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;}
 
-        /* قوائم اللاعبين والإنفاق (Compact) */
+        /* قوائم اللاعبين والإنفاق */
         .premium-list { width: 100%; max-width: 700px; display: flex; flex-direction: column; gap: 10px; }
         .list-row { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 6px; padding: 12px 15px; display: flex; align-items: center; gap: 15px; transition: 0.3s; }
-        .list-row:hover { background: rgba(157, 78, 221, 0.05); border-color: rgba(157, 78, 221, 0.3); }
+        .list-row:hover { background: rgba(157, 78, 221, 0.08); border-color: rgba(157, 78, 221, 0.3); }
         
         .rank-num { font-size: 1.2rem; font-weight: 900; color: var(--text-muted); width: 30px; text-align: center; }
         .rank-1 .rank-num { color: var(--glow-yyy); } .rank-2 .rank-num { color: #94a3b8; } .rank-3 .rank-num { color: #cd7f32; }
@@ -149,27 +146,28 @@
         .list-name { font-weight: bold; font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         
         .progress-container { flex: 1.5; display: flex; flex-direction: column; gap: 5px; justify-content: center;}
-        .progress-track { width: 100%; height: 6px; background: rgba(0,0,0,0.4); border-radius: 10px; overflow: hidden; }
+        .progress-track { width: 100%; height: 6px; background: rgba(0,0,0,0.5); border-radius: 10px; overflow: hidden; }
         [data-theme="light"] .progress-track { background: rgba(0,0,0,0.08); }
         .progress-fill { height: 100%; border-radius: 10px; transition: width 1s ease-out; }
         .score-val { font-weight: 900; font-size: 1.05rem; }
 
-        /* البطولات (مضغوطة) */
+        /* البطولات */
         .tournaments-grid { width: 100%; max-width: 750px; display: flex; flex-direction: column; gap: 15px; }
         .tour-card { background: var(--bg-card); border: 1px solid var(--border-color); border-right: 3px solid var(--primary); padding: 20px; border-radius: 6px; position: relative; transition: 0.3s; }
         html[dir="ltr"] .tour-card { border-right: 1px solid var(--border-color); border-left: 3px solid var(--primary); }
+        .tour-card:hover { transform: scale(1.01); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
         .tour-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;}
         .tour-title-box { display: flex; align-items: center; gap: 10px; }
         .tour-title { font-size: 1.15rem; font-weight: 900; color: var(--primary); }
         .countdown-box { background: rgba(220, 38, 38, 0.05); border: 1px solid rgba(220, 38, 38, 0.3); color: #ef4444; padding: 4px 10px; border-radius: 4px; font-weight: bold; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; }
-        .tour-desc { color: var(--text-muted); line-height: 1.6; font-size: 0.85rem; margin-bottom: 15px; }
+        .tour-desc { color: var(--text-main); line-height: 1.7; font-size: 0.9rem; margin-bottom: 15px; }
         .tour-footer { display: flex; gap: 8px; flex-wrap: wrap; }
-        .info-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(157, 78, 221, 0.05); border: 1px solid rgba(157, 78, 221, 0.3); padding: 5px 12px; border-radius: 4px; color: var(--text-main); font-weight: bold; font-size: 0.8rem; }
-        .prize-badge { border-color: rgba(227, 179, 65, 0.3); background: rgba(227, 179, 65, 0.05); color: var(--glow-yyy); }
+        .info-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(157, 78, 221, 0.08); border: 1px solid rgba(157, 78, 221, 0.3); padding: 5px 12px; border-radius: 4px; color: var(--text-main); font-weight: bold; font-size: 0.8rem; }
+        .prize-badge { border-color: rgba(227, 179, 65, 0.4); background: rgba(227, 179, 65, 0.1); color: var(--glow-yyy); }
         .admin-copy-btn { cursor: pointer; transition: 0.2s; } .admin-copy-btn:hover { background: var(--primary); color: #fff; }
 
-        /* البوت الذكي */
-        .bot-fab { position: fixed; bottom: 25px; left: 25px; width: 55px; height: 55px; background: var(--primary); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; color: #fff; cursor: pointer; z-index: 1600; box-shadow: 0 5px 15px rgba(0,0,0,0.5); transition: 0.3s; }
+        /* البوت الذكي (PlatoBot) */
+        .bot-fab { position: fixed; bottom: 25px; left: 25px; width: 55px; height: 55px; background: var(--bot-header); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; color: #fff; cursor: pointer; z-index: 1600; box-shadow: 0 5px 15px rgba(0,0,0,0.5); transition: 0.3s; }
         html[dir="ltr"] .bot-fab { left: auto; right: 25px; }
         .bot-fab:hover { transform: scale(1.05); }
         
@@ -180,17 +178,17 @@
         .bot-body { padding: 15px; height: 300px; overflow-y: auto; background: rgba(0,0,0,0.1); display: flex; flex-direction: column; gap: 8px;}
         [data-theme="light"] .bot-body { background: transparent; }
         
-        .bot-msg { background: var(--primary); color: #fff; padding: 8px 12px; border-radius: 12px; border-top-right-radius: 0; font-size: 0.9rem; line-height: 1.4; width: fit-content; max-width: 85%; align-self: flex-start; font-weight: bold;}
+        .bot-msg { background: var(--bot-header); color: #fff; padding: 8px 12px; border-radius: 12px; border-top-right-radius: 0; font-size: 0.9rem; line-height: 1.5; width: fit-content; max-width: 85%; align-self: flex-start; font-weight: bold;}
         html[dir="ltr"] .bot-msg { border-top-right-radius: 12px; border-top-left-radius: 0; }
-        .user-msg { background: rgba(255,255,255,0.08); color: var(--text-main); padding: 8px 12px; border-radius: 12px; border-top-left-radius: 0; font-size: 0.9rem; width: fit-content; max-width: 85%; align-self: flex-end; font-weight: bold;}
+        .user-msg { background: rgba(255,255,255,0.08); color: var(--text-main); padding: 8px 12px; border-radius: 12px; border-top-left-radius: 0; font-size: 0.9rem; width: fit-content; max-width: 85%; align-self: flex-end; font-weight: bold; line-height: 1.5;}
         html[dir="ltr"] .user-msg { border-top-left-radius: 12px; border-top-right-radius: 0; }
         [data-theme="light"] .user-msg { background: rgba(0,0,0,0.05); }
 
         .bot-input { display: flex; padding: 8px; background: var(--bg-card); border-top: 1px solid var(--border-color); }
         .bot-input input { flex: 1; padding: 8px; border: none; background: transparent; color: var(--text-main); outline: none; font-family: 'Cairo', sans-serif; font-weight: bold; font-size: 0.9rem;}
-        .bot-input button { background: var(--primary); color: #fff; border: none; padding: 0 15px; border-radius: 4px; cursor: pointer; transition: 0.2s;}
+        .bot-input button { background: var(--bot-header); color: #fff; border: none; padding: 0 15px; border-radius: 4px; cursor: pointer; transition: 0.2s;}
 
-        .typing-indicator { display: flex; gap: 3px; padding: 8px 12px; background: var(--primary); border-radius: 12px; border-top-right-radius: 0; width: fit-content; align-self: flex-start;}
+        .typing-indicator { display: flex; gap: 3px; padding: 8px 12px; background: var(--bot-header); border-radius: 12px; border-top-right-radius: 0; width: fit-content; align-self: flex-start;}
         html[dir="ltr"] .typing-indicator { border-top-right-radius: 12px; border-top-left-radius: 0; }
         .typing-dot { width: 5px; height: 5px; background: #fff; border-radius: 50%; animation: typing 1.4s infinite ease-in-out both; }
         .typing-dot:nth-child(1) { animation-delay: -0.32s; } .typing-dot:nth-child(2) { animation-delay: -0.16s; }
@@ -202,7 +200,7 @@
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1500; display: none; backdrop-filter: blur(2px);}
         .overlay.active { display: block; }
 
-        /* Media Queries لجعل الجوال مثالياً والمقاسات ملمومة */
+        /* Media Queries */
         @media (max-width: 600px) {
             section { padding: 50px 12px 25px; }
             .hero { height: 45vh; margin-top: 30px;}
@@ -212,8 +210,7 @@
             
             .featured-news { padding: 20px; }
             .news-headline { font-size: 1.2rem; }
-            .news-body { font-size: 0.85rem; }
-            .discord-btn { width: 100%; justify-content: center; font-size: 0.85rem; }
+            .news-body { font-size: 0.9rem; }
 
             .card { width: 100%; max-width: 300px; padding: 25px 15px; }
             .card img { width: 80px; height: 80px; margin-bottom: 10px; }
@@ -226,7 +223,7 @@
             
             .tour-card { padding: 15px; }
             .tour-title { font-size: 1.05rem; }
-            .tour-desc { font-size: 0.8rem; margin-bottom: 10px;}
+            .tour-desc { font-size: 0.85rem; margin-bottom: 10px;}
             .tour-footer { flex-direction: column; gap: 6px; }
             .info-badge { width: 100%; justify-content: center; font-size: 0.75rem; padding: 5px;}
             
@@ -278,20 +275,16 @@
         <p data-aos="fade-up" data-aos-delay="200" data-i18n="hero_desc">يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.</p>
     </section>
 
-    <!-- لوحة الأخبار الاحترافية (Pro Featured) -->
+    <!-- لوحة الأخبار (Ultra Pro - بدون زر المزيد) -->
     <section id="news" style="padding-top: 10px;">
         <h2 class="section-title" data-aos="fade-right" data-i18n="news_board_title">لوحة أخبار المجتمع</h2>
         <div class="featured-news" data-aos="zoom-in">
             <div class="news-header-top">
-                <span class="news-badge" data-i18n="tag_update">خبر هام</span>
+                <span class="news-badge"><i class="fa-solid fa-bullhorn"></i> <span data-i18n="tag_update">خبر هام</span></span>
                 <span class="news-date-sub num-font">SEP 2026</span>
             </div>
             <h3 class="news-headline" data-i18n="news_1_title">إطلاق ألعاب وميزات جديدة قريباً!</h3>
             <p class="news-body" data-i18n="news_1_body">لدينا لعبتان جديدتان نأمل أن نُطلقهما خلال الشهر المقبل أو نحو ذلك، إلى جانب العديد من الميزات الجديدة التي لم نُعلن عنها بعد. ستكون الأشهر القادمة حافلة بالتحديثات، ونستعد لتقديم المزيد لكم حتى نهاية هذا العام. ترقبوا الإعلانات القادمة!</p>
-            <a href="https://discord.gg/plato" target="_blank" class="discord-btn">
-                <i class="fa-brands fa-discord"></i> 
-                <span data-i18n="discord_more">لعرض المزيد من الأخبار انضموا إلى الديسكورد</span>
-            </a>
         </div>
     </section>
 
@@ -320,7 +313,7 @@
 
     <div class="cyber-divider"><div class="center-node"></div></div>
 
-    <!-- اللاعبين الأقدم (بدون صح، تصميم نظيف) -->
+    <!-- اللاعبين الأقدم -->
     <section id="accounts">
         <h2 class="section-title" data-aos="fade-right" data-i18n="players_title">اللاعبين الاقدم</h2>
         <div class="premium-list" data-aos="fade-up">
@@ -375,7 +368,7 @@
 
     <div class="cyber-divider"><div class="center-node"></div></div>
 
-    <!-- ترتيب الإنفاق (Top 3 فقط - Progress Bars) -->
+    <!-- ترتيب الإنفاق (Top 3) -->
     <section id="top-spending">
         <h2 class="section-title" data-aos="fade-right" data-i18n="spending_title">ترتيب المجموعات الأكثر إنفاقًا</h2>
         <div class="premium-list" data-aos="fade-up">
@@ -426,20 +419,20 @@
         <div class="tournaments-grid" id="tournaments-container" data-aos="fade-up"></div>
     </section>
 
-    <!-- البوت الذكي المحاكى -->
+    <!-- PlatoBot الذكي -->
     <div class="bot-fab" onclick="toggleBot()">
         <i class="fa-solid fa-robot"></i>
     </div>
     <div class="bot-window" id="botWindow">
         <div class="bot-header">
-            <div><i class="fa-solid fa-bolt" style="color: var(--glow-yyy);"></i> BoltBot⚡#8804</div>
+            <div><i class="fa-solid fa-microchip" style="color: var(--glow-yyy);"></i> PlatoBot 🤖</div>
             <i class="fa-solid fa-xmark" onclick="toggleBot()" style="cursor:pointer;"></i>
         </div>
         <div class="bot-body" id="botBody">
-            <div class="bot-msg" data-i18n="bot_welcome">مرحباً بك! أنا BoltBot، مساعدك الذكي في مجتمع PlatoX. كيف يمكنني مساعدتك اليوم؟ 🎮</div>
+            <div class="bot-msg" data-i18n="bot_welcome">مرحباً بك! أنا PlatoBot، مساعدك الذكي في مجتمعنا. كيف أقدر أساعدك اليوم؟ 🎮</div>
         </div>
         <div class="bot-input">
-            <input type="text" id="botInput" data-i18n-placeholder="bot_placeholder" placeholder="تحدث معي هنا..." autocomplete="off" onkeypress="handleBotEnter(event)">
+            <input type="text" id="botInput" data-i18n-placeholder="bot_placeholder" placeholder="اسألني عن البطولات، المتجر..." autocomplete="off" onkeypress="handleBotEnter(event)">
             <button onclick="processBotMessage()"><i class="fa-solid fa-paper-plane"></i></button>
         </div>
     </div>
@@ -453,13 +446,14 @@
         function toggleMenu() { document.getElementById('sidebar').classList.toggle('active'); document.querySelector('.overlay').classList.toggle('active'); }
         function toggleBot() { document.getElementById('botWindow').classList.toggle('active'); }
 
+        // إنشاء جزيئات الألعاب المتحركة في الخلفية
         const icons = ['fa-gamepad', 'fa-dice', 'fa-chess-knight', 'fa-bowling-ball', 'fa-ghost', 'fa-futbol'];
         const particlesContainer = document.getElementById('particles');
-        for(let i=0; i<15; i++){
+        for(let i=0; i<18; i++){
             let icon = document.createElement('i');
             icon.className = 'fa-solid ' + icons[Math.floor(Math.random() * icons.length)] + ' particle';
             icon.style.left = Math.random() * 100 + 'vw';
-            icon.style.fontSize = Math.random() * 1.5 + 1 + 'rem';
+            icon.style.fontSize = Math.random() * 1.5 + 1.2 + 'rem'; // تكبير الأيقونات قليلاً
             icon.style.animationDuration = Math.random() * 10 + 15 + 's';
             icon.style.animationDelay = Math.random() * 5 + 's';
             particlesContainer.appendChild(icon);
@@ -482,7 +476,7 @@
             });
         }
 
-        /* برمجة الذكاء الاصطناعي (ردود طبيعية ومحاكية) */
+        /* برمجة الذكاء الاصطناعي (PlatoBot - Smart NLP Simulation) */
         function handleBotEnter(e) { if(e.key === 'Enter') processBotMessage(); }
         
         function processBotMessage() {
@@ -506,47 +500,63 @@
                 let reply = "";
                 const lowerText = text.toLowerCase();
                 
+                // خوارزمية التعرف المتقدمة
                 if(lowerText.match(/(سلام|مرحبا|هلا|شلونك|كيفك|hi|hello|hey|sup)/)) {
-                    const replies = isAr ? ["يا هلا بك! نورت، شلون أقدر أخدمك؟", "وعليكم السلام! تفضل، اسألني اللي تبيه."] : ["Hello there! How can I assist you?", "Hi! Welcome, what do you need?"];
+                    const replies = isAr ? ["يا أهلاً وسهلاً! نورت PlatoX، تفضل كيف أساعدك؟", "وعليكم السلام! جاهز للعب والمنافسة؟ اسألني اللي تحتاجه."] : ["Hello there! Ready to game?", "Hi! Welcome to PlatoX, how can I help?"];
                     reply = replies[Math.floor(Math.random() * replies.length)];
                 } 
-                else if(lowerText.match(/(بطول|مسابق|العب|تسجيل|لعب|tour|match|game|play)/)) {
-                    reply = isAr ? "شوف قسم 'مركز البطولات' بالموقع، انسخ يوزر الإدارة هناك وكلمهم بالديسكورد عشان يسجلونك. بالتوفيق! 🏆" : "Check out the 'Tournaments' section below! Copy the admin's ID to register via Discord. Good luck! 🏆";
+                else if(lowerText.match(/(كيف|شلون|طريقة|how).*(اسجل|العب|ادخل|join|play|register)/)) {
+                    reply = isAr ? "بسيط جداً! انزل لقسم 'مركز البطولات' في هذا الموقع، بتلاقي البطولات المتاحة. كل اللي عليك هو إنك تنسخ 'يوزر الإدارة' وتضيفه في لعبة بلاتو عشان تسجل." : "Very simple! Go to the 'Tournaments' section below, copy the Admin's ID, and add them in Plato to register.";
                 }
-                else if(lowerText.match(/(ديسكورد|رابط|سيرفر|discord|link|server|join)/)) {
-                    reply = isAr ? "تفضل يالذيب، هذا رابط الديسكورد الرسمي: https://discord.gg/plato" : "Here is the official Discord link: https://discord.gg/plato";
+                else if(lowerText.match(/(بلياردو|ذئاب|werewolf|pool)/)) {
+                    reply = isAr ? "عندنا بطولات قوية في البلياردو والـ Werewolf! الجوائز توصل لـ 50K. تأكد من قسم البطولات لمعرفة الوقت المتبقي." : "We have massive Pool and Werewolf tournaments! Prizes go up to 50K. Check the tournaments section.";
+                }
+                else if(lowerText.match(/(بطول|مسابق|لعب|tour|match|game)/)) {
+                    reply = isAr ? "البطولات يتم الإعلان عنها في 'مركز البطولات' هنا بالموقع، وتقدر تشوف العد التنازلي متى تبدأ البطولة القادمة. 🔥" : "Tournaments are listed in the 'Tournaments' section. You can see the live countdown there! 🔥";
+                }
+                else if(lowerText.match(/(ديسكورد|رابط|سيرفر|discord|link|server)/)) {
+                    reply = isAr ? "ديسكورد هو المكان اللي نجتمع فيه! تفضل رابط السيرفر الرسمي: https://discord.gg/plato" : "Discord is where we gather! Here is the official link: https://discord.gg/plato";
                 }
                 else if(lowerText.match(/(فلوس|كوينز|متجر|شراء|coin|money|store|shop)/)) {
-                    reply = isAr ? "حسب آخر تحديث من الإدارة، المتجر بيتنظف من الكوينز قريباً جداً." : "The management announced that the store will be cleared of coin items soon.";
-                }
-                else if(lowerText.match(/(شكر|يعطيك|تسلم|حبيبي|thank|thx|thanks)/)) {
-                    reply = isAr ? "حاضرين لك بأي وقت! 💙" : "Always here to help! 💙";
+                    reply = isAr ? "مثل ما تم الإعلان في لوحة الأخبار: المتجر بيتنظف من الكوينز كلياً في التحديث القادم." : "As announced in the news board, the store will be completely cleared of coin items soon.";
                 }
                 else if(lowerText.match(/(منو انت|شنو انت|شسمك|who are you|name)/)) {
-                    reply = isAr ? "أنا BoltBot ⚡، مساعدك الذكي المبرمج عشان أخدم مجتمع PlatoX." : "I am BoltBot ⚡, your AI assistant programmed for the PlatoX community.";
+                    reply = isAr ? "أنا PlatoBot 🤖! الذكاء الاصطناعي الخاص بهذا المجتمع، مهمتي أجاوب أسئلتك وأرشدك بالموقع." : "I am PlatoBot 🤖! The AI assistant for this community.";
+                }
+                else if(lowerText.match(/(جائز|جوائز|هدية|فوز|prize|win|reward)/)) {
+                    reply = isAr ? "الجوائز تختلف حسب البطولة، بعضها يوصل المركز الأول لـ 50K والمركز الثاني 30K. انزل تحت وشوف الجوائز بنفسك!" : "Prizes vary by tournament. First place can get 50K and second place 30K. Scroll down to see!";
+                }
+                else if(lowerText.match(/(شكر|يعطيك|تسلم|حبيبي|thank|thx|thanks)/)) {
+                    reply = isAr ? "في خدمتك دائماً يا وحش! 💙" : "Always here to serve you! 💙";
                 }
                 else {
                     const genericReplies = isAr ? [
-                        "همم.. كلامك منطقي، بس لو توضح لي سؤالك أكثر عشان أقدر أساعدك بشكل صحيح؟ 🤔",
-                        "شوف، أنا مجرد بوت أساعد بالأشياء الأساسية، لو سؤالك معقد تقدر تفتح (Ticket) بالديسكورد والإدارة بترد عليك ⚡",
-                        "عفواً ما فهمت قصدك بالضبط، تقدر تسألني عن: البطولات، الديسكورد، أو آخر الأخبار."
+                        "همم.. سؤالك ذكي، بس أحتاج توضيح أكثر عشان أعطيك الإجابة الصح؟ 🤔",
+                        "أنا مجرد روبوت 🤖 أرد على الأسئلة الشائعة.. لو عندك استفسار معقد تقدر تفتح (تذكرة) بالديسكورد والإدارة بتساعدك فوراً.",
+                        "عذراً ما لقطت الكلمة! تقدر تسألني عن: طريقة التسجيل بالبطولات، أوقات المباريات، أو رابط الديسكورد."
                     ] : [
-                        "Hmm.. interesting, could you clarify your question so I can help you better? 🤔",
-                        "I understand, but I'm just a bot! For complex issues, please open a Ticket in Discord ⚡",
-                        "Sorry, I didn't catch that. You can ask me about: Tournaments, Discord, or News."
+                        "Hmm.. interesting question, could you clarify a bit more? 🤔",
+                        "I am just a bot! For complex inquiries, please open a Ticket in Discord and the real admins will help you.",
+                        "Sorry, I didn't quite get that. You can ask me about: Registration, tournaments, or Discord."
                     ];
                     reply = genericReplies[Math.floor(Math.random() * genericReplies.length)];
                 }
 
                 body.innerHTML += `<div class="bot-msg">${reply}</div>`;
                 body.scrollTop = body.scrollHeight;
-            }, 1200 + Math.random() * 800); // تأخير عشوائي بين 1.2 و 2 ثانية ليكون أكثر طبيعية
+            }, 1000 + Math.random() * 1000); // 1 to 2 seconds delay
         }
 
         const now = new Date(); const dateString = now.toISOString().split('T')[0];
         const tournamentsData = [
-            { id: 1, time: `${dateString}T21:00:00`, img: "https://ui-avatars.com/api/?name=Y1&background=ffd700&color=000", titleKey: "tour_1_title", descKey: "tour_1_desc", groupKey: "group_1", gameKey: "game_pool", prize: "50K - 30K", admin: "YYY", borderColor: "var(--primary)" },
-            { id: 2, time: `${dateString}T22:00:00`, img: "https://ui-avatars.com/api/?name=Y2&background=00b4d8&color=fff", titleKey: "tour_2_title", descKey: "tour_2_desc", groupKey: "group_2", gameKey: "game_werewolf", prize: "40K", admin: "BBB", borderColor: "var(--glow-bbb)" }
+            { 
+                id: 1, time: `${dateString}T21:00:00`, img: "https://ui-avatars.com/api/?name=Y1&background=ffd700&color=000", 
+                titleKey: "tour_1_title", descKey: "tour_1_desc", groupKey: "group_1", gameKey: "game_pool", prize: "50K - 30K", admin: "YYY", borderColor: "var(--primary)" 
+            },
+            { 
+                id: 2, time: `${dateString}T22:00:00`, img: "https://ui-avatars.com/api/?name=Y2&background=00b4d8&color=fff", 
+                titleKey: "tour_2_title", descKey: "tour_2_desc", groupKey: "group_2", gameKey: "game_werewolf", prize: "40K", admin: "BBB", borderColor: "var(--glow-bbb)" 
+            }
         ];
 
         function renderTournaments() {
@@ -602,13 +612,13 @@
                 leaders_title: "القادة العرب", news_board_title: "لوحة أخبار المجتمع", players_title: "اللاعبين الاقدم", spending_title: "ترتيب المجموعات الأكثر إنفاقًا", tournaments_title: "مركز البطولات المعتمدة",
                 desc_yyy: "صانع الأثر، يقود برؤية مستقبلية لخلق بيئة إيجابية لا تعرف المستحيل.", desc_hat: "رمز الكاريزما والقوة، تقود المجتمع بثقة راسخة وترسم معايير الرقي.", desc_bbb: "الحكمة في اتخاذ القرار، يوازن بين الحزم والهدوء لإدارة الأزمات باحترافية.",
                 news_1_title: "إطلاق ألعاب وميزات جديدة قريباً!", news_1_body: "لدينا لعبتان جديدتان نأمل أن نُطلقهما خلال الشهر المقبل أو نحو ذلك، إلى جانب العديد من الميزات الجديدة التي لم نُعلن عنها بعد. ستكون الأشهر القادمة حافلة بالتحديثات، ونستعد لتقديم المزيد لكم حتى نهاية هذا العام. ترقبوا الإعلانات القادمة!",
-                discord_more: "لعرض المزيد من الأخبار انضموا إلى الديسكورد", tag_update: "خبر هام",
+                tag_update: "خبر هام",
                 th_player: "اللاعب", th_days: "يوم", th_group: "المجموعة", th_coins: "الإنفاق",
                 group_1: "يوسف تجربة 1", group_2: "يوسف تجربة 2", group_3: "يوسف تجربة 3",
-                tour_1_title: "بطولة يوسف تجربة 1", tour_1_desc: "مجموعة يوسف تجربة 1 ترحب بكم، اليوم الساعة 9 بتوقيت السعودية بطولة بلياردو. للتسجيل يرجى إضافة الإداري.",
+                tour_1_title: "بطولة يوسف تجربة 1", tour_1_desc: "مجموعة يوسف الاولى ترحب بكم في بطولة بلياردو الليلة الساعة ٩ بتوقيت السعودية بجوائز للمركز الاولى ٥٠ك للمركز الثاني ٣٠ك للدخول الى القروب يرجى نسخ يوزر الاداري واضافته على بلاتو",
                 tour_2_title: "بطولة يوسف تجربة 2", tour_2_desc: "ندعوكم للمشاركة في تحدي ذئاب (Werewolf) الليلة الساعة 10 بتوقيت السعودية. الأماكن محدودة.",
                 game_pool: "بلياردو", game_werewolf: "ذئاب (Werewolf)",
-                bot_welcome: "مرحباً بك! أنا BoltBot، مساعدك الذكي في مجتمع PlatoX. كيف يمكنني مساعدتك اليوم؟ 🎮", bot_placeholder: "تحدث معي هنا..."
+                bot_welcome: "مرحباً بك! أنا PlatoBot، مساعدك الذكي في مجتمعنا. كيف أقدر أساعدك اليوم؟ 🎮", bot_placeholder: "اسألني عن البطولات، القوانين..."
             },
             en: {
                 menu_home: "HOME", menu_leaders: "LEADERS", menu_news: "NEWS", menu_players: "PLAYERS", menu_spending: "SPENDING", menu_tournaments: "TOURNAMENTS",
@@ -617,13 +627,13 @@
                 leaders_title: "ARABIC LEADERS", news_board_title: "COMMUNITY NEWS BOARD", players_title: "OLDEST PLAYERS", spending_title: "TOP SPENDING GROUPS", tournaments_title: "APPROVED TOURNAMENTS",
                 desc_yyy: "The Impact Maker, leading with a futuristic vision to create a positive environment.", desc_hat: "Symbol of Charisma, leading the community with solid confidence and setting standards.", desc_bbb: "Wisdom in decision making, balancing firmness and calmness in management.",
                 news_1_title: "New Games & Features Launch!", news_1_body: "We have two new games that we hope to release within the next month or so, along with many other new features that we haven't announced yet. The coming months will be packed with new updates, and we're getting ready to bring you even more through the end of this year.",
-                discord_more: "For more news, join our Discord server", tag_update: "HOT NEWS",
+                tag_update: "HOT NEWS",
                 th_player: "PLAYER", th_days: "DAYS", th_group: "GROUP", th_coins: "SPENDING",
                 group_1: "Yousef Test 1", group_2: "Yousef Test 2", group_3: "Yousef Test 3",
-                tour_1_title: "Yousef Test 1 Tournament", tour_1_desc: "Yousef Test 1 group welcomes you! Today at 9 PM KSA, a Pool tournament. Please add the admin to join.",
+                tour_1_title: "Yousef Test 1 Tournament", tour_1_desc: "Yousef Test 1 group welcomes you to the Pool tournament tonight at 9 PM KSA. Prizes: 1st place 50K, 2nd place 30K. To join, copy the admin's ID and add them on Plato.",
                 tour_2_title: "Yousef Test 2 Tournament", tour_2_desc: "Join us for a Werewolf challenge tonight at 10 PM KSA. Limited seats available.",
                 game_pool: "Pool", game_werewolf: "Werewolf",
-                bot_welcome: "Welcome! I'm BoltBot, your smart assistant. How can I help you today? 🎮", bot_placeholder: "Talk to me here..."
+                bot_welcome: "Welcome! I'm PlatoBot, your smart assistant. How can I help you today? 🎮", bot_placeholder: "Ask me anything..."
             }
         };
 
