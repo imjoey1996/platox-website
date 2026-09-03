@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PlatoX | E-Sports Center</title>
+    <title>PlatoX | مجتمع اللاعبين العرب</title>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <!-- خطوط عربية ورياضية للأرقام -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    <!-- مكتبة الأيقونات (لوجو ديسكورد وانستقرام) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
             --bg-main: #09090b;
@@ -39,7 +42,6 @@
             background-size: 50px 50px;
         }
 
-        /* الأرقام والكلمات الإنجليزية بخط رياضي */
         .num-font, .navbar h1 {
             font-family: 'Rajdhani', sans-serif;
         }
@@ -67,15 +69,30 @@
 
         .navbar h1 span { color: var(--primary); }
 
-        /* الأزرار ذات الحواف المقطوعة (Cyberpunk) */
+        /* أيقونات التواصل الاجتماعي */
+        .social-icons a {
+            color: var(--text-main);
+            font-size: 24px;
+            margin-right: 20px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: var(--primary);
+            text-shadow: 0 0 15px var(--primary-glow);
+            transform: scale(1.1);
+        }
+
+        /* الأزرار ذات الحواف المقطوعة */
         .cyber-btn {
             background: transparent;
             color: var(--text-main);
             border: 1px solid var(--primary);
-            padding: 10px 25px;
-            font-family: 'Cairo', sans-serif;
+            padding: 8px 25px;
+            font-family: 'Rajdhani', sans-serif;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 16px;
             cursor: pointer;
             text-decoration: none;
             position: relative;
@@ -100,19 +117,22 @@
             border-bottom: 1px solid var(--border-color);
             background: radial-gradient(circle at center, rgba(157, 78, 221, 0.15) 0%, transparent 60%);
             margin-top: 60px;
+            padding: 0 20px;
         }
 
         .hero h2 {
             font-size: 3.5rem;
             font-weight: 900;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             text-shadow: 0 0 20px var(--primary-glow);
+            color: var(--primary);
         }
 
         .hero p {
-            color: var(--text-muted);
-            font-size: 1.2rem;
-            max-width: 600px;
+            color: var(--text-main);
+            font-size: 1.3rem;
+            max-width: 700px;
+            line-height: 1.8;
         }
 
         /* العناوين للأقسام */
@@ -187,6 +207,7 @@
             border: 1px solid var(--border-color);
             filter: grayscale(20%);
             transition: 0.3s;
+            object-fit: cover;
         }
 
         .card:hover img {
@@ -206,7 +227,7 @@
             line-height: 1.6;
         }
 
-        /* جداول الصدارة (Leaderboards) */
+        /* جداول الصدارة */
         .table-wrapper {
             width: 100%;
             max-width: 900px;
@@ -232,6 +253,7 @@
             padding: 18px 20px;
             border-bottom: 1px solid var(--border-color);
             font-weight: 700;
+            text-align: center;
         }
 
         tr:hover td {
@@ -257,36 +279,40 @@
     <!-- النافبار -->
     <nav class="navbar">
         <h1>Plato<span>X</span></h1>
-        <div class="social-links">
-            <a href="https://discord.gg/plato" target="_blank" class="cyber-btn num-font">DISCORD</a>
+        <div class="social-icons">
+            <a href="https://discord.gg/plato" target="_blank" title="Discord"><i class="fa-brands fa-discord"></i></a>
+            <a href="https://instagram.com/platoarab" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
         </div>
     </nav>
 
     <!-- الهيرو -->
     <section class="hero">
-        <h2 data-aos="fade-down">P L A T O X</h2>
-        <p data-aos="fade-up" data-aos-delay="200">المركز الرياضي الاحترافي لمجتمع بلاتو العربي. حيث يلتقي النخبة، وتصنع الأساطير.</p>
+        <h2 data-aos="fade-down">مجتمع اللاعبين العرب</h2>
+        <p data-aos="fade-up" data-aos-delay="200">يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.</p>
     </section>
 
     <!-- القادة -->
     <section id="leaders">
-        <h2 class="section-title" data-aos="fade-right">الإدارة العليا</h2>
+        <h2 class="section-title" data-aos="fade-right">القادة العرب</h2>
         <div class="grid-container">
             
+            <!-- YYY (يمين) - أخذت صورة BBB -->
             <div class="card" data-aos="fade-up" data-aos-delay="100">
-                <img src="f3b8c20da38a9320fa2f250f52f7f16a.png" alt="YYY">
+                <img src="IMG_3154.png" alt="YYY">
                 <h3>YYY</h3>
                 <p>صانع الأثر، يقود برؤية مستقبلية لخلق بيئة إيجابية لا تعرف المستحيل.</p>
             </div>
 
+            <!-- HAT (المنتصف) - أخذت صورة YYY -->
             <div class="card" style="border-color: var(--primary);" data-aos="fade-up" data-aos-delay="200">
-                <img src="a_368d018a788facdb964b3f1df658ecde.gif" alt="HAT">
+                <img src="f3b8c20da38a9320fa2f250f52f7f16a.png" alt="HAT">
                 <h3 style="color: var(--primary);">HAT</h3>
                 <p>رمز الكاريزما والقوة، تقود المجتمع بثقة راسخة وترسم معايير الرقي.</p>
             </div>
 
+            <!-- BBB (يسار) - أخذت صورة HAT -->
             <div class="card" data-aos="fade-up" data-aos-delay="300">
-                <img src="IMG_3154.png" alt="BBB">
+                <img src="a_368d018a788facdb964b3f1df658ecde.gif" alt="BBB">
                 <h3>BBB</h3>
                 <p>الحكمة في اتخاذ القرار، يوازن بين الحزم والهدوء لإدارة الأزمات باحترافية.</p>
             </div>
@@ -294,22 +320,55 @@
         </div>
     </section>
 
-    <!-- أقدم الحسابات (مع العد التلقائي) -->
+    <!-- اللاعبين الأقدم -->
     <section id="accounts">
-        <h2 class="section-title" data-aos="fade-right">لوحة الشرف التاريخية</h2>
+        <h2 class="section-title" data-aos="fade-right">اللاعبين الاقدم</h2>
         <div class="table-wrapper" data-aos="zoom-in">
             <table>
                 <thead>
                     <tr>
-                        <th>المركز</th>
+                        <th>التسلسل</th>
                         <th>الاسم (ID)</th>
                         <th>مدة النشاط</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="rank-1"><td class="num-font">01</td><td class="num-font">MMM</td><td class="num-font days-count auto-days" data-base-days="3005">3005 DAYS</td></tr>
-                    <tr class="rank-2"><td class="num-font">02</td><td class="num-font">BBB</td><td class="num-font days-count auto-days" data-base-days="3005">3005 DAYS</td></tr>
-                    <tr class="rank-3"><td class="num-font">03</td><td class="num-font">Test</td><td class="num-font days-count auto-days" data-base-days="3010">3010 DAYS</td></tr>
+                    <tr class="rank-1"><td class="num-font">01</td><td class="num-font">Test</td><td class="num-font days-count auto-days" data-base-days="3010">3010 DAYS</td></tr>
+                    <tr class="rank-2"><td class="num-font">02</td><td class="num-font">MMM</td><td class="num-font days-count auto-days" data-base-days="3005">3005 DAYS</td></tr>
+                    <tr class="rank-3"><td class="num-font">03</td><td class="num-font">BBB</td><td class="num-font days-count auto-days" data-base-days="3005">3005 DAYS</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- المجموعات الأكثر إنفاقاً (القسم الجديد) -->
+    <section id="top-spending">
+        <h2 class="section-title" data-aos="fade-right">لوحة ترتيب المجموعات الأكثر إنفاقًا</h2>
+        <div class="table-wrapper" data-aos="zoom-in">
+            <table>
+                <thead>
+                    <tr>
+                        <th>المركز</th>
+                        <th>اسم المجموعة</th>
+                        <th>الإنفاق (Coins)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="rank-1">
+                        <td class="num-font">01</td>
+                        <td>الفرسان</td>
+                        <td class="num-font" style="color: var(--gold);">500,000</td>
+                    </tr>
+                    <tr class="rank-2">
+                        <td class="num-font">02</td>
+                        <td>النخبة</td>
+                        <td class="num-font" style="color: var(--silver);">350,000</td>
+                    </tr>
+                    <tr class="rank-3">
+                        <td class="num-font">03</td>
+                        <td>الأساطير</td>
+                        <td class="num-font" style="color: var(--bronze);">150,000</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -325,7 +384,7 @@
                         <th>القروب</th>
                         <th>البطولة</th>
                         <th>الجائزة (Coins)</th>
-                        <th>حالة التسجيل</th>
+                        <th>يوزر الادارة</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -333,13 +392,13 @@
                         <td>الفرسان</td>
                         <td>Billiards</td>
                         <td class="num-font" style="color: var(--gold);">50,000</td>
-                        <td><button class="cyber-btn">JOIN NOW</button></td>
+                        <td><button class="cyber-btn">YYY</button></td>
                     </tr>
                     <tr>
                         <td>النخبة</td>
                         <td>Werewolf</td>
                         <td class="num-font" style="color: var(--gold);">30,000</td>
-                        <td><button class="cyber-btn">JOIN NOW</button></td>
+                        <td><button class="cyber-btn">YYY</button></td>
                     </tr>
                 </tbody>
             </table>
