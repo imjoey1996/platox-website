@@ -12,7 +12,7 @@
         /* الوضع الليلي القاتم والمريح مع لمعان الزجاج */
         :root {
             --bg-main: #050508; 
-            --bg-card: rgba(15, 15, 20, 0.45); /* شفافية لإظهار السائل خلفه */
+            --bg-card: rgba(15, 15, 20, 0.45); 
             --primary: #9d4edd;
             --primary-glow: rgba(157, 78, 221, 0.3);
             --glass-border: rgba(255, 255, 255, 0.08);
@@ -262,7 +262,6 @@
 </head>
 <body>
 
-    <!-- الزجاج السائل (Liquid Glass) -->
     <div class="liquid-bg">
         <div class="blob blob-1"></div>
         <div class="blob blob-2"></div>
@@ -274,7 +273,6 @@
     <div class="sidebar" id="sidebar">
         <i class="fa-solid fa-xmark close-btn" onclick="toggleMenu()"></i>
         
-        <!-- أزرار اللغة النصية الاحترافية -->
         <div class="lang-switch">
             <button class="lang-btn active" onclick="changeLang('ar')" id="btn-ar">اللغة العربية</button>
             <button class="lang-btn" onclick="changeLang('en')" id="btn-en">English</button>
@@ -282,10 +280,10 @@
 
         <a href="#hero" onclick="toggleMenu()" data-i18n="menu_home">الرئيسية</a>
         <a href="#news" onclick="toggleMenu()" data-i18n="menu_news">الأخبار</a>
-        <a href="#leaders" onclick="toggleMenu()" data-i18n="menu_leaders">القادة</a>
-        <a href="#accounts" onclick="toggleMenu()" data-i18n="menu_players">اللاعبين</a>
-        <a href="#top-spending" onclick="toggleMenu()" data-i18n="menu_spending">الإنفاق</a>
+        <a href="#arabic-leaders" onclick="toggleMenu()" data-i18n="menu_leaders">القادة العرب</a>
         <a href="#tournaments" onclick="toggleMenu()" data-i18n="menu_tournaments">البطولات</a>
+        <a href="#top-spending" onclick="toggleMenu()" data-i18n="menu_spending">الإنفاق</a>
+        <a href="#accounts" onclick="toggleMenu()" data-i18n="menu_players">اللاعبين</a>
     </div>
 
     <nav class="navbar">
@@ -309,7 +307,6 @@
         <p data-aos="fade-up" data-aos-delay="200" data-i18n="hero_desc">يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.</p>
     </section>
 
-    <!-- لوحة الأخبار -->
     <section id="news" style="padding-top: 10px;">
         <h2 class="section-title" data-aos="fade-right" data-i18n="news_board_title">لوحة أخبار المجتمع</h2>
         <div class="featured-news glass-panel" data-aos="zoom-in">
@@ -320,7 +317,6 @@
             <h3 class="news-headline" data-i18n="news_1_title">إطلاق ألعاب وميزات جديدة قريباً!</h3>
             <p class="news-body" data-i18n="news_1_body">لدينا لعبتان جديدتان نأمل أن نُطلقهما خلال الشهر المقبل أو نحو ذلك، إلى جانب العديد من الميزات الجديدة التي لم نُعلن عنها بعد. ستكون الأشهر القادمة حافلة بالتحديثات، ونستعد لتقديم المزيد لكم حتى نهاية هذا العام. ترقبوا الإعلانات القادمة!</p>
         </div>
-        <!-- رابط الديسكورد الخارجي بخط صغير أنيق -->
         <a href="https://discord.gg/plato" target="_blank" class="more-news-link" data-aos="fade-up" data-aos-delay="100">
             <i class="fa-brands fa-discord"></i> <span data-i18n="discord_more">للمزيد من الأخبار انضموا إلى الديسكورد</span>
         </a>
@@ -328,10 +324,9 @@
 
     <div class="cyber-divider"><div class="center-node"></div></div>
 
-    <section id="leaders">
+    <section id="arabic-leaders">
         <h2 class="section-title" data-aos="fade-right" data-i18n="leaders_title">القادة العرب</h2>
-        
-        <div class="grid-container" style="margin-bottom: 40px;">
+        <div class="grid-container">
             <div class="card glass-panel card-yyy" data-aos="fade-up" data-aos-delay="100">
                 <img src="IMG_3154.png" alt="YYY">
                 <h3>YYY</h3>
@@ -348,10 +343,12 @@
                 <p data-i18n="desc_bbb">الحكمة في اتخاذ القرار، يوازن بين الحزم والهدوء لإدارة الأزمات باحترافية.</p>
             </div>
         </div>
+    </section>
 
-        <div class="cyber-divider" style="opacity: 0.2; margin-bottom: 30px;"><div class="center-node"></div></div>
-        
-        <h2 class="section-title" data-aos="fade-right" data-i18n="global_leaders_title" style="font-size: 1.4rem;">قادة السيرفرات العالمية</h2>
+    <div class="cyber-divider"><div class="center-node"></div></div>
+
+    <section id="global-leaders">
+        <h2 class="section-title" data-aos="fade-right" data-i18n="global_leaders_title">قادة السيرفرات العالمية</h2>
         
         <div class="server-tabs" data-aos="fade-up">
             <button class="server-tab active" data-target="english" onclick="filterServer('english')" data-i18n="tab_english">الإنجليزي</button>
@@ -366,62 +363,14 @@
         </div>
 
         <div class="global-leaders-grid" id="global-leaders-grid">
-            <!-- Dynamic Server Leaders -->
-        </div>
+            </div>
     </section>
 
     <div class="cyber-divider"><div class="center-node"></div></div>
 
-    <section id="accounts">
-        <h2 class="section-title" data-aos="fade-right" data-i18n="players_title">اللاعبين الاقدم</h2>
-        <div class="premium-list" data-aos="fade-up">
-            
-            <div class="list-row glass-panel rank-1">
-                <div class="rank-num num-font">01</div>
-                <div class="list-info">
-                    <img src="https://ui-avatars.com/api/?name=Te&background=9d4edd&color=fff" class="list-img">
-                    <div class="list-name num-font">Test</div>
-                </div>
-                <div class="score-val num-font"><span class="auto-days" data-base-days="3010"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
-            </div>
-
-            <div class="list-row glass-panel rank-2">
-                <div class="rank-num num-font">02</div>
-                <div class="list-info">
-                    <img src="https://ui-avatars.com/api/?name=MM&background=27272a&color=fff" class="list-img">
-                    <div class="list-name num-font">MMM</div>
-                </div>
-                <div class="score-val num-font"><span class="auto-days" data-base-days="3005"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
-            </div>
-
-            <div class="list-row glass-panel rank-3">
-                <div class="rank-num num-font">03</div>
-                <div class="list-info">
-                    <img src="https://ui-avatars.com/api/?name=BB&background=27272a&color=fff" class="list-img">
-                    <div class="list-name num-font">BBB</div>
-                </div>
-                <div class="score-val num-font"><span class="auto-days" data-base-days="3005"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
-            </div>
-
-            <div class="list-row glass-panel">
-                <div class="rank-num num-font">04</div>
-                <div class="list-info">
-                    <img src="https://ui-avatars.com/api/?name=P4&background=111&color=fff" class="list-img">
-                    <div class="list-name num-font">Player 4</div>
-                </div>
-                <div class="score-val num-font"><span class="auto-days" data-base-days="2900"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
-            </div>
-
-            <div class="list-row glass-panel">
-                <div class="rank-num num-font">05</div>
-                <div class="list-info">
-                    <img src="https://ui-avatars.com/api/?name=P5&background=111&color=fff" class="list-img">
-                    <div class="list-name num-font">Player 5</div>
-                </div>
-                <div class="score-val num-font"><span class="auto-days" data-base-days="2850"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
-            </div>
-
-        </div>
+    <section id="tournaments">
+        <h2 class="section-title" data-aos="fade-right" data-i18n="tournaments_title">مركز البطولات المعتمدة</h2>
+        <div class="tournaments-grid" id="tournaments-container" data-aos="fade-up"></div>
     </section>
 
     <div class="cyber-divider"><div class="center-node"></div></div>
@@ -429,7 +378,6 @@
     <section id="top-spending">
         <h2 class="section-title" data-aos="fade-right" data-i18n="spending_title">ترتيب المجموعات الأكثر إنفاقًا</h2>
         <div class="premium-list" data-aos="fade-up">
-            
             <div class="list-row glass-panel rank-1">
                 <div class="rank-num num-font">01</div>
                 <div class="list-info">
@@ -441,7 +389,6 @@
                 </div>
                 <div class="score-val num-font" style="color: var(--glow-yyy);">500K</div>
             </div>
-
             <div class="list-row glass-panel rank-2">
                 <div class="rank-num num-font">02</div>
                 <div class="list-info">
@@ -453,7 +400,6 @@
                 </div>
                 <div class="score-val num-font" style="color: silver;">350K</div>
             </div>
-
             <div class="list-row glass-panel rank-3">
                 <div class="rank-num num-font">03</div>
                 <div class="list-info">
@@ -465,18 +411,57 @@
                 </div>
                 <div class="score-val num-font" style="color: #cd7f32;">200K</div>
             </div>
-
         </div>
     </section>
 
     <div class="cyber-divider"><div class="center-node"></div></div>
 
-    <section id="tournaments" style="padding-bottom: 120px;">
-        <h2 class="section-title" data-aos="fade-right" data-i18n="tournaments_title">مركز البطولات المعتمدة</h2>
-        <div class="tournaments-grid" id="tournaments-container" data-aos="fade-up"></div>
+    <section id="accounts" style="padding-bottom: 120px;">
+        <h2 class="section-title" data-aos="fade-right" data-i18n="players_title">اللاعبين الاقدم</h2>
+        <div class="premium-list" data-aos="fade-up">
+            <div class="list-row glass-panel rank-1">
+                <div class="rank-num num-font">01</div>
+                <div class="list-info">
+                    <img src="https://ui-avatars.com/api/?name=Te&background=9d4edd&color=fff" class="list-img">
+                    <div class="list-name num-font">Test</div>
+                </div>
+                <div class="score-val num-font"><span class="auto-days" data-base-days="3010"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
+            </div>
+            <div class="list-row glass-panel rank-2">
+                <div class="rank-num num-font">02</div>
+                <div class="list-info">
+                    <img src="https://ui-avatars.com/api/?name=MM&background=27272a&color=fff" class="list-img">
+                    <div class="list-name num-font">MMM</div>
+                </div>
+                <div class="score-val num-font"><span class="auto-days" data-base-days="3005"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
+            </div>
+            <div class="list-row glass-panel rank-3">
+                <div class="rank-num num-font">03</div>
+                <div class="list-info">
+                    <img src="https://ui-avatars.com/api/?name=BB&background=27272a&color=fff" class="list-img">
+                    <div class="list-name num-font">BBB</div>
+                </div>
+                <div class="score-val num-font"><span class="auto-days" data-base-days="3005"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
+            </div>
+            <div class="list-row glass-panel">
+                <div class="rank-num num-font">04</div>
+                <div class="list-info">
+                    <img src="https://ui-avatars.com/api/?name=P4&background=111&color=fff" class="list-img">
+                    <div class="list-name num-font">Player 4</div>
+                </div>
+                <div class="score-val num-font"><span class="auto-days" data-base-days="2900"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
+            </div>
+            <div class="list-row glass-panel">
+                <div class="rank-num num-font">05</div>
+                <div class="list-info">
+                    <img src="https://ui-avatars.com/api/?name=P5&background=111&color=fff" class="list-img">
+                    <div class="list-name num-font">Player 5</div>
+                </div>
+                <div class="score-val num-font"><span class="auto-days" data-base-days="2850"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
+            </div>
+        </div>
     </section>
 
-    <!-- PlatoBot -->
     <div class="bot-fab" onclick="toggleBot()">
         <i class="fa-solid fa-robot"></i>
     </div>
@@ -614,50 +599,34 @@
         ];
 
         /* قادة السيرفرات العالمية Data */
-                const globalLeadersData = [
-    // السيرفر الإنجليزي
-    { name: "abc", server: "english", color: "0a2a75", img: "abc.WEBP" }, 
-    { name: "Fear", server: "english", color: "0a2a75", img: "fear.WEBP" }, 
-    { name: "Rose", server: "english", color: "0a2a75", img: "rose.WEBP" }, 
-    { name: "Risk", server: "english", color: "0a2a75", img: "risk.WEBP" },
-    
-    // السيرفر الفارسي
-    { name: "77777777", server: "persian", color: "10b981", img: "IMG_9665.WEBP" }, 
-    { name: "Reza", server: "persian", color: "10b981", img: "reza.WEBP" }, 
-    { name: "Armin", server: "persian", color: "10b981", img: "armin.WEBP" }, 
-    { name: "NarGc", server: "persian", color: "10b981", img: "nargc.WEBP" },
-    
-    // السيرفر الفرنسي
-    { name: "Mdame", server: "french", color: "3b82f6", img: "mdame.WEBP" }, 
-    { name: "Love_hope", server: "french", color: "3b82f6", img: "love_hope.WEBP" }, 
-    { name: "Algerian", server: "french", color: "3b82f6", img: "algerian.WEBP" }, 
-    { name: "H22", server: "french", color: "3b82f6", img: "h22.WEBP" },
-    
-    // السيرفر الماليزي
-    { name: "abo", server: "melayu", color: "8b5cf6", img: "abo.WEBP" }, 
-    { name: "fyy", server: "melayu", color: "8b5cf6", img: "fyy.WEBP" }, 
-    { name: "Lyn", server: "melayu", color: "8b5cf6", img: "lyn.WEBP" },
-    
-    // السيرفر التركي
-    { name: "esthell", server: "turkish", color: "ef4444", img: "esthell.WEBP" }, 
-    { name: "nefya", server: "turkish", color: "ef4444", img: "nefya.WEBP" },
-    
-    // السيرفر الإسباني
-    { name: "marito", server: "spanish", color: "f59e0b", img: "marito.WEBP" }, 
-    { name: "kroxtar", server: "spanish", color: "f59e0b", img: "kroxtar.WEBP" },
-    
-    // السيرفر البرازيلي
-    { name: "morango", server: "brazil", color: "22c55e", img: "mornago.WEBP" }, 
-    { name: "vsf", server: "brazil", color: "22c55e", img: "vsf.WEBP" },
-    
-    // السيرفر التايلندي
-    { name: "sroti", server: "thai", color: "ec4899", img: "sroti.WEBP" }, 
-    { name: "nrasl", server: "thai", color: "ec4899", img: "nrasl.WEBP" },
-    
-    // السيرفر الهندي
-    { name: "Mellisssaaa", server: "desi", color: "d97706", img: "mellisssaaa.WEBP" }, 
-    { name: "Frequency", server: "desi", color: "d97706", img: "frequency.WEBP" } 
-];
+        const globalLeadersData = [
+            { name: "abc", server: "english", color: "0a2a75", img: "abc.WEBP" }, 
+            { name: "Fear", server: "english", color: "0a2a75", img: "fear.WEBP" }, 
+            { name: "Rose", server: "english", color: "0a2a75", img: "rose.WEBP" }, 
+            { name: "Risk", server: "english", color: "0a2a75", img: "risk.WEBP" },
+            { name: "77777777", server: "persian", color: "10b981", img: "IMG_9665.WEBP" }, 
+            { name: "Reza", server: "persian", color: "10b981", img: "reza.WEBP" }, 
+            { name: "Armin", server: "persian", color: "10b981", img: "armin.WEBP" }, 
+            { name: "NarGc", server: "persian", color: "10b981", img: "nargc.WEBP" },
+            { name: "Mdame", server: "french", color: "3b82f6", img: "mdame.WEBP" }, 
+            { name: "Love_hope", server: "french", color: "3b82f6", img: "love_hope.WEBP" }, 
+            { name: "Algerian", server: "french", color: "3b82f6", img: "algerian.WEBP" }, 
+            { name: "H22", server: "french", color: "3b82f6", img: "h22.WEBP" },
+            { name: "abo", server: "melayu", color: "8b5cf6", img: "abo.WEBP" }, 
+            { name: "fyy", server: "melayu", color: "8b5cf6", img: "fyy.WEBP" }, 
+            { name: "Lyn", server: "melayu", color: "8b5cf6", img: "lyn.WEBP" },
+            { name: "esthell", server: "turkish", color: "ef4444", img: "esthell.WEBP" }, 
+            { name: "nefya", server: "turkish", color: "ef4444", img: "nefya.WEBP" },
+            { name: "marito", server: "spanish", color: "f59e0b", img: "marito.WEBP" }, 
+            { name: "kroxtar", server: "spanish", color: "f59e0b", img: "kroxtar.WEBP" },
+            { name: "morango", server: "brazil", color: "22c55e", img: "mornago.WEBP" }, 
+            { name: "vsf", server: "brazil", color: "22c55e", img: "vsf.WEBP" },
+            { name: "sroti", server: "thai", color: "ec4899", img: "sroti.WEBP" }, 
+            { name: "nrasl", server: "thai", color: "ec4899", img: "nrasl.WEBP" },
+            { name: "Mellisssaaa", server: "desi", color: "d97706", img: "mellisssaaa.WEBP" }, 
+            { name: "Frequency", server: "desi", color: "d97706", img: "frequency.WEBP" } 
+        ];
+        
         function renderGlobalLeaders() {
             const container = document.getElementById('global-leaders-grid');
             container.innerHTML = '';
@@ -671,7 +640,7 @@
             });
         }
 
-                function filterServer(serverName) {
+        function filterServer(serverName) {
             document.querySelectorAll('.server-tab').forEach(tab => {
                 tab.classList.toggle('active', tab.dataset.target === serverName);
             });
@@ -681,7 +650,6 @@
                     card.style.display = 'block';
                     card.style.animation = 'none'; 
                     
-                    // استخدام المؤقت بدلاً من فرض التحديث الثقيل لتجنب أي تعليق
                     setTimeout(() => {
                         card.style.animation = 'fadeScale 0.4s ease-out forwards';
                     }, 10);
@@ -787,9 +755,9 @@
             const animatedElements = document.querySelectorAll('[data-aos]');
             animatedElements.forEach(el => { el.classList.remove('aos-animate'); void el.offsetWidth; });
             setTimeout(() => { animatedElements.forEach(el => el.classList.add('aos-animate')); }, 50);
-    }
+        }
 
-                window.onload = () => {
+        window.onload = () => {
             const savedTheme = localStorage.getItem('theme') || 'dark'; 
             document.documentElement.setAttribute('data-theme', savedTheme); 
             document.getElementById('theme-icon').className = savedTheme === 'light' ? 'fa-solid fa-sun theme-toggle' : 'fa-solid fa-moon theme-toggle';
@@ -803,7 +771,6 @@
             renderGlobalLeaders();
             filterServer('english'); 
             
-            // هذه الدالة ستقوم برسم البطولات وترجمتها فوراً بدون الكتابة فوقها
             const savedLang = localStorage.getItem('lang') || 'ar'; 
             changeLang(savedLang);
             
