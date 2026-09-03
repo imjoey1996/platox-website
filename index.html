@@ -157,19 +157,42 @@
         .card p { font-size: 0.9rem; color: rgba(255,255,255,0.7); line-height: 1.6;}
         [data-theme="light"] .card p { color: var(--text-muted); }
 
-        /* قادة السيرفرات العالمية */
-        .server-tabs { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 30px; width: 100%; max-width: 900px; }
-        .server-tab { background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); color: var(--text-muted); padding: 8px 16px; border-radius: 20px; cursor: pointer; transition: 0.3s; font-family: 'Rajdhani', 'Cairo', sans-serif; font-weight: bold; backdrop-filter: blur(10px); font-size: 0.9rem;}
-        .server-tab:hover { color: var(--text-main); border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.08); }
-        .server-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 0 15px var(--primary-glow); }
-        
-        .global-leaders-grid { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; max-width: 950px; min-height: 150px; }
-        .global-leader { width: 140px; padding: 20px 10px; text-align: center; display: none; animation: fadeScale 0.4s ease-out forwards; }
-        @keyframes fadeScale { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-        .global-leader img { width: 65px; height: 65px; border-radius: 50%; margin-bottom: 12px; object-fit: cover; border: 2px solid rgba(255,255,255,0.1); transition: 0.3s; }
-        .global-leader:hover { border-color: var(--primary); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.3);}
-        .global-leader:hover img { border-color: var(--primary); box-shadow: 0 0 15px var(--primary-glow); transform: scale(1.05); }
-        .global-leader h3 { font-size: 0.95rem; color: var(--text-main); font-family: 'Rajdhani', 'Cairo', sans-serif; }
+        /* قادة السيرفرات العالمية */        /* قادة السيرفرات العالمية - تصميم مطابق للصورة */
+        .server-tabs { 
+            display: flex; 
+            gap: 12px; 
+            justify-content: center; 
+            flex-wrap: wrap; 
+            margin-bottom: 30px; 
+            width: 100%; 
+            max-width: 450px; /* تصغير العرض لإجبارها على النزول في 3 أسطر مثل الصورة */
+        }
+        .server-tab { 
+            background: transparent; 
+            border: 1px solid rgba(255, 255, 255, 0.2); 
+            color: rgba(255, 255, 255, 0.7); 
+            padding: 10px 24px; 
+            border-radius: 30px; /* شكل بيضاوي */
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            font-family: 'Poppins', sans-serif; 
+            font-weight: 600; 
+            font-size: 0.95rem;
+        }
+        [data-theme="light"] .server-tab {
+            border-color: rgba(0, 0, 0, 0.2);
+            color: var(--text-muted);
+        }
+        .server-tab:hover { 
+            color: var(--text-main); 
+            border-color: var(--text-main); 
+        }
+        .server-tab.active { 
+            background: var(--text-main); /* لون صلب أبيض */
+            color: var(--bg-main); /* لون النص أسود */
+            border-color: var(--text-main); 
+            box-shadow: none; 
+        }
 
         /* قوائم اللاعبين والإنفاق */
         .premium-list { width: 100%; max-width: 700px; display: flex; flex-direction: column; gap: 10px; }
@@ -350,16 +373,18 @@
     <section id="global-leaders">
         <h2 class="section-title" data-aos="fade-right" data-i18n="global_leaders_title">قادة السيرفرات العالمية</h2>
         
-        <div class="server-tabs" data-aos="fade-up">
-            <button class="server-tab active" data-target="english" onclick="filterServer('english')" data-i18n="tab_english">الإنجليزي</button>
-            <button class="server-tab" data-target="persian" onclick="filterServer('persian')" data-i18n="tab_persian">الفارسي</button>
-            <button class="server-tab" data-target="french" onclick="filterServer('french')" data-i18n="tab_french">الفرنسي</button>
-            <button class="server-tab" data-target="melayu" onclick="filterServer('melayu')" data-i18n="tab_melayu">الماليزي</button>
-            <button class="server-tab" data-target="turkish" onclick="filterServer('turkish')" data-i18n="tab_turkish">التركي</button>
-            <button class="server-tab" data-target="spanish" onclick="filterServer('spanish')" data-i18n="tab_spanish">الإسباني</button>
-            <button class="server-tab" data-target="thai" onclick="filterServer('thai')" data-i18n="tab_thai">التايلندي</button>
-            <button class="server-tab" data-target="brazil" onclick="filterServer('brazil')" data-i18n="tab_brazil">البرازيلي</button>
-            <button class="server-tab" data-target="desi" onclick="filterServer('desi')" data-i18n="tab_desi">الهندي</button>
+                <div class="server-tabs" data-aos="fade-up" dir="ltr">
+            <button class="server-tab" data-target="french" onclick="filterServer('french')">French</button>
+            <button class="server-tab" data-target="english" onclick="filterServer('english')">English</button>
+            <button class="server-tab" data-target="desi" onclick="filterServer('desi')">Desi</button>
+            <button class="server-tab active" data-target="brazil" onclick="filterServer('brazil')">Brazil</button>
+            
+            <button class="server-tab" data-target="thai" onclick="filterServer('thai')">Thai</button>
+            <button class="server-tab" data-target="spanish" onclick="filterServer('spanish')">Spanish</button>
+            <button class="server-tab" data-target="persian" onclick="filterServer('persian')">Persian</button>
+            <button class="server-tab" data-target="melayu" onclick="filterServer('melayu')">Melayu</button>
+            
+            <button class="server-tab" data-target="turkish" onclick="filterServer('turkish')">Turkish</button>
         </div>
 
         <div class="global-leaders-grid" id="global-leaders-grid">
