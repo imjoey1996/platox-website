@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* الوضع الليلي القاتم والمريح مع لمعان الزجاج */
         :root {
             --bg-main: #050508; 
             --bg-card: rgba(15, 15, 20, 0.45); 
@@ -23,12 +22,9 @@
             --glow-yyy: #e3b341;
             --glow-hat: #9d4edd;
             --glow-bbb: #00c3e3;
-            --bot-bg: rgba(17, 17, 24, 0.9);
-            --bot-header: #9d4edd;
             --discord-color: #5865F2;
         }
 
-        /* الوضع النهاري */
         [data-theme="light"] {
             --bg-main: #f3f4f6; 
             --bg-card: rgba(255, 255, 255, 0.6); 
@@ -40,15 +36,12 @@
             --ticker-text: #1e293b;
             --glow-yyy: #d4af37; 
             --glow-bbb: #0096b4;
-            --bot-bg: rgba(255, 255, 255, 0.95); 
-            --bot-header: #7b2cbf;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { color: var(--text-main); font-family: 'Cairo', sans-serif; overflow-x: hidden; transition: background 0.4s, color 0.4s; background-color: var(--bg-main); }
         html[dir="ltr"] body, .num-font, .navbar h1 { font-family: 'Rajdhani', sans-serif; }
 
-        /* --- خلفية الزجاج السائل (Liquid Glassmorphism) --- */
         .liquid-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3; overflow: hidden; background: var(--bg-main); }
         .blob { position: absolute; filter: blur(90px); opacity: 0.45; z-index: -2; animation: liquidFlow 25s infinite alternate ease-in-out; }
         [data-theme="light"] .blob { opacity: 0.3; filter: blur(70px); }
@@ -62,13 +55,11 @@
             100% { transform: translate(-5%, -5%) scale(0.9) rotate(360deg); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
         }
 
-        /* جزيئات الألعاب المتطايرة */
         .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; pointer-events: none; }
         .particle { position: absolute; color: #fff; opacity: 0.15; animation: floatUp infinite linear; filter: blur(1px); } 
         [data-theme="light"] .particle { color: var(--primary); opacity: 0.08; }
         @keyframes floatUp { 0% { transform: translateY(100vh) rotate(0deg) scale(0.8); opacity: 0; } 20% { opacity: 0.15; } 80% { opacity: 0.15; } 100% { transform: translateY(-10vh) rotate(360deg) scale(1.5); opacity: 0; } }
 
-        /* الكلاس المشترك للزجاج البلوري */
         .glass-panel {
             background: var(--bg-card); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
             border: 1px solid var(--glass-border); border-top: 1px solid rgba(255, 255, 255, 0.12);
@@ -77,7 +68,6 @@
         html[dir="ltr"] .glass-panel { border-left: 1px solid var(--glass-border); border-right: 1px solid rgba(255, 255, 255, 0.05); }
         [data-theme="light"] .glass-panel { box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07); border-top: 1px solid rgba(255, 255, 255, 0.6); }
 
-        /* شريط التنقل */
         .navbar { position: fixed; top: 0; width: 100%; padding: 12px 25px; display: flex; justify-content: space-between; align-items: center; background: rgba(5, 5, 8, 0.5); backdrop-filter: blur(25px); border-bottom: 1px solid var(--glass-border); z-index: 1000; }
         [data-theme="light"] .navbar { background: rgba(255, 255, 255, 0.7); }
         .navbar h1 { font-size: 24px; font-weight: 900; letter-spacing: 1px; }
@@ -86,7 +76,6 @@
         .nav-actions i { font-size: 20px; cursor: pointer; color: var(--text-main); transition: 0.3s; }
         .nav-actions i:hover { color: var(--primary); text-shadow: 0 0 10px var(--primary-glow); }
         
-        /* شريط الأخبار */
         .news-ticker { position: fixed; top: 55px; width: 100%; background: var(--ticker-bg); backdrop-filter: blur(15px); color: var(--ticker-text); padding: 6px 0; overflow: hidden; white-space: nowrap; z-index: 999; border-bottom: 1px solid var(--glass-border); font-weight: 700; font-size: 0.85rem; }
         .ticker-content { display: inline-block; animation: ticker-rtl 40s linear infinite; }
         html[dir="ltr"] .ticker-content { animation: ticker-ltr 40s linear infinite; }
@@ -94,7 +83,6 @@
         @keyframes ticker-rtl { from { transform: translateX(-100vw); } to { transform: translateX(100vw); } }
         @keyframes ticker-ltr { from { transform: translateX(100vw); } to { transform: translateX(-100vw); } }
 
-        /* القائمة الجانبية */
         .sidebar { position: fixed; top: 0; right: -280px; width: 280px; height: 100vh; background: var(--bg-card); backdrop-filter: blur(30px); border-left: 1px solid var(--glass-border); z-index: 2000; transition: right 0.4s ease; display: flex; flex-direction: column; padding: 25px; box-shadow: -10px 0 30px rgba(0,0,0,0.5);}
         html[dir="ltr"] .sidebar { right: auto; left: -280px; border-left: none; border-right: 1px solid var(--glass-border); transition: left 0.4s ease; box-shadow: 10px 0 30px rgba(0,0,0,0.5);}
         .sidebar.active { right: 0; }
@@ -102,7 +90,6 @@
         .close-btn { align-self: flex-end; font-size: 26px; cursor: pointer; margin-bottom: 15px; }
         html[dir="ltr"] .close-btn { align-self: flex-start; }
         
-        /* أزرار اللغة النصية */
         .lang-switch { display: flex; justify-content: center; gap: 10px; margin: 15px 0 25px 0; }
         .lang-btn { background: transparent; color: var(--text-muted); border: 1px solid var(--glass-border); padding: 6px 15px; border-radius: 20px; cursor: pointer; transition: 0.3s; font-family: 'Cairo', sans-serif; font-weight: 700; font-size: 0.9rem;}
         .lang-btn:hover { color: var(--primary); border-color: var(--primary); }
@@ -112,7 +99,6 @@
         .sidebar a:hover { color: var(--primary); padding-right: 8px; text-shadow: 0 0 10px var(--primary-glow); }
         html[dir="ltr"] .sidebar a:hover { padding-right: 0; padding-left: 8px; }
 
-        /* الأقسام الأساسية */
         section { padding: 70px 15px 30px; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; }
         .hero { height: 50vh; justify-content: center; text-align: center; padding: 0 15px; margin-top: 40px;}
         .hero h2 { font-size: 3.2rem; font-weight: 900; margin-bottom: 10px; color: #fff; text-shadow: 0 0 30px rgba(255,255,255,0.2); }
@@ -129,25 +115,21 @@
         .section-title::before { content: ''; position: absolute; right: -15px; top: 50%; transform: translateY(-50%); width: 6px; height: 20px; background: var(--primary); border-radius: 3px; box-shadow: 0 0 15px var(--primary-glow);}
         html[dir="ltr"] .section-title::before { right: auto; left: -15px; }
 
-        /* لوحة الأخبار (زجاجية ونظيفة) */
         .featured-news { width: 100%; max-width: 750px; padding: 35px; display: flex; flex-direction: column; gap: 15px; transition: 0.4s; margin-bottom: 15px; overflow: hidden; border-radius: 12px;}
         .featured-news:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(0,0,0,0.4); border-color: rgba(157, 78, 221, 0.3); }
-        
         .news-header-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; }
         .news-badge { background: rgba(157, 78, 221, 0.15); color: var(--primary); border: 1px solid rgba(157, 78, 221, 0.3); padding: 5px 12px; border-radius: 8px; font-weight: 900; font-size: 0.8rem; display: flex; align-items: center; gap: 8px; box-shadow: 0 0 15px rgba(157, 78, 221, 0.1);}
         .news-date-sub { font-family: 'Rajdhani', sans-serif; font-size: 0.85rem; color: var(--text-muted); font-weight: bold;}
-        
         .news-headline { font-size: 1.4rem; font-weight: 900; line-height: 1.4; color: var(--text-main); margin-top: 5px;}
         .news-body { color: rgba(255,255,255,0.7); line-height: 1.8; font-size: 0.95rem; }
         [data-theme="light"] .news-body { color: var(--text-muted); }
-
         .more-news-link { display: inline-flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 0.9rem; text-decoration: none; transition: 0.3s; font-weight: bold; background: var(--bg-card); padding: 8px 20px; border-radius: 20px; border: 1px solid var(--glass-border); backdrop-filter: blur(10px);}
         .more-news-link i { color: var(--discord-color); font-size: 1.1rem; }
         .more-news-link:hover { color: var(--text-main); transform: translateY(-2px); border-color: var(--discord-color); box-shadow: 0 5px 15px rgba(88, 101, 242, 0.2);}
 
-        /* القادة العرب (Glass Panels) */
-        .grid-container { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; max-width: 900px; }
-        .card { width: 280px; padding: 35px 20px; text-align: center; transition: 0.4s; position: relative; overflow: hidden; border-radius: 16px;}
+        /* القادة العرب والقادة العالميين بنظام Grid */
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; width: 100%; max-width: 900px; justify-items: center; }
+        .card { width: 100%; padding: 35px 20px; text-align: center; transition: 0.4s; position: relative; overflow: hidden; border-radius: 16px;}
         .card:hover { transform: translateY(-8px); }
         .card img { width: 100px; height: 100px; border-radius: 50%; margin-bottom: 20px; object-fit: cover; filter: grayscale(10%); transition: 0.4s; border: 3px solid rgba(255,255,255,0.1); box-shadow: 0 10px 20px rgba(0,0,0,0.5);}
         .card:hover img { filter: grayscale(0%); transform: scale(1.05); }
@@ -157,44 +139,20 @@
         .card p { font-size: 0.9rem; color: rgba(255,255,255,0.7); line-height: 1.6;}
         [data-theme="light"] .card p { color: var(--text-muted); }
 
-        /* قادة السيرفرات العالمية */        /* قادة السيرفرات العالمية - تصميم مطابق للصورة */
-        .server-tabs { 
-            display: flex; 
-            gap: 12px; 
-            justify-content: center; 
-            flex-wrap: wrap; 
-            margin-bottom: 30px; 
-            width: 100%; 
-            max-width: 450px; /* تصغير العرض لإجبارها على النزول في 3 أسطر مثل الصورة */
-        }
-        .server-tab { 
-            background: transparent; 
-            border: 1px solid rgba(255, 255, 255, 0.2); 
-            color: rgba(255, 255, 255, 0.7); 
-            padding: 10px 24px; 
-            border-radius: 30px; /* شكل بيضاوي */
-            cursor: pointer; 
-            transition: all 0.3s ease; 
-            font-family: 'Poppins', sans-serif; 
-            font-weight: 600; 
-            font-size: 0.95rem;
-        }
-        [data-theme="light"] .server-tab {
-            border-color: rgba(0, 0, 0, 0.2);
-            color: var(--text-muted);
-        }
-        .server-tab:hover { 
-            color: var(--text-main); 
-            border-color: var(--text-main); 
-        }
-        .server-tab.active { 
-            background: var(--text-main); /* لون صلب أبيض */
-            color: var(--bg-main); /* لون النص أسود */
-            border-color: var(--text-main); 
-            box-shadow: none; 
-        }
+        .server-tabs { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 30px; width: 100%; max-width: 450px; }
+        .server-tab { background: transparent; border: 1px solid rgba(255, 255, 255, 0.2); color: rgba(255, 255, 255, 0.7); padding: 10px 24px; border-radius: 30px; cursor: pointer; transition: all 0.3s ease; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.95rem; }
+        [data-theme="light"] .server-tab { border-color: rgba(0, 0, 0, 0.2); color: var(--text-muted); }
+        .server-tab:hover { color: var(--text-main); border-color: var(--text-main); }
+        .server-tab.active { background: var(--text-main); color: var(--bg-main); border-color: var(--text-main); box-shadow: none; }
+        
+        .global-leaders-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px; width: 100%; max-width: 950px; justify-items: center; }
+        .global-leader { width: 100%; padding: 20px 10px; text-align: center; display: none; animation: fadeScale 0.4s ease-out forwards; }
+        @keyframes fadeScale { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        .global-leader img { width: 65px; height: 65px; border-radius: 50%; margin-bottom: 12px; object-fit: cover; border: 2px solid rgba(255,255,255,0.1); transition: 0.3s; }
+        .global-leader:hover { border-color: var(--primary); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.3);}
+        .global-leader:hover img { border-color: var(--primary); box-shadow: 0 0 15px var(--primary-glow); transform: scale(1.05); }
+        .global-leader h3 { font-size: 0.95rem; color: var(--text-main); font-family: 'Rajdhani', 'Cairo', sans-serif; }
 
-        /* قوائم اللاعبين والإنفاق */
         .premium-list { width: 100%; max-width: 700px; display: flex; flex-direction: column; gap: 10px; }
         .list-row { padding: 12px 15px; display: flex; align-items: center; gap: 15px; transition: 0.3s; }
         .list-row:hover { background: rgba(157, 78, 221, 0.08); border-color: rgba(157, 78, 221, 0.3); transform: scale(1.02); }
@@ -214,7 +172,6 @@
         .progress-fill { height: 100%; border-radius: 10px; transition: width 1s ease-out; box-shadow: 0 0 10px currentColor;}
         .score-val { font-weight: 900; font-size: 1.05rem; }
 
-        /* البطولات (زجاجية) */
         .tournaments-grid { width: 100%; max-width: 750px; display: flex; flex-direction: column; gap: 15px; }
         .tour-card { padding: 20px; transition: 0.4s; overflow: hidden;}
         .tour-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary); box-shadow: 0 0 15px var(--primary); }
@@ -232,34 +189,11 @@
         .prize-badge { border-color: rgba(227, 179, 65, 0.3); background: rgba(227, 179, 65, 0.1); color: var(--glow-yyy); }
         .admin-copy-btn { cursor: pointer; transition: 0.3s; } .admin-copy-btn:hover { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 0 15px var(--primary-glow);}
 
-        /* PlatoBot الذكي */
-        .bot-fab { position: fixed; bottom: 25px; left: 25px; width: 60px; height: 60px; background: var(--bot-header); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 26px; color: #fff; cursor: pointer; z-index: 1600; box-shadow: 0 10px 25px rgba(157, 78, 221, 0.4); transition: 0.4s; }
-        html[dir="ltr"] .bot-fab { left: auto; right: 25px; }
-        .bot-fab:hover { transform: scale(1.1) rotate(10deg); }
-        
-        .bot-window { position: fixed; bottom: 95px; left: 25px; width: 340px; background: var(--bot-bg); backdrop-filter: blur(30px); border-radius: 16px; overflow: hidden; z-index: 1600; box-shadow: 0 15px 40px rgba(0,0,0,0.5); opacity: 0; pointer-events: none; transform: translateY(20px); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 1px solid var(--glass-border); }
-        html[dir="ltr"] .bot-window { left: auto; right: 25px; }
-        .bot-window.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
-        .bot-header { background: rgba(157, 78, 221, 0.2); border-bottom: 1px solid var(--glass-border); padding: 15px; color: var(--text-main); font-weight: bold; display: flex; justify-content: space-between; align-items: center; font-family: 'Rajdhani', sans-serif; font-size: 1rem;}
-        .bot-body { padding: 20px; height: 320px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px;}
-        [data-theme="light"] .bot-body { background: transparent; }
-        
-        .bot-msg { background: rgba(157, 78, 221, 0.2); border: 1px solid rgba(157, 78, 221, 0.3); color: var(--text-main); padding: 10px 15px; border-radius: 15px; border-top-right-radius: 0; font-size: 0.95rem; line-height: 1.5; width: fit-content; max-width: 85%; align-self: flex-start; font-weight: bold;}
-        html[dir="ltr"] .bot-msg { border-top-right-radius: 15px; border-top-left-radius: 0; }
-        .user-msg { background: rgba(255,255,255,0.08); border: 1px solid var(--glass-border); color: var(--text-main); padding: 10px 15px; border-radius: 15px; border-top-left-radius: 0; font-size: 0.95rem; width: fit-content; max-width: 85%; align-self: flex-end; font-weight: bold; line-height: 1.5;}
-        html[dir="ltr"] .user-msg { border-top-left-radius: 15px; border-top-right-radius: 0; }
-        [data-theme="light"] .user-msg { background: rgba(0,0,0,0.05); }
-
-        .bot-input { display: flex; padding: 10px; background: rgba(0,0,0,0.2); border-top: 1px solid var(--glass-border); }
-        [data-theme="light"] .bot-input { background: rgba(255,255,255,0.5); }
-        .bot-input input { flex: 1; padding: 10px; border: none; background: transparent; color: var(--text-main); outline: none; font-family: 'Cairo', sans-serif; font-weight: bold; font-size: 0.95rem;}
-        .bot-input button { background: var(--primary); color: #fff; border: none; padding: 0 15px; border-radius: 8px; cursor: pointer; transition: 0.2s; box-shadow: 0 0 10px var(--primary-glow);}
-
-        .typing-indicator { display: flex; gap: 4px; padding: 10px 15px; background: rgba(157, 78, 221, 0.2); border: 1px solid rgba(157, 78, 221, 0.3); border-radius: 15px; border-top-right-radius: 0; width: fit-content; align-self: flex-start;}
-        html[dir="ltr"] .typing-indicator { border-top-right-radius: 15px; border-top-left-radius: 0; }
-        .typing-dot { width: 6px; height: 6px; background: var(--text-main); border-radius: 50%; animation: typing 1.4s infinite ease-in-out both; }
-        .typing-dot:nth-child(1) { animation-delay: -0.32s; } .typing-dot:nth-child(2) { animation-delay: -0.16s; }
-        @keyframes typing { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+        .rank-badge { width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; border: 2px solid rgba(255,255,255,0.1); box-shadow: 0 0 10px rgba(0,0,0,0.3); }
+        .badge-gold { background: rgba(227, 179, 65, 0.2); color: var(--glow-yyy); border-color: var(--glow-yyy); }
+        .badge-silver { background: rgba(192, 192, 192, 0.2); color: #cbd5e1; border-color: #cbd5e1; }
+        .badge-bronze { background: rgba(205, 127, 50, 0.2); color: #cd7f32; border-color: #cd7f32; }
+        .badge-normal { background: rgba(255, 255, 255, 0.05); color: var(--text-muted); }
 
         #toast { visibility: hidden; min-width: 200px; background: rgba(15, 15, 20, 0.95); backdrop-filter: blur(10px); color: #fff; text-align: center; border-radius: 10px; padding: 12px 20px; position: fixed; z-index: 9999; left: 50%; bottom: 25px; transform: translateX(-50%); font-size: 14px; transition: 0.4s; opacity: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid var(--primary); font-family: 'Cairo', sans-serif; font-weight:bold;}
         #toast.show { visibility: visible; bottom: 85px; opacity: 1; }
@@ -273,13 +207,24 @@
             .hero h2 { font-size: 2.2rem; } .hero p { font-size: 1rem; }
             .section-title { font-size: 1.4rem; margin-bottom: 25px; }
             .featured-news { padding: 25px 20px; } .news-headline { font-size: 1.25rem; } .news-body { font-size: 0.9rem; }
-            .card { width: 100%; max-width: 300px; padding: 25px 15px; }
+            
+            /* تفعيل نظام الشبكة 2×2 للقادة مع منع التمرير الجانبي كلياً */
+            .grid-container, .global-leaders-grid { 
+                display: grid !important; 
+                grid-template-columns: repeat(2, 1fr) !important; 
+                gap: 10px; 
+                width: 100%; 
+            }
+            .card { padding: 15px 10px; width: 100%; max-width: none; }
+            .card img { width: 70px; height: 70px; margin-bottom: 10px; }
+            .card h3 { font-size: 1.1rem; margin-bottom: 5px; }
+            .card p { font-size: 0.8rem; line-height: 1.4; }
+            .global-leader { padding: 15px 5px; width: 100%; }
+            .global-leader img { width: 55px; height: 55px; }
+
             .list-row { padding: 10px; gap: 8px; } .rank-num { font-size: 1rem; width: 20px; } .list-img { width: 30px; height: 30px; } .list-name { font-size: 0.85rem; } .score-val { font-size: 0.95rem; }
             .tour-card { padding: 20px 15px; } .tour-title { font-size: 1.05rem; } .tour-desc { font-size: 0.85rem; margin-bottom: 12px;} .tour-footer { flex-direction: column; gap: 8px; } .info-badge { width: 100%; justify-content: center; font-size: 0.8rem; padding: 6px;}
-            .bot-window { width: calc(100% - 30px); left: 15px; right: 15px; bottom: 85px; } html[dir="ltr"] .bot-window { left: 15px; right: 15px; }
-            .bot-fab { bottom: 20px; left: 20px; width: 50px; height: 50px; font-size: 20px; } html[dir="ltr"] .bot-fab { right: 20px; left: auto; }
-            .server-tabs { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding-bottom: 10px; }
-            .server-tabs::-webkit-scrollbar { display: none; }
+            .server-tabs { flex-wrap: wrap !important; justify-content: center !important; gap: 10px; padding-bottom: 10px; }
         }
     </style>
 </head>
@@ -373,7 +318,7 @@
     <section id="global-leaders">
         <h2 class="section-title" data-aos="fade-right" data-i18n="global_leaders_title">قادة السيرفرات العالمية</h2>
         
-                <div class="server-tabs" data-aos="fade-up" dir="ltr">
+        <div class="server-tabs" data-aos="fade-up" dir="ltr">
             <button class="server-tab" data-target="french" onclick="filterServer('french')">French</button>
             <button class="server-tab" data-target="english" onclick="filterServer('english')">English</button>
             <button class="server-tab" data-target="desi" onclick="filterServer('desi')">Desi</button>
@@ -388,7 +333,8 @@
         </div>
 
         <div class="global-leaders-grid" id="global-leaders-grid">
-            </div>
+            <!-- Dynamic Server Leaders -->
+        </div>
     </section>
 
     <div class="cyber-divider"><div class="center-node"></div></div>
@@ -441,17 +387,7 @@
 
     <div class="cyber-divider"><div class="center-node"></div></div>
 
-        <!-- 6. اللاعبين الأقدم -->
     <section id="accounts" style="padding-bottom: 120px;">
-        <style>
-            /* تنسيق أوسمة المراكز */
-            .rank-badge { width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; border: 2px solid rgba(255,255,255,0.1); box-shadow: 0 0 10px rgba(0,0,0,0.3); }
-            .badge-gold { background: rgba(227, 179, 65, 0.2); color: var(--glow-yyy); border-color: var(--glow-yyy); }
-            .badge-silver { background: rgba(192, 192, 192, 0.2); color: #cbd5e1; border-color: #cbd5e1; }
-            .badge-bronze { background: rgba(205, 127, 50, 0.2); color: #cd7f32; border-color: #cd7f32; }
-            .badge-normal { background: rgba(255, 255, 255, 0.05); color: var(--text-muted); }
-        </style>
-        
         <h2 class="section-title" data-aos="fade-right" data-i18n="players_title">اللاعبين الاقدم</h2>
         <div class="premium-list" data-aos="fade-up">
             
@@ -502,22 +438,6 @@
 
         </div>
     </section>
-    <div class="bot-fab" onclick="toggleBot()">
-        <i class="fa-solid fa-robot"></i>
-    </div>
-    <div class="bot-window" id="botWindow">
-        <div class="bot-header">
-            <div style="display:flex; align-items:center; gap:8px;"><i class="fa-solid fa-microchip"></i> PlatoBot 🤖</div>
-            <i class="fa-solid fa-xmark" onclick="toggleBot()" style="cursor:pointer; font-size:1.2rem;"></i>
-        </div>
-        <div class="bot-body" id="botBody">
-            <div class="bot-msg" data-i18n="bot_welcome">مرحباً بك! أنا PlatoBot، مساعدك الذكي في مجتمعنا. كيف أقدر أساعدك اليوم؟ 🎮</div>
-        </div>
-        <div class="bot-input">
-            <input type="text" id="botInput" data-i18n-placeholder="bot_placeholder" placeholder="اسألني عن البطولات، القوانين..." autocomplete="off" onkeypress="handleBotEnter(event)">
-            <button onclick="processBotMessage()"><i class="fa-solid fa-paper-plane"></i></button>
-        </div>
-    </div>
 
     <div id="toast"></div>
 
@@ -526,7 +446,6 @@
         AOS.init({ duration: 500, once: true });
 
         function toggleMenu() { document.getElementById('sidebar').classList.toggle('active'); document.querySelector('.overlay').classList.toggle('active'); }
-        function toggleBot() { document.getElementById('botWindow').classList.toggle('active'); }
 
         const icons = ['fa-gamepad', 'fa-dice', 'fa-chess-knight', 'fa-bowling-ball', 'fa-ghost', 'fa-futbol'];
         const particlesContainer = document.getElementById('particles');
@@ -557,75 +476,6 @@
             });
         }
 
-        function handleBotEnter(e) { if(e.key === 'Enter') processBotMessage(); }
-        
-        function processBotMessage() {
-            const inputField = document.getElementById('botInput');
-            const text = inputField.value.trim();
-            if(text === '') return;
-            
-            const body = document.getElementById('botBody');
-            const isAr = document.documentElement.getAttribute('lang') === 'ar';
-            
-            body.innerHTML += `<div class="user-msg">${text}</div>`;
-            inputField.value = '';
-            body.scrollTop = body.scrollHeight;
-
-            const typingID = 'typing-' + Date.now();
-            body.innerHTML += `<div class="typing-indicator" id="${typingID}"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
-            body.scrollTop = body.scrollHeight;
-
-            setTimeout(() => {
-                document.getElementById(typingID).remove();
-                let reply = "";
-                const lowerText = text.toLowerCase();
-                
-                if(lowerText.match(/(سلام|مرحبا|هلا|شلونك|كيفك|hi|hello|hey|sup)/)) {
-                    const replies = isAr ? ["يا أهلاً وسهلاً! نورت PlatoX، تفضل كيف أساعدك؟", "وعليكم السلام! جاهز للعب والمنافسة؟ اسألني اللي تحتاجه."] : ["Hello there! Ready to game?", "Hi! Welcome to PlatoX, how can I help?"];
-                    reply = replies[Math.floor(Math.random() * replies.length)];
-                } 
-                else if(lowerText.match(/(كيف|شلون|طريقة|how).*(اسجل|العب|ادخل|join|play|register)/)) {
-                    reply = isAr ? "بسيط جداً! انزل لقسم 'مركز البطولات' في هذا الموقع، بتلاقي البطولات المتاحة. كل اللي عليك هو إنك تنسخ 'يوزر الإدارة' وتضيفه في لعبة بلاتو عشان تسجل." : "Very simple! Go to the 'Tournaments' section below, copy the Admin's ID, and add them in Plato to register.";
-                }
-                else if(lowerText.match(/(بلياردو|ذئاب|werewolf|pool)/)) {
-                    reply = isAr ? "عندنا بطولات قوية في البلياردو والـ Werewolf! الجوائز توصل لـ 50K. تأكد من قسم البطولات لمعرفة الوقت المتبقي." : "We have massive Pool and Werewolf tournaments! Prizes go up to 50K. Check the tournaments section.";
-                }
-                else if(lowerText.match(/(بطول|مسابق|لعب|tour|match|game)/)) {
-                    reply = isAr ? "البطولات يتم الإعلان عنها في 'مركز البطولات' هنا بالموقع، وتقدر تشوف العد التنازلي متى تبدأ البطولة القادمة. 🔥" : "Tournaments are listed in the 'Tournaments' section. You can see the live countdown there! 🔥";
-                }
-                else if(lowerText.match(/(ديسكورد|رابط|سيرفر|discord|link|server)/)) {
-                    reply = isAr ? "ديسكورد هو المكان اللي نجتمع فيه! تفضل رابط السيرفر الرسمي: https://discord.gg/plato" : "Discord is where we gather! Here is the official link: https://discord.gg/plato";
-                }
-                else if(lowerText.match(/(فلوس|كوينز|متجر|شراء|coin|money|store|shop)/)) {
-                    reply = isAr ? "مثل ما تم الإعلان في لوحة الأخبار: المتجر بيتنظف من الكوينز كلياً في التحديث القادم." : "As announced in the news board, the store will be completely cleared of coin items soon.";
-                }
-                else if(lowerText.match(/(مين انت|وش انت|وش اسمك|who are you|name)/)) {
-                    reply = isAr ? "أنا PlatoBot 🤖! الذكاء الاصطناعي الخاص بهذا المجتمع، مهمتي أجاوب أسئلتك وأرشدك بالموقع." : "I am PlatoBot 🤖! The AI assistant for this community.";
-                }
-                else if(lowerText.match(/(جائز|جوائز|هدية|فوز|prize|win|reward)/)) {
-                    reply = isAr ? "الجوائز تختلف حسب البطولة، بعضها يوصل المركز الأول لـ 50K والمركز الثاني 30K. انزل تحت وشوف الجوائز بنفسك!" : "Prizes vary by tournament. First place can get 50K and second place 30K. Scroll down to see!";
-                }
-                else if(lowerText.match(/(شكر|يعطيك|تسلم|حبيبي|thank|thx|thanks)/)) {
-                    reply = isAr ? "في خدمتك دائماً يا وحش! 💙" : "Always here to serve you! 💙";
-                }
-                else {
-                    const genericReplies = isAr ? [
-                        "همم.. سؤالك ذكي، بس أحتاج توضيح أكثر عشان أعطيك الإجابة الصح؟ 🤔",
-                        "أنا مجرد روبوت 🤖 أرد على الأسئلة الشائعة.. لو عندك استفسار معقد تقدر تفتح (تذكرة) بالديسكورد والإدارة بتساعدك فوراً.",
-                        "عذراً ما لقطت الكلمة! تقدر تسألني عن: طريقة التسجيل بالبطولات، أوقات المباريات، أو رابط الديسكورد."
-                    ] : [
-                        "Hmm.. interesting question, could you clarify a bit more? 🤔",
-                        "I am just a bot! For complex inquiries, please open a Ticket in Discord and the real admins will help you.",
-                        "Sorry, I didn't quite get that. You can ask me about: Registration, tournaments, or Discord."
-                    ];
-                    reply = genericReplies[Math.floor(Math.random() * genericReplies.length)];
-                }
-
-                body.innerHTML += `<div class="bot-msg">${reply}</div>`;
-                body.scrollTop = body.scrollHeight;
-            }, 1000 + Math.random() * 1000); 
-        }
-
         const now = new Date(); const dateString = now.toISOString().split('T')[0];
         const tournamentsData = [
             { 
@@ -638,7 +488,6 @@
             }
         ];
 
-        /* قادة السيرفرات العالمية Data */
         const globalLeadersData = [
             { name: "abc", server: "english", color: "0a2a75", img: "abc.WEBP" }, 
             { name: "Fear", server: "english", color: "0a2a75", img: "55fb9c5469409aa250bb7f2eeae0fbea.png" }, 
@@ -671,9 +520,10 @@
             const container = document.getElementById('global-leaders-grid');
             container.innerHTML = '';
             globalLeadersData.forEach(leader => {
+                const imageSource = leader.img ? leader.img : `https://ui-avatars.com/api/?name=${leader.name}&background=${leader.color}&color=fff&bold=true`;
                 container.innerHTML += `
                     <div class="global-leader glass-panel" data-server="${leader.server}">
-                        <img src="https://ui-avatars.com/api/?name=${leader.name}&background=${leader.color}&color=fff&bold=true">
+                        <img src="${imageSource}" alt="${leader.name}">
                         <h3 class="num-font">${leader.name}</h3>
                     </div>
                 `;
@@ -699,7 +549,6 @@
                 }
             });
         }
-
 
         function renderTournaments() {
             const container = document.getElementById('tournaments-container');
@@ -760,7 +609,6 @@
                 tour_1_title: "بطولة يوسف 1", tour_1_desc: "مجموعة يوسف الاولى ترحب بكم في بطولة بلياردو الليلة الساعة ٩ بتوقيت السعودية بجوائز للمركز الاولى ٥٠ك للمركز الثاني ٣٠ك للدخول الى القروب يرجى نسخ يوزر الاداري واضافته على بلاتو",
                 tour_2_title: "بطولة يوسف 2", tour_2_desc: "ندعوكم للمشاركة في تحدي ذئاب (Werewolf) الليلة الساعة 10 بتوقيت السعودية. الأماكن محدودة.",
                 game_pool: "بلياردو", game_werewolf: "ذئاب (Werewolf)",
-                bot_welcome: "مرحباً بك! أنا PlatoBot، مساعدك الذكي في مجتمعنا. كيف أقدر أساعدك اليوم؟ 🎮", bot_placeholder: "اسألني عن البطولات، القوانين...",
                 tab_english: "الإنجليزي", tab_persian: "الفارسي", tab_french: "الفرنسي", tab_melayu: "الماليزي", tab_turkish: "التركي", tab_spanish: "الإسباني", tab_thai: "التايلندي", tab_brazil: "البرازيلي", tab_desi: "الهندي"
             },
             en: {
@@ -776,7 +624,6 @@
                 tour_1_title: "Yousef 1 Tournament", tour_1_desc: "Yousef First Group welcomes you to the Pool tournament tonight at 9 PM KSA. Prizes: 1st place 50K, 2nd place 30K. To join, copy the admin's ID and add them on Plato.",
                 tour_2_title: "Yousef 2 Tournament", tour_2_desc: "Join us for a Werewolf challenge tonight at 10 PM KSA. Limited seats available.",
                 game_pool: "Pool", game_werewolf: "Werewolf",
-                bot_welcome: "Welcome! I'm PlatoBot, your smart assistant. How can I help you today? 🎮", bot_placeholder: "Ask me anything...",
                 tab_english: "English", tab_persian: "Persian", tab_french: "Français", tab_melayu: "Melayu", tab_turkish: "Turkish", tab_spanish: "Español", tab_thai: "Thai", tab_brazil: "Brasil", tab_desi: "Desi"
             }
         };
@@ -788,7 +635,6 @@
             document.getElementById('btn-en').classList.toggle('active', lang === 'en');
             
             document.querySelectorAll('[data-i18n]').forEach(el => { if(translations[lang][el.getAttribute('data-i18n')]) el.innerText = translations[lang][el.getAttribute('data-i18n')]; });
-            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { if(translations[lang][el.getAttribute('data-i18n-placeholder')]) el.placeholder = translations[lang][el.getAttribute('data-i18n-placeholder')]; });
             document.getElementById('news-text').innerText = translations[lang]['news_text'];
             
             renderTournaments(); localStorage.setItem('lang', lang);
