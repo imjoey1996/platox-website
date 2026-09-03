@@ -10,20 +10,11 @@
     
     <style>
         :root {
-            --bg-main: #09090b;
-            --bg-card: rgba(18, 18, 23, 0.85);
-            --primary: #9d4edd;
-            --primary-glow: rgba(157, 78, 221, 0.5);
-            --border-color: rgba(255, 255, 255, 0.1);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --ticker-bg: #8a2be2;
-            --ticker-text: #ffffff;
-            --glow-yyy: #ffd700;
-            --glow-hat: #9d4edd;
-            --glow-bbb: #00e5ff;
-            --bot-bg: #2b2d35;
-            --bot-header: #0a2a75;
+            --bg-main: #09090b; --bg-card: rgba(18, 18, 23, 0.85); --primary: #9d4edd;
+            --primary-glow: rgba(157, 78, 221, 0.5); --border-color: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc; --text-muted: #94a3b8; --ticker-bg: #8a2be2; --ticker-text: #ffffff;
+            --glow-yyy: #ffd700; --glow-hat: #9d4edd; --glow-bbb: #00e5ff;
+            --bot-bg: #2b2d35; --bot-header: #0a2a75;
         }
 
         [data-theme="light"] {
@@ -37,7 +28,7 @@
         body { color: var(--text-main); font-family: 'Cairo', sans-serif; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
         html[dir="ltr"] body, .num-font, .navbar h1 { font-family: 'Rajdhani', sans-serif; }
 
-        /* الخلفية المتحركة (ألعاب) */
+        /* الخلفية المتحركة */
         .animated-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; background: linear-gradient(45deg, var(--bg-main), rgba(157, 78, 221, 0.05), var(--bg-main)); background-size: 400% 400%; animation: gradientBG 15s ease infinite; transition: background 0.5s ease; }
         @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; pointer-events: none; }
@@ -45,16 +36,14 @@
         [data-theme="light"] .particle { opacity: 0.08; }
         @keyframes floatUp { 0% { transform: translateY(100vh) rotate(0deg) scale(0.8); opacity: 0; } 10% { opacity: 0.12; } 90% { opacity: 0.12; } 100% { transform: translateY(-10vh) rotate(360deg) scale(1.5); opacity: 0; } }
 
-        /* شريط التنقل */
+        /* شريط التنقل والأخبار */
         .navbar { position: fixed; top: 0; width: 100%; padding: 12px 30px; display: flex; justify-content: space-between; align-items: center; background: var(--bg-card); backdrop-filter: blur(15px); border-bottom: 1px solid var(--border-color); z-index: 1000; }
         .navbar h1 { font-size: 26px; font-weight: 900; letter-spacing: 2px; }
         .navbar h1 span { color: var(--primary); text-shadow: 0 0 10px var(--primary-glow); }
         .nav-actions { display: flex; align-items: center; gap: 20px; }
         .nav-actions i { font-size: 22px; cursor: pointer; color: var(--text-main); transition: 0.3s; }
         .nav-actions i:hover { color: var(--primary); transform: scale(1.1); }
-        .theme-toggle { font-size: 20px !important; margin-right: 15px; }
-
-        /* شريط الأخبار الذكي */
+        
         .news-ticker { position: fixed; top: 60px; width: 100%; background: var(--ticker-bg); color: var(--ticker-text); padding: 7px 0; overflow: hidden; white-space: nowrap; z-index: 999; box-shadow: 0 4px 15px rgba(0,0,0,0.2); font-weight: 700; font-size: 0.95rem; }
         .ticker-content { display: inline-block; animation: ticker-rtl 35s linear infinite; }
         html[dir="ltr"] .ticker-content { animation: ticker-ltr 35s linear infinite; }
@@ -76,13 +65,12 @@
         .sidebar a:hover { color: var(--primary); padding-right: 10px; }
         html[dir="ltr"] .sidebar a:hover { padding-right: 0; padding-left: 10px; }
 
-        /* الأقسام والبطاقات */
+        /* الأقسام والفواصل */
         section { padding: 90px 20px 40px; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; }
         .hero { height: 60vh; justify-content: center; text-align: center; padding: 0 20px; margin-top: 50px;}
         .hero h2 { font-size: 3rem; font-weight: 900; margin-bottom: 15px; color: var(--primary); text-shadow: 0 0 20px var(--primary-glow); }
         .hero p { font-size: 1.2rem; max-width: 700px; line-height: 1.8; margin: 0 auto; color: var(--text-main);}
 
-        /* فواصل الأقسام الاحترافية (Cyber Divider) */
         .cyber-divider { display: flex; align-items: center; justify-content: center; width: 100%; max-width: 800px; margin: 20px auto; opacity: 0.8; }
         .cyber-divider::before, .cyber-divider::after { content: ''; flex: 1; height: 2px; background: linear-gradient(90deg, transparent, var(--primary), transparent); }
         .cyber-divider .center-node { width: 25px; height: 6px; background: var(--text-main); margin: 0 15px; transform: skewX(-45deg); box-shadow: 0 0 15px var(--primary-glow); }
@@ -91,32 +79,30 @@
         .section-title::before { content: ''; position: absolute; right: -15px; top: 12px; width: 8px; height: 8px; background: var(--primary); box-shadow: 0 0 10px var(--primary); }
         html[dir="ltr"] .section-title::before { right: auto; left: -15px; }
 
+        /* القادة */
         .grid-container { display: flex; gap: 25px; justify-content: center; flex-wrap: wrap; max-width: 1100px; }
         .card { background: var(--bg-card); padding: 30px 20px; width: 300px; text-align: center; backdrop-filter: blur(10px); clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%); transition: 0.4s; position: relative; border: 1px solid var(--border-color); }
         .card::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; transform: scaleX(0); transition: 0.4s; }
         .card:hover { transform: translateY(-10px); }
         .card:hover::after { transform: scaleX(1); }
         .card img { width: 100px; height: 100px; border-radius: 50%; margin-bottom: 15px; object-fit: cover; filter: grayscale(20%); transition: 0.3s; border: 2px solid transparent; }
-        
-        .card-yyy { border-color: rgba(255, 215, 0, 0.3); box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.05); }
-        .card-yyy::after { background: var(--glow-yyy); }
-        .card-yyy:hover { box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2); border-color: var(--glow-yyy); }
-        .card-yyy:hover img { border-color: var(--glow-yyy); box-shadow: 0 0 15px var(--glow-yyy); filter: grayscale(0%); }
-        .card-yyy h3 { color: var(--glow-yyy); }
+        .card-yyy { border-color: rgba(255, 215, 0, 0.3); box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.05); } .card-yyy::after { background: var(--glow-yyy); } .card-yyy:hover { box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2); border-color: var(--glow-yyy); } .card-yyy:hover img { border-color: var(--glow-yyy); filter: grayscale(0%); } .card-yyy h3 { color: var(--glow-yyy); }
+        .card-hat { border-color: rgba(157, 78, 221, 0.3); box-shadow: inset 0 0 20px rgba(157, 78, 221, 0.05); } .card-hat::after { background: var(--glow-hat); } .card-hat:hover { box-shadow: 0 10px 30px rgba(157, 78, 221, 0.2); border-color: var(--glow-hat); } .card-hat:hover img { border-color: var(--glow-hat); filter: grayscale(0%); } .card-hat h3 { color: var(--glow-hat); }
+        .card-bbb { border-color: rgba(0, 229, 255, 0.3); box-shadow: inset 0 0 20px rgba(0, 229, 255, 0.05); } .card-bbb::after { background: var(--glow-bbb); } .card-bbb:hover { box-shadow: 0 10px 30px rgba(0, 229, 255, 0.2); border-color: var(--glow-bbb); } .card-bbb:hover img { border-color: var(--glow-bbb); filter: grayscale(0%); } .card-bbb h3 { color: var(--glow-bbb); }
 
-        .card-hat { border-color: rgba(157, 78, 221, 0.3); box-shadow: inset 0 0 20px rgba(157, 78, 221, 0.05); }
-        .card-hat::after { background: var(--glow-hat); }
-        .card-hat:hover { box-shadow: 0 10px 30px rgba(157, 78, 221, 0.2); border-color: var(--glow-hat); }
-        .card-hat:hover img { border-color: var(--glow-hat); box-shadow: 0 0 15px var(--glow-hat); filter: grayscale(0%); }
-        .card-hat h3 { color: var(--glow-hat); }
+        /* سكشن الأخبار الرسمي (الجديد) */
+        .news-grid { display: flex; flex-direction: column; gap: 20px; width: 100%; max-width: 900px; }
+        .news-card { background: var(--bg-card); border: 1px solid var(--border-color); padding: 25px; border-radius: 8px; backdrop-filter: blur(10px); position: relative; overflow: hidden; transition: 0.3s;}
+        .news-card:hover { border-color: var(--primary); box-shadow: 0 5px 20px rgba(157, 78, 221, 0.15); }
+        .news-card::before { content: ''; position: absolute; top: 0; right: 0; width: 4px; height: 100%; background: var(--primary); }
+        html[dir="ltr"] .news-card::before { right: auto; left: 0; }
+        .news-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;}
+        .news-title { font-size: 1.3rem; font-weight: 900; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+        .news-date { font-size: 0.85rem; color: var(--text-muted); font-family: 'Rajdhani', sans-serif;}
+        .news-body { color: var(--text-main); line-height: 1.8; font-size: 1rem; }
+        .news-tag { background: rgba(157, 78, 221, 0.15); color: var(--primary); padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; }
 
-        .card-bbb { border-color: rgba(0, 229, 255, 0.3); box-shadow: inset 0 0 20px rgba(0, 229, 255, 0.05); }
-        .card-bbb::after { background: var(--glow-bbb); }
-        .card-bbb:hover { box-shadow: 0 10px 30px rgba(0, 229, 255, 0.2); border-color: var(--glow-bbb); }
-        .card-bbb:hover img { border-color: var(--glow-bbb); box-shadow: 0 0 15px var(--glow-bbb); filter: grayscale(0%); }
-        .card-bbb h3 { color: var(--glow-bbb); }
-
-        /* الجداول وشارة التوثيق */
+        /* الجداول */
         .table-wrapper { width: 100%; max-width: 700px; background: var(--bg-card); backdrop-filter: blur(10px); border-radius: 8px; border: 1px solid var(--border-color); overflow: hidden;}
         table { width: 100%; border-collapse: collapse; table-layout: fixed; }
         th { padding: 15px 10px; color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; text-align: right; border-bottom: 1px solid var(--border-color); background: rgba(0,0,0,0.2); }
@@ -128,12 +114,10 @@
         .player-img { border-radius: 50%; }
         .verified-badge { color: #1d9bf0; font-size: 0.85rem; margin-right: 5px; }
         html[dir="ltr"] .verified-badge { margin-right: 0; margin-left: 5px; }
-        .col-rank { width: 15%; color: var(--text-muted); text-align: center; }
-        .col-name { width: 55%; }
-        .col-days { width: 30%; text-align: left; color: var(--text-main); font-size: 1.1rem; }
+        .col-rank { width: 15%; color: var(--text-muted); text-align: center; } .col-name { width: 55%; } .col-days { width: 30%; text-align: left; color: var(--text-main); font-size: 1.1rem; }
         html[dir="ltr"] .col-days { text-align: right; }
 
-        /* البطولات المتكاملة */
+        /* البطولات */
         .tournaments-grid { width: 100%; max-width: 800px; display: flex; flex-direction: column; gap: 20px; }
         .tour-card { background: var(--bg-card); border: 1px solid var(--border-color); border-right: 4px solid var(--primary); padding: 25px; border-radius: 8px; position: relative; backdrop-filter: blur(10px); transition: 0.3s; }
         html[dir="ltr"] .tour-card { border-right: 1px solid var(--border-color); border-left: 4px solid var(--primary); }
@@ -147,8 +131,7 @@
         .tour-footer { display: flex; gap: 12px; flex-wrap: wrap; }
         .info-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(157, 78, 221, 0.1); border: 1px solid var(--primary); padding: 6px 15px; border-radius: 4px; color: var(--text-main); font-weight: bold; font-size: 0.9rem; }
         .prize-badge { border-color: var(--glow-yyy); background: rgba(255, 215, 0, 0.05); color: var(--glow-yyy); }
-        .admin-copy-btn { cursor: pointer; transition: 0.2s; }
-        .admin-copy-btn:hover { background: var(--primary); color: #fff; }
+        .admin-copy-btn { cursor: pointer; transition: 0.2s; } .admin-copy-btn:hover { background: var(--primary); color: #fff; }
 
         /* بوت الذكاء الاصطناعي (BoltBot) */
         .bot-fab { position: fixed; bottom: 30px; left: 30px; width: 60px; height: 60px; background: var(--bot-header); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 28px; color: #fff; cursor: pointer; z-index: 1600; box-shadow: 0 10px 20px rgba(0,0,0,0.3); transition: 0.3s; animation: floatBot 3s infinite ease-in-out; }
@@ -156,30 +139,39 @@
         .bot-fab:hover { transform: scale(1.1); background: var(--primary); }
         @keyframes floatBot { 0% { transform: translateY(0); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0); } }
         
-        .bot-window { position: fixed; bottom: 100px; left: 30px; width: 320px; background: var(--bot-bg); border-radius: 12px; overflow: hidden; z-index: 1600; box-shadow: 0 15px 40px rgba(0,0,0,0.4); opacity: 0; pointer-events: none; transform: translateY(20px); transition: 0.3s; border: 1px solid var(--border-color); }
+        .bot-window { position: fixed; bottom: 100px; left: 30px; width: 340px; background: var(--bot-bg); border-radius: 12px; overflow: hidden; z-index: 1600; box-shadow: 0 15px 40px rgba(0,0,0,0.5); opacity: 0; pointer-events: none; transform: translateY(20px); transition: 0.3s; border: 1px solid var(--border-color); }
         html[dir="ltr"] .bot-window { left: auto; right: 30px; }
         .bot-window.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
         .bot-header { background: var(--bot-header); padding: 15px; color: #fff; font-weight: bold; display: flex; justify-content: space-between; align-items: center; font-family: 'Rajdhani', sans-serif;}
-        .bot-body { padding: 20px; height: 250px; overflow-y: auto; background: rgba(0,0,0,0.1); }
-        .bot-msg { background: var(--primary); color: #fff; padding: 10px 15px; border-radius: 15px; border-top-right-radius: 0; font-size: 0.9rem; line-height: 1.5; margin-bottom: 10px; width: 85%; }
+        .bot-body { padding: 20px; height: 300px; overflow-y: auto; background: rgba(0,0,0,0.1); display: flex; flex-direction: column; gap: 10px;}
+        
+        .bot-msg { background: var(--primary); color: #fff; padding: 10px 15px; border-radius: 15px; border-top-right-radius: 0; font-size: 0.9rem; line-height: 1.5; width: fit-content; max-width: 85%; align-self: flex-start;}
         html[dir="ltr"] .bot-msg { border-top-right-radius: 15px; border-top-left-radius: 0; }
+        
+        .user-msg { background: rgba(255,255,255,0.1); color: var(--text-main); padding: 10px 15px; border-radius: 15px; border-top-left-radius: 0; font-size: 0.9rem; width: fit-content; max-width: 85%; align-self: flex-end; }
+        html[dir="ltr"] .user-msg { border-top-left-radius: 15px; border-top-right-radius: 0; }
+
         .bot-input { display: flex; padding: 10px; background: var(--bg-card); border-top: 1px solid var(--border-color); }
         .bot-input input { flex: 1; padding: 10px; border: none; background: transparent; color: var(--text-main); outline: none; font-family: 'Cairo', sans-serif;}
-        .bot-input button { background: var(--primary); color: #fff; border: none; padding: 0 15px; border-radius: 6px; cursor: pointer; }
+        .bot-input button { background: var(--primary); color: #fff; border: none; padding: 0 15px; border-radius: 6px; cursor: pointer; transition: 0.2s;}
+        .bot-input button:hover { background: var(--glow-hat); }
 
-        /* رسائل منبثقة (Toast) */
-        #toast { visibility: hidden; min-width: 250px; background-color: var(--bot-header); color: #fff; text-align: center; border-radius: 8px; padding: 15px; position: fixed; z-index: 9999; left: 50%; bottom: 30px; transform: translateX(-50%); font-size: 16px; transition: 0.5s; opacity: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.3); font-weight: bold;}
+        .typing-indicator { display: flex; gap: 4px; padding: 10px 15px; background: var(--primary); border-radius: 15px; border-top-right-radius: 0; width: fit-content; align-self: flex-start;}
+        html[dir="ltr"] .typing-indicator { border-top-right-radius: 15px; border-top-left-radius: 0; }
+        .typing-dot { width: 6px; height: 6px; background: #fff; border-radius: 50%; animation: typing 1.4s infinite ease-in-out both; }
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; } .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes typing { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+
+        #toast { visibility: hidden; min-width: 250px; background-color: #2b2d35; color: #fff; text-align: center; border-radius: 8px; padding: 15px; position: fixed; z-index: 9999; left: 50%; bottom: 30px; transform: translateX(-50%); font-size: 15px; transition: 0.5s; opacity: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.3); border: 1px solid var(--primary); font-family: 'Cairo', sans-serif; font-weight:bold;}
         #toast.show { visibility: visible; bottom: 80px; opacity: 1; }
-
+        
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1500; display: none; backdrop-filter: blur(3px);}
         .overlay.active { display: block; }
 
         @media (max-width: 600px) {
-            .hero h2 { font-size: 2.2rem; }
-            th, td { font-size: 0.85rem; padding: 10px 5px; }
-            .tour-card { padding: 15px; }
-            .tour-footer { flex-direction: column; gap: 8px; }
-            .info-badge { width: 100%; justify-content: center; }
+            .hero h2 { font-size: 2.2rem; } th, td { font-size: 0.85rem; padding: 10px 5px; } .tour-card { padding: 15px; }
+            .tour-footer { flex-direction: column; gap: 8px; } .info-badge { width: 100%; justify-content: center; }
+            .bot-window { width: calc(100% - 40px); left: 20px; right: 20px; }
         }
     </style>
 </head>
@@ -197,6 +189,7 @@
         </div>
         <a href="#hero" onclick="toggleMenu()" data-i18n="menu_home">الرئيسية</a>
         <a href="#leaders" onclick="toggleMenu()" data-i18n="menu_leaders">القادة</a>
+        <a href="#news" onclick="toggleMenu()" data-i18n="menu_news">أحدث الأخبار</a>
         <a href="#accounts" onclick="toggleMenu()" data-i18n="menu_players">اللاعبين</a>
         <a href="#top-spending" onclick="toggleMenu()" data-i18n="menu_spending">الإنفاق</a>
         <a href="#tournaments" onclick="toggleMenu()" data-i18n="menu_tournaments">البطولات</a>
@@ -224,7 +217,6 @@
         <p data-aos="fade-up" data-aos-delay="200" data-i18n="hero_desc">يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.</p>
     </section>
 
-    <!-- فاصل هندسي -->
     <div class="cyber-divider"><div class="center-node"></div></div>
 
     <section id="leaders">
@@ -250,6 +242,32 @@
 
     <div class="cyber-divider"><div class="center-node"></div></div>
 
+    <!-- لوحة الأخبار الرسمية (الجديدة) -->
+    <section id="news">
+        <h2 class="section-title" data-aos="fade-right" data-i18n="news_board_title">لوحة أخبار المجتمع</h2>
+        <div class="news-grid" data-aos="fade-up">
+            
+            <div class="news-card">
+                <div class="news-header">
+                    <div class="news-title"><i class="fa-solid fa-gamepad"></i> <span data-i18n="news_1_title">إطلاق ألعاب وميزات جديدة</span></div>
+                    <span class="news-tag" data-i18n="tag_update">تحديث</span>
+                </div>
+                <p class="news-body" data-i18n="news_1_body">لدينا لعبتان جديدتان نأمل أن نُطلقهما خلال الشهر المقبل أو نحو ذلك، إلى جانب العديد من الميزات الجديدة التي لم نُعلن عنها بعد. ستكون الأشهر القادمة حافلة بالتحديثات، ونستعد لتقديم المزيد لكم حتى نهاية هذا العام.</p>
+            </div>
+
+            <div class="news-card">
+                <div class="news-header">
+                    <div class="news-title" style="color: #ef4444;"><i class="fa-solid fa-shield-halved"></i> <span data-i18n="news_2_title">نظام مكافحة الغش الجديد</span></div>
+                    <span class="news-tag" style="background: rgba(239, 68, 68, 0.15); color: #ef4444;" data-i18n="tag_important">هام جداً</span>
+                </div>
+                <p class="news-body" data-i18n="news_2_body">قد يتأخر الموسم القادم حتى نصدر بعض ميزات مكافحة الغش التي نعمل عليها حاليًا. وسيسمح لنا ذلك بإعادة العاب مثل بونس وغيرها لتوفير بيئة لعب عادلة للجميع.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="cyber-divider"><div class="center-node"></div></div>
+
     <section id="accounts">
         <h2 class="section-title" data-aos="fade-right" data-i18n="players_title">اللاعبين الاقدم</h2>
         <div class="table-wrapper" data-aos="zoom-in">
@@ -258,8 +276,8 @@
                     <tr><th class="col-rank">#</th><th class="col-name" data-i18n="th_player">اللاعب</th><th class="col-days" data-i18n="th_days">عدد الأيام</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td class="col-rank num-font">01</td><td class="col-name"><div class="entity-info"><img src="https://ui-avatars.com/api/?name=Te&background=9d4edd&color=fff" class="entity-img player-img"><span class="num-font">Test</span> <i class="fa-solid fa-circle-check verified-badge"></i></div></td><td class="col-days num-font auto-days" data-base-days="3010"></td></tr>
-                    <tr><td class="col-rank num-font">02</td><td class="col-name"><div class="entity-info"><img src="https://ui-avatars.com/api/?name=MM&background=27272a&color=fff" class="entity-img player-img"><span class="num-font">MMM</span> <i class="fa-solid fa-circle-check verified-badge"></i></div></td><td class="col-days num-font auto-days" data-base-days="3005"></td></tr>
+                    <tr><td class="col-rank num-font">01</td><td class="col-name"><div class="entity-info"><img src="https://ui-avatars.com/api/?name=Te&background=9d4edd&color=fff" class="entity-img player-img"><span class="num-font">Test</span> <i class="fa-solid fa-circle-check verified-badge" title="موثق"></i></div></td><td class="col-days num-font auto-days" data-base-days="3010"></td></tr>
+                    <tr><td class="col-rank num-font">02</td><td class="col-name"><div class="entity-info"><img src="https://ui-avatars.com/api/?name=MM&background=27272a&color=fff" class="entity-img player-img"><span class="num-font">MMM</span> <i class="fa-solid fa-circle-check verified-badge" title="موثق"></i></div></td><td class="col-days num-font auto-days" data-base-days="3005"></td></tr>
                     <tr><td class="col-rank num-font">03</td><td class="col-name"><div class="entity-info"><img src="https://ui-avatars.com/api/?name=BB&background=27272a&color=fff" class="entity-img player-img"><span class="num-font">BBB</span></div></td><td class="col-days num-font auto-days" data-base-days="3005"></td></tr>
                     <tr><td class="col-rank num-font">04</td><td class="col-name"><div class="entity-info"><img src="https://ui-avatars.com/api/?name=P4&background=111&color=fff" class="entity-img player-img"><span class="num-font">Player 4</span></div></td><td class="col-days num-font auto-days" data-base-days="2900"></td></tr>
                     <tr><td class="col-rank num-font">05</td><td class="col-name"><div class="entity-info"><img src="https://ui-avatars.com/api/?name=P5&background=111&color=fff" class="entity-img player-img"><span class="num-font">Player 5</span></div></td><td class="col-days num-font auto-days" data-base-days="2850"></td></tr>
@@ -291,7 +309,7 @@
     <div class="cyber-divider"><div class="center-node"></div></div>
 
     <section id="tournaments" style="padding-bottom: 150px;">
-        <h2 class="section-title" data-aos="fade-right" data-i18n="tournaments_title">مركز البطولات</h2>
+        <h2 class="section-title" data-aos="fade-right" data-i18n="tournaments_title">مركز البطولات المعتمدة</h2>
         <div class="tournaments-grid" id="tournaments-container" data-aos="fade-up"></div>
     </section>
 
@@ -305,15 +323,14 @@
             <i class="fa-solid fa-xmark" onclick="toggleBot()" style="cursor:pointer;"></i>
         </div>
         <div class="bot-body" id="botBody">
-            <div class="bot-msg" data-i18n="bot_welcome">مرحباً! أنا BoltBot، مساعدك الذكي في مجتمع PlatoX. سيتم ربطي قريباً بسيرفر الديسكورد للرد المباشر! 🎮</div>
+            <div class="bot-msg" data-i18n="bot_welcome">مرحباً بك! أنا BoltBot، مساعدك الذكي في مجتمع PlatoX. اسألني عن البطولات، القوانين، أو الديسكورد 🎮</div>
         </div>
         <div class="bot-input">
-            <input type="text" id="botInput" data-i18n-placeholder="bot_placeholder" placeholder="اكتب رسالتك هنا...">
-            <button onclick="sendBotMsg()"><i class="fa-solid fa-paper-plane"></i></button>
+            <input type="text" id="botInput" data-i18n-placeholder="bot_placeholder" placeholder="اكتب رسالتك هنا..." onkeypress="handleBotEnter(event)">
+            <button onclick="processBotMessage()"><i class="fa-solid fa-paper-plane"></i></button>
         </div>
     </div>
 
-    <!-- رسالة النسخ (Toast) -->
     <div id="toast"></div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -343,43 +360,70 @@
             document.getElementById('theme-icon').className = newTheme === 'light' ? 'fa-solid fa-sun theme-toggle' : 'fa-solid fa-moon theme-toggle';
         }
 
-        /* نسخ اليوزر الذكي */
         function copyAdminID(id) {
             navigator.clipboard.writeText(id).then(() => {
                 const toast = document.getElementById("toast");
-                toast.innerText = (document.documentElement.getAttribute('lang') === 'ar') ? `تم نسخ الإداري: ${id}` : `Copied Admin: ${id}`;
+                toast.innerHTML = (document.documentElement.getAttribute('lang') === 'ar') ? `<i class="fa-solid fa-check"></i> تم نسخ الإداري: ${id}` : `<i class="fa-solid fa-check"></i> Copied Admin: ${id}`;
                 toast.className = "show";
                 setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
             });
         }
 
-        /* محاكاة إرسال رسالة في البوت */
-        function sendBotMsg() {
-            const input = document.getElementById('botInput');
-            if(input.value.trim() !== '') {
-                const body = document.getElementById('botBody');
-                const isAr = document.documentElement.getAttribute('lang') === 'ar';
-                body.innerHTML += `<div class="bot-msg" style="background: var(--bg-card); color:var(--text-main); margin-left: auto; border-radius: 15px; text-align: right;">${input.value}</div>`;
-                input.value = '';
-                setTimeout(() => {
-                    body.innerHTML += `<div class="bot-msg">${isAr ? 'عذراً، البوت قيد الربط مع خوادم الديسكورد حالياً ⚙️' : 'Bot is currently being linked to Discord servers ⚙️'}</div>`;
-                    body.scrollTop = body.scrollHeight;
-                }, 1000);
+        /* برمجة الذكاء الاصطناعي المُحاكى لـ BoltBot */
+        function handleBotEnter(e) { if(e.key === 'Enter') processBotMessage(); }
+        
+        function processBotMessage() {
+            const inputField = document.getElementById('botInput');
+            const text = inputField.value.trim();
+            if(text === '') return;
+            
+            const body = document.getElementById('botBody');
+            const isAr = document.documentElement.getAttribute('lang') === 'ar';
+            
+            // رسالة المستخدم
+            body.innerHTML += `<div class="user-msg">${text}</div>`;
+            inputField.value = '';
+            body.scrollTop = body.scrollHeight;
+
+            // إظهار علامة "يكتب..." (Typing indicator)
+            const typingID = 'typing-' + Date.now();
+            body.innerHTML += `<div class="typing-indicator" id="${typingID}"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
+            body.scrollTop = body.scrollHeight;
+
+            // تحليل الكلمات المفتاحية (Keyword Analysis)
+            setTimeout(() => {
+                document.getElementById(typingID).remove();
+                let reply = "";
+                const lowerText = text.toLowerCase();
+                
+                if(lowerText.includes('سلام') || lowerText.includes('مرحبا') || lowerText.includes('هلا') || lowerText.includes('hi') || lowerText.includes('hello')) {
+                    reply = isAr ? "أهلاً بك يا صديقي! كيف يمكنني مساعدتك في مجتمع PlatoX اليوم؟" : "Hello friend! How can I help you in PlatoX today?";
+                } 
+                else if(lowerText.includes('بطولة') || lowerText.includes('بطولات') || lowerText.includes('مسابقة') || lowerText.includes('tournament')) {
+                    reply = isAr ? "يمكنك التسجيل في البطولات عبر قسم 'مركز البطولات' في هذا الموقع. انسخ يوزر الإدارة وتواصل معهم، أو انضم لسيرفر الديسكورد للتفاصيل." : "You can register for tournaments in the 'Tournaments' section. Copy the admin ID or join Discord for details.";
+                }
+                else if(lowerText.includes('ديسكورد') || lowerText.includes('رابط') || lowerText.includes('discord') || lowerText.includes('link')) {
+                    reply = isAr ? "تفضل، هذا هو رابط الديسكورد الرسمي لمجتمعنا: discord.gg/plato 🎮 ننتظرك هناك!" : "Here is our official Discord link: discord.gg/plato 🎮 See you there!";
+                }
+                else if(lowerText.includes('كوينز') || lowerText.includes('متجر') || lowerText.includes('coins') || lowerText.includes('store')) {
+                    reply = isAr ? "حسب آخر الأخبار الرسمية: سيتم تنظيف المتجر من عناصر الكوينز كليًا قريباً!" : "According to the latest news: The store will be completely cleared of coin items soon!";
+                }
+                else if(lowerText.includes('غش') || lowerText.includes('هاك') || lowerText.includes('cheat') || lowerText.includes('hack')) {
+                    reply = isAr ? "نحن نعمل حالياً على نظام مكافحة غش صارم جداً لضمان بيئة لعب عادلة للجميع. ترقب التحديثات!" : "We are currently working on a strict anti-cheat system to ensure fair play. Stay tuned!";
+                }
+                else {
+                    reply = isAr ? "سؤال رائع! للحصول على إجابة دقيقة والتحدث مع الإدارة، أنصحك بفتح (تذكرة/Ticket) في سيرفر الديسكورد الخاص بنا. ⚡" : "Great question! To get a precise answer, I recommend opening a Ticket in our Discord server. ⚡";
+                }
+
+                body.innerHTML += `<div class="bot-msg">${reply}</div>`;
                 body.scrollTop = body.scrollHeight;
-            }
+            }, 1200); // تأخير لمحاكاة التفكير الحقيقي (1.2 ثانية)
         }
 
-        const now = new Date();
-        const dateString = now.toISOString().split('T')[0];
+        const now = new Date(); const dateString = now.toISOString().split('T')[0];
         const tournamentsData = [
-            { 
-                id: 1, time: `${dateString}T21:00:00`, img: "https://ui-avatars.com/api/?name=Y1&background=ffd700&color=000", 
-                titleKey: "tour_1_title", descKey: "tour_1_desc", groupKey: "group_1", gameKey: "game_pool", prize: "50K - 30K", admin: "YYY", borderColor: "var(--primary)" 
-            },
-            { 
-                id: 2, time: `${dateString}T22:00:00`, img: "https://ui-avatars.com/api/?name=Y2&background=00b4d8&color=fff", 
-                titleKey: "tour_2_title", descKey: "tour_2_desc", groupKey: "group_2", gameKey: "game_werewolf", prize: "40K", admin: "BBB", borderColor: "var(--glow-bbb)" 
-            }
+            { id: 1, time: `${dateString}T21:00:00`, img: "https://ui-avatars.com/api/?name=Y1&background=ffd700&color=000", titleKey: "tour_1_title", descKey: "tour_1_desc", groupKey: "group_1", gameKey: "game_pool", prize: "50K - 30K", admin: "YYY", borderColor: "var(--primary)" },
+            { id: 2, time: `${dateString}T22:00:00`, img: "https://ui-avatars.com/api/?name=Y2&background=00b4d8&color=fff", titleKey: "tour_2_title", descKey: "tour_2_desc", groupKey: "group_2", gameKey: "game_werewolf", prize: "40K", admin: "BBB", borderColor: "var(--glow-bbb)" }
         ];
 
         function renderTournaments() {
@@ -396,9 +440,7 @@
                                 <img src="${tour.img}" class="entity-img">
                                 <div class="tour-title" style="color: ${tour.borderColor};" data-i18n="${tour.titleKey}">...</div>
                             </div>
-                            <div class="countdown-box" id="timer-${tour.id}">
-                                <i class="fa-regular fa-clock"></i> <span class="num-font countdown-val">00:00:00</span>
-                            </div>
+                            <div class="countdown-box" id="timer-${tour.id}"><i class="fa-regular fa-clock"></i> <span class="num-font countdown-val">00:00:00</span></div>
                         </div>
                         <p class="tour-desc" data-i18n="${tour.descKey}">...</p>
                         <div class="tour-footer">
@@ -431,30 +473,36 @@
         
         const translations = {
             ar: {
-                menu_home: "الرئيسية", menu_leaders: "القادة", menu_players: "اللاعبين", menu_spending: "الإنفاق", menu_tournaments: "البطولات",
-                news_text: "🔥 أحدث أخبار بلاتو: لدينا لعبتان جديدتان نأمل أن نُطلقهما خلال الشهر المقبل أو نحو ذلك، إلى جانب العديد من الميزات الجديدة التي لم نُعلن عنها بعد. ستكون الأشهر القادمة حافلة بالتحديثات، ونستعد لتقديم المزيد لكم حتى نهاية هذا العام. ✦ قد يتأخر الموسم القادم حتى نصدر بعض ميزات مكافحة الغش التي نعمل عليها حاليًا. وسيسمح لنا ذلك بإعادة العاب مثل بونس وغيرها. ✦ 🎮 للمزيد انضموا الى الديسكورد!",
+                menu_home: "الرئيسية", menu_leaders: "القادة", menu_news: "الأخبار", menu_players: "اللاعبين", menu_spending: "الإنفاق", menu_tournaments: "البطولات",
+                news_text: "احدث اخبار بلاتو: سيتم تنظيف المتجر من عناصر الكوينز كليًا",
                 hero_title: "مجتمع اللاعبين العرب", hero_desc: "يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.",
-                leaders_title: "القادة العرب", players_title: "اللاعبين الاقدم", spending_title: "ترتيب المجموعات الأكثر إنفاقًا", tournaments_title: "مركز البطولات المعتمدة",
+                leaders_title: "القادة العرب", news_board_title: "لوحة أخبار المجتمع", players_title: "اللاعبين الاقدم", spending_title: "ترتيب المجموعات الأكثر إنفاقًا", tournaments_title: "مركز البطولات المعتمدة",
                 desc_yyy: "صانع الأثر، يقود برؤية مستقبلية لخلق بيئة إيجابية لا تعرف المستحيل.", desc_hat: "رمز الكاريزما والقوة، تقود المجتمع بثقة راسخة وترسم معايير الرقي.", desc_bbb: "الحكمة في اتخاذ القرار، يوازن بين الحزم والهدوء لإدارة الأزمات باحترافية.",
+                news_1_title: "إطلاق ألعاب وميزات جديدة", news_1_body: "لدينا لعبتان جديدتان نأمل أن نُطلقهما خلال الشهر المقبل أو نحو ذلك، إلى جانب العديد من الميزات الجديدة التي لم نُعلن عنها بعد. ستكون الأشهر القادمة حافلة بالتحديثات، ونستعد لتقديم المزيد لكم حتى نهاية هذا العام.",
+                news_2_title: "نظام مكافحة الغش الجديد", news_2_body: "قد يتأخر الموسم القادم حتى نصدر بعض ميزات مكافحة الغش التي نعمل عليها حاليًا. وسيسمح لنا ذلك بإعادة العاب مثل بونس وغيرها لتوفير بيئة لعب عادلة للجميع.",
+                tag_update: "تحديث", tag_important: "هام جداً",
                 th_player: "اللاعب", th_days: "عدد الأيام", th_group: "المجموعة", th_coins: "الإنفاق",
                 group_1: "يوسف تجربة 1", group_2: "يوسف تجربة 2", group_3: "يوسف تجربة 3", group_4: "يوسف تجربة 4", group_5: "يوسف تجربة 5",
                 tour_1_title: "بطولة يوسف تجربة 1", tour_1_desc: "مجموعة يوسف تجربة 1 ترحب بكم، اليوم الساعة 9 بتوقيت السعودية بطولة بلياردو. للتسجيل يرجى إضافة الإداري.",
                 tour_2_title: "بطولة يوسف تجربة 2", tour_2_desc: "ندعوكم للمشاركة في تحدي ذئاب (Werewolf) الليلة الساعة 10 بتوقيت السعودية. الأماكن محدودة.",
                 tour_group: "المجموعة:", tour_game: "اللعبة:", game_pool: "بلياردو", game_werewolf: "ذئاب (Werewolf)", tour_admin: "نسخ الإدارة:", tour_prize: "الجوائز:",
-                bot_welcome: "مرحباً! أنا BoltBot، مساعدك الذكي في مجتمع PlatoX. سيتم ربطي قريباً بسيرفر الديسكورد للرد المباشر! 🎮", bot_placeholder: "اكتب رسالتك هنا..."
+                bot_welcome: "مرحباً بك! أنا BoltBot، مساعدك الذكي في مجتمع PlatoX. اسألني عن البطولات، القوانين، أو الديسكورد 🎮", bot_placeholder: "اكتب رسالتك هنا..."
             },
             en: {
-                menu_home: "HOME", menu_leaders: "LEADERS", menu_players: "PLAYERS", menu_spending: "SPENDING", menu_tournaments: "TOURNAMENTS",
-                news_text: "🔥 LATEST NEWS: We have two new games that we hope to release within the next month or so, along with many other new features that we haven't announced yet. The coming months will be packed with new updates... ✦ The next season may be delayed until we release some of the anti-cheat features we're currently working on. This will allow us to bring back games like Bounce and others. ✦ 🎮 For more, join our Discord!",
+                menu_home: "HOME", menu_leaders: "LEADERS", menu_news: "NEWS", menu_players: "PLAYERS", menu_spending: "SPENDING", menu_tournaments: "TOURNAMENTS",
+                news_text: "LATEST PLATO NEWS: The store will be completely cleared of coin items.",
                 hero_title: "ARABIC PLAYERS COMMUNITY", hero_desc: "Where gaming enthusiasts meet to experience thrilling moments, build true friendships, and create eternal memories.",
-                leaders_title: "ARABIC LEADERS", players_title: "OLDEST PLAYERS", spending_title: "TOP SPENDING GROUPS", tournaments_title: "APPROVED TOURNAMENTS",
+                leaders_title: "ARABIC LEADERS", news_board_title: "COMMUNITY NEWS BOARD", players_title: "OLDEST PLAYERS", spending_title: "TOP SPENDING GROUPS", tournaments_title: "APPROVED TOURNAMENTS",
                 desc_yyy: "The Impact Maker, leading with a futuristic vision to create a positive environment.", desc_hat: "Symbol of Charisma, leading the community with solid confidence and setting standards.", desc_bbb: "Wisdom in decision making, balancing firmness and calmness in management.",
+                news_1_title: "New Games & Features Launch", news_1_body: "We have two new games that we hope to release within the next month or so, along with many other new features that we haven't announced yet. The coming months will be packed with new updates, and we're getting ready to bring you even more through the end of this year.",
+                news_2_title: "New Anti-Cheat System", news_2_body: "The next season may be delayed until we release some of the anti-cheat features we're currently working on. This will allow us to bring back games like Bounce and others to ensure a fair playing environment.",
+                tag_update: "UPDATE", tag_important: "CRITICAL",
                 th_player: "PLAYER", th_days: "DAYS", th_group: "GROUP", th_coins: "SPENDING",
                 group_1: "Yousef Test 1", group_2: "Yousef Test 2", group_3: "Yousef Test 3", group_4: "Yousef Test 4", group_5: "Yousef Test 5",
                 tour_1_title: "Yousef Test 1 Tournament", tour_1_desc: "Yousef Test 1 group welcomes you! Today at 9 PM KSA, a Pool tournament. Please add the admin to join.",
                 tour_2_title: "Yousef Test 2 Tournament", tour_2_desc: "Join us for a Werewolf challenge tonight at 10 PM KSA. Limited seats available.",
                 tour_group: "Group:", tour_game: "Game:", game_pool: "Pool", game_werewolf: "Werewolf", tour_admin: "Copy Admin:", tour_prize: "Prizes:",
-                bot_welcome: "Hello! I am BoltBot, your smart assistant. I will be linked to the Discord servers soon for live replies! 🎮", bot_placeholder: "Type your message..."
+                bot_welcome: "Hello! I'm BoltBot, your smart assistant. Ask me about tournaments, rules, or Discord 🎮", bot_placeholder: "Type your message..."
             }
         };
 
