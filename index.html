@@ -789,16 +789,25 @@
             setTimeout(() => { animatedElements.forEach(el => el.classList.add('aos-animate')); }, 50);
     }
 
-        window.onload = () => {
-            const savedTheme = localStorage.getItem('theme') || 'dark'; document.documentElement.setAttribute('data-theme', savedTheme); document.getElementById('theme-icon').className = savedTheme === 'light' ? 'fa-solid fa-sun theme-toggle' : 'fa-solid fa-moon theme-toggle';
-            const savedLang = localStorage.getItem('lang') || 'ar'; changeLang(savedLang);
-            const start = new Date('2026-09-03'); const added = Math.max(0, Math.floor((new Date() - start) / (1000 * 60 * 60 * 24))); 
-            document.querySelectorAll('.auto-days').forEach(td => { td.innerText = (parseInt(td.getAttribute('data-base-days')) + added); });
+                window.onload = () => {
+            const savedTheme = localStorage.getItem('theme') || 'dark'; 
+            document.documentElement.setAttribute('data-theme', savedTheme); 
+            document.getElementById('theme-icon').className = savedTheme === 'light' ? 'fa-solid fa-sun theme-toggle' : 'fa-solid fa-moon theme-toggle';
+            
+            const start = new Date('2026-09-03'); 
+            const added = Math.max(0, Math.floor((new Date() - start) / (1000 * 60 * 60 * 24))); 
+            document.querySelectorAll('.auto-days').forEach(td => { 
+                td.innerText = (parseInt(td.getAttribute('data-base-days')) + added); 
+            });
             
             renderGlobalLeaders();
             filterServer('english'); 
             
-            renderTournaments(); setInterval(updateTimers, 1000);
+            // هذه الدالة ستقوم برسم البطولات وترجمتها فوراً بدون الكتابة فوقها
+            const savedLang = localStorage.getItem('lang') || 'ar'; 
+            changeLang(savedLang);
+            
+            setInterval(updateTimers, 1000);
         }
     </script>
 </body>
