@@ -3,313 +3,276 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PlatoX - مجتمع بلاتو العربي</title>
+    <title>PlatoX - القادة العرب</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+
         :root {
             --bg-dark: #0a0a0a;
-            --bg-card: #151515;
-            --text-light: #f5f5f5;
+            --text-light: #ffffff;
             --accent-purple: #8a2be2;
-            --glow: 0 0 15px rgba(138, 43, 226, 0.3);
-            --border-color: #333;
+            --glass-bg: rgba(20, 20, 20, 0.6);
+            --glass-border: rgba(138, 43, 226, 0.2);
         }
-        
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            font-family: 'Cairo', sans-serif;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-dark);
             color: var(--text-light);
-            /* حركة التمرير السلسة للأقسام */
-            overflow-y: scroll;
-            scroll-snap-type: y mandatory;
-            height: 100vh;
+            overflow-x: hidden;
+            /* خلفية توحي بأجواء الألعاب والبلاتو */
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(138, 43, 226, 0.1) 0%, transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(255, 255, 255, 0.02) 0%, transparent 25%);
+            background-attachment: fixed;
         }
 
-        /* تنسيق الأقسام لتأخذ الشاشة كاملة */
-        section {
-            height: 100vh;
-            width: 100%;
-            scroll-snap-align: start;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            padding: 20px;
-            /* خلفية مستوحاة من أجواء الألعاب */
-            background-image: radial-gradient(circle at 10% 20%, rgba(138, 43, 226, 0.05) 0%, transparent 20%),
-                              radial-gradient(circle at 90% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 20%);
-        }
-
-        /* الترويسة العلوية الثابتة */
-        .header-nav {
+        .navbar {
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 20px 50px;
+            padding: 15px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(10, 10, 10, 0.9);
+            background: rgba(10, 10, 10, 0.8);
             backdrop-filter: blur(10px);
-            z-index: 50;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
         }
 
-        .header-nav h1 {
-            color: var(--text-light);
-            font-size: 28px;
+        .navbar h1 {
+            font-weight: 900;
+            font-size: 26px;
         }
-        
-        .header-nav h1 span {
+
+        .navbar h1 span {
             color: var(--accent-purple);
-            text-shadow: var(--glow);
+            text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
         }
 
-        .social-btns {
-            display: flex;
-            gap: 15px;
-        }
-
-        .social-btns a {
+        .social-links a {
             color: white;
             text-decoration: none;
-            padding: 8px 20px;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 14px;
+            padding: 8px 15px;
+            border-radius: 6px;
             border: 1px solid var(--accent-purple);
+            margin-right: 10px;
+            font-size: 14px;
             transition: 0.3s;
-            background: rgba(138, 43, 226, 0.1);
         }
 
-        .social-btns a:hover {
-            background-color: var(--accent-purple);
-            box-shadow: var(--glow);
+        .social-links a:hover {
+            background: var(--accent-purple);
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
+        }
+
+        section {
+            padding: 120px 20px 60px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .section-title {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             margin-bottom: 50px;
-            text-shadow: var(--glow);
-            text-align: center;
+            font-weight: 900;
+            text-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
         }
 
-        /* تنسيق بطاقات القادة الموحدة */
-        .ids-container {
+        .leaders-grid {
             display: flex;
+            gap: 30px;
             justify-content: center;
             align-items: center;
-            gap: 30px;
             flex-wrap: wrap;
+            width: 100%;
+            max-width: 1100px;
         }
 
-        .card {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 40px 30px;
+        .leader-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
             border-radius: 15px;
-            text-align: center;
+            padding: 30px 20px;
             width: 300px;
-            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
-            position: relative;
-            overflow: hidden;
+            text-align: center;
+            transition: 0.4s;
         }
 
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; height: 4px;
-            background: var(--accent-purple);
-            box-shadow: var(--glow);
-            opacity: 0;
-            transition: 0.3s;
-        }
-
-        .card:hover {
+        .leader-card:hover {
             transform: translateY(-10px);
             border-color: var(--accent-purple);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(138, 43, 226, 0.2);
         }
 
-        .card:hover::before {
-            opacity: 1;
+        .center-leader {
+            width: 340px;
+            border-color: rgba(138, 43, 226, 0.5);
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.1);
         }
 
-        .card img {
-            width: 110px;
-            height: 110px;
+        .leader-card img {
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
-            margin-bottom: 20px;
-            border: 2px solid var(--border-color);
-            transition: 0.3s;
+            margin-bottom: 15px;
+            border: 2px solid var(--accent-purple);
             object-fit: cover;
         }
 
-        .card:hover img {
-            border-color: var(--accent-purple);
-            box-shadow: var(--glow);
+        .leader-card h3 {
+            font-size: 1.4rem;
+            color: white;
+            margin-bottom: 10px;
         }
 
-        /* تنسيق الجداول (البطولات وأقدم الحسابات) */
-        .data-table-wrapper {
-            width: 90%;
-            max-width: 1000px;
-            background-color: var(--bg-card);
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
+        .leader-card p {
+            color: #ccc;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .table-container {
+            width: 100%;
+            max-width: 900px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .data-table {
+        table {
             width: 100%;
             border-collapse: collapse;
         }
 
-        .data-table th, .data-table td {
-            padding: 20px;
+        th, td {
+            padding: 18px;
             text-align: center;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
-        .data-table th {
-            background-color: #111;
-            color: var(--text-light);
-            font-size: 1.1rem;
+        th {
+            background: rgba(0,0,0,0.5);
+            color: var(--accent-purple);
         }
 
-        .data-table tr:last-child td {
-            border-bottom: none;
+        tr:hover td {
+            background: rgba(138, 43, 226, 0.05);
         }
 
-        .data-table tr:hover td {
-            background-color: rgba(255,255,255,0.02);
-        }
-
-        .join-btn {
-            background-color: transparent;
-            color: var(--text-light);
+        .action-btn {
+            background: transparent;
+            color: white;
             border: 1px solid var(--accent-purple);
-            padding: 8px 20px;
+            padding: 6px 15px;
             border-radius: 5px;
             cursor: pointer;
             transition: 0.3s;
-            font-weight: bold;
         }
 
-        .join-btn:hover {
-            background-color: var(--accent-purple);
-            box-shadow: var(--glow);
+        .action-btn:hover {
+            background: var(--accent-purple);
         }
 
-        /* زر الاقتراحات العائم */
-        .suggest-btn {
+        .floating-btn {
             position: fixed;
-            bottom: 40px;
-            right: 40px;
-            background-color: var(--bg-card);
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent-purple);
             color: white;
-            border: 1px solid var(--accent-purple);
-            padding: 15px 30px;
+            border: none;
+            padding: 12px 25px;
             border-radius: 30px;
-            cursor: pointer;
             font-weight: bold;
-            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
+            z-index: 1000;
             transition: 0.3s;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
-        .suggest-btn:hover {
-            background-color: var(--accent-purple);
-            box-shadow: var(--glow);
+        .floating-btn:hover {
             transform: scale(1.05);
         }
     </style>
 </head>
 <body>
 
-    <nav class="header-nav">
+    <nav class="navbar">
         <h1>Plato<span>X</span></h1>
-        <div class="social-btns">
+        <div class="social-links">
             <a href="https://discord.gg/plato" target="_blank">Discord</a>
-            <a href="https://instagram.com/platoarab" target="_blank">Instagram @platoarab</a>
+            <a href="https://instagram.com/platoarab" target="_blank">@platoarab</a>
         </div>
     </nav>
 
+    <!-- قسم القادة العرب -->
     <section id="leaders">
-        <h2 class="section-title">القادة العرب</h2>
-        
-        <div class="ids-container">
-            <div class="card">
+        <h2 class="section-title" data-aos="fade-down">القادة العرب</h2>
+        <div class="leaders-grid">
+            
+            <!-- YYY (يمين) -->
+            <div class="leader-card" data-aos="fade-up" data-aos-delay="100">
                 <img src="https://via.placeholder.com/150" alt="YYY">
                 <h3>YYY</h3>
-                <span style="color:var(--accent-purple); display:block; margin: 10px 0;">قائد طموح</span>
-                <p style="font-size: 0.9em; color: #aaa; line-height: 1.6;">يسعى للارتقاء بالمجتمع وتطويره، لا يكتفي بالوجود بل يصنع أثرًا ويخلق بيئة إيجابية محفزة.</p>
+                <p>قائد طموح يسعى للارتقاء بالمجتمع وتطويره، لا يكتفي بالوجود بل يصنع أثرًا ويخلق بيئة إيجابية محفزة.</p>
             </div>
 
-            <div class="card">
+            <!-- HAT (المنتصف) -->
+            <div class="leader-card center-leader" data-aos="fade-up" data-aos-delay="200">
                 <img src="https://via.placeholder.com/150" alt="HAT">
-                <h3>HAT</h3>
-                <span style="color:var(--accent-purple); display:block; margin: 10px 0;">قائدة استثنائية</span>
-                <p style="font-size: 0.9em; color: #aaa; line-height: 1.6;">تتجلّى فيها الكاريزما في أبهى صورها؛ تقود المجتمع بثقةٍ راسخة، حضورها رمزٌ للقوة والرقي.</p>
+                <h3 style="color: var(--accent-purple);">HAT</h3>
+                <p>قائدة استثنائية، تتجلّى فيها الكاريزما في أبهى صورها؛ تقود المجتمع بثقةٍ راسخة، حضورها رمزٌ للقوة والرقي، وأثرها يخلد في كل زاوية من المجتمع.</p>
             </div>
 
-            <div class="card">
+            <!-- BBB (يسار) -->
+            <div class="leader-card" data-aos="fade-up" data-aos-delay="300">
                 <img src="https://via.placeholder.com/150" alt="BBB">
                 <h3>BBB</h3>
-                <span style="color:var(--accent-purple); display:block; margin: 10px 0;">قائد حكيم</span>
-                <p style="font-size: 0.9em; color: #aaa; line-height: 1.6;">ذو حضور قوي، يدير الأمور بحكمة، يجمع بين الحزم والهدوء في إدارة المجتمع.</p>
+                <p>قائد حكيم ذو حضور قوي، يدير الأمور بحكمة، يجمع بين الحزم والهدوء في إدارة المجتمع.</p>
             </div>
+
         </div>
     </section>
 
-    <section id="oldest-accounts">
-        <h2 class="section-title">أقدم الحسابات العربية</h2>
-        
-        <div class="data-table-wrapper">
-            <table class="data-table">
+    <!-- أقدم الحسابات العربية -->
+    <section id="accounts">
+        <h2 class="section-title" data-aos="fade-right">أقدم الحسابات العربية</h2>
+        <div class="table-container" data-aos="zoom-in">
+            <table>
                 <thead>
                     <tr>
                         <th>الترتيب</th>
                         <th>اسم المستخدم</th>
-                        <th>عدد أيام النشاط</th>
+                        <th>أيام النشاط</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>يوزر 1</td>
-                        <td>1500 يوم</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>يوزر 2</td>
-                        <td>1200 يوم</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>يوزر 3</td>
-                        <td>1150 يوم</td>
-                    </tr>
+                    <tr><td>1</td><td>يوزر 1</td><td>1500 يوم</td></tr>
+                    <tr><td>2</td><td>يوزر 2</td><td>1200 يوم</td></tr>
+                    <tr><td>3</td><td>يوزر 3</td><td>1150 يوم</td></tr>
                 </tbody>
             </table>
         </div>
     </section>
 
-    <section id="tournament-hub">
-        <h2 class="section-title">مركز البطولات</h2>
-        
-        <div class="data-table-wrapper">
-            <table class="data-table">
+    <!-- مركز البطولات -->
+    <section id="tournaments">
+        <h2 class="section-title" data-aos="fade-right">مركز البطولات</h2>
+        <div class="table-container" data-aos="zoom-in">
+            <table>
                 <thead>
                     <tr>
                         <th>اسم القروب</th>
@@ -320,29 +283,27 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>تجربة يوسف</td>
+                        <td>الفرسان</td>
                         <td>بلياردو (Pool)</td>
                         <td>50,000</td>
-                        <td><button class="join-btn">إضافة يوزر</button></td>
+                        <td><button class="action-btn">إضافة يوزر</button></td>
                     </tr>
                     <tr>
-                        <td>تجربة يوسف</td>
+                        <td>النخبة</td>
                         <td>ذئاب (Werewolf)</td>
                         <td>30,000</td>
-                        <td><button class="join-btn">إضافة يوزر</button></td>
-                    </tr>
-                    <tr>
-                        <td>تجربة يوسف</td>
-                        <td>أونو (Ocho)</td>
-                        <td>20,000</td>
-                        <td><button class="join-btn">إضافة يوزر</button></td>
+                        <td><button class="action-btn">إضافة يوزر</button></td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </section>
 
-    <button class="suggest-btn">💡 قدم اقتراحك</button>
+    <button class="floating-btn">💡 قدم اقتراحك</button>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true });
+    </script>
 </body>
 </html>
