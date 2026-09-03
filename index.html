@@ -9,10 +9,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* المتغيرات الأساسية (الوضع الليلي الافتراضي) */
         :root {
             --bg-main: #09090b;
-            --bg-card: rgba(18, 18, 23, 0.8);
+            --bg-card: rgba(18, 18, 23, 0.85);
             --primary: #9d4edd;
             --primary-glow: rgba(157, 78, 221, 0.5);
             --border-color: rgba(255, 255, 255, 0.1);
@@ -22,10 +21,9 @@
             --ticker-text: #ffffff;
             --glow-yyy: #ffd700;
             --glow-hat: #9d4edd;
-            --glow-bbb: #00e5ff; /* عدلته لسماوي نيون ليبرز أكثر في الوضعين */
+            --glow-bbb: #00e5ff;
         }
 
-        /* متغيرات الوضع النهاري */
         [data-theme="light"] {
             --bg-main: #f0f2f5;
             --bg-card: rgba(255, 255, 255, 0.9);
@@ -40,25 +38,30 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body {
-            color: var(--text-main); font-family: 'Cairo', sans-serif;
-            overflow-x: hidden; transition: color 0.3s ease;
-        }
-        
+        body { color: var(--text-main); font-family: 'Cairo', sans-serif; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
         html[dir="ltr"] body, .num-font, .navbar h1 { font-family: 'Rajdhani', sans-serif; }
 
-        /* الخلفية المتحركة (Gaming Animated BG) */
+        /* الخلفية المتحركة */
         .animated-bg {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1;
-            background: linear-gradient(45deg, var(--bg-main), var(--bg-card), var(--bg-main));
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2;
+            background: linear-gradient(45deg, var(--bg-main), rgba(157, 78, 221, 0.05), var(--bg-main));
             background-size: 400% 400%; animation: gradientBG 15s ease infinite; transition: background 0.5s ease;
         }
         @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        /* جزيئات تسبح في الخلفية */
-        .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; pointer-events: none; opacity: 0.4; }
-        .particle { position: absolute; background: var(--primary); border-radius: 50%; animation: floatUp 20s infinite linear; filter: blur(3px); }
-        @keyframes floatUp { 0% { transform: translateY(100vh) scale(0); opacity: 0; } 50% { opacity: 0.5; } 100% { transform: translateY(-10vh) scale(1); opacity: 0; } }
+        /* أيقونات الألعاب المتطايرة (بلاتو) */
+        .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; pointer-events: none; }
+        .particle {
+            position: absolute; color: var(--primary); opacity: 0.12;
+            animation: floatUp infinite linear;
+        }
+        [data-theme="light"] .particle { opacity: 0.08; }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(0deg) scale(0.8); opacity: 0; }
+            10% { opacity: 0.12; }
+            90% { opacity: 0.12; }
+            100% { transform: translateY(-10vh) rotate(360deg) scale(1.5); opacity: 0; }
+        }
 
         /* شريط التنقل */
         .navbar {
@@ -74,16 +77,19 @@
         .nav-actions i:hover { color: var(--primary); transform: scale(1.1); }
         .theme-toggle { font-size: 20px !important; margin-right: 15px; }
 
-        /* شريط الأخبار المتحرك */
+        /* شريط الأخبار المطور (عربي/إنجليزي) */
         .news-ticker {
             position: fixed; top: 60px; width: 100%; background: var(--ticker-bg); color: var(--ticker-text);
-            padding: 5px 0; overflow: hidden; white-space: nowrap; z-index: 999;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2); font-weight: 700; font-size: 0.9rem;
+            padding: 6px 0; overflow: hidden; white-space: nowrap; z-index: 999;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); font-weight: 700; font-size: 0.95rem;
         }
-        .ticker-content { display: inline-block; animation: ticker 25s linear infinite; padding-left: 100%; }
-        html[dir="ltr"] .ticker-content { animation: ticker-ltr 25s linear infinite; padding-left: 0; padding-right: 100%; }
-        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-        @keyframes ticker-ltr { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+        .ticker-content { display: inline-block; animation: ticker-rtl 25s linear infinite; }
+        html[dir="ltr"] .ticker-content { animation: ticker-ltr 25s linear infinite; }
+        
+        /* العربي (من اليسار لليمين) */
+        @keyframes ticker-rtl { from { transform: translateX(-100vw); } to { transform: translateX(100vw); } }
+        /* الإنجليزي (من اليمين لليسار) */
+        @keyframes ticker-ltr { from { transform: translateX(100vw); } to { transform: translateX(-100vw); } }
 
         /* القائمة الجانبية */
         .sidebar {
@@ -97,14 +103,16 @@
         .close-btn { align-self: flex-end; font-size: 30px; cursor: pointer; margin-bottom: 20px; }
         html[dir="ltr"] .close-btn { align-self: flex-start; }
         
+        /* الأعلام */
         .lang-switch { display: flex; justify-content: center; gap: 20px; margin: 20px 0 30px 0; }
         .lang-switch img { width: 40px; cursor: pointer; border-radius: 4px; opacity: 0.4; transition: 0.3s; filter: grayscale(100%); }
         .lang-switch img:hover, .lang-switch img.active { opacity: 1; filter: grayscale(0); box-shadow: 0 0 10px rgba(157, 78, 221, 0.5); }
+        
         .sidebar a { color: var(--text-main); text-decoration: none; font-size: 1.1rem; font-weight: 700; padding: 15px 0; border-bottom: 1px solid var(--border-color); transition: 0.3s; text-transform: uppercase; }
         .sidebar a:hover { color: var(--primary); padding-right: 10px; }
         html[dir="ltr"] .sidebar a:hover { padding-right: 0; padding-left: 10px; }
 
-        /* الأقسام */
+        /* الأقسام والبطاقات */
         section { padding: 120px 20px 40px; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; }
         .hero { height: 60vh; justify-content: center; text-align: center; border-bottom: 1px solid var(--border-color); padding: 0 20px; }
         .hero h2 { font-size: 3rem; font-weight: 900; margin-bottom: 15px; color: var(--primary); text-shadow: 0 0 20px var(--primary-glow); }
@@ -114,7 +122,6 @@
         .section-title::before { content: ''; position: absolute; right: -15px; top: 12px; width: 8px; height: 8px; background: var(--primary); box-shadow: 0 0 10px var(--primary); }
         html[dir="ltr"] .section-title::before { right: auto; left: -15px; }
 
-        /* بطاقات القادة (تأثير النيون) */
         .grid-container { display: flex; gap: 25px; justify-content: center; flex-wrap: wrap; max-width: 1100px; }
         .card {
             background: var(--bg-card); padding: 30px 20px; width: 300px; text-align: center; backdrop-filter: blur(10px);
@@ -144,7 +151,7 @@
         .card-bbb:hover img { border-color: var(--glow-bbb); box-shadow: 0 0 15px var(--glow-bbb); filter: grayscale(0%); }
         .card-bbb h3 { color: var(--glow-bbb); }
 
-        /* الجداول (تصميم ملموم) */
+        /* الجداول */
         .table-wrapper { width: 100%; max-width: 700px; background: var(--bg-card); backdrop-filter: blur(10px); border-radius: 8px; border: 1px solid var(--border-color); overflow: hidden;}
         table { width: 100%; border-collapse: collapse; table-layout: fixed; }
         th { padding: 15px 10px; color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; text-align: right; border-bottom: 1px solid var(--border-color); background: rgba(0,0,0,0.2); }
@@ -161,42 +168,24 @@
         .col-days { width: 30%; text-align: left; color: var(--text-main); font-size: 1.1rem; }
         html[dir="ltr"] .col-days { text-align: right; }
 
-        /* مركز البطولات الاحترافي (مع العد التنازلي والجوائز) */
+        /* البطولات */
         .tournaments-grid { width: 100%; max-width: 800px; display: flex; flex-direction: column; gap: 20px; }
-        .tour-card {
-            background: var(--bg-card); border: 1px solid var(--border-color); border-right: 4px solid var(--primary);
-            padding: 25px; border-radius: 8px; position: relative; backdrop-filter: blur(10px);
-            transition: 0.3s;
-        }
+        .tour-card { background: var(--bg-card); border: 1px solid var(--border-color); border-right: 4px solid var(--primary); padding: 25px; border-radius: 8px; position: relative; backdrop-filter: blur(10px); transition: 0.3s; }
         html[dir="ltr"] .tour-card { border-right: 1px solid var(--border-color); border-left: 4px solid var(--primary); }
         .tour-card:hover { transform: scale(1.02); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        
         .tour-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;}
         .tour-title-box { display: flex; align-items: center; gap: 12px; }
         .tour-title { font-size: 1.3rem; font-weight: 900; color: var(--primary); }
-        
-        /* تصميم العد التنازلي */
-        .countdown-box {
-            background: rgba(220, 38, 38, 0.1); border: 1px solid #dc2626; color: #ef4444;
-            padding: 5px 12px; border-radius: 4px; font-weight: bold; font-size: 0.9rem;
-            display: flex; align-items: center; gap: 8px; animation: pulseRed 2s infinite;
-        }
+        .countdown-box { background: rgba(220, 38, 38, 0.1); border: 1px solid #dc2626; color: #ef4444; padding: 5px 12px; border-radius: 4px; font-weight: bold; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; animation: pulseRed 2s infinite; }
         @keyframes pulseRed { 0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(220, 38, 38, 0); } 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); } }
-
         .tour-desc { color: var(--text-muted); line-height: 1.7; font-size: 0.95rem; margin-bottom: 20px; }
-        
-        /* صناديق الجوائز والإدارة */
         .tour-footer { display: flex; gap: 15px; flex-wrap: wrap; }
-        .info-badge {
-            display: inline-flex; align-items: center; gap: 8px;
-            background: rgba(157, 78, 221, 0.1); border: 1px solid var(--primary);
-            padding: 6px 15px; border-radius: 4px; color: var(--text-main); font-weight: bold; font-size: 0.9rem;
-        }
+        .info-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(157, 78, 221, 0.1); border: 1px solid var(--primary); padding: 6px 15px; border-radius: 4px; color: var(--text-main); font-weight: bold; font-size: 0.9rem; }
         .prize-badge { border-color: var(--glow-yyy); background: rgba(255, 215, 0, 0.05); color: var(--glow-yyy); }
         
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1500; display: none; backdrop-filter: blur(3px);}
         .overlay.active { display: block; }
-        
+
         @media (max-width: 600px) {
             .hero h2 { font-size: 2.2rem; }
             th, td { font-size: 0.85rem; padding: 10px 5px; }
@@ -208,21 +197,16 @@
 </head>
 <body>
 
-    <!-- الخلفية المتحركة -->
     <div class="animated-bg"></div>
     <div class="particles" id="particles"></div>
-
     <div class="overlay" onclick="toggleMenu()"></div>
     
-    <!-- القائمة الجانبية -->
     <div class="sidebar" id="sidebar">
         <i class="fa-solid fa-xmark close-btn" onclick="toggleMenu()"></i>
-        
         <div class="lang-switch">
-            <img src="https://flagcdn.com/w80/ae.png" alt="Arabic" onclick="changeLang('ar')" id="flag-ar" class="active">
-            <img src="https://flagcdn.com/w80/us.png" alt="English" onclick="changeLang('en')" id="flag-en">
+            <img src="https://flagcdn.com/w80/ae.png" alt="Arabic" onclick="changeLang('ar')" id="flag-ar" class="active" title="العربية">
+            <img src="https://flagcdn.com/w80/us.png" alt="English" onclick="changeLang('en')" id="flag-en" title="English">
         </div>
-
         <a href="#hero" onclick="toggleMenu()" data-i18n="menu_home">الرئيسية</a>
         <a href="#leaders" onclick="toggleMenu()" data-i18n="menu_leaders">القادة</a>
         <a href="#accounts" onclick="toggleMenu()" data-i18n="menu_players">اللاعبين</a>
@@ -230,12 +214,10 @@
         <a href="#tournaments" onclick="toggleMenu()" data-i18n="menu_tournaments">البطولات</a>
     </div>
 
-    <!-- شريط التنقل -->
     <nav class="navbar">
         <h1>Plato<span>X</span></h1>
         <div class="nav-actions">
-            <!-- زر الوضع الليلي/النهاري -->
-            <i class="fa-solid fa-moon theme-toggle" id="theme-icon" onclick="toggleTheme()" title="تغيير المظهر"></i>
+            <i class="fa-solid fa-moon theme-toggle" id="theme-icon" onclick="toggleTheme()"></i>
             <div class="social-icons" style="display: flex; gap:15px;">
                 <a href="https://discord.gg/plato" target="_blank"><i class="fa-brands fa-discord"></i></a>
                 <a href="https://instagram.com/platoarab" target="_blank"><i class="fa-brands fa-instagram"></i></a>
@@ -244,7 +226,6 @@
         </div>
     </nav>
 
-    <!-- شريط الأخبار -->
     <div class="news-ticker">
         <span class="ticker-content" data-i18n="news_text">🔥 أحدث أخبار بلاتو: مرحباً بكم في مجتمع بلاتو إكس الرسمي! ترقبوا أضخم البطولات والفعاليات قريباً... 🏆</span>
     </div>
@@ -254,7 +235,6 @@
         <p data-aos="fade-up" data-aos-delay="200" data-i18n="hero_desc">يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.</p>
     </section>
 
-    <!-- القادة -->
     <section id="leaders">
         <h2 class="section-title" data-aos="fade-right" data-i18n="leaders_title">القادة العرب</h2>
         <div class="grid-container">
@@ -276,17 +256,12 @@
         </div>
     </section>
 
-    <!-- اللاعبين -->
     <section id="accounts">
         <h2 class="section-title" data-aos="fade-right" data-i18n="players_title">اللاعبين الاقدم</h2>
         <div class="table-wrapper" data-aos="zoom-in">
             <table>
                 <thead>
-                    <tr>
-                        <th class="col-rank">#</th>
-                        <th class="col-name" data-i18n="th_player">اللاعب</th>
-                        <th class="col-days" data-i18n="th_days">عدد الأيام</th>
-                    </tr>
+                    <tr><th class="col-rank">#</th><th class="col-name" data-i18n="th_player">اللاعب</th><th class="col-days" data-i18n="th_days">عدد الأيام</th></tr>
                 </thead>
                 <tbody>
                     <tr><td class="col-rank num-font">01</td><td class="col-name"><div class="entity-info"><img src="https://ui-avatars.com/api/?name=Te&background=9d4edd&color=fff" class="entity-img player-img"><span class="num-font">Test</span></div></td><td class="col-days num-font auto-days" data-base-days="3010"></td></tr>
@@ -299,16 +274,12 @@
         </div>
     </section>
 
-    <!-- المجموعات الأكثر إنفاقاً -->
     <section id="top-spending">
         <h2 class="section-title" data-aos="fade-right" data-i18n="spending_title">ترتيب المجموعات الأكثر إنفاقًا</h2>
         <div class="table-wrapper" data-aos="zoom-in">
             <table>
                 <thead>
-                    <tr>
-                        <th class="col-name" data-i18n="th_group" style="width: 70%;">المجموعة</th>
-                        <th class="col-days" data-i18n="th_coins" style="width: 30%;">الإنفاق</th>
-                    </tr>
+                    <tr><th class="col-name" data-i18n="th_group" style="width: 70%;">المجموعة</th><th class="col-days" data-i18n="th_coins" style="width: 30%;">الإنفاق</th></tr>
                 </thead>
                 <tbody>
                     <tr><td class="col-name"><div class="entity-info"><img src="https://ui-avatars.com/api/?name=Y1&background=ffd700&color=000" class="entity-img"><span data-i18n="group_1">يوسف تجربة 1</span></div></td><td class="col-days num-font" style="color: var(--glow-yyy);">500,000</td></tr>
@@ -321,92 +292,57 @@
         </div>
     </section>
 
-    <!-- مركز البطولات المطور (الترتيب التلقائي والعد التنازلي) -->
     <section id="tournaments">
         <h2 class="section-title" data-aos="fade-right" data-i18n="tournaments_title">مركز البطولات</h2>
-        <div class="tournaments-grid" id="tournaments-container" data-aos="fade-up">
-            
-            <!-- سيتم إنشاء البطاقات هنا تلقائياً عن طريق الجافاسكريبت ليتم ترتيبها حسب الوقت -->
-
-        </div>
+        <div class="tournaments-grid" id="tournaments-container" data-aos="fade-up"></div>
     </section>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({ duration: 600, once: true });
 
-        /* --- نظام القائمة الجانبية --- */
         function toggleMenu() {
             document.getElementById('sidebar').classList.toggle('active');
             document.querySelector('.overlay').classList.toggle('active');
         }
 
-        /* --- إنشاء جزيئات الخلفية --- */
+        // جزيئات الألعاب في الخلفية
+        const icons = ['fa-gamepad', 'fa-dice', 'fa-chess-knight', 'fa-bowling-ball', 'fa-ghost', 'fa-futbol'];
         const particlesContainer = document.getElementById('particles');
-        for(let i=0; i<15; i++){
-            let div = document.createElement('div');
-            div.className = 'particle';
-            div.style.left = Math.random() * 100 + 'vw';
-            div.style.width = Math.random() * 20 + 10 + 'px';
-            div.style.height = div.style.width;
-            div.style.animationDuration = Math.random() * 10 + 15 + 's';
-            div.style.animationDelay = Math.random() * 5 + 's';
-            particlesContainer.appendChild(div);
+        for(let i=0; i<18; i++){
+            let icon = document.createElement('i');
+            icon.className = 'fa-solid ' + icons[Math.floor(Math.random() * icons.length)] + ' particle';
+            icon.style.left = Math.random() * 100 + 'vw';
+            icon.style.fontSize = Math.random() * 2 + 1 + 'rem';
+            icon.style.animationDuration = Math.random() * 10 + 15 + 's';
+            icon.style.animationDelay = Math.random() * 5 + 's';
+            particlesContainer.appendChild(icon);
         }
 
-        /* --- الوضع الليلي والنهاري --- */
-        const themeIcon = document.getElementById('theme-icon');
         function toggleTheme() {
             const currentTheme = document.documentElement.getAttribute('data-theme');
             const newTheme = currentTheme === 'light' ? 'dark' : 'light';
             document.documentElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
-            updateThemeIcon(newTheme);
-        }
-        function updateThemeIcon(theme) {
-            if (theme === 'light') {
-                themeIcon.classList.remove('fa-moon');
-                themeIcon.classList.add('fa-sun');
-            } else {
-                themeIcon.classList.remove('fa-sun');
-                themeIcon.classList.add('fa-moon');
-            }
+            const themeIcon = document.getElementById('theme-icon');
+            themeIcon.className = newTheme === 'light' ? 'fa-solid fa-sun theme-toggle' : 'fa-solid fa-moon theme-toggle';
         }
 
-        /* --- نظام البطولات (الترتيب والعد التنازلي) --- */
-        // إنشاء تواريخ ديناميكية لغرض التجربة (اليوم الساعة 9 و 10 مساءً)
         const now = new Date();
         const dateString = now.toISOString().split('T')[0];
-        
         const tournamentsData = [
-            {
-                id: 1,
-                time: `${dateString}T21:00:00`,
-                img: "https://ui-avatars.com/api/?name=Y1&background=ffd700&color=000",
-                titleKey: "tour_1_title", descKey: "tour_1_desc",
-                prize: "50K - 30K", admin: "YYY", borderColor: "var(--primary)"
-            },
-            {
-                id: 2,
-                time: `${dateString}T22:00:00`,
-                img: "https://ui-avatars.com/api/?name=Y2&background=00b4d8&color=fff",
-                titleKey: "tour_2_title", descKey: "tour_2_desc",
-                prize: "40K", admin: "BBB", borderColor: "var(--glow-bbb)"
-            }
+            { id: 1, time: `${dateString}T21:00:00`, img: "https://ui-avatars.com/api/?name=Y1&background=ffd700&color=000", titleKey: "tour_1_title", descKey: "tour_1_desc", prize: "50K - 30K", admin: "YYY", borderColor: "var(--primary)" },
+            { id: 2, time: `${dateString}T22:00:00`, img: "https://ui-avatars.com/api/?name=Y2&background=00b4d8&color=fff", titleKey: "tour_2_title", descKey: "tour_2_desc", prize: "40K", admin: "BBB", borderColor: "var(--glow-bbb)" }
         ];
 
         function renderTournaments() {
             const container = document.getElementById('tournaments-container');
             container.innerHTML = '';
-            
-            // ترتيب البطولات بحيث الأقرب وقتاً تكون في الأعلى
             tournamentsData.sort((a, b) => new Date(a.time) - new Date(b.time));
-
             tournamentsData.forEach(tour => {
                 const isLtr = document.documentElement.getAttribute('dir') === 'ltr';
                 const borderStyle = isLtr ? `border-left-color: ${tour.borderColor};` : `border-right-color: ${tour.borderColor};`;
-                
-                const card = `
+                container.innerHTML += `
                     <div class="tour-card" style="${borderStyle}">
                         <div class="tour-header">
                             <div class="tour-title-box">
@@ -424,22 +360,17 @@
                         </div>
                     </div>
                 `;
-                container.innerHTML += card;
             });
-            // إعادة تطبيق الترجمة على العناصر الجديدة
-            applyTranslations(localStorage.getItem('lang') || 'ar');
         }
 
         function updateTimers() {
             const nowTime = new Date().getTime();
             tournamentsData.forEach(tour => {
-                const target = new Date(tour.time).getTime();
-                const diff = target - nowTime;
+                const diff = new Date(tour.time).getTime() - nowTime;
                 const el = document.querySelector(`#timer-${tour.id} .countdown-val`);
                 if(el) {
-                    if (diff < 0) {
-                        el.innerText = document.documentElement.getAttribute('lang') === 'ar' ? 'بدأت!' : 'STARTED!';
-                    } else {
+                    if (diff < 0) el.innerText = document.documentElement.getAttribute('lang') === 'ar' ? 'بدأت!' : 'STARTED!';
+                    else {
                         const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
                         const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
                         const s = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
@@ -449,7 +380,6 @@
             });
         }
         
-        /* --- نظام الترجمة المحدث --- */
         const translations = {
             ar: {
                 menu_home: "الرئيسية", menu_leaders: "القادة", menu_players: "اللاعبين", menu_spending: "الإنفاق", menu_tournaments: "البطولات",
@@ -477,43 +407,44 @@
             }
         };
 
-        function applyTranslations(lang) {
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if(translations[lang][key]) el.innerText = translations[lang][key];
-            });
-        }
-
         function changeLang(lang) {
             document.documentElement.setAttribute('lang', lang);
             document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
             document.getElementById('flag-ar').classList.toggle('active', lang === 'ar');
             document.getElementById('flag-en').classList.toggle('active', lang === 'en');
             
-            applyTranslations(lang);
-            renderTournaments(); // إعادة بناء البطاقات لتطبيق التنسيق (LTR/RTL)
+            // تحديث النصوص
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if(translations[lang][key]) el.innerText = translations[lang][key];
+            });
+            
+            renderTournaments();
             localStorage.setItem('lang', lang);
+
+            // إعادة تشغيل التأثيرات عند تغيير اللغة
+            const animatedElements = document.querySelectorAll('[data-aos]');
+            animatedElements.forEach(el => {
+                el.classList.remove('aos-animate');
+                void el.offsetWidth; // إجبار المتصفح على قراءة التغيير
+            });
+            setTimeout(() => {
+                animatedElements.forEach(el => el.classList.add('aos-animate'));
+            }, 50);
         }
 
-        /* --- التشغيل عند تحميل الصفحة --- */
         window.onload = () => {
-            // تفعيل الوضع الليلي/النهاري المحفوظ
             const savedTheme = localStorage.getItem('theme') || 'dark';
             document.documentElement.setAttribute('data-theme', savedTheme);
-            updateThemeIcon(savedTheme);
+            document.getElementById('theme-icon').className = savedTheme === 'light' ? 'fa-solid fa-sun theme-toggle' : 'fa-solid fa-moon theme-toggle';
 
-            // تفعيل اللغة
             const savedLang = localStorage.getItem('lang') || 'ar';
             changeLang(savedLang);
 
-            // تفعيل عداد الأيام
             const start = new Date('2026-09-03'); 
             const added = Math.max(0, Math.floor((new Date() - start) / (1000 * 60 * 60 * 24))); 
-            document.querySelectorAll('.auto-days').forEach(td => {
-                td.innerText = (parseInt(td.getAttribute('data-base-days')) + added);
-            });
+            document.querySelectorAll('.auto-days').forEach(td => { td.innerText = (parseInt(td.getAttribute('data-base-days')) + added); });
 
-            // تشغيل العد التنازلي للبطولات
             renderTournaments();
             setInterval(updateTimers, 1000);
         }
