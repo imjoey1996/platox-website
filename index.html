@@ -787,7 +787,7 @@
             const animatedElements = document.querySelectorAll('[data-aos]');
             animatedElements.forEach(el => { el.classList.remove('aos-animate'); void el.offsetWidth; });
             setTimeout(() => { animatedElements.forEach(el => el.classList.add('aos-animate')); }, 50);
-        }
+    }
 
         window.onload = () => {
             const savedTheme = localStorage.getItem('theme') || 'dark'; document.documentElement.setAttribute('data-theme', savedTheme); document.getElementById('theme-icon').className = savedTheme === 'light' ? 'fa-solid fa-sun theme-toggle' : 'fa-solid fa-moon theme-toggle';
