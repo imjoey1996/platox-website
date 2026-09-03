@@ -9,64 +9,100 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* الوضع الليلي المحسن (قاتم ومريح للعين مع حركة واضحة) */
+        /* المتغيرات (Liquid Glass Edition) */
         :root {
             --bg-main: #050508; 
-            --bg-card: rgba(15, 15, 20, 0.85); 
+            /* خلفية البطاقات زجاجية شديدة الشفافية */
+            --bg-glass: rgba(15, 15, 20, 0.4); 
             --primary: #9d4edd;
-            --primary-glow: rgba(157, 78, 221, 0.3);
-            --border-color: rgba(255, 255, 255, 0.08);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --ticker-bg: #111118;
+            --primary-glow: rgba(157, 78, 221, 0.5);
+            /* انعكاس إضاءة الزجاج */
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-highlight: rgba(255, 255, 255, 0.03);
+            
+            --text-main: #ffffff;
+            --text-muted: #a1a1aa;
+            --ticker-bg: rgba(5, 5, 8, 0.7);
             --ticker-text: #e2e8f0;
             --glow-yyy: #e3b341;
             --glow-hat: #9d4edd;
             --glow-bbb: #00c3e3;
-            --bot-bg: #111118;
+            --bot-bg: rgba(15, 15, 20, 0.85);
             --bot-header: #9d4edd;
             --discord-color: #5865F2;
         }
 
-        /* الوضع النهاري الساطع */
         [data-theme="light"] {
-            --bg-main: #f3f4f6; 
-            --bg-card: rgba(255, 255, 255, 0.95); 
+            --bg-main: #f0f2f5; 
+            --bg-glass: rgba(255, 255, 255, 0.6); 
             --primary: #7b2cbf;
-            --border-color: rgba(0, 0, 0, 0.08); 
+            --glass-border: rgba(0, 0, 0, 0.1); 
+            --glass-highlight: rgba(255, 255, 255, 0.5);
             --text-main: #0f172a; 
             --text-muted: #475569;
-            --ticker-bg: #e2e8f0;
+            --ticker-bg: rgba(255, 255, 255, 0.7);
             --ticker-text: #1e293b;
             --glow-yyy: #d4af37; 
             --glow-bbb: #0096b4;
-            --bot-bg: #ffffff; 
+            --bot-bg: rgba(255, 255, 255, 0.95); 
             --bot-header: #7b2cbf;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { color: var(--text-main); font-family: 'Cairo', sans-serif; overflow-x: hidden; transition: background 0.4s, color 0.4s; }
+        body { color: var(--text-main); font-family: 'Cairo', sans-serif; overflow-x: hidden; transition: background 0.5s ease; background-color: var(--bg-main); }
         html[dir="ltr"] body, .num-font, .navbar h1 { font-family: 'Rajdhani', sans-serif; }
 
-        /* الخلفية المتحركة */
-        .animated-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; background: linear-gradient(45deg, var(--bg-main), rgba(157, 78, 221, 0.08), var(--bg-main)); background-size: 400% 400%; animation: gradientBG 15s ease infinite; transition: background 0.5s ease; }
-        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        /* --- Liquid Glass Background --- */
+        .liquid-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3; overflow: hidden; background: var(--bg-main); }
         
+        .blob {
+            position: absolute; filter: blur(90px); opacity: 0.6; z-index: -2;
+            animation: liquidFlow 20s infinite alternate ease-in-out;
+        }
+        [data-theme="light"] .blob { opacity: 0.3; filter: blur(70px); }
+        
+        /* الكتل السائلة الملونة */
+        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--primary); animation-delay: 0s; }
+        .blob-2 { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: var(--glow-bbb); animation-delay: -5s; }
+        .blob-3 { top: 40%; left: 30%; width: 40vw; height: 40vw; background: var(--glow-yyy); animation-delay: -10s; opacity: 0.3; }
+
+        @keyframes liquidFlow {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+            50% { transform: translate(5%, 10%) scale(1.1) rotate(180deg); border-radius: 60% 40% 30% 70% / 50% 60% 40% 50%; }
+            100% { transform: translate(-5%, -5%) scale(0.9) rotate(360deg); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+        }
+
+        /* جزيئات إضافية لتعزيز الحيوية */
         .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; pointer-events: none; }
-        .particle { position: absolute; color: var(--primary); opacity: 0.15; animation: floatUp infinite linear; } 
-        [data-theme="light"] .particle { opacity: 0.08; }
-        @keyframes floatUp { 0% { transform: translateY(100vh) rotate(0deg) scale(0.8); opacity: 0; } 10% { opacity: 0.15; } 90% { opacity: 0.15; } 100% { transform: translateY(-10vh) rotate(360deg) scale(1.5); opacity: 0; } }
+        .particle { position: absolute; color: #fff; opacity: 0.1; animation: floatUp infinite linear; filter: blur(1px); } 
+        [data-theme="light"] .particle { color: var(--primary); opacity: 0.08; }
+        @keyframes floatUp { 0% { transform: translateY(100vh) rotate(0deg) scale(0.8); opacity: 0; } 20% { opacity: 0.1; } 80% { opacity: 0.1; } 100% { transform: translateY(-10vh) rotate(360deg) scale(1.5); opacity: 0; } }
+
+        /* الكلاس المشترك للزجاج السائل */
+        .glass-panel {
+            background: var(--bg-glass);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            border-left: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+        }
+        html[dir="ltr"] .glass-panel { border-left: 1px solid var(--glass-border); border-right: 1px solid rgba(255, 255, 255, 0.08); }
+        [data-theme="light"] .glass-panel { box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07); border-top: 1px solid rgba(255, 255, 255, 0.8); }
 
         /* شريط التنقل */
-        .navbar { position: fixed; top: 0; width: 100%; padding: 12px 25px; display: flex; justify-content: space-between; align-items: center; background: rgba(5, 5, 8, 0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color); z-index: 1000; }
-        [data-theme="light"] .navbar { background: rgba(255, 255, 255, 0.9); }
+        .navbar { position: fixed; top: 0; width: 100%; padding: 12px 25px; display: flex; justify-content: space-between; align-items: center; background: rgba(5, 5, 8, 0.5); backdrop-filter: blur(25px); border-bottom: 1px solid var(--glass-border); z-index: 1000; }
+        [data-theme="light"] .navbar { background: rgba(255, 255, 255, 0.7); }
         .navbar h1 { font-size: 24px; font-weight: 900; letter-spacing: 1px; }
         .navbar h1 span { color: var(--primary); }
         .nav-actions { display: flex; align-items: center; gap: 15px; }
         .nav-actions i { font-size: 20px; cursor: pointer; color: var(--text-main); transition: 0.3s; }
-        .nav-actions i:hover { color: var(--primary); }
+        .nav-actions i:hover { color: var(--primary); text-shadow: 0 0 10px var(--primary-glow); }
         
-        .news-ticker { position: fixed; top: 55px; width: 100%; background: var(--ticker-bg); color: var(--ticker-text); padding: 6px 0; overflow: hidden; white-space: nowrap; z-index: 999; border-bottom: 1px solid var(--border-color); font-weight: 700; font-size: 0.85rem; }
+        /* شريط الأخبار */
+        .news-ticker { position: fixed; top: 55px; width: 100%; background: var(--ticker-bg); backdrop-filter: blur(10px); color: var(--ticker-text); padding: 6px 0; overflow: hidden; white-space: nowrap; z-index: 999; border-bottom: 1px solid var(--glass-border); font-weight: 700; font-size: 0.85rem; }
         .ticker-content { display: inline-block; animation: ticker-rtl 40s linear infinite; }
         html[dir="ltr"] .ticker-content { animation: ticker-ltr 40s linear infinite; }
         .news-ticker:hover .ticker-content { animation-play-state: paused; }
@@ -74,139 +110,136 @@
         @keyframes ticker-ltr { from { transform: translateX(100vw); } to { transform: translateX(-100vw); } }
 
         /* القائمة الجانبية */
-        .sidebar { position: fixed; top: 0; right: -280px; width: 280px; height: 100vh; background: var(--bg-card); backdrop-filter: blur(20px); border-left: 1px solid var(--border-color); z-index: 2000; transition: right 0.4s ease; display: flex; flex-direction: column; padding: 25px; }
-        html[dir="ltr"] .sidebar { right: auto; left: -280px; border-left: none; border-right: 1px solid var(--border-color); transition: left 0.4s ease;}
+        .sidebar { position: fixed; top: 0; right: -280px; width: 280px; height: 100vh; background: var(--bg-glass); backdrop-filter: blur(30px); border-left: 1px solid var(--glass-border); z-index: 2000; transition: right 0.4s ease; display: flex; flex-direction: column; padding: 25px; box-shadow: -10px 0 30px rgba(0,0,0,0.5);}
+        html[dir="ltr"] .sidebar { right: auto; left: -280px; border-left: none; border-right: 1px solid var(--glass-border); transition: left 0.4s ease; box-shadow: 10px 0 30px rgba(0,0,0,0.5);}
         .sidebar.active { right: 0; }
         html[dir="ltr"] .sidebar.active { left: 0; right: auto; }
         .close-btn { align-self: flex-end; font-size: 26px; cursor: pointer; margin-bottom: 15px; }
         html[dir="ltr"] .close-btn { align-self: flex-start; }
         
-        /* أزرار اللغة (النصية بدلاً من الأعلام) */
         .lang-switch { display: flex; justify-content: center; gap: 10px; margin: 15px 0 25px 0; }
-        .lang-btn { background: transparent; color: var(--text-muted); border: 1px solid var(--border-color); padding: 6px 15px; border-radius: 20px; cursor: pointer; transition: 0.3s; font-family: 'Cairo', sans-serif; font-weight: 700; font-size: 0.9rem;}
-        .lang-btn:hover { color: var(--primary); border-color: var(--primary); }
-        .lang-btn.active { color: #fff; background: var(--primary); border-color: var(--primary); }
+        .lang-btn { background: rgba(255,255,255,0.05); color: var(--text-muted); border: 1px solid var(--glass-border); padding: 6px 15px; border-radius: 20px; cursor: pointer; transition: 0.3s; font-family: 'Cairo', sans-serif; font-weight: 700; font-size: 0.9rem;}
+        .lang-btn:hover { color: var(--primary); border-color: var(--primary); background: rgba(157, 78, 221, 0.1); }
+        .lang-btn.active { color: #fff; background: var(--primary); border-color: var(--primary); box-shadow: 0 0 15px var(--primary-glow);}
 
-        .sidebar a { color: var(--text-main); text-decoration: none; font-size: 1.05rem; font-weight: 700; padding: 12px 0; border-bottom: 1px solid var(--border-color); transition: 0.3s; text-transform: uppercase; }
-        .sidebar a:hover { color: var(--primary); padding-right: 8px; }
+        .sidebar a { color: var(--text-main); text-decoration: none; font-size: 1.05rem; font-weight: 700; padding: 12px 0; border-bottom: 1px solid var(--glass-border); transition: 0.3s; text-transform: uppercase; }
+        .sidebar a:hover { color: var(--primary); padding-right: 8px; text-shadow: 0 0 10px var(--primary-glow);}
         html[dir="ltr"] .sidebar a:hover { padding-right: 0; padding-left: 8px; }
 
         /* الأقسام الأساسية */
         section { padding: 70px 15px 30px; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; }
         .hero { height: 50vh; justify-content: center; text-align: center; padding: 0 15px; margin-top: 40px;}
-        .hero h2 { font-size: 2.8rem; font-weight: 900; margin-bottom: 10px; color: var(--primary); text-shadow: 0 0 20px var(--primary-glow); }
-        .hero p { font-size: 1.1rem; max-width: 600px; line-height: 1.7; margin: 0 auto; color: var(--text-main);}
+        .hero h2 { font-size: 3.2rem; font-weight: 900; margin-bottom: 10px; color: #fff; text-shadow: 0 0 30px rgba(255,255,255,0.3); }
+        .hero h2 span { color: var(--primary); text-shadow: 0 0 30px var(--primary-glow); }
+        [data-theme="light"] .hero h2 { color: #000; text-shadow: none; }
+        .hero p { font-size: 1.1rem; max-width: 600px; line-height: 1.7; margin: 0 auto; color: rgba(255,255,255,0.8);}
+        [data-theme="light"] .hero p { color: var(--text-muted); }
 
-        .cyber-divider { display: flex; align-items: center; justify-content: center; width: 100%; max-width: 600px; margin: 10px auto; opacity: 0.4; }
-        .cyber-divider::before, .cyber-divider::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--border-color), transparent); }
-        .cyber-divider .center-node { width: 15px; height: 3px; background: var(--text-muted); margin: 0 10px; transform: skewX(-45deg); }
+        .cyber-divider { display: flex; align-items: center; justify-content: center; width: 100%; max-width: 600px; margin: 15px auto; opacity: 0.4; }
+        .cyber-divider::before, .cyber-divider::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--text-muted), transparent); }
+        .cyber-divider .center-node { width: 8px; height: 8px; border-radius: 50%; background: var(--text-muted); margin: 0 10px; box-shadow: 0 0 10px var(--text-muted); }
 
         .section-title { font-size: 1.6rem; font-weight: 900; margin-bottom: 35px; text-transform: uppercase; position: relative; letter-spacing: 0.5px;}
-        .section-title::before { content: ''; position: absolute; right: -12px; top: 12px; width: 6px; height: 6px; background: var(--primary); transform: rotate(45deg); }
-        html[dir="ltr"] .section-title::before { right: auto; left: -12px; }
+        .section-title::before { content: ''; position: absolute; right: -15px; top: 50%; transform: translateY(-50%); width: 6px; height: 20px; background: var(--primary); border-radius: 3px; box-shadow: 0 0 15px var(--primary-glow);}
+        html[dir="ltr"] .section-title::before { right: auto; left: -15px; }
 
-        /* لوحة الأخبار (محدثة مع رابط بالأسفل) */
-        .featured-news {
-            width: 100%; max-width: 750px; background: var(--bg-card); border: 1px solid var(--border-color);
-            border-radius: 12px; padding: 35px; position: relative; overflow: hidden; backdrop-filter: blur(15px);
-            display: flex; flex-direction: column; gap: 15px; transition: 0.3s;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2); margin-bottom: 15px;
-        }
-        [data-theme="light"] .featured-news { box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        
-        .news-header-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; }
-        .news-badge { background: rgba(157, 78, 221, 0.15); color: var(--primary); border: 1px solid var(--primary); padding: 5px 12px; border-radius: 6px; font-weight: 900; font-size: 0.8rem; display: flex; align-items: center; gap: 8px;}
+        /* لوحة الأخبار (زجاجية فاخرة) */
+        .featured-news { width: 100%; max-width: 750px; padding: 35px; display: flex; flex-direction: column; gap: 15px; transition: 0.4s; margin-bottom: 15px; overflow: hidden;}
+        .featured-news:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(0,0,0,0.4); border-color: rgba(157, 78, 221, 0.3); }
+        .news-header-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; }
+        .news-badge { background: rgba(157, 78, 221, 0.15); color: var(--primary); border: 1px solid rgba(157, 78, 221, 0.3); padding: 5px 12px; border-radius: 8px; font-weight: 900; font-size: 0.8rem; display: flex; align-items: center; gap: 8px; box-shadow: 0 0 15px rgba(157, 78, 221, 0.2);}
         .news-date-sub { font-family: 'Rajdhani', sans-serif; font-size: 0.85rem; color: var(--text-muted); font-weight: bold;}
-        
-        .news-headline { font-size: 1.4rem; font-weight: 900; line-height: 1.4; color: var(--text-main); margin-top: 5px;}
-        .news-body { color: var(--text-muted); line-height: 1.8; font-size: 0.95rem; }
+        .news-headline { font-size: 1.5rem; font-weight: 900; line-height: 1.4; color: var(--text-main); margin-top: 5px;}
+        .news-body { color: rgba(255,255,255,0.7); line-height: 1.8; font-size: 0.95rem; }
+        [data-theme="light"] .news-body { color: var(--text-muted); }
 
-        /* رابط الديسكورد خارج الخبر */
-        .more-news-link {
-            display: inline-flex; align-items: center; gap: 8px; color: var(--text-muted); 
-            font-size: 0.9rem; text-decoration: none; transition: 0.3s; font-weight: bold;
-        }
+        .more-news-link { display: inline-flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 0.9rem; text-decoration: none; transition: 0.3s; font-weight: bold; background: var(--bg-glass); padding: 8px 20px; border-radius: 20px; border: 1px solid var(--glass-border); backdrop-filter: blur(10px);}
         .more-news-link i { color: var(--discord-color); font-size: 1.1rem; }
-        .more-news-link:hover { color: var(--text-main); transform: translateY(-2px); }
+        .more-news-link:hover { color: var(--text-main); transform: translateY(-2px); border-color: var(--discord-color); box-shadow: 0 5px 15px rgba(88, 101, 242, 0.2);}
 
-        /* القادة العرب */
-        .grid-container { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; max-width: 900px; }
-        .card { background: var(--bg-card); padding: 30px 15px; width: 280px; text-align: center; clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%); transition: 0.3s; position: relative; border: 1px solid var(--border-color); }
-        .card::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; transform: scaleX(0); transition: 0.3s; }
-        .card:hover { transform: translateY(-5px); }
-        .card:hover::after { transform: scaleX(1); }
-        .card img { width: 90px; height: 90px; border-radius: 50%; margin-bottom: 15px; object-fit: cover; filter: grayscale(20%); transition: 0.3s; border: 2px solid transparent; }
-        .card-yyy { border-color: rgba(227, 179, 65, 0.2); } .card-yyy::after { background: var(--glow-yyy); } .card-yyy:hover img { border-color: var(--glow-yyy); filter: grayscale(0%); } .card-yyy h3 { color: var(--glow-yyy); font-size: 1.3rem; margin-bottom:8px;}
-        .card-hat { border-color: rgba(157, 78, 221, 0.2); } .card-hat::after { background: var(--glow-hat); } .card-hat:hover img { border-color: var(--glow-hat); filter: grayscale(0%); } .card-hat h3 { color: var(--glow-hat); font-size: 1.3rem; margin-bottom:8px;}
-        .card-bbb { border-color: rgba(0, 195, 227, 0.2); } .card-bbb::after { background: var(--glow-bbb); } .card-bbb:hover img { border-color: var(--glow-bbb); filter: grayscale(0%); } .card-bbb h3 { color: var(--glow-bbb); font-size: 1.3rem; margin-bottom:8px;}
-        .card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;}
+        /* القادة العرب (كروت زجاجية ناعمة) */
+        .grid-container { display: flex; gap: 25px; justify-content: center; flex-wrap: wrap; max-width: 950px; }
+        .card { width: 280px; padding: 35px 20px; text-align: center; transition: 0.4s; position: relative; overflow: hidden;}
+        .card:hover { transform: translateY(-8px); }
+        .card img { width: 100px; height: 100px; border-radius: 50%; margin-bottom: 20px; object-fit: cover; filter: grayscale(10%); transition: 0.4s; border: 3px solid rgba(255,255,255,0.1); box-shadow: 0 10px 20px rgba(0,0,0,0.5);}
+        .card:hover img { filter: grayscale(0%); transform: scale(1.05); }
+        .card-yyy:hover { border-color: rgba(227, 179, 65, 0.4); box-shadow: 0 15px 35px rgba(227, 179, 65, 0.15); } .card-yyy:hover img { border-color: var(--glow-yyy); box-shadow: 0 0 20px rgba(227, 179, 65, 0.4);} .card-yyy h3 { color: var(--glow-yyy); font-size: 1.4rem; margin-bottom:8px; text-shadow: 0 0 15px rgba(227, 179, 65, 0.4);}
+        .card-hat:hover { border-color: rgba(157, 78, 221, 0.4); box-shadow: 0 15px 35px rgba(157, 78, 221, 0.15); } .card-hat:hover img { border-color: var(--glow-hat); box-shadow: 0 0 20px rgba(157, 78, 221, 0.4);} .card-hat h3 { color: var(--glow-hat); font-size: 1.4rem; margin-bottom:8px; text-shadow: 0 0 15px rgba(157, 78, 221, 0.4);}
+        .card-bbb:hover { border-color: rgba(0, 195, 227, 0.4); box-shadow: 0 15px 35px rgba(0, 195, 227, 0.15); } .card-bbb:hover img { border-color: var(--glow-bbb); box-shadow: 0 0 20px rgba(0, 195, 227, 0.4);} .card-bbb h3 { color: var(--glow-bbb); font-size: 1.4rem; margin-bottom:8px; text-shadow: 0 0 15px rgba(0, 195, 227, 0.4);}
+        .card p { font-size: 0.9rem; color: rgba(255,255,255,0.7); line-height: 1.6;}
+        [data-theme="light"] .card p { color: var(--text-muted); }
 
         /* قوائم اللاعبين والإنفاق */
-        .premium-list { width: 100%; max-width: 700px; display: flex; flex-direction: column; gap: 10px; }
-        .list-row { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 6px; padding: 12px 15px; display: flex; align-items: center; gap: 15px; transition: 0.3s; }
-        .list-row:hover { background: rgba(157, 78, 221, 0.08); border-color: rgba(157, 78, 221, 0.3); }
+        .premium-list { width: 100%; max-width: 700px; display: flex; flex-direction: column; gap: 12px; }
+        .list-row { padding: 15px 20px; display: flex; align-items: center; gap: 15px; transition: 0.3s; border-radius: 16px; }
+        .list-row:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2); transform: scale(1.02); }
+        [data-theme="light"] .list-row:hover { background: rgba(0,0,0,0.02); border-color: rgba(0,0,0,0.15); }
         
-        .rank-num { font-size: 1.2rem; font-weight: 900; color: var(--text-muted); width: 30px; text-align: center; }
-        .rank-1 .rank-num { color: var(--glow-yyy); } .rank-2 .rank-num { color: #94a3b8; } .rank-3 .rank-num { color: #cd7f32; }
+        .rank-num { font-size: 1.2rem; font-weight: 900; color: rgba(255,255,255,0.3); width: 30px; text-align: center; }
+        [data-theme="light"] .rank-num { color: rgba(0,0,0,0.3); }
+        .rank-1 .rank-num { color: var(--glow-yyy); text-shadow: 0 0 10px rgba(227, 179, 65, 0.5);} .rank-2 .rank-num { color: #cbd5e1; } .rank-3 .rank-num { color: #cd7f32; }
 
-        .list-info { display: flex; align-items: center; gap: 12px; flex: 1; overflow: hidden; }
-        .list-img { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; }
-        .group-img { border-radius: 6px; }
-        .list-name { font-weight: bold; font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .list-info { display: flex; align-items: center; gap: 15px; flex: 1; overflow: hidden; }
+        .list-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.1); }
+        .group-img { border-radius: 10px; }
+        .list-name { font-weight: bold; font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         
-        .progress-container { flex: 1.5; display: flex; flex-direction: column; gap: 5px; justify-content: center;}
-        .progress-track { width: 100%; height: 6px; background: rgba(0,0,0,0.5); border-radius: 10px; overflow: hidden; }
-        [data-theme="light"] .progress-track { background: rgba(0,0,0,0.08); }
-        .progress-fill { height: 100%; border-radius: 10px; transition: width 1s ease-out; }
-        .score-val { font-weight: 900; font-size: 1.05rem; }
+        .progress-container { flex: 1.5; display: flex; flex-direction: column; gap: 6px; justify-content: center;}
+        .progress-track { width: 100%; height: 6px; background: rgba(0,0,0,0.4); border-radius: 10px; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.5); }
+        [data-theme="light"] .progress-track { background: rgba(0,0,0,0.1); box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);}
+        .progress-fill { height: 100%; border-radius: 10px; transition: width 1.5s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 0 10px currentColor;}
+        .score-val { font-weight: 900; font-size: 1.1rem; }
 
-        /* البطولات */
-        .tournaments-grid { width: 100%; max-width: 750px; display: flex; flex-direction: column; gap: 15px; }
-        .tour-card { background: var(--bg-card); border: 1px solid var(--border-color); border-right: 3px solid var(--primary); padding: 20px; border-radius: 6px; position: relative; transition: 0.3s; }
-        html[dir="ltr"] .tour-card { border-right: 1px solid var(--border-color); border-left: 3px solid var(--primary); }
-        .tour-card:hover { transform: scale(1.01); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-        .tour-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;}
-        .tour-title-box { display: flex; align-items: center; gap: 10px; }
-        .tour-title { font-size: 1.15rem; font-weight: 900; color: var(--primary); }
-        .countdown-box { background: rgba(220, 38, 38, 0.05); border: 1px solid rgba(220, 38, 38, 0.3); color: #ef4444; padding: 4px 10px; border-radius: 4px; font-weight: bold; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; }
-        .tour-desc { color: var(--text-main); line-height: 1.7; font-size: 0.9rem; margin-bottom: 15px; }
-        .tour-footer { display: flex; gap: 8px; flex-wrap: wrap; }
-        .info-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(157, 78, 221, 0.08); border: 1px solid rgba(157, 78, 221, 0.3); padding: 5px 12px; border-radius: 4px; color: var(--text-main); font-weight: bold; font-size: 0.8rem; }
-        .prize-badge { border-color: rgba(227, 179, 65, 0.4); background: rgba(227, 179, 65, 0.1); color: var(--glow-yyy); }
-        .admin-copy-btn { cursor: pointer; transition: 0.2s; } .admin-copy-btn:hover { background: var(--primary); color: #fff; }
+        /* البطولات (زجاجية ناعمة) */
+        .tournaments-grid { width: 100%; max-width: 750px; display: flex; flex-direction: column; gap: 20px; }
+        .tour-card { padding: 25px; transition: 0.4s; overflow: hidden;}
+        .tour-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary); box-shadow: 0 0 15px var(--primary); }
+        html[dir="ltr"] .tour-card::before { left: auto; right: 0; }
+        .tour-card:hover { transform: scale(1.02); border-color: rgba(157, 78, 221, 0.3); box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
+        .tour-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;}
+        .tour-title-box { display: flex; align-items: center; gap: 12px; }
+        .tour-title { font-size: 1.25rem; font-weight: 900; color: var(--text-main); }
+        .countdown-box { background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.3); color: #ef4444; padding: 5px 12px; border-radius: 6px; font-weight: bold; font-size: 0.85rem; display: flex; align-items: center; gap: 8px; box-shadow: 0 0 15px rgba(220, 38, 38, 0.15);}
+        .tour-desc { color: rgba(255,255,255,0.7); line-height: 1.7; font-size: 0.95rem; margin-bottom: 20px; }
+        [data-theme="light"] .tour-desc { color: var(--text-muted); }
+        .tour-footer { display: flex; gap: 10px; flex-wrap: wrap; }
+        .info-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 6px 15px; border-radius: 8px; color: var(--text-main); font-weight: bold; font-size: 0.85rem; backdrop-filter: blur(5px);}
+        [data-theme="light"] .info-badge { background: rgba(0,0,0,0.03); }
+        .prize-badge { border-color: rgba(227, 179, 65, 0.3); background: rgba(227, 179, 65, 0.1); color: var(--glow-yyy); }
+        .admin-copy-btn { cursor: pointer; transition: 0.3s; } .admin-copy-btn:hover { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 0 15px var(--primary-glow);}
 
-        /* البوت الذكي (PlatoBot) */
-        .bot-fab { position: fixed; bottom: 25px; left: 25px; width: 55px; height: 55px; background: var(--bot-header); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; color: #fff; cursor: pointer; z-index: 1600; box-shadow: 0 5px 15px rgba(0,0,0,0.5); transition: 0.3s; }
+        /* البوت الذكي (PlatoBot - Glassmorphism) */
+        .bot-fab { position: fixed; bottom: 25px; left: 25px; width: 60px; height: 60px; background: var(--bot-header); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 26px; color: #fff; cursor: pointer; z-index: 1600; box-shadow: 0 10px 25px rgba(157, 78, 221, 0.4); transition: 0.4s; }
         html[dir="ltr"] .bot-fab { left: auto; right: 25px; }
-        .bot-fab:hover { transform: scale(1.05); }
+        .bot-fab:hover { transform: scale(1.1) rotate(10deg); }
         
-        .bot-window { position: fixed; bottom: 90px; left: 25px; width: 320px; background: var(--bot-bg); border-radius: 10px; overflow: hidden; z-index: 1600; box-shadow: 0 10px 30px rgba(0,0,0,0.6); opacity: 0; pointer-events: none; transform: translateY(15px); transition: 0.3s; border: 1px solid var(--border-color); }
+        .bot-window { position: fixed; bottom: 95px; left: 25px; width: 340px; background: var(--bot-bg); backdrop-filter: blur(30px); border-radius: 16px; overflow: hidden; z-index: 1600; box-shadow: 0 15px 40px rgba(0,0,0,0.5); opacity: 0; pointer-events: none; transform: translateY(20px); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 1px solid var(--glass-border); }
         html[dir="ltr"] .bot-window { left: auto; right: 25px; }
         .bot-window.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
-        .bot-header { background: var(--bot-header); padding: 12px; color: #fff; font-weight: bold; display: flex; justify-content: space-between; align-items: center; font-family: 'Rajdhani', sans-serif; font-size: 0.95rem;}
-        .bot-body { padding: 15px; height: 300px; overflow-y: auto; background: rgba(0,0,0,0.1); display: flex; flex-direction: column; gap: 8px;}
-        [data-theme="light"] .bot-body { background: transparent; }
+        .bot-header { background: rgba(157, 78, 221, 0.2); border-bottom: 1px solid var(--glass-border); padding: 15px; color: var(--text-main); font-weight: bold; display: flex; justify-content: space-between; align-items: center; font-family: 'Rajdhani', sans-serif; font-size: 1rem;}
+        .bot-body { padding: 20px; height: 320px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px;}
         
-        .bot-msg { background: var(--bot-header); color: #fff; padding: 8px 12px; border-radius: 12px; border-top-right-radius: 0; font-size: 0.9rem; line-height: 1.5; width: fit-content; max-width: 85%; align-self: flex-start; font-weight: bold;}
-        html[dir="ltr"] .bot-msg { border-top-right-radius: 12px; border-top-left-radius: 0; }
-        .user-msg { background: rgba(255,255,255,0.08); color: var(--text-main); padding: 8px 12px; border-radius: 12px; border-top-left-radius: 0; font-size: 0.9rem; width: fit-content; max-width: 85%; align-self: flex-end; font-weight: bold; line-height: 1.5;}
-        html[dir="ltr"] .user-msg { border-top-left-radius: 12px; border-top-right-radius: 0; }
+        .bot-msg { background: rgba(157, 78, 221, 0.2); border: 1px solid rgba(157, 78, 221, 0.3); color: var(--text-main); padding: 10px 15px; border-radius: 15px; border-top-right-radius: 0; font-size: 0.95rem; line-height: 1.5; width: fit-content; max-width: 85%; align-self: flex-start; font-weight: bold;}
+        html[dir="ltr"] .bot-msg { border-top-right-radius: 15px; border-top-left-radius: 0; }
+        .user-msg { background: rgba(255,255,255,0.08); border: 1px solid var(--glass-border); color: var(--text-main); padding: 10px 15px; border-radius: 15px; border-top-left-radius: 0; font-size: 0.95rem; width: fit-content; max-width: 85%; align-self: flex-end; font-weight: bold; line-height: 1.5;}
+        html[dir="ltr"] .user-msg { border-top-left-radius: 15px; border-top-right-radius: 0; }
         [data-theme="light"] .user-msg { background: rgba(0,0,0,0.05); }
 
-        .bot-input { display: flex; padding: 8px; background: var(--bg-card); border-top: 1px solid var(--border-color); }
-        .bot-input input { flex: 1; padding: 8px; border: none; background: transparent; color: var(--text-main); outline: none; font-family: 'Cairo', sans-serif; font-weight: bold; font-size: 0.9rem;}
-        .bot-input button { background: var(--bot-header); color: #fff; border: none; padding: 0 15px; border-radius: 4px; cursor: pointer; transition: 0.2s;}
+        .bot-input { display: flex; padding: 10px; background: rgba(0,0,0,0.2); border-top: 1px solid var(--glass-border); }
+        [data-theme="light"] .bot-input { background: rgba(255,255,255,0.5); }
+        .bot-input input { flex: 1; padding: 10px; border: none; background: transparent; color: var(--text-main); outline: none; font-family: 'Cairo', sans-serif; font-weight: bold; font-size: 0.95rem;}
+        .bot-input button { background: var(--primary); color: #fff; border: none; padding: 0 15px; border-radius: 8px; cursor: pointer; transition: 0.2s; box-shadow: 0 0 10px var(--primary-glow);}
 
-        .typing-indicator { display: flex; gap: 3px; padding: 8px 12px; background: var(--bot-header); border-radius: 12px; border-top-right-radius: 0; width: fit-content; align-self: flex-start;}
-        html[dir="ltr"] .typing-indicator { border-top-right-radius: 12px; border-top-left-radius: 0; }
-        .typing-dot { width: 5px; height: 5px; background: #fff; border-radius: 50%; animation: typing 1.4s infinite ease-in-out both; }
+        .typing-indicator { display: flex; gap: 4px; padding: 10px 15px; background: rgba(157, 78, 221, 0.2); border: 1px solid rgba(157, 78, 221, 0.3); border-radius: 15px; border-top-right-radius: 0; width: fit-content; align-self: flex-start;}
+        html[dir="ltr"] .typing-indicator { border-top-right-radius: 15px; border-top-left-radius: 0; }
+        .typing-dot { width: 6px; height: 6px; background: var(--text-main); border-radius: 50%; animation: typing 1.4s infinite ease-in-out both; }
         .typing-dot:nth-child(1) { animation-delay: -0.32s; } .typing-dot:nth-child(2) { animation-delay: -0.16s; }
         @keyframes typing { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
 
-        #toast { visibility: hidden; min-width: 200px; background-color: #2b2d35; color: #fff; text-align: center; border-radius: 6px; padding: 12px; position: fixed; z-index: 9999; left: 50%; bottom: 25px; transform: translateX(-50%); font-size: 14px; transition: 0.3s; opacity: 0; box-shadow: 0 5px 20px rgba(0,0,0,0.5); border: 1px solid var(--primary); font-family: 'Cairo', sans-serif; font-weight:bold;}
-        #toast.show { visibility: visible; bottom: 70px; opacity: 1; }
+        #toast { visibility: hidden; min-width: 200px; background: rgba(15, 15, 20, 0.9); backdrop-filter: blur(10px); color: #fff; text-align: center; border-radius: 10px; padding: 12px 20px; position: fixed; z-index: 9999; left: 50%; bottom: 25px; transform: translateX(-50%); font-size: 14px; transition: 0.4s; opacity: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid var(--primary); font-family: 'Cairo', sans-serif; font-weight:bold;}
+        #toast.show { visibility: visible; bottom: 85px; opacity: 1; }
         
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1500; display: none; backdrop-filter: blur(2px);}
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1500; display: none; backdrop-filter: blur(5px);}
         .overlay.active { display: block; }
 
         /* Media Queries */
@@ -217,24 +250,23 @@
             .hero p { font-size: 1rem; }
             .section-title { font-size: 1.4rem; margin-bottom: 25px; }
             
-            .featured-news { padding: 20px; }
-            .news-headline { font-size: 1.2rem; }
+            .featured-news { padding: 25px 20px; }
+            .news-headline { font-size: 1.25rem; }
             .news-body { font-size: 0.9rem; }
 
             .card { width: 100%; max-width: 300px; padding: 25px 15px; }
-            .card img { width: 80px; height: 80px; margin-bottom: 10px; }
             
-            .list-row { padding: 10px; gap: 8px; }
+            .list-row { padding: 12px; gap: 10px; }
             .rank-num { font-size: 1rem; width: 20px; }
             .list-img { width: 30px; height: 30px; }
-            .list-name { font-size: 0.85rem; }
+            .list-name { font-size: 0.9rem; }
             .score-val { font-size: 0.95rem; }
             
-            .tour-card { padding: 15px; }
+            .tour-card { padding: 20px 15px; }
             .tour-title { font-size: 1.05rem; }
-            .tour-desc { font-size: 0.85rem; margin-bottom: 10px;}
-            .tour-footer { flex-direction: column; gap: 6px; }
-            .info-badge { width: 100%; justify-content: center; font-size: 0.75rem; padding: 5px;}
+            .tour-desc { font-size: 0.85rem; margin-bottom: 12px;}
+            .tour-footer { flex-direction: column; gap: 8px; }
+            .info-badge { width: 100%; justify-content: center; font-size: 0.8rem; padding: 6px;}
             
             .bot-window { width: calc(100% - 30px); left: 15px; right: 15px; bottom: 85px; }
             html[dir="ltr"] .bot-window { left: 15px; right: 15px; }
@@ -245,10 +277,16 @@
 </head>
 <body>
 
-    <div class="animated-bg"></div>
+    <!-- خلفية الزجاج السائل (Liquid Glass) -->
+    <div class="liquid-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
     <div class="particles" id="particles"></div>
     <div class="overlay" onclick="toggleMenu()"></div>
     
+    <!-- القائمة الجانبية -->
     <div class="sidebar" id="sidebar">
         <i class="fa-solid fa-xmark close-btn" onclick="toggleMenu()"></i>
         
@@ -266,6 +304,7 @@
         <a href="#tournaments" onclick="toggleMenu()" data-i18n="menu_tournaments">البطولات</a>
     </div>
 
+    <!-- النافذة العلوية -->
     <nav class="navbar">
         <h1>Plato<span>X</span></h1>
         <div class="nav-actions">
@@ -278,19 +317,21 @@
         </div>
     </nav>
 
+    <!-- شريط الأخبار -->
     <div class="news-ticker">
         <span class="ticker-content" id="news-text"></span>
     </div>
 
+    <!-- الهيرو -->
     <section class="hero" id="hero">
-        <h2 data-aos="fade-down" data-i18n="hero_title">مجتمع اللاعبين العرب</h2>
+        <h2 data-aos="fade-down">Plato<span>X</span> <span data-i18n="hero_title_sub">المجتمع العربي</span></h2>
         <p data-aos="fade-up" data-aos-delay="200" data-i18n="hero_desc">يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.</p>
     </section>
 
-    <!-- لوحة الأخبار (Ultra Pro - نص الديسكورد بالخارج) -->
+    <!-- لوحة الأخبار (Ultra Pro Glass) -->
     <section id="news" style="padding-top: 10px;">
         <h2 class="section-title" data-aos="fade-right" data-i18n="news_board_title">لوحة أخبار المجتمع</h2>
-        <div class="featured-news" data-aos="zoom-in">
+        <div class="featured-news glass-panel" data-aos="zoom-in">
             <div class="news-header-top">
                 <span class="news-badge"><i class="fa-solid fa-bullhorn"></i> <span data-i18n="tag_update">خبر هام</span></span>
                 <span class="news-date-sub num-font">SEP 2026</span>
@@ -306,20 +347,21 @@
 
     <div class="cyber-divider"><div class="center-node"></div></div>
 
+    <!-- القادة العرب (Glass Cards) -->
     <section id="leaders">
         <h2 class="section-title" data-aos="fade-right" data-i18n="leaders_title">القادة العرب</h2>
         <div class="grid-container">
-            <div class="card card-yyy" data-aos="fade-up" data-aos-delay="100">
+            <div class="card glass-panel card-yyy" data-aos="fade-up" data-aos-delay="100">
                 <img src="IMG_3154.png" alt="YYY">
                 <h3>YYY</h3>
                 <p data-i18n="desc_yyy">صانع الأثر، يقود برؤية مستقبلية لخلق بيئة إيجابية لا تعرف المستحيل.</p>
             </div>
-            <div class="card card-hat" data-aos="fade-up" data-aos-delay="200">
+            <div class="card glass-panel card-hat" data-aos="fade-up" data-aos-delay="200">
                 <img src="f3b8c20da38a9320fa2f250f52f7f16a.png" alt="HAT">
                 <h3>HAT</h3>
                 <p data-i18n="desc_hat">رمز الكاريزما والقوة، تقود المجتمع بثقة راسخة وترسم معايير الرقي.</p>
             </div>
-            <div class="card card-bbb" data-aos="fade-up" data-aos-delay="300">
+            <div class="card glass-panel card-bbb" data-aos="fade-up" data-aos-delay="300">
                 <img src="a_368d018a788facdb964b3f1df658ecde.gif" alt="BBB">
                 <h3>BBB</h3>
                 <p data-i18n="desc_bbb">الحكمة في اتخاذ القرار، يوازن بين الحزم والهدوء لإدارة الأزمات باحترافية.</p>
@@ -329,53 +371,54 @@
 
     <div class="cyber-divider"><div class="center-node"></div></div>
 
+    <!-- اللاعبين الأقدم (Glass Rows) -->
     <section id="accounts">
         <h2 class="section-title" data-aos="fade-right" data-i18n="players_title">اللاعبين الاقدم</h2>
         <div class="premium-list" data-aos="fade-up">
             
-            <div class="list-row rank-1">
+            <div class="list-row glass-panel rank-1">
                 <div class="rank-num num-font">01</div>
                 <div class="list-info">
                     <img src="https://ui-avatars.com/api/?name=Te&background=9d4edd&color=fff" class="list-img">
                     <div class="list-name num-font">Test</div>
                 </div>
-                <div class="score-val num-font"><span class="auto-days" data-base-days="3010"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
+                <div class="score-val num-font"><span class="auto-days" data-base-days="3010"></span> <span style="font-size:0.85rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
             </div>
 
-            <div class="list-row rank-2">
+            <div class="list-row glass-panel rank-2">
                 <div class="rank-num num-font">02</div>
                 <div class="list-info">
                     <img src="https://ui-avatars.com/api/?name=MM&background=27272a&color=fff" class="list-img">
                     <div class="list-name num-font">MMM</div>
                 </div>
-                <div class="score-val num-font"><span class="auto-days" data-base-days="3005"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
+                <div class="score-val num-font"><span class="auto-days" data-base-days="3005"></span> <span style="font-size:0.85rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
             </div>
 
-            <div class="list-row rank-3">
+            <div class="list-row glass-panel rank-3">
                 <div class="rank-num num-font">03</div>
                 <div class="list-info">
                     <img src="https://ui-avatars.com/api/?name=BB&background=27272a&color=fff" class="list-img">
                     <div class="list-name num-font">BBB</div>
                 </div>
-                <div class="score-val num-font"><span class="auto-days" data-base-days="3005"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
+                <div class="score-val num-font"><span class="auto-days" data-base-days="3005"></span> <span style="font-size:0.85rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
             </div>
 
-            <div class="list-row">
+            <div class="list-row glass-panel">
                 <div class="rank-num num-font">04</div>
                 <div class="list-info">
                     <img src="https://ui-avatars.com/api/?name=P4&background=111&color=fff" class="list-img">
                     <div class="list-name num-font">Player 4</div>
                 </div>
-                <div class="score-val num-font"><span class="auto-days" data-base-days="2900"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
+                <div class="score-val num-font"><span class="auto-days" data-base-days="2900"></span> <span style="font-size:0.85rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
             </div>
 
-            <div class="list-row">
+            <div class="list-row glass-panel">
                 <div class="rank-num num-font">05</div>
                 <div class="list-info">
                     <img src="https://ui-avatars.com/api/?name=P5&background=111&color=fff" class="list-img">
                     <div class="list-name num-font">Player 5</div>
                 </div>
-                <div class="score-val num-font"><span class="auto-days" data-base-days="2850"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
+                <div class="score-val num-font"><span class="auto-days" data-base-days="2850"></span> <span style="font-size:0.85rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
             </div>
 
         </div>
@@ -383,11 +426,12 @@
 
     <div class="cyber-divider"><div class="center-node"></div></div>
 
+    <!-- ترتيب الإنفاق (Glass Bars) -->
     <section id="top-spending">
         <h2 class="section-title" data-aos="fade-right" data-i18n="spending_title">ترتيب المجموعات الأكثر إنفاقًا</h2>
         <div class="premium-list" data-aos="fade-up">
             
-            <div class="list-row rank-1">
+            <div class="list-row glass-panel rank-1">
                 <div class="rank-num num-font">01</div>
                 <div class="list-info">
                     <img src="https://ui-avatars.com/api/?name=Y1&background=ffd700&color=000" class="list-img group-img">
@@ -399,7 +443,7 @@
                 <div class="score-val num-font" style="color: var(--glow-yyy);">500K</div>
             </div>
 
-            <div class="list-row rank-2">
+            <div class="list-row glass-panel rank-2">
                 <div class="rank-num num-font">02</div>
                 <div class="list-info">
                     <img src="https://ui-avatars.com/api/?name=Y2&background=c0c0c0&color=000" class="list-img group-img">
@@ -411,7 +455,7 @@
                 <div class="score-val num-font" style="color: silver;">350K</div>
             </div>
 
-            <div class="list-row rank-3">
+            <div class="list-row glass-panel rank-3">
                 <div class="rank-num num-font">03</div>
                 <div class="list-info">
                     <img src="https://ui-avatars.com/api/?name=Y3&background=cd7f32&color=000" class="list-img group-img">
@@ -433,14 +477,14 @@
         <div class="tournaments-grid" id="tournaments-container" data-aos="fade-up"></div>
     </section>
 
-    <!-- PlatoBot الذكي -->
+    <!-- PlatoBot الذكي (Glass Window) -->
     <div class="bot-fab" onclick="toggleBot()">
         <i class="fa-solid fa-robot"></i>
     </div>
     <div class="bot-window" id="botWindow">
         <div class="bot-header">
-            <div><i class="fa-solid fa-microchip" style="color: var(--glow-yyy);"></i> PlatoBot 🤖</div>
-            <i class="fa-solid fa-xmark" onclick="toggleBot()" style="cursor:pointer;"></i>
+            <div style="display:flex; align-items:center; gap:8px;"><i class="fa-solid fa-microchip"></i> PlatoBot 🤖</div>
+            <i class="fa-solid fa-xmark" onclick="toggleBot()" style="cursor:pointer; font-size:1.2rem;"></i>
         </div>
         <div class="bot-body" id="botBody">
             <div class="bot-msg" data-i18n="bot_welcome">مرحباً بك! أنا PlatoBot، مساعدك الذكي في مجتمعنا. كيف أقدر أساعدك اليوم؟ 🎮</div>
@@ -462,7 +506,7 @@
 
         const icons = ['fa-gamepad', 'fa-dice', 'fa-chess-knight', 'fa-bowling-ball', 'fa-ghost', 'fa-futbol'];
         const particlesContainer = document.getElementById('particles');
-        for(let i=0; i<18; i++){
+        for(let i=0; i<15; i++){
             let icon = document.createElement('i');
             icon.className = 'fa-solid ' + icons[Math.floor(Math.random() * icons.length)] + ' particle';
             icon.style.left = Math.random() * 100 + 'vw';
@@ -562,11 +606,11 @@
         const tournamentsData = [
             { 
                 id: 1, time: `${dateString}T21:00:00`, img: "https://ui-avatars.com/api/?name=Y1&background=ffd700&color=000", 
-                titleKey: "tour_1_title", descKey: "tour_1_desc", groupKey: "group_1", gameKey: "game_pool", prize: "50K - 30K", admin: "YYY", borderColor: "var(--primary)" 
+                titleKey: "tour_1_title", descKey: "tour_1_desc", groupKey: "group_1", gameKey: "game_pool", prize: "50K - 30K", admin: "YYY" 
             },
             { 
                 id: 2, time: `${dateString}T22:00:00`, img: "https://ui-avatars.com/api/?name=Y2&background=00b4d8&color=fff", 
-                titleKey: "tour_2_title", descKey: "tour_2_desc", groupKey: "group_2", gameKey: "game_werewolf", prize: "40K", admin: "BBB", borderColor: "var(--glow-bbb)" 
+                titleKey: "tour_2_title", descKey: "tour_2_desc", groupKey: "group_2", gameKey: "game_werewolf", prize: "40K", admin: "BBB" 
             }
         ];
 
@@ -575,14 +619,12 @@
             container.innerHTML = '';
             tournamentsData.sort((a, b) => new Date(a.time) - new Date(b.time));
             tournamentsData.forEach(tour => {
-                const isLtr = document.documentElement.getAttribute('dir') === 'ltr';
-                const borderStyle = isLtr ? `border-left-color: ${tour.borderColor};` : `border-right-color: ${tour.borderColor};`;
                 container.innerHTML += `
-                    <div class="tour-card" style="${borderStyle}">
+                    <div class="tour-card glass-panel">
                         <div class="tour-header">
                             <div class="tour-title-box">
-                                <img src="${tour.img}" class="entity-img">
-                                <div class="tour-title" style="color: ${tour.borderColor};" data-i18n="${tour.titleKey}">...</div>
+                                <img src="${tour.img}" class="entity-img" style="border-radius:8px;">
+                                <div class="tour-title" data-i18n="${tour.titleKey}">...</div>
                             </div>
                             <div class="countdown-box" id="timer-${tour.id}"><i class="fa-regular fa-clock"></i> <span class="num-font countdown-val">00:00:00</span></div>
                         </div>
@@ -619,7 +661,7 @@
             ar: {
                 menu_home: "الرئيسية", menu_leaders: "القادة", menu_news: "الأخبار", menu_players: "اللاعبين", menu_spending: "الإنفاق", menu_tournaments: "البطولات",
                 news_text: "احدث اخبار بلاتو: سيتم تنظيف المتجر من عناصر الكوينز كليًا",
-                hero_title: "مجتمع اللاعبين العرب", hero_desc: "يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.",
+                hero_title_sub: "المجتمع العربي", hero_desc: "يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.",
                 leaders_title: "القادة العرب", news_board_title: "لوحة أخبار المجتمع", players_title: "اللاعبين الاقدم", spending_title: "ترتيب المجموعات الأكثر إنفاقًا", tournaments_title: "مركز البطولات المعتمدة",
                 desc_yyy: "صانع الأثر، يقود برؤية مستقبلية لخلق بيئة إيجابية لا تعرف المستحيل.", desc_hat: "رمز الكاريزما والقوة، تقود المجتمع بثقة راسخة وترسم معايير الرقي.", desc_bbb: "الحكمة في اتخاذ القرار، يوازن بين الحزم والهدوء لإدارة الأزمات باحترافية.",
                 news_1_title: "إطلاق ألعاب وميزات جديدة قريباً!", news_1_body: "لدينا لعبتان جديدتان نأمل أن نُطلقهما خلال الشهر المقبل أو نحو ذلك، إلى جانب العديد من الميزات الجديدة التي لم نُعلن عنها بعد. ستكون الأشهر القادمة حافلة بالتحديثات، ونستعد لتقديم المزيد لكم حتى نهاية هذا العام. ترقبوا الإعلانات القادمة!",
@@ -634,14 +676,14 @@
             en: {
                 menu_home: "HOME", menu_leaders: "LEADERS", menu_news: "NEWS", menu_players: "PLAYERS", menu_spending: "SPENDING", menu_tournaments: "TOURNAMENTS",
                 news_text: "LATEST PLATO NEWS: The store will be completely cleared of coin items.",
-                hero_title: "ARABIC PLAYERS COMMUNITY", hero_desc: "Where gaming enthusiasts meet to experience thrilling moments, build true friendships, and create eternal memories.",
+                hero_title_sub: "COMMUNITY", hero_desc: "Where gaming enthusiasts meet to experience thrilling moments, build true friendships, and create eternal memories.",
                 leaders_title: "ARABIC LEADERS", news_board_title: "COMMUNITY NEWS BOARD", players_title: "OLDEST PLAYERS", spending_title: "TOP SPENDING GROUPS", tournaments_title: "APPROVED TOURNAMENTS",
                 desc_yyy: "The Impact Maker, leading with a futuristic vision to create a positive environment.", desc_hat: "Symbol of Charisma, leading the community with solid confidence and setting standards.", desc_bbb: "Wisdom in decision making, balancing firmness and calmness in management.",
                 news_1_title: "New Games & Features Launch!", news_1_body: "We have two new games that we hope to release within the next month or so, along with many other new features that we haven't announced yet. The coming months will be packed with new updates, and we're getting ready to bring you even more through the end of this year.",
                 discord_more: "For more news, join our Discord server", tag_update: "HOT NEWS",
                 th_player: "PLAYER", th_days: "DAYS", th_group: "GROUP", th_coins: "SPENDING",
                 group_1: "Yousef Test 1", group_2: "Yousef Test 2", group_3: "Yousef Test 3",
-                tour_1_title: "Yousef Test 1 Tournament", tour_1_desc: "Yousef Test 1 group welcomes you to the Pool tournament tonight at 9 PM KSA. Prizes: 1st place 50K, 2nd place 30K. To join, copy the admin's ID and add them on Plato.",
+                tour_1_title: "Yousef Test 1 Tournament", tour_1_desc: "Yousef First Group welcomes you to the Pool tournament tonight at 9 PM KSA. Prizes: 1st place 50K, 2nd place 30K. To join, copy the admin's ID and add them on Plato.",
                 tour_2_title: "Yousef Test 2 Tournament", tour_2_desc: "Join us for a Werewolf challenge tonight at 10 PM KSA. Limited seats available.",
                 game_pool: "Pool", game_werewolf: "Werewolf",
                 bot_welcome: "Welcome! I'm PlatoBot, your smart assistant. How can I help you today? 🎮", bot_placeholder: "Ask me anything..."
@@ -651,7 +693,6 @@
         function changeLang(lang) {
             document.documentElement.setAttribute('lang', lang); document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
             
-            // تحديث الأزرار النصية للغة
             document.getElementById('btn-ar').classList.toggle('active', lang === 'ar');
             document.getElementById('btn-en').classList.toggle('active', lang === 'en');
             
