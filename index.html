@@ -131,7 +131,7 @@
         .more-news-link i { color: var(--discord-color); font-size: 1.1rem; }
         .more-news-link:hover { color: var(--text-main); transform: translateY(-2px); border-color: var(--discord-color); box-shadow: 0 5px 15px rgba(88, 101, 242, 0.2);}
 
-        /* تنسيقات نموذج إرسال البلاغات */
+        /* تنسيقات البلاغات */
         .bug-radio { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border); transition: 0.3s; background: rgba(0,0,0,0.2); }
         .bug-radio:hover { background: rgba(157, 78, 221, 0.08); border-color: var(--primary); }
         .bug-radio input { margin-top: 4px; accent-color: var(--primary); transform: scale(1.2); }
@@ -649,22 +649,32 @@
         };
 
         let cachedSheetRows = null;
-        let globalTimeOffset = 0; 
+        let baseRealTime = Date.now();
+        let basePerfTime = performance.now();
 
         async function syncRealTime() {
             try {
                 const response = await fetch('https://worldtimeapi.org/api/timezone/Asia/Riyadh');
+                if (!response.ok) throw new Error('API Blocked');
                 const data = await response.json();
-                const realTime = new Date(data.utc_datetime).getTime(); 
-                const deviceTime = new Date().getTime(); 
-                globalTimeOffset = realTime - deviceTime; 
+                baseRealTime = new Date(data.utc_datetime).getTime();
+                basePerfTime = performance.now();
             } catch (error) {
-                console.error("تعذر مزامنة الوقت، سيتم استخدام وقت الجهاز مؤقتاً");
+                try {
+                    const res = await fetch(window.location.href, { method: 'HEAD', cache: 'no-cache' });
+                    const dateHeader = res.headers.get('Date');
+                    if (dateHeader) {
+                        baseRealTime = new Date(dateHeader).getTime();
+                        basePerfTime = performance.now();
+                    }
+                } catch(e) {
+                    console.log("استخدام وقت الجهاز مؤقتاً");
+                }
             }
         }
 
         function getAccurateTime() {
-            return new Date().getTime() + globalTimeOffset;
+            return baseRealTime + (performance.now() - basePerfTime);
         }
 
         function changeLang(lang) {
