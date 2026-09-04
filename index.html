@@ -162,8 +162,13 @@
         [data-theme="light"] .bug-input { background: rgba(255,255,255,0.6); }
         [data-theme="light"] .bug-input:focus { background: #fff; }
 
-        .submit-btn { background: var(--primary); color: #fff; border: none; padding: 14px; border-radius: 8px; font-weight: 900; font-size: 1rem; cursor: pointer; transition: 0.3s; font-family: inherit; }
+        .submit-btn { background: var(--primary); color: #fff; border: none; padding: 14px; border-radius: 8px; font-weight: 900; font-size: 1rem; cursor: pointer; transition: 0.3s; font-family: inherit; flex: 1;}
         .submit-btn:hover { box-shadow: 0 0 20px var(--primary-glow); transform: translateY(-2px); }
+        
+        .cancel-btn { background: rgba(255,255,255,0.1); color: var(--text-main); border: 1px solid var(--glass-border); padding: 14px; border-radius: 8px; font-weight: 900; font-size: 1rem; cursor: pointer; transition: 0.3s; font-family: inherit; flex: 1;}
+        .cancel-btn:hover { background: rgba(220, 38, 38, 0.2); border-color: rgba(220, 38, 38, 0.5); color: #ef4444; transform: translateY(-2px); }
+        [data-theme="light"] .cancel-btn { background: rgba(0,0,0,0.05); color: var(--text-muted); border-color: rgba(0,0,0,0.1); }
+        [data-theme="light"] .cancel-btn:hover { background: rgba(220, 38, 38, 0.1); color: #ef4444; border-color: rgba(220, 38, 38, 0.3); }
 
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; width: 100%; max-width: 900px; justify-items: center; }
         .card { width: 100%; padding: 35px 20px; text-align: center; transition: 0.4s; position: relative; overflow: hidden; border-radius: 16px;}
@@ -258,6 +263,7 @@
             .list-row { padding: 10px; gap: 8px; } .rank-num { font-size: 1rem; width: 20px; } .list-img { width: 30px; height: 30px; } .list-name { font-size: 0.85rem; } .score-val { font-size: 0.95rem; }
             .tour-card { padding: 20px 15px; } .tour-title { font-size: 1.05rem; } .tour-desc { font-size: 0.85rem; margin-bottom: 12px;} .tour-footer { flex-direction: column; gap: 8px; } .info-badge { width: 100%; justify-content: center; font-size: 0.8rem; padding: 6px;}
             .server-tabs { flex-wrap: wrap !important; justify-content: center !important; gap: 10px; padding-bottom: 10px; }
+            .submit-btn, .cancel-btn { font-size: 0.9rem; padding: 12px; }
         }
     </style>
 </head>
@@ -325,7 +331,6 @@
 
     <div class="cyber-divider"><div class="center-node"></div></div>
 
-    <!-- قسم البلاغات الجديد -->
     <section id="bug-report">
         <h2 class="section-title" data-aos="fade-right" data-i18n="bug_title">تقديم بلاغ</h2>
         <div class="glass-panel" style="width: 100%; max-width: 650px; padding: 30px; border-radius: 16px;" data-aos="fade-up">
@@ -340,15 +345,18 @@
                 </label>
                 <label class="bug-radio">
                     <input type="radio" name="bugType" value="Serious Technical Issue" onchange="showBugForm()">
-                    <span><strong data-i18n="bug_opt2_title">مشكلة تقنية جسيمة:</strong> <span data-i18n="bug_tech_desc" style="color: var(--text-muted); font-size: 0.9rem;">أخطاء تقنية ذات تأثير عالي أو مشاكل نظام قابلة للاستغلال المتكرر.</span></span>
+                    <span><strong data-i18n="bug_opt2_title">مشكلة تقنية:</strong> <span data-i18n="bug_tech_desc" style="color: var(--text-muted); font-size: 0.9rem;">أخطاء تقنية ذات تأثير عالي أو مشاكل نظام قابلة للاستغلال المتكرر.</span></span>
                 </label>
             </div>
 
             <div id="bug-details" style="display: none; flex-direction: column; gap: 15px; animation: fadeScale 0.4s ease-out;">
-                <input type="text" id="plato-id" class="bug-input num-font" placeholder="Plato ID">
+                <input type="text" id="plato-id" class="bug-input num-font" placeholder="يوزرك في اللعبة">
                 <textarea id="bug-desc" class="bug-input" rows="4" placeholder="وصف المشكلة..." style="resize: vertical;"></textarea>
                 
-                <button onclick="submitBugReport()" class="submit-btn" data-i18n="bug_submit">إرسال البلاغ</button>
+                <div style="display: flex; gap: 10px;">
+                    <button onclick="submitBugReport()" class="submit-btn" data-i18n="bug_submit">إرسال البلاغ</button>
+                    <button onclick="hideBugForm()" class="cancel-btn" data-i18n="bug_cancel">إلغاء</button>
+                </div>
             </div>
         </div>
     </section>
@@ -394,7 +402,6 @@
         </div>
 
         <div class="global-leaders-grid" id="global-leaders-grid">
-            <!-- سيتم توليد القادة العالميين هنا عبر الجافاسكريبت مع زر النسخ -->
         </div>
     </section>
 
@@ -505,12 +512,17 @@
             });
         }
 
-        // دالة إظهار فورم البلاغات
         function showBugForm() {
             document.getElementById('bug-details').style.display = 'flex';
         }
 
-        // دالة إرسال البلاغ للديسكورد
+        function hideBugForm() {
+            document.getElementById('bug-details').style.display = 'none';
+            document.querySelectorAll('input[name="bugType"]').forEach(r => r.checked = false);
+            document.getElementById('plato-id').value = '';
+            document.getElementById('bug-desc').value = '';
+        }
+
         function submitBugReport() {
             const bugTypeElement = document.querySelector('input[name="bugType"]:checked');
             const platoId = document.getElementById('plato-id').value.trim();
@@ -559,10 +571,7 @@
                 toast.className = "show";
                 setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
                 
-                document.getElementById('plato-id').value = '';
-                document.getElementById('bug-desc').value = '';
-                document.getElementById('bug-details').style.display = 'none';
-                document.querySelectorAll('input[name="bugType"]').forEach(r => r.checked = false);
+                hideBugForm();
             }).catch(err => {
                 console.error("Error sending webhook:", err);
                 alert(document.documentElement.lang === 'ar' ? "حدث خطأ أثناء الإرسال، حاول مجدداً." : "Error submitting report, try again.");
@@ -638,7 +647,7 @@
                 news_text: "احدث اخبار بلاتو: سيتم تنظيف المتجر من عناصر الكوينز كليًا",
                 hero_title_sub: "المجتمع العربي", hero_desc: "يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.",
                 leaders_title: "القادة العرب", global_leaders_title: "قادة السيرفرات العالمية", news_board_title: "لوحة أخبار المجتمع", players_title: "اللاعبين الاقدم", spending_title: "ترتيب المجموعات الأكثر إنفاقًا", tournaments_title: "مركز البطولات المعتمدة",
-                bug_title: "تقديم بلاغ", bug_type_label: "نوع المشكلة:", bug_note: "هذا القسم غير مخصص للمشاكل الشخصية.", bug_opt1_title: "الثغرات (Exploits):", bug_opt2_title: "مشكلة تقنية جسيمة:", bug_exp_desc: "ثغرات، أخطاء برمجية، أو نسخ معدلة.", bug_tech_desc: "أخطاء تقنية ذات تأثير عالي أو مشاكل نظام قابلة للاستغلال المتكرر.", bug_submit: "إرسال البلاغ",
+                bug_title: "تقديم بلاغ", bug_type_label: "نوع المشكلة:", bug_note: "هذا القسم غير مخصص للمشاكل الشخصية.", bug_opt1_title: "الثغرات (Exploits):", bug_opt2_title: "مشكلة تقنية:", bug_exp_desc: "ثغرات، أخطاء برمجية، أو نسخ معدلة.", bug_tech_desc: "أخطاء تقنية ذات تأثير عالي أو مشاكل نظام قابلة للاستغلال المتكرر.", bug_submit: "إرسال البلاغ", bug_cancel: "إلغاء",
                 desc_yyy: "صانع الأثر، يقود برؤية مستقبلية لخلق بيئة إيجابية لا تعرف المستحيل.", desc_hat: "حضور راسخ، تقود المجتمع بثقة راسخة وترسم معايير الرقي.", desc_bbb: "الحكمة في اتخاذ القرار، يوازن بين الحزم والهدوء لإدارة الأزمات باحترافية.",
                 news_1_title: "إطلاق ألعاب وميزات جديدة قريباً!", news_1_body: "لدينا لعبتان جديدتان نأمل أن نُطلقهما خلال الشهر المقبل أو نحو ذلك، إلى جانب العديد من الميزات الجديدة التي لم نُعلن عنها بعد. ستكون الأشهر القادمة حافلة بالتحديثات، ونستعد لتقديم المزيد لكم حتى نهاية هذا العام. ترقبوا الإعلانات القادمة!",
                 discord_more: "للمزيد من الأخبار انضموا إلى الديسكورد", tag_update: "خبر هام",
@@ -650,7 +659,7 @@
                 news_text: "LATEST PLATO NEWS: The store will be completely cleared of coin items.",
                 hero_title_sub: "COMMUNITY", hero_desc: "Where gaming enthusiasts meet to experience thrilling moments, build true friendships, and create eternal memories.",
                 leaders_title: "ARABIC LEADERS", global_leaders_title: "GLOBAL SERVERS LEADERS", news_board_title: "COMMUNITY NEWS BOARD", players_title: "OLDEST PLAYERS", spending_title: "TOP SPENDING GROUPS", tournaments_title: "APPROVED TOURNAMENTS",
-                bug_title: "Bug Reporting", bug_type_label: "Issue Type:", bug_note: "This section is not for personal issues.", bug_opt1_title: "Exploits:", bug_opt2_title: "Serious Technical Issue:", bug_exp_desc: "Bugs, glitches, or modified clients.", bug_tech_desc: "High-impact bugs or system problems that can be repeatedly abused.", bug_submit: "Submit Report",
+                bug_title: "Bug Reporting", bug_type_label: "Issue Type:", bug_note: "This section is not for personal issues.", bug_opt1_title: "Exploits:", bug_opt2_title: "Serious Technical Issue:", bug_exp_desc: "Bugs, glitches, or modified clients.", bug_tech_desc: "High-impact bugs or system problems that can be repeatedly abused.", bug_submit: "Submit Report", bug_cancel: "Cancel",
                 desc_yyy: "The Impact Maker, leading with a futuristic vision to create a positive environment.", desc_hat: "A grounded presence, leading the community with solid confidence and setting standards.", desc_bbb: "Wisdom in decision making, balancing firmness and calmness in management.",
                 news_1_title: "New Games & Features Launch!", news_1_body: "We have two new games that we hope to release within the next month or so, along with many other new features that we haven't announced yet. The coming months will be packed with new updates, and were getting ready to bring you even more through the end of this year.",
                 discord_more: "For more news, join our Discord server", tag_update: "HOT NEWS",
@@ -679,8 +688,7 @@
             
             document.getElementById('news-text').innerText = translations[lang]['news_text'];
             
-            // تحديث Placeholders لقسم البلاغات
-            document.getElementById('plato-id').placeholder = lang === 'ar' ? 'يوزرك في اللعبة (Plato ID)' : 'Plato ID';
+            document.getElementById('plato-id').placeholder = lang === 'ar' ? 'يوزرك في اللعبة' : 'Your Plato ID';
             document.getElementById('bug-desc').placeholder = lang === 'ar' ? 'وصف المشكلة...' : 'Issue description...';
             
             if (cachedSheetRows) renderDynamicData();
