@@ -119,19 +119,38 @@
         .section-title::before { content: ''; position: absolute; right: -15px; top: 50%; transform: translateY(-50%); width: 6px; height: 20px; background: var(--primary); border-radius: 3px; box-shadow: 0 0 15px var(--primary-glow);}
         html[dir="ltr"] .section-title::before { right: auto; left: -15px; }
 
-        .featured-news { width: 100%; max-width: 750px; padding: 35px; display: flex; flex-direction: column; gap: 15px; transition: 0.4s; margin-bottom: 15px; overflow: hidden; border-radius: 12px;}
-        .featured-news:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(0,0,0,0.4); border-color: rgba(157, 78, 221, 0.3); }
+        /* ---------------- تنسيقات شريط الأخبار الزجاجي (الجديد) ---------------- */
+        .news-carousel-container { width: 100%; max-width: 800px; position: relative; display: flex; flex-direction: column; gap: 20px; margin-bottom: 10px;}
+        .news-slider { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none; padding-bottom: 15px;}
+        .news-slider::-webkit-scrollbar { display: none; }
+        
+        .news-slide-card { min-width: 100%; flex: 0 0 auto; scroll-snap-align: center; padding: 35px; border-radius: 16px; transition: transform 0.4s, box-shadow 0.4s;}
+        .news-slide-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.4); border-color: rgba(157, 78, 221, 0.4); }
+        
         .news-header-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; }
-        .news-badge { background: rgba(157, 78, 221, 0.15); color: var(--primary); border: 1px solid rgba(157, 78, 221, 0.3); padding: 5px 12px; border-radius: 8px; font-weight: 900; font-size: 0.8rem; display: flex; align-items: center; gap: 8px; box-shadow: 0 0 15px rgba(157, 78, 221, 0.1);}
+        .news-badge { padding: 5px 12px; border-radius: 8px; font-weight: 900; font-size: 0.8rem; display: flex; align-items: center; gap: 8px; border: 1px solid transparent; }
         .news-date-sub { font-family: 'Rajdhani', sans-serif; font-size: 0.85rem; color: var(--text-muted); font-weight: bold;}
-        .news-headline { font-size: 1.4rem; font-weight: 900; line-height: 1.4; color: var(--text-main); margin-top: 5px;}
+        .news-headline { font-size: 1.4rem; font-weight: 900; line-height: 1.4; color: var(--text-main); margin-top: 15px; margin-bottom: 5px;}
         .news-body { color: rgba(255,255,255,0.7); line-height: 1.8; font-size: 0.95rem; }
         [data-theme="light"] .news-body { color: var(--text-muted); }
+        
         .more-news-link { display: inline-flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 0.9rem; text-decoration: none; transition: 0.3s; font-weight: bold; background: var(--bg-card); padding: 8px 20px; border-radius: 20px; border: 1px solid var(--glass-border); backdrop-filter: blur(10px);}
         .more-news-link i { color: var(--discord-color); font-size: 1.1rem; }
         .more-news-link:hover { color: var(--text-main); transform: translateY(-2px); border-color: var(--discord-color); box-shadow: 0 5px 15px rgba(88, 101, 242, 0.2);}
 
-        /* تنسيقات البلاغات */
+        .slider-controls { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0 15px; margin-top: -5px;}
+        .nav-btn { background: transparent; border: none; color: var(--text-muted); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px; transition: 0.3s; font-family: inherit;}
+        .nav-btn:hover { color: var(--primary); transform: scale(1.08); }
+        .nav-label { font-size: 0.8rem; font-weight: 900; letter-spacing: 1px; opacity: 0.8;}
+        .arrow-icon { font-size: 1.1rem; background: var(--bg-card); border: 1px solid var(--glass-border); padding: 10px 18px; border-radius: 30px; backdrop-filter: blur(10px); transition: 0.3s;}
+        .nav-btn:hover .arrow-icon { border-color: var(--primary); box-shadow: 0 0 15px var(--primary-glow); background: rgba(157, 78, 221, 0.1); }
+        html[dir="ltr"] .prev-icon, html[dir="ltr"] .next-icon { transform: rotate(180deg); }
+
+        .slider-dots { display: flex; gap: 8px; }
+        .dot { width: 8px; height: 8px; background: var(--glass-border); border-radius: 50%; transition: 0.4s; }
+        .dot.active { background: var(--primary); width: 22px; border-radius: 10px; box-shadow: 0 0 10px var(--primary-glow); }
+
+        /* ---------------- تنسيقات البلاغات ---------------- */
         .bug-radio { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border); transition: 0.3s; background: rgba(0,0,0,0.2); }
         .bug-radio:hover { background: rgba(157, 78, 221, 0.08); border-color: var(--primary); }
         .bug-radio input { margin-top: 4px; accent-color: var(--primary); transform: scale(1.2); }
@@ -231,7 +250,13 @@
             .hero { height: 45vh; margin-top: 20px;}
             .hero h2 { font-size: 2.2rem; } .hero p { font-size: 1rem; }
             .section-title { font-size: 1.4rem; margin-bottom: 25px; }
-            .featured-news { padding: 25px 20px; } .news-headline { font-size: 1.25rem; } .news-body { font-size: 0.9rem; }
+            
+            /* تعديلات الموبايل لشريط الأخبار */
+            .news-slide-card { min-width: 90%; padding: 25px 20px; } 
+            .news-slider { padding: 0 5% 15px; gap: 15px; } 
+            .news-headline { font-size: 1.25rem; } 
+            .news-body { font-size: 0.9rem; }
+            
             .grid-container { display: grid !important; grid-template-columns: 1fr !important; gap: 15px; width: 100%; }
             .global-leaders-grid { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 10px; width: 100%; }
             .card { padding: 15px 10px; width: 100%; max-width: none; }
@@ -294,23 +319,42 @@
         <p data-aos="fade-up" data-aos-delay="200" data-i18n="hero_desc">يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.</p>
     </section>
 
+    <!-- ---------------- قسم الأخبار الزجاجي الاحترافي ---------------- -->
     <section id="news" style="padding-top: 10px;">
         <h2 class="section-title" data-aos="fade-right" data-i18n="news_board_title">لوحة أخبار المجتمع</h2>
-        <div class="featured-news glass-panel" data-aos="zoom-in">
-            <div class="news-header-top">
-                <span class="news-badge"><i class="fa-solid fa-bullhorn"></i> <span data-i18n="tag_update">خبر هام</span></span>
-                <span class="news-date-sub num-font">SEP 2026</span>
+
+        <div class="news-carousel-container" data-aos="zoom-in">
+            <!-- الشريط المنزلق الذي يحتوي على الكروت -->
+            <div class="news-slider" id="newsSlider">
+                <!-- سيتم جلب الأخبار من جوجل شيت هنا برمجياً -->
             </div>
-            <h3 class="news-headline" data-i18n="news_1_title">إطلاق ألعاب وميزات جديدة قريباً!</h3>
-            <p class="news-body" data-i18n="news_1_body">لدينا لعبتان جديدتان نأمل أن نُطلقهما خلال الشهر المقبل أو نحو ذلك، إلى جانب العديد من الميزات الجديدة التي لم نُعلن عنها بعد. ستكون الأشهر القادمة حافلة بالتحديثات، ونستعد لتقديم المزيد لكم حتى نهاية هذا العام. ترقبوا الإعلانات القادمة!</p>
+            
+            <!-- أزرار التنقل والنقاط -->
+            <div class="slider-controls">
+                <button class="nav-btn" onclick="slideNews(-1)">
+                    <span class="nav-label num-font" data-i18n="news_newer">الأحدث</span>
+                    <i class="fa-solid fa-arrow-right arrow-icon prev-icon"></i>
+                </button>
+                
+                <div class="slider-dots" id="newsDots">
+                    <!-- سيتم إضافة النقاط برمجياً حسب عدد الأخبار -->
+                </div>
+
+                <button class="nav-btn" onclick="slideNews(1)">
+                    <span class="nav-label num-font" data-i18n="news_older">الأقدم</span>
+                    <i class="fa-solid fa-arrow-left arrow-icon next-icon"></i>
+                </button>
+            </div>
         </div>
-        <a href="https://discord.gg/plato" target="_blank" class="more-news-link" data-aos="fade-up" data-aos-delay="100">
+
+        <a href="https://discord.gg/plato" target="_blank" class="more-news-link" data-aos="fade-up" data-aos-delay="100" style="margin-top: 25px;">
             <i class="fa-brands fa-discord"></i> <span data-i18n="discord_more">للمزيد من الأخبار انضموا إلى الديسكورد</span>
         </a>
     </section>
 
     <div class="cyber-divider"><div class="center-node"></div></div>
 
+    <!-- ---------------- قسم البلاغات ---------------- -->
     <section id="bug-report">
         <h2 class="section-title" data-aos="fade-right" data-i18n="bug_title">تقديم بلاغ</h2>
         <div class="glass-panel" style="width: 100%; max-width: 650px; padding: 30px; border-radius: 16px;" data-aos="fade-up">
@@ -629,7 +673,7 @@
                 leaders_title: "القادة العرب", global_leaders_title: "قادة السيرفرات العالمية", news_board_title: "لوحة أخبار المجتمع", players_title: "اللاعبين الاقدم", spending_title: "ترتيب المجموعات الأكثر إنفاقًا", tournaments_title: "مركز البطولات المعتمدة",
                 bug_title: "تقديم بلاغ", bug_type_label: "نوع المشكلة:", bug_note: "هذا القسم غير مخصص للمشاكل الشخصية.", bug_opt1_title: "الثغرات (Exploits):", bug_opt2_title: "مشكلة تقنية:", bug_exp_desc: "ثغرات، أخطاء برمجية، أو نسخ معدلة.", bug_tech_desc: "أخطاء تقنية ذات تأثير عالي أو مشاكل نظام قابلة للاستغلال المتكرر.", bug_submit: "إرسال البلاغ", bug_cancel: "إلغاء",
                 desc_yyy: "صانع الأثر، يقود برؤية مستقبلية لخلق بيئة إيجابية لا تعرف المستحيل.", desc_hat: "حضور راسخ، تقود المجتمع بثقة راسخة وترسم معايير الرقي.", desc_bbb: "الحكمة في اتخاذ القرار، يوازن بين الحزم والهدوء لإدارة الأزمات باحترافية.",
-                news_1_title: "إطلاق ألعاب وميزات جديدة قريباً!", news_1_body: "لدينا لعبتان جديدتان نأمل أن نُطلقهما خلال الشهر المقبل أو نحو ذلك، إلى جانب العديد من الميزات الجديدة التي لم نُعلن عنها بعد. ستكون الأشهر القادمة حافلة بالتحديثات، ونستعد لتقديم المزيد لكم حتى نهاية هذا العام. ترقبوا الإعلانات القادمة!",
+                news_newer: "الأحدث", news_older: "الأقدم",
                 discord_more: "للمزيد من الأخبار انضموا إلى الديسكورد", tag_update: "خبر هام",
                 th_player: "اللاعب", th_days: "يوم", th_group: "المجموعة", th_coins: "الإنفاق",
                 tab_english: "الإنجليزي", tab_persian: "الفارسي", tab_french: "الفرنسي", tab_melayu: "الماليزي", tab_turkish: "التركي", tab_spanish: "الإسباني", tab_thai: "التايلندي", tab_brazil: "البرازيلي", tab_desi: "الهندي"
@@ -641,7 +685,7 @@
                 leaders_title: "ARABIC LEADERS", global_leaders_title: "GLOBAL SERVERS LEADERS", news_board_title: "COMMUNITY NEWS BOARD", players_title: "OLDEST PLAYERS", spending_title: "TOP SPENDING GROUPS", tournaments_title: "APPROVED TOURNAMENTS",
                 bug_title: "Bug Reporting", bug_type_label: "Issue Type:", bug_note: "This section is not for personal issues.", bug_opt1_title: "Exploits:", bug_opt2_title: "Serious Technical Issue:", bug_exp_desc: "Bugs, glitches, or modified clients.", bug_tech_desc: "High-impact bugs or system problems that can be repeatedly abused.", bug_submit: "Submit Report", bug_cancel: "Cancel",
                 desc_yyy: "The Impact Maker, leading with a futuristic vision to create a positive environment.", desc_hat: "A grounded presence, leading the community with solid confidence and setting standards.", desc_bbb: "Wisdom in decision making, balancing firmness and calmness in management.",
-                news_1_title: "New Games & Features Launch!", news_1_body: "We have two new games that we hope to release within the next month or so, along with many other new features that we haven't announced yet. The coming months will be packed with new updates, and were getting ready to bring you even more through the end of this year.",
+                news_newer: "NEWER", news_older: "OLDER",
                 discord_more: "For more news, join our Discord server", tag_update: "HOT NEWS",
                 th_player: "PLAYER", th_days: "DAYS", th_group: "GROUP", th_coins: "SPENDING",
                 tab_english: "English", tab_persian: "Persian", tab_french: "Français", tab_melayu: "Melayu", tab_turkish: "Turkish", tab_spanish: "Español", tab_thai: "Thai", tab_brazil: "Brasil", tab_desi: "Desi"
@@ -649,8 +693,14 @@
         };
 
         let cachedSheetRows = null;
+        let cachedNewsRows = null;
+        
         let baseRealTime = Date.now();
         let basePerfTime = performance.now();
+
+        // الروابط الجديدة للبطولات والأخبار
+        const tourSheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/export?format=csv"; 
+        const newsSheetURL = "https://docs.google.com/spreadsheets/d/10YreDjSMCJc1hvGFbyfVJO4zAmzFGO0eeyoq5qKwf_E/export?format=csv";
 
         async function syncRealTime() {
             try {
@@ -698,15 +748,86 @@
             document.getElementById('bug-desc').placeholder = lang === 'ar' ? 'وصف المشكلة...' : 'Issue description...';
             
             if (cachedSheetRows) renderDynamicData();
+            if (cachedNewsRows) renderNews();
+            
             localStorage.setItem('lang', lang);
 
             setTimeout(() => { sidebar.style.transition = ''; }, 50);
         }
 
-        async function loadDynamicData() {
-            const sheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/export?format=csv"; 
+        // ---------------- دالة جلب وعرض الأخبار ----------------
+        async function loadNewsData() {
             try {
-                const response = await fetch(sheetURL);
+                const response = await fetch(newsSheetURL);
+                const data = await response.text();
+                // تخطي الصف الأول وجلب البيانات
+                cachedNewsRows = data.split('\n').slice(1).filter(row => row.trim().length > 0);
+                renderNews();
+            } catch (error) { console.error("Error loading news", error); }
+        }
+
+        function renderNews() {
+            if (!cachedNewsRows) return;
+            const slider = document.getElementById('newsSlider');
+            const dotsContainer = document.getElementById('newsDots');
+            const isAr = document.documentElement.getAttribute('lang') === 'ar';
+            let sliderHTML = '', dotsHTML = '';
+
+            // عرض آخر 5 أخبار كحد أقصى لضمان أداء بدون لاق
+            cachedNewsRows.slice(0, 5).forEach((row, index) => {
+                const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                if(cols.length < 6) return;
+
+                const dateStr = cols[0].replace(/"/g, '').trim();
+                const tagType = cols[1].replace(/"/g, '').trim();
+                const displayTitle = isAr ? cols[2].replace(/"/g, '').trim() : cols[4].replace(/"/g, '').trim();
+                const displayBody = isAr ? cols[3].replace(/"/g, '').trim() : cols[5].replace(/"/g, '').trim();
+
+                let tagColor = 'var(--primary)', tagBg = 'rgba(157, 78, 221, 0.15)', tagBorder = 'rgba(157, 78, 221, 0.3)', icon = 'fa-bolt';
+                
+                if(tagType.includes('تحديث') || tagType.toLowerCase().includes('update')) {
+                    tagColor = '#10b981'; tagBg = 'rgba(16, 185, 129, 0.1)'; tagBorder = 'rgba(16, 185, 129, 0.3)'; icon = 'fa-wrench';
+                } else if(tagType.includes('بطولة') || tagType.toLowerCase().includes('event') || tagType.includes('بطوله')) {
+                    tagColor = '#f59e0b'; tagBg = 'rgba(245, 158, 11, 0.1)'; tagBorder = 'rgba(245, 158, 11, 0.3)'; icon = 'fa-trophy';
+                }
+
+                sliderHTML += `
+                    <div class="news-slide-card glass-panel">
+                        <div class="news-header-top">
+                            <span class="news-badge" style="color:${tagColor}; border-color:${tagBorder}; background:${tagBg};"><i class="fa-solid ${icon}"></i> <span>${tagType}</span></span>
+                            <span class="news-date-sub num-font">${dateStr}</span>
+                        </div>
+                        <h3 class="news-headline">${displayTitle}</h3>
+                        <p class="news-body">${displayBody}</p>
+                    </div>`;
+                dotsHTML += `<div class="dot ${index === 0 ? 'active' : ''}"></div>`;
+            });
+
+            slider.innerHTML = sliderHTML;
+            if(dotsContainer) dotsContainer.innerHTML = dotsHTML;
+        }
+
+        function slideNews(direction) {
+            const slider = document.getElementById('newsSlider');
+            const cardWidth = slider.querySelector('.news-slide-card').offsetWidth + 20; 
+            const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
+            slider.scrollBy({ left: cardWidth * (isRTL ? -direction : direction), behavior: 'smooth' });
+        }
+
+        // تفاعل النقاط مع السحب
+        document.getElementById('newsSlider')?.addEventListener('scroll', () => {
+            const slider = document.getElementById('newsSlider');
+            const dots = document.querySelectorAll('.dot');
+            if(!slider || !slider.querySelector('.news-slide-card')) return;
+            
+            let index = Math.round(Math.abs(slider.scrollLeft) / (slider.querySelector('.news-slide-card').offsetWidth + 20));
+            dots.forEach((dot, i) => dot.classList.toggle('active', i === Math.min(index, dots.length - 1)));
+        });
+
+        // ---------------- دالة جلب وعرض البطولات ----------------
+        async function loadDynamicData() {
+            try {
+                const response = await fetch(tourSheetURL);
                 const data = await response.text();
                 cachedSheetRows = data.split('\n').slice(1);
                 renderDynamicData();
@@ -732,7 +853,6 @@
                 const cols = row.split(','); 
                 if(cols.length < 7 || !cols[0].trim()) return;
 
-                // التعديل الخاص بمتصفح سفاري وتوقيت السعودية
                 const rawTimeStr = cols[0].replace(/"/g, '').trim(); 
                 let safeTimeStr = rawTimeStr.replace(/-/g, '/'); 
                 if (!safeTimeStr.includes('+') && !safeTimeStr.toUpperCase().includes('GMT')) {
@@ -741,7 +861,6 @@
 
                 const targetTimeMs = new Date(safeTimeStr).getTime();
                 
-                // تجاوز الخطأ في حال كانت الخانة فارغة أو مكتوبة بشكل خاطئ تماماً
                 if (isNaN(targetTimeMs)) return; 
 
                 const diff = targetTimeMs - nowTime;
@@ -780,7 +899,6 @@
                 const displayName = currentLang === 'ar' ? tour.nameAr : tour.nameEn;
                 const borderStyle = isLtr ? `border-left-color: var(--primary);` : `border-right-color: var(--primary);`;
 
-                // الاعتماد على الرقم مباشرة بدل النص لحل مشكلة السفاري نهائياً
                 tourHTML += `
                     <div class="tour-card glass-panel" style="${borderStyle}">
                         <div class="tour-header">
@@ -890,6 +1008,8 @@
             changeLang(savedLang);
             
             loadDynamicData(); 
+            loadNewsData(); 
+            
             setInterval(updateSheetTimers, 1000);
         }
     </script>
