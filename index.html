@@ -52,17 +52,23 @@
         .liquid-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3; overflow: hidden; background: var(--bg-main); }
         .blob { 
             position: absolute; filter: blur(90px); opacity: 0.45; z-index: -2; 
-            animation: liquidFlow 25s infinite alternate ease-in-out; 
         }
         [data-theme="light"] .blob { opacity: 0.3; filter: blur(70px); }
-        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--primary); animation-delay: 0s; }
-        .blob-2 { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: var(--glow-bbb); animation-delay: -5s; }
-        .blob-3 { top: 40%; left: 30%; width: 40vw; height: 40vw; background: var(--glow-yyy); animation-delay: -10s; opacity: 0.25; }
+        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--primary); animation: liquidFlow 25s infinite alternate ease-in-out; }
+        .blob-2 { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: var(--glow-bbb); animation: liquidFlow 25s infinite alternate ease-in-out -5s; }
+        .blob-3 { top: 40%; left: 30%; width: 40vw; height: 40vw; opacity: 0.25; animation: liquidFlow 25s infinite alternate ease-in-out -10s, colorShift 18s infinite linear; }
         
         @keyframes liquidFlow {
             0% { transform: translate(0, 0) scale(1) rotate(0deg); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
             50% { transform: translate(5%, 10%) scale(1.1) rotate(180deg); border-radius: 60% 40% 30% 70% / 50% 60% 40% 50%; }
             100% { transform: translate(-5%, -5%) scale(0.9) rotate(360deg); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+        }
+
+        @keyframes colorShift {
+            0% { background: var(--glow-yyy); }   /* أصفر */
+            33% { background: var(--primary); }   /* بنفسجي */
+            66% { background: var(--glow-bbb); }  /* سماوي */
+            100% { background: var(--glow-yyy); } /* عودة للأصفر */
         }
 
         .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; pointer-events: none; }
