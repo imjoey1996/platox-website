@@ -40,18 +40,13 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
-        html { 
-            scroll-behavior: smooth; 
-            scroll-padding-top: 85px; 
-        }
+        html { scroll-behavior: smooth; scroll-padding-top: 85px; }
 
         body { color: var(--text-main); font-family: 'Cairo', sans-serif; overflow-x: hidden; transition: background 0.4s, color 0.4s; background-color: var(--bg-main); }
         html[dir="ltr"] body, .num-font, .navbar h1 { font-family: 'Rajdhani', sans-serif; }
 
         .liquid-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3; overflow: hidden; background: var(--bg-main); }
-        .blob { 
-            position: absolute; filter: blur(90px); opacity: 0.45; z-index: -2; 
-        }
+        .blob { position: absolute; filter: blur(90px); opacity: 0.45; z-index: -2; }
         [data-theme="light"] .blob { opacity: 0.3; filter: blur(70px); }
         .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--primary); animation: liquidFlow 25s infinite alternate ease-in-out; }
         .blob-2 { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: var(--glow-bbb); animation: liquidFlow 25s infinite alternate ease-in-out -5s; }
@@ -63,23 +58,14 @@
             100% { transform: translate(-5%, -5%) scale(0.9) rotate(360deg); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
         }
 
-        @keyframes colorShift {
-            0% { background: var(--glow-yyy); }
-            33% { background: var(--primary); }
-            66% { background: var(--glow-bbb); }
-            100% { background: var(--glow-yyy); }
-        }
+        @keyframes colorShift { 0% { background: var(--glow-yyy); } 33% { background: var(--primary); } 66% { background: var(--glow-bbb); } 100% { background: var(--glow-yyy); } }
 
         .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; pointer-events: none; }
         .particle { position: absolute; color: #fff; opacity: 0.15; animation: floatUp infinite linear; filter: blur(1px); } 
         [data-theme="light"] .particle { color: var(--primary); opacity: 0.08; }
         @keyframes floatUp { 0% { transform: translateY(100vh) rotate(0deg) scale(0.8); opacity: 0; } 20% { opacity: 0.15; } 80% { opacity: 0.15; } 100% { transform: translateY(-10vh) rotate(360deg) scale(1.5); opacity: 0; } }
 
-        .glass-panel {
-            background: var(--bg-card); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            border: 1px solid var(--glass-border); border-top: 1px solid rgba(255, 255, 255, 0.12);
-            border-left: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); border-radius: 16px;
-        }
+        .glass-panel { background: var(--bg-card); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border: 1px solid var(--glass-border); border-top: 1px solid rgba(255, 255, 255, 0.12); border-left: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); border-radius: 16px; }
         html[dir="ltr"] .glass-panel { border-left: 1px solid var(--glass-border); border-right: 1px solid rgba(255, 255, 255, 0.05); }
         [data-theme="light"] .glass-panel { box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07); border-top: 1px solid rgba(255, 255, 255, 0.6); }
 
@@ -98,13 +84,7 @@
         @keyframes ticker-rtl { from { transform: translateX(-100vw); } to { transform: translateX(100vw); } }
         @keyframes ticker-ltr { from { transform: translateX(100vw); } to { transform: translateX(-100vw); } }
 
-        .sidebar { 
-            position: fixed; top: 0; right: 0; width: 280px; height: 100vh; 
-            background: rgba(10, 10, 12, 0.98); border-left: 1px solid var(--glass-border); z-index: 2000; 
-            display: flex; flex-direction: column; padding: 25px; 
-            box-shadow: -10px 0 30px rgba(0,0,0,0.8); transform: translateX(100%); 
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        .sidebar { position: fixed; top: 0; right: 0; width: 280px; height: 100vh; background: rgba(10, 10, 12, 0.98); border-left: 1px solid var(--glass-border); z-index: 2000; display: flex; flex-direction: column; padding: 25px; box-shadow: -10px 0 30px rgba(0,0,0,0.8); transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         [data-theme="light"] .sidebar { background: rgba(250, 250, 250, 0.98); }
         html[dir="ltr"] .sidebar { right: auto; left: 0; border-left: none; border-right: 1px solid var(--glass-border); box-shadow: 10px 0 30px rgba(0,0,0,0.8); transform: translateX(-100%); }
         .sidebar.active { transform: translateX(0); }
@@ -669,6 +649,23 @@
         };
 
         let cachedSheetRows = null;
+        let globalTimeOffset = 0; 
+
+        async function syncRealTime() {
+            try {
+                const response = await fetch('https://worldtimeapi.org/api/timezone/Asia/Riyadh');
+                const data = await response.json();
+                const realTime = new Date(data.utc_datetime).getTime(); 
+                const deviceTime = new Date().getTime(); 
+                globalTimeOffset = realTime - deviceTime; 
+            } catch (error) {
+                console.error("تعذر مزامنة الوقت، سيتم استخدام وقت الجهاز مؤقتاً");
+            }
+        }
+
+        function getAccurateTime() {
+            return new Date().getTime() + globalTimeOffset;
+        }
 
         function changeLang(lang) {
             const sidebar = document.getElementById('sidebar');
@@ -717,7 +714,7 @@
             const currentLang = document.documentElement.getAttribute('lang') || 'ar';
             const isLtr = currentLang === 'en';
             
-            const nowTime = new Date().getTime();
+            const nowTime = getAccurateTime();
             const twentyFourHoursMs = 24 * 60 * 60 * 1000;
             let groupsSpending = {}; 
             let tournamentsList = [];
@@ -824,7 +821,7 @@
         }
 
         function updateSheetTimers() {
-            const nowTime = new Date().getTime();
+            const nowTime = getAccurateTime();
             document.querySelectorAll('.sheet-timer').forEach(el => {
                 const targetStr = el.getAttribute('data-time');
                 const diff = new Date(targetStr).getTime() - nowTime;
@@ -851,13 +848,15 @@
             anchor.addEventListener('click', () => { toggleMenu(); });
         });
 
-        window.onload = () => {
+        window.onload = async () => {
+            await syncRealTime(); 
+            
             const savedTheme = localStorage.getItem('theme') || 'dark'; 
             document.documentElement.setAttribute('data-theme', savedTheme); 
             document.getElementById('theme-icon').className = savedTheme === 'light' ? 'fa-solid fa-sun theme-toggle' : 'fa-solid fa-moon theme-toggle';
             
             const start = new Date('2026-09-03'); 
-            const added = Math.max(0, Math.floor((new Date() - start) / (1000 * 60 * 60 * 24))); 
+            const added = Math.max(0, Math.floor((getAccurateTime() - start.getTime()) / (1000 * 60 * 60 * 24))); 
             document.querySelectorAll('.auto-days').forEach(td => { 
                 td.innerText = (parseInt(td.getAttribute('data-base-days')) + added); 
             });
