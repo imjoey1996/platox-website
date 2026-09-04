@@ -43,8 +43,6 @@
         html[dir="ltr"] body, .num-font, .navbar h1 { font-family: 'Rajdhani', sans-serif; }
 
         .liquid-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3; overflow: hidden; background: var(--bg-main); }
-        
-        /* إضافة تسريع المعالج (GPU Acceleration) للخلفية لتجنب اللاق */
         .blob { 
             position: absolute; filter: blur(90px); opacity: 0.45; z-index: -2; 
             animation: liquidFlow 25s infinite alternate ease-in-out; 
@@ -64,8 +62,6 @@
         }
 
         .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; pointer-events: none; }
-        
-        /* إضافة تسريع المعالج للجزيئات المتطايرة */
         .particle { 
             position: absolute; color: #fff; opacity: 0.15; 
             animation: floatUp infinite linear; filter: blur(1px); 
@@ -76,7 +72,6 @@
         [data-theme="light"] .particle { color: var(--primary); opacity: 0.08; }
         @keyframes floatUp { 0% { transform: translateY(100vh) rotate(0deg) scale(0.8); opacity: 0; } 20% { opacity: 0.15; } 80% { opacity: 0.15; } 100% { transform: translateY(-10vh) rotate(360deg) scale(1.5); opacity: 0; } }
 
-        /* إضافة تسريع المعالج للزجاج لمنع الفريز وقت التمرير */
         .glass-panel {
             background: var(--bg-card); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
             border: 1px solid var(--glass-border); border-top: 1px solid rgba(255, 255, 255, 0.12);
@@ -318,7 +313,7 @@
             <div class="card glass-panel card-hat" data-aos="fade-up" data-aos-delay="200">
                 <img src="f3b8c20da38a9320fa2f250f52f7f16a.png" alt="HAT">
                 <h3>HAT</h3>
-                <p data-i18n="desc_hat">رمز الكاريزما والقوة، تقود المجتمع بثقة راسخة وترسم معايير الرقي.</p>
+                <p data-i18n="desc_hat">حضور راسخ، تقود المجتمع بثقة راسخة وترسم معايير الرقي.</p>
             </div>
             <div class="card glass-panel card-bbb" data-aos="fade-up" data-aos-delay="300">
                 <img src="a_368d018a788facdb964b3f1df658ecde.gif" alt="BBB">
@@ -346,13 +341,15 @@
         </div>
 
         <div class="global-leaders-grid" id="global-leaders-grid">
-            </div>
+            <!-- Dynamic Server Leaders -->
+        </div>
     </section>
 
     <div class="cyber-divider"><div class="center-node"></div></div>
 
     <section id="tournaments">
         <h2 class="section-title" data-aos="fade-right" data-i18n="tournaments_title">مركز البطولات المعتمدة</h2>
+        <!-- البطولات ستظهر هنا تلقائياً من الشيت -->
         <div class="tournaments-grid" id="tournaments-container" data-aos="fade-up"></div>
     </section>
 
@@ -360,6 +357,7 @@
 
     <section id="top-spending">
         <h2 class="section-title" data-aos="fade-right" data-i18n="spending_title">ترتيب المجموعات الأكثر إنفاقًا</h2>
+        <!-- المجموعات وقيم الإنفاق ستظهر هنا تلقائياً بناءً على البطولات -->
         <div class="premium-list" id="spenders-container" data-aos="fade-up"></div>
     </section>
 
@@ -549,6 +547,9 @@
             }
         };
 
+        // متغير لحفظ بيانات جوجل شيت في الذاكرة لتسريع تغيير اللغة
+        let cachedSheetRows = null;
+
         function changeLang(lang) {
             document.documentElement.setAttribute('lang', lang); document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
             
@@ -558,129 +559,122 @@
             document.querySelectorAll('[data-i18n]').forEach(el => { if(translations[lang][el.getAttribute('data-i18n')]) el.innerText = translations[lang][el.getAttribute('data-i18n')]; });
             document.getElementById('news-text').innerText = translations[lang]['news_text'];
             
-            if(typeof loadDynamicData === 'function') loadDynamicData();
-            localStorage.setItem('lang', lang);
+            // تحديث بيانات الشيت من الذاكرة فوراً بدون تحميل من الإنترنت
+            if (cachedSheetRows) renderDynamicData();
             
-            /* تحسين طريقة إعادة الأنيميشن لعدم تجميد الموقع */
-            const animatedElements = document.querySelectorAll('[data-aos]');
-            animatedElements.forEach(el => el.classList.remove('aos-animate'));
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    animatedElements.forEach(el => el.classList.add('aos-animate'));
-                });
-            });
+            localStorage.setItem('lang', lang);
         }
 
-        // الدالة الشاملة لجلب البطولات وحساب الإنفاق معاً من الشيت (تم تسريع الطباعة)
+        // دالة التحميل من الإنترنت (تحدث مرة واحدة فقط عند فتح الصفحة)
         async function loadDynamicData() {
             const sheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/export?format=csv"; 
             try {
                 const response = await fetch(sheetURL);
                 const data = await response.text();
-                
-                const rows = data.split('\n').slice(1);
-                const tourContainer = document.getElementById('tournaments-container');
-                const spendContainer = document.getElementById('spenders-container');
-                
-                const currentLang = document.documentElement.getAttribute('lang') || 'ar';
-                const isLtr = currentLang === 'en';
-
-                let groupsSpending = {}; 
-                let tourHTML = ''; // متغير لتخزين كود البطولات
-                let spendHTML = ''; // متغير لتخزين كود الإنفاق
-
-                rows.forEach((row) => {
-                    const cols = row.split(','); 
-                    if(cols.length < 7 || !cols[0].trim()) return;
-
-                    const targetTime = cols[0].replace(/"/g, '').trim(); 
-                    const nameAr = cols[1].replace(/"/g, '').trim();
-                    const nameEn = cols[2].replace(/"/g, '').trim();
-                    const image = cols[3].replace(/"/g, '').trim();
-                    const prizeStr = cols[4].replace(/"/g, '').trim();
-                    const game = cols[5].replace(/"/g, '').trim();
-                    const admin = cols[6].replace(/"/g, '').trim();
-
-                    const displayName = currentLang === 'ar' ? nameAr : nameEn;
-                    const borderStyle = isLtr ? `border-left-color: var(--primary);` : `border-right-color: var(--primary);`;
-
-                    // تجميع البطولات في المتغير (لتسريع المتصفح)
-                    tourHTML += `
-                        <div class="tour-card glass-panel" style="${borderStyle}">
-                            <div class="tour-header">
-                                <div class="tour-title-box">
-                                    <img src="${image}" class="entity-img" style="border-radius:8px; width:35px; height:35px; object-fit:cover;">
-                                    <div class="tour-title">${displayName}</div>
-                                </div>
-                                <div class="countdown-box sheet-timer" data-time="${targetTime}">
-                                    <i class="fa-regular fa-clock"></i> <span class="num-font countdown-val">00:00:00</span>
-                                </div>
-                            </div>
-                            <div class="tour-footer" style="margin-top: 15px;">
-                                <div class="info-badge"><i class="fa-solid fa-gamepad"></i> <span>${game}</span></div>
-                                <div class="info-badge prize-badge"><i class="fa-solid fa-trophy"></i> <span class="num-font">${prizeStr}</span></div>
-                                <div class="info-badge admin-copy-btn" onclick="copyAdminID('${admin}')" title="انسخ اليوزر">
-                                    <i class="fa-solid fa-copy"></i> <span class="num-font">${admin}</span>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-
-                    // حساب رصيد المجموعات
-                    let numValue = 0;
-                    let cleanStr = prizeStr.toUpperCase().replace(/[^0-9.K]/g, '');
-                    if (cleanStr.includes('K')) {
-                        numValue = parseFloat(cleanStr.replace('K', '')) * 1000;
-                    } else {
-                        numValue = parseFloat(cleanStr) || 0;
-                    }
-
-                    if (!groupsSpending[nameAr]) {
-                        groupsSpending[nameAr] = { nameAr, nameEn, image, total: 0 };
-                    }
-                    groupsSpending[nameAr].total += numValue;
-                });
-
-                // ترتيب المجموعات وتجميعها في المتغير
-                let sortedGroups = Object.values(groupsSpending).sort((a, b) => b.total - a.total);
-                let highestTotal = sortedGroups.length > 0 ? sortedGroups[0].total : 1;
-
-                sortedGroups.forEach((group, index) => {
-                    const displayName = currentLang === 'ar' ? group.nameAr : group.nameEn;
-                    const rankNum = (index + 1).toString();
-                    const rank = rankNum.padStart(2, '0');
-                    const percent = Math.min(100, Math.max(5, (group.total / highestTotal) * 100));
-
-                    let rankClass = '', color = 'var(--text-muted)', barBg = 'rgba(255,255,255,0.2)';
-                    if (rankNum === '1') { rankClass = 'rank-1'; color = 'var(--glow-yyy)'; barBg = 'var(--glow-yyy)'; }
-                    else if (rankNum === '2') { rankClass = 'rank-2'; color = '#cbd5e1'; barBg = 'silver'; }
-                    else if (rankNum === '3') { rankClass = 'rank-3'; color = '#cd7f32'; barBg = '#cd7f32'; }
-
-                    let displayScore = group.total >= 1000 ? (group.total / 1000) + 'K' : group.total;
-
-                    spendHTML += `
-                        <div class="list-row glass-panel ${rankClass}">
-                            <div class="rank-num num-font">${rank}</div>
-                            <div class="list-info">
-                                <img src="${group.image}" class="list-img group-img" style="object-fit:cover;">
-                                <div class="progress-container">
-                                    <div class="list-name">${displayName}</div>
-                                    <div class="progress-track"><div class="progress-fill" style="width: ${percent}%; background: ${barBg};"></div></div>
-                                </div>
-                            </div>
-                            <div class="score-val num-font" style="color: ${color};">${displayScore}</div>
-                        </div>
-                    `;
-                });
-                
-                // طباعة البيانات في الموقع دفعة واحدة لتسريع الأداء
-                tourContainer.innerHTML = tourHTML;
-                spendContainer.innerHTML = spendHTML;
-
-                updateSheetTimers(); 
+                cachedSheetRows = data.split('\n').slice(1);
+                renderDynamicData();
             } catch (error) {
                 console.error("حدث خطأ أثناء جلب البيانات:", error);
             }
+        }
+
+        // دالة الطباعة السريعة في الموقع (تعتمد على الذاكرة)
+        function renderDynamicData() {
+            if (!cachedSheetRows) return;
+            const tourContainer = document.getElementById('tournaments-container');
+            const spendContainer = document.getElementById('spenders-container');
+            
+            const currentLang = document.documentElement.getAttribute('lang') || 'ar';
+            const isLtr = currentLang === 'en';
+
+            let groupsSpending = {}; 
+            let tourHTML = ''; 
+            let spendHTML = ''; 
+
+            cachedSheetRows.forEach((row) => {
+                const cols = row.split(','); 
+                if(cols.length < 7 || !cols[0].trim()) return;
+
+                const targetTime = cols[0].replace(/"/g, '').trim(); 
+                const nameAr = cols[1].replace(/"/g, '').trim();
+                const nameEn = cols[2].replace(/"/g, '').trim();
+                const image = cols[3].replace(/"/g, '').trim();
+                const prizeStr = cols[4].replace(/"/g, '').trim();
+                const game = cols[5].replace(/"/g, '').trim();
+                const admin = cols[6].replace(/"/g, '').trim();
+
+                const displayName = currentLang === 'ar' ? nameAr : nameEn;
+                const borderStyle = isLtr ? `border-left-color: var(--primary);` : `border-right-color: var(--primary);`;
+
+                tourHTML += `
+                    <div class="tour-card glass-panel" style="${borderStyle}">
+                        <div class="tour-header">
+                            <div class="tour-title-box">
+                                <img src="${image}" class="entity-img" style="border-radius:8px; width:35px; height:35px; object-fit:cover;">
+                                <div class="tour-title">${displayName}</div>
+                            </div>
+                            <div class="countdown-box sheet-timer" data-time="${targetTime}">
+                                <i class="fa-regular fa-clock"></i> <span class="num-font countdown-val">00:00:00</span>
+                            </div>
+                        </div>
+                        <div class="tour-footer" style="margin-top: 15px;">
+                            <div class="info-badge"><i class="fa-solid fa-gamepad"></i> <span>${game}</span></div>
+                            <div class="info-badge prize-badge"><i class="fa-solid fa-trophy"></i> <span class="num-font">${prizeStr}</span></div>
+                            <div class="info-badge admin-copy-btn" onclick="copyAdminID('${admin}')" title="انسخ اليوزر">
+                                <i class="fa-solid fa-copy"></i> <span class="num-font">${admin}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                let numValue = 0;
+                let cleanStr = prizeStr.toUpperCase().replace(/[^0-9.K]/g, '');
+                if (cleanStr.includes('K')) {
+                    numValue = parseFloat(cleanStr.replace('K', '')) * 1000;
+                } else {
+                    numValue = parseFloat(cleanStr) || 0;
+                }
+
+                if (!groupsSpending[nameAr]) {
+                    groupsSpending[nameAr] = { nameAr, nameEn, image, total: 0 };
+                }
+                groupsSpending[nameAr].total += numValue;
+            });
+
+            let sortedGroups = Object.values(groupsSpending).sort((a, b) => b.total - a.total);
+            let highestTotal = sortedGroups.length > 0 ? sortedGroups[0].total : 1;
+
+            sortedGroups.forEach((group, index) => {
+                const displayName = currentLang === 'ar' ? group.nameAr : group.nameEn;
+                const rankNum = (index + 1).toString();
+                const rank = rankNum.padStart(2, '0');
+                const percent = Math.min(100, Math.max(5, (group.total / highestTotal) * 100));
+
+                let rankClass = '', color = 'var(--text-muted)', barBg = 'rgba(255,255,255,0.2)';
+                if (rankNum === '1') { rankClass = 'rank-1'; color = 'var(--glow-yyy)'; barBg = 'var(--glow-yyy)'; }
+                else if (rankNum === '2') { rankClass = 'rank-2'; color = '#cbd5e1'; barBg = 'silver'; }
+                else if (rankNum === '3') { rankClass = 'rank-3'; color = '#cd7f32'; barBg = '#cd7f32'; }
+
+                let displayScore = group.total >= 1000 ? (group.total / 1000) + 'K' : group.total;
+
+                spendHTML += `
+                    <div class="list-row glass-panel ${rankClass}">
+                        <div class="rank-num num-font">${rank}</div>
+                        <div class="list-info">
+                            <img src="${group.image}" class="list-img group-img" style="object-fit:cover;">
+                            <div class="progress-container">
+                                <div class="list-name">${displayName}</div>
+                                <div class="progress-track"><div class="progress-fill" style="width: ${percent}%; background: ${barBg};"></div></div>
+                            </div>
+                        </div>
+                        <div class="score-val num-font" style="color: ${color};">${displayScore}</div>
+                    </div>
+                `;
+            });
+            
+            tourContainer.innerHTML = tourHTML;
+            spendContainer.innerHTML = spendHTML;
+            updateSheetTimers(); 
         }
 
         function updateSheetTimers() {
@@ -724,7 +718,7 @@
             const savedLang = localStorage.getItem('lang') || 'ar'; 
             changeLang(savedLang);
             
-            loadDynamicData();
+            loadDynamicData(); // تحميل الشيت لمرة واحدة فقط عند فتح الصفحة
             setInterval(updateSheetTimers, 1000);
         }
     </script>
