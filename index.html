@@ -124,10 +124,30 @@
         .close-btn { align-self: flex-end; font-size: 26px; cursor: pointer; margin-bottom: 15px; }
         html[dir="ltr"] .close-btn { align-self: flex-start; }
         
-        .lang-switch { display: flex; justify-content: center; gap: 10px; margin: 15px 0 25px 0; }
+        /* أزرار تغيير اللغة */
         .lang-btn { background: transparent; color: var(--text-muted); border: 1px solid var(--glass-border); padding: 6px 15px; border-radius: 20px; cursor: pointer; transition: 0.3s; font-family: 'Cairo', sans-serif; font-weight: 700; font-size: 0.9rem;}
         .lang-btn:hover { color: var(--primary); border-color: var(--primary); }
         .lang-btn.active { color: #fff; background: var(--primary); border-color: var(--primary); box-shadow: 0 0 15px var(--primary-glow); }
+
+        /* منطقة أزرار اللغة الرئيسية (الجديدة) */
+        .main-lang-switch {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 105px auto -10px; /* المسافة من الأعلى تحت شريط الأخبار */
+            position: relative;
+            z-index: 10;
+        }
+        .main-lang-switch .lang-btn {
+            background: rgba(15, 15, 20, 0.4);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            padding: 6px 25px;
+        }
+        [data-theme="light"] .main-lang-switch .lang-btn {
+            background: rgba(255, 255, 255, 0.6);
+        }
 
         /* روابط القائمة الجانبية (معالجة اختفاء النص) */
         .sidebar a { 
@@ -147,7 +167,7 @@
         html[dir="ltr"] .sidebar a:hover { padding-right: 0; padding-left: 8px; }
 
         section { padding: 70px 15px 30px; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; }
-        .hero { height: 50vh; justify-content: center; text-align: center; padding: 0 15px; margin-top: 40px;}
+        .hero { height: 45vh; justify-content: center; text-align: center; padding: 0 15px; margin-top: 10px;}
         .hero h2 { font-size: 3.2rem; font-weight: 900; margin-bottom: 10px; color: #fff; text-shadow: 0 0 30px rgba(255,255,255,0.2); }
         .hero h2 span { color: var(--primary); text-shadow: 0 0 20px var(--primary-glow); }
         [data-theme="light"] .hero h2 { color: #000; text-shadow: none; }
@@ -258,11 +278,14 @@
                 animation: none !important;
             }
 
+            .main-lang-switch { margin-top: 95px; margin-bottom: -15px; }
+            .main-lang-switch .lang-btn { padding: 5px 15px; font-size: 0.85rem; }
+
             .blob { filter: blur(40px); opacity: 0.25; } 
             .glass-panel, .navbar { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
 
             section { padding: 50px 12px 25px; }
-            .hero { height: 45vh; margin-top: 30px;}
+            .hero { height: 45vh; margin-top: 20px;}
             .hero h2 { font-size: 2.2rem; } .hero p { font-size: 1rem; }
             .section-title { font-size: 1.4rem; margin-bottom: 25px; }
             .featured-news { padding: 25px 20px; } .news-headline { font-size: 1.25rem; } .news-body { font-size: 0.9rem; }
@@ -296,11 +319,6 @@
     <div class="sidebar" id="sidebar">
         <i class="fa-solid fa-xmark close-btn" onclick="toggleMenu()"></i>
         
-        <div class="lang-switch">
-            <button class="lang-btn active" onclick="changeLang('ar')" id="btn-ar">اللغة العربية</button>
-            <button class="lang-btn" onclick="changeLang('en')" id="btn-en">English</button>
-        </div>
-
         <a href="#hero" data-i18n="menu_home">الرئيسية</a>
         <a href="#news" data-i18n="menu_news">الأخبار</a>
         <a href="#arabic-leaders" data-i18n="menu_leaders">القادة العرب</a>
@@ -323,6 +341,12 @@
 
     <div class="news-ticker">
         <span class="ticker-content" id="news-text"></span>
+    </div>
+
+    <!-- أزرار اللغة انتقلت هنا لتكون ظاهرة للجميع -->
+    <div class="main-lang-switch" data-aos="fade-down">
+        <button class="lang-btn active" onclick="changeLang('ar')" id="btn-ar">العربية</button>
+        <button class="lang-btn" onclick="changeLang('en')" id="btn-en">EN</button>
     </div>
 
     <section class="hero" id="hero">
