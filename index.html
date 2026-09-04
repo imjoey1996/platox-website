@@ -40,13 +40,19 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
-        html { scroll-behavior: smooth; scroll-padding-top: 85px; }
+        /* التمرير السلس الأصلي مع حساب مساحة الهيدر تلقائياً */
+        html { 
+            scroll-behavior: smooth; 
+            scroll-padding-top: 85px; 
+        }
 
         body { color: var(--text-main); font-family: 'Cairo', sans-serif; overflow-x: hidden; transition: background 0.4s, color 0.4s; background-color: var(--bg-main); }
         html[dir="ltr"] body, .num-font, .navbar h1 { font-family: 'Rajdhani', sans-serif; }
 
         .liquid-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3; overflow: hidden; background: var(--bg-main); }
-        .blob { position: absolute; filter: blur(90px); opacity: 0.45; z-index: -2; }
+        .blob { 
+            position: absolute; filter: blur(90px); opacity: 0.45; z-index: -2; 
+        }
         [data-theme="light"] .blob { opacity: 0.3; filter: blur(70px); }
         .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--primary); animation: liquidFlow 25s infinite alternate ease-in-out; }
         .blob-2 { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: var(--glow-bbb); animation: liquidFlow 25s infinite alternate ease-in-out -5s; }
@@ -66,7 +72,10 @@
         }
 
         .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; pointer-events: none; }
-        .particle { position: absolute; color: #fff; opacity: 0.15; animation: floatUp infinite linear; filter: blur(1px); } 
+        .particle { 
+            position: absolute; color: #fff; opacity: 0.15; 
+            animation: floatUp infinite linear; filter: blur(1px); 
+        } 
         [data-theme="light"] .particle { color: var(--primary); opacity: 0.08; }
         @keyframes floatUp { 0% { transform: translateY(100vh) rotate(0deg) scale(0.8); opacity: 0; } 20% { opacity: 0.15; } 80% { opacity: 0.15; } 100% { transform: translateY(-10vh) rotate(360deg) scale(1.5); opacity: 0; } }
 
@@ -93,30 +102,73 @@
         @keyframes ticker-rtl { from { transform: translateX(-100vw); } to { transform: translateX(100vw); } }
         @keyframes ticker-ltr { from { transform: translateX(100vw); } to { transform: translateX(-100vw); } }
 
-        /* القائمة الجانبية لسفاري */
+        /* تعديلات القائمة الجانبية لحل مشكلة اختفاء النصوص في سفاري */
         .sidebar { 
             position: fixed; top: 0; right: 0; width: 280px; height: 100vh; 
-            background: rgba(10, 10, 12, 0.98); backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+            background: rgba(10, 10, 12, 0.98); 
+            backdrop-filter: none !important; 
+            -webkit-backdrop-filter: none !important;
             border-left: 1px solid var(--glass-border); z-index: 2000; 
-            display: flex; flex-direction: column; padding: 25px; box-shadow: -10px 0 30px rgba(0,0,0,0.8);
-            transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); -webkit-backface-visibility: hidden; 
+            display: flex; flex-direction: column; padding: 25px; 
+            box-shadow: -10px 0 30px rgba(0,0,0,0.8);
+            transform: translateX(100%); 
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            -webkit-backface-visibility: hidden; 
         }
         [data-theme="light"] .sidebar { background: rgba(250, 250, 250, 0.98); }
-        html[dir="ltr"] .sidebar { right: auto; left: 0; border-left: none; border-right: 1px solid var(--glass-border); box-shadow: 10px 0 30px rgba(0,0,0,0.8); transform: translateX(-100%); }
+
+        html[dir="ltr"] .sidebar { 
+            right: auto; left: 0; 
+            border-left: none; border-right: 1px solid var(--glass-border); 
+            box-shadow: 10px 0 30px rgba(0,0,0,0.8);
+            transform: translateX(-100%); 
+        }
+
         .sidebar.active { transform: translateX(0); }
         html[dir="ltr"] .sidebar.active { transform: translateX(0); }
+        
         .close-btn { align-self: flex-end; font-size: 26px; cursor: pointer; margin-bottom: 15px; }
         html[dir="ltr"] .close-btn { align-self: flex-start; }
         
+        /* أزرار تغيير اللغة */
         .lang-btn { background: transparent; color: var(--text-muted); border: 1px solid var(--glass-border); padding: 6px 15px; border-radius: 20px; cursor: pointer; transition: 0.3s; font-family: 'Cairo', sans-serif; font-weight: 700; font-size: 0.9rem;}
         .lang-btn:hover { color: var(--primary); border-color: var(--primary); }
         .lang-btn.active { color: #fff; background: var(--primary); border-color: var(--primary); box-shadow: 0 0 15px var(--primary-glow); }
 
-        .main-lang-switch { display: flex; justify-content: center; gap: 12px; margin: 105px auto -10px; position: relative; z-index: 10; }
-        .main-lang-switch .lang-btn { background: rgba(15, 15, 20, 0.4); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); box-shadow: 0 4px 15px rgba(0,0,0,0.2); padding: 6px 25px; }
-        [data-theme="light"] .main-lang-switch .lang-btn { background: rgba(255, 255, 255, 0.6); }
+        /* منطقة أزرار اللغة الرئيسية */
+        .main-lang-switch {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 105px auto -10px;
+            position: relative;
+            z-index: 10;
+        }
+        .main-lang-switch .lang-btn {
+            background: rgba(15, 15, 20, 0.4);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            padding: 6px 25px;
+        }
+        [data-theme="light"] .main-lang-switch .lang-btn {
+            background: rgba(255, 255, 255, 0.6);
+        }
 
-        .sidebar a { color: var(--text-main); text-decoration: none; font-size: 1.05rem; font-weight: 700; padding: 12px 0; border-bottom: 1px solid var(--glass-border); transition: 0.3s; text-transform: uppercase; position: relative; -webkit-transform: translateZ(0); -webkit-backface-visibility: hidden;}
+        /* روابط القائمة الجانبية */
+        .sidebar a { 
+            color: var(--text-main); 
+            text-decoration: none; 
+            font-size: 1.05rem; 
+            font-weight: 700; 
+            padding: 12px 0; 
+            border-bottom: 1px solid var(--glass-border); 
+            transition: 0.3s; 
+            text-transform: uppercase;
+            position: relative;
+            -webkit-transform: translateZ(0); 
+            -webkit-backface-visibility: hidden;
+        }
         .sidebar a:hover { color: var(--primary); padding-right: 8px; text-shadow: 0 0 10px var(--primary-glow); }
         html[dir="ltr"] .sidebar a:hover { padding-right: 0; padding-left: 8px; }
 
@@ -460,7 +512,7 @@
             document.getElementById('theme-icon').className = newTheme === 'light' ? 'fa-solid fa-sun theme-toggle' : 'fa-solid fa-moon theme-toggle';
         }
 
-        // دالة النسخ التي تظهر رسالة التنبيه (تُستخدم للبطولات وللقادة الأجانب)
+        // دالة النسخ المشتركة للبطولات والقادة
         function copyAdminID(id) {
             navigator.clipboard.writeText(id).then(() => {
                 const toast = document.getElementById("toast");
@@ -506,7 +558,6 @@
             { name: "Frequency", server: "desi", color: "d97706", img: "IMG_7440.png" } 
         ];
         
-        // دالة إنشاء القادة الأجانب مع ميزة النقر والنسخ
         function renderGlobalLeaders() {
             const container = document.getElementById('global-leaders-grid');
             container.innerHTML = '';
@@ -608,6 +659,7 @@
             }
         }
 
+        // دالة الفرز المتقدمة للبطولات والإنفاق
         function renderDynamicData() {
             if (!cachedSheetRows) return;
             const tourContainer = document.getElementById('tournaments-container');
@@ -615,16 +667,22 @@
             
             const currentLang = document.documentElement.getAttribute('lang') || 'ar';
             const isLtr = currentLang === 'en';
-
+            
+            // تهيئة متغيرات الفرز والوقت
+            const nowTime = new Date().getTime();
+            const twentyFourHoursMs = 24 * 60 * 60 * 1000;
             let groupsSpending = {}; 
-            let tourHTML = ''; 
-            let spendHTML = ''; 
+            let tournamentsList = [];
 
+            // 1. قراءة البيانات وحساب أوقات البطولات
             cachedSheetRows.forEach((row) => {
                 const cols = row.split(','); 
                 if(cols.length < 7 || !cols[0].trim()) return;
 
-                const targetTime = cols[0].replace(/"/g, '').trim(); 
+                const targetTimeStr = cols[0].replace(/"/g, '').trim(); 
+                const targetTimeMs = new Date(targetTimeStr).getTime();
+                const diff = targetTimeMs - nowTime; // حساب الفرق بين وقت البطولة والوقت الحالي
+
                 const nameAr = cols[1].replace(/"/g, '').trim();
                 const nameEn = cols[2].replace(/"/g, '').trim();
                 const image = cols[3].replace(/"/g, '').trim();
@@ -632,30 +690,7 @@
                 const game = cols[5].replace(/"/g, '').trim();
                 const admin = cols[6].replace(/"/g, '').trim();
 
-                const displayName = currentLang === 'ar' ? nameAr : nameEn;
-                const borderStyle = isLtr ? `border-left-color: var(--primary);` : `border-right-color: var(--primary);`;
-
-                tourHTML += `
-                    <div class="tour-card glass-panel" style="${borderStyle}">
-                        <div class="tour-header">
-                            <div class="tour-title-box">
-                                <img src="${image}" class="entity-img" style="border-radius:8px; width:35px; height:35px; object-fit:cover;">
-                                <div class="tour-title">${displayName}</div>
-                            </div>
-                            <div class="countdown-box sheet-timer" data-time="${targetTime}">
-                                <i class="fa-regular fa-clock"></i> <span class="num-font countdown-val">00:00:00</span>
-                            </div>
-                        </div>
-                        <div class="tour-footer" style="margin-top: 15px;">
-                            <div class="info-badge"><i class="fa-solid fa-gamepad"></i> <span>${game}</span></div>
-                            <div class="info-badge prize-badge"><i class="fa-solid fa-trophy"></i> <span class="num-font">${prizeStr}</span></div>
-                            <div class="info-badge admin-copy-btn" onclick="copyAdminID('${admin}')" title="انسخ اليوزر">
-                                <i class="fa-solid fa-copy"></i> <span class="num-font">${admin}</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
-
+                // حساب الإنفاق للجميع (دائماً يُحسب حتى لو اختفت البطولة)
                 let numValue = 0;
                 let cleanStr = prizeStr.toUpperCase().replace(/[^0-9.K]/g, '');
                 if (cleanStr.includes('K')) {
@@ -668,11 +703,56 @@
                     groupsSpending[nameAr] = { nameAr, nameEn, image, total: 0 };
                 }
                 groupsSpending[nameAr].total += numValue;
+
+                // تصفية البطولات: لا تقم بإضافتها لقائمة العرض إذا مر عليها أكثر من 24 ساعة
+                if (diff > -twentyFourHoursMs) {
+                    tournamentsList.push({
+                        targetTimeMs, targetTimeStr, nameAr, nameEn, image, prizeStr, game, admin, diff
+                    });
+                }
             });
 
+            // 2. فرز البطولات (ترتيب ذكي)
+            // البطولات القادمة: ترتب من الأقرب زمناً إلى الأبعد
+            let upcomingTours = tournamentsList.filter(t => t.diff > 0).sort((a, b) => a.targetTimeMs - b.targetTimeMs);
+            // البطولات التي بدأت: تُدفع لأسفل القائمة وترتب حسب الأحدث بداية
+            let startedTours = tournamentsList.filter(t => t.diff <= 0).sort((a, b) => b.targetTimeMs - a.targetTimeMs);
+            // دمج القائمتين معاً
+            let sortedTournaments = [...upcomingTours, ...startedTours];
+
+            // 3. توليد كود الـ HTML للبطولات بعد الفرز
+            let tourHTML = ''; 
+            sortedTournaments.forEach(tour => {
+                const displayName = currentLang === 'ar' ? tour.nameAr : tour.nameEn;
+                const borderStyle = isLtr ? `border-left-color: var(--primary);` : `border-right-color: var(--primary);`;
+
+                tourHTML += `
+                    <div class="tour-card glass-panel" style="${borderStyle}">
+                        <div class="tour-header">
+                            <div class="tour-title-box">
+                                <img src="${tour.image}" class="entity-img" style="border-radius:8px; width:35px; height:35px; object-fit:cover;">
+                                <div class="tour-title">${displayName}</div>
+                            </div>
+                            <div class="countdown-box sheet-timer" data-time="${tour.targetTimeStr}">
+                                <i class="fa-regular fa-clock"></i> <span class="num-font countdown-val">00:00:00</span>
+                            </div>
+                        </div>
+                        <div class="tour-footer" style="margin-top: 15px;">
+                            <div class="info-badge"><i class="fa-solid fa-gamepad"></i> <span>${tour.game}</span></div>
+                            <div class="info-badge prize-badge"><i class="fa-solid fa-trophy"></i> <span class="num-font">${tour.prizeStr}</span></div>
+                            <div class="info-badge admin-copy-btn" onclick="copyAdminID('${tour.admin}')" title="انسخ اليوزر">
+                                <i class="fa-solid fa-copy"></i> <span class="num-font">${tour.admin}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // 4. توليد وترتيب كود أكثر إنفاقاً
             let sortedGroups = Object.values(groupsSpending).sort((a, b) => b.total - a.total);
             let highestTotal = sortedGroups.length > 0 ? sortedGroups[0].total : 1;
 
+            let spendHTML = ''; 
             sortedGroups.forEach((group, index) => {
                 const displayName = currentLang === 'ar' ? group.nameAr : group.nameEn;
                 const rankNum = (index + 1).toString();
