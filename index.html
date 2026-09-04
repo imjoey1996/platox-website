@@ -40,19 +40,13 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
-        /* التمرير السلس الأصلي مع حساب مساحة الهيدر تلقائياً */
-        html { 
-            scroll-behavior: smooth; 
-            scroll-padding-top: 85px; 
-        }
+        html { scroll-behavior: smooth; scroll-padding-top: 85px; }
 
         body { color: var(--text-main); font-family: 'Cairo', sans-serif; overflow-x: hidden; transition: background 0.4s, color 0.4s; background-color: var(--bg-main); }
         html[dir="ltr"] body, .num-font, .navbar h1 { font-family: 'Rajdhani', sans-serif; }
 
         .liquid-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3; overflow: hidden; background: var(--bg-main); }
-        .blob { 
-            position: absolute; filter: blur(90px); opacity: 0.45; z-index: -2; 
-        }
+        .blob { position: absolute; filter: blur(90px); opacity: 0.45; z-index: -2; }
         [data-theme="light"] .blob { opacity: 0.3; filter: blur(70px); }
         .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--primary); animation: liquidFlow 25s infinite alternate ease-in-out; }
         .blob-2 { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: var(--glow-bbb); animation: liquidFlow 25s infinite alternate ease-in-out -5s; }
@@ -65,17 +59,14 @@
         }
 
         @keyframes colorShift {
-            0% { background: var(--glow-yyy); }   /* أصفر */
-            33% { background: var(--primary); }   /* بنفسجي */
-            66% { background: var(--glow-bbb); }  /* سماوي */
-            100% { background: var(--glow-yyy); } /* عودة للأصفر */
+            0% { background: var(--glow-yyy); }
+            33% { background: var(--primary); }
+            66% { background: var(--glow-bbb); }
+            100% { background: var(--glow-yyy); }
         }
 
         .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; pointer-events: none; }
-        .particle { 
-            position: absolute; color: #fff; opacity: 0.15; 
-            animation: floatUp infinite linear; filter: blur(1px); 
-        } 
+        .particle { position: absolute; color: #fff; opacity: 0.15; animation: floatUp infinite linear; filter: blur(1px); } 
         [data-theme="light"] .particle { color: var(--primary); opacity: 0.08; }
         @keyframes floatUp { 0% { transform: translateY(100vh) rotate(0deg) scale(0.8); opacity: 0; } 20% { opacity: 0.15; } 80% { opacity: 0.15; } 100% { transform: translateY(-10vh) rotate(360deg) scale(1.5); opacity: 0; } }
 
@@ -102,73 +93,30 @@
         @keyframes ticker-rtl { from { transform: translateX(-100vw); } to { transform: translateX(100vw); } }
         @keyframes ticker-ltr { from { transform: translateX(100vw); } to { transform: translateX(-100vw); } }
 
-        /* تعديلات القائمة الجانبية لحل مشكلة اختفاء النصوص في سفاري */
+        /* القائمة الجانبية لسفاري */
         .sidebar { 
             position: fixed; top: 0; right: 0; width: 280px; height: 100vh; 
-            background: rgba(10, 10, 12, 0.98); 
-            backdrop-filter: none !important; 
-            -webkit-backdrop-filter: none !important;
+            background: rgba(10, 10, 12, 0.98); backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
             border-left: 1px solid var(--glass-border); z-index: 2000; 
-            display: flex; flex-direction: column; padding: 25px; 
-            box-shadow: -10px 0 30px rgba(0,0,0,0.8);
-            transform: translateX(100%); 
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            -webkit-backface-visibility: hidden; 
+            display: flex; flex-direction: column; padding: 25px; box-shadow: -10px 0 30px rgba(0,0,0,0.8);
+            transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); -webkit-backface-visibility: hidden; 
         }
         [data-theme="light"] .sidebar { background: rgba(250, 250, 250, 0.98); }
-
-        html[dir="ltr"] .sidebar { 
-            right: auto; left: 0; 
-            border-left: none; border-right: 1px solid var(--glass-border); 
-            box-shadow: 10px 0 30px rgba(0,0,0,0.8);
-            transform: translateX(-100%); 
-        }
-
+        html[dir="ltr"] .sidebar { right: auto; left: 0; border-left: none; border-right: 1px solid var(--glass-border); box-shadow: 10px 0 30px rgba(0,0,0,0.8); transform: translateX(-100%); }
         .sidebar.active { transform: translateX(0); }
         html[dir="ltr"] .sidebar.active { transform: translateX(0); }
-        
         .close-btn { align-self: flex-end; font-size: 26px; cursor: pointer; margin-bottom: 15px; }
         html[dir="ltr"] .close-btn { align-self: flex-start; }
         
-        /* أزرار تغيير اللغة */
         .lang-btn { background: transparent; color: var(--text-muted); border: 1px solid var(--glass-border); padding: 6px 15px; border-radius: 20px; cursor: pointer; transition: 0.3s; font-family: 'Cairo', sans-serif; font-weight: 700; font-size: 0.9rem;}
         .lang-btn:hover { color: var(--primary); border-color: var(--primary); }
         .lang-btn.active { color: #fff; background: var(--primary); border-color: var(--primary); box-shadow: 0 0 15px var(--primary-glow); }
 
-        /* منطقة أزرار اللغة الرئيسية (الجديدة) */
-        .main-lang-switch {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin: 105px auto -10px; /* المسافة من الأعلى تحت شريط الأخبار */
-            position: relative;
-            z-index: 10;
-        }
-        .main-lang-switch .lang-btn {
-            background: rgba(15, 15, 20, 0.4);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            padding: 6px 25px;
-        }
-        [data-theme="light"] .main-lang-switch .lang-btn {
-            background: rgba(255, 255, 255, 0.6);
-        }
+        .main-lang-switch { display: flex; justify-content: center; gap: 12px; margin: 105px auto -10px; position: relative; z-index: 10; }
+        .main-lang-switch .lang-btn { background: rgba(15, 15, 20, 0.4); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); box-shadow: 0 4px 15px rgba(0,0,0,0.2); padding: 6px 25px; }
+        [data-theme="light"] .main-lang-switch .lang-btn { background: rgba(255, 255, 255, 0.6); }
 
-        /* روابط القائمة الجانبية (معالجة اختفاء النص) */
-        .sidebar a { 
-            color: var(--text-main); 
-            text-decoration: none; 
-            font-size: 1.05rem; 
-            font-weight: 700; 
-            padding: 12px 0; 
-            border-bottom: 1px solid var(--glass-border); 
-            transition: 0.3s; 
-            text-transform: uppercase;
-            position: relative;
-            -webkit-transform: translateZ(0); 
-            -webkit-backface-visibility: hidden;
-        }
+        .sidebar a { color: var(--text-main); text-decoration: none; font-size: 1.05rem; font-weight: 700; padding: 12px 0; border-bottom: 1px solid var(--glass-border); transition: 0.3s; text-transform: uppercase; position: relative; -webkit-transform: translateZ(0); -webkit-backface-visibility: hidden;}
         .sidebar a:hover { color: var(--primary); padding-right: 8px; text-shadow: 0 0 10px var(--primary-glow); }
         html[dir="ltr"] .sidebar a:hover { padding-right: 0; padding-left: 8px; }
 
@@ -223,7 +171,13 @@
         .global-leader img { width: 65px; height: 65px; border-radius: 50%; margin-bottom: 12px; object-fit: cover; border: 2px solid rgba(255,255,255,0.1); transition: 0.3s; }
         .global-leader:hover { border-color: var(--primary); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.3);}
         .global-leader:hover img { border-color: var(--primary); box-shadow: 0 0 15px var(--primary-glow); transform: scale(1.05); }
-        .global-leader h3 { font-size: 0.95rem; color: var(--text-main); font-family: 'Rajdhani', 'Cairo', sans-serif; }
+        
+        /* تنسيق اسم الليدر الأجنبي وأيقونة النسخ */
+        .leader-name-box { display: flex; justify-content: center; align-items: center; gap: 6px; cursor: pointer; transition: 0.3s; }
+        .leader-name-box h3 { font-size: 0.95rem; color: var(--text-main); font-family: 'Rajdhani', 'Cairo', sans-serif; transition: 0.3s; }
+        .leader-copy-icon { font-size: 0.8rem; color: var(--text-muted); transition: 0.3s; }
+        .leader-name-box:hover h3, .leader-name-box:hover .leader-copy-icon { color: var(--primary); }
+        .leader-name-box:hover .leader-copy-icon { transform: scale(1.15); }
 
         .premium-list { width: 100%; max-width: 700px; display: flex; flex-direction: column; gap: 10px; }
         .list-row { padding: 12px 15px; display: flex; align-items: center; gap: 15px; transition: 0.3s; }
@@ -270,42 +224,28 @@
         #toast { visibility: hidden; min-width: 200px; background: rgba(15, 15, 20, 0.95); backdrop-filter: blur(10px); color: #fff; text-align: center; border-radius: 10px; padding: 12px 20px; position: fixed; z-index: 9999; left: 50%; bottom: 25px; transform: translateX(-50%); font-size: 14px; transition: 0.4s; opacity: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid var(--primary); font-family: 'Cairo', sans-serif; font-weight:bold;}
         #toast.show { visibility: visible; bottom: 85px; opacity: 1; }
         
-        /* إزالة الضبابية من الـ Overlay لتسريع الاستجابة */
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1500; display: none; }
         .overlay.active { display: block; }
 
-        /* تعديلات مخصصة لتخفيف الضغط على متصفح الجوال (سفاري) وحل مشكلة AOS */
         @media (max-width: 600px) {
-            /* إجبار العناصر على الظهور فوراً في الجوال وتخطي تعليق مكتبة AOS */
-            [data-aos] {
-                opacity: 1 !important;
-                transform: none !important;
-                transition: none !important;
-                animation: none !important;
-            }
-
+            [data-aos] { opacity: 1 !important; transform: none !important; transition: none !important; animation: none !important; }
             .main-lang-switch { margin-top: 95px; margin-bottom: -15px; }
             .main-lang-switch .lang-btn { padding: 5px 15px; font-size: 0.85rem; }
-
             .blob { filter: blur(40px); opacity: 0.25; } 
             .glass-panel, .navbar { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-
             section { padding: 50px 12px 25px; }
             .hero { height: 45vh; margin-top: 20px;}
             .hero h2 { font-size: 2.2rem; } .hero p { font-size: 1rem; }
             .section-title { font-size: 1.4rem; margin-bottom: 25px; }
             .featured-news { padding: 25px 20px; } .news-headline { font-size: 1.25rem; } .news-body { font-size: 0.9rem; }
-            
             .grid-container { display: grid !important; grid-template-columns: 1fr !important; gap: 15px; width: 100%; }
             .global-leaders-grid { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 10px; width: 100%; }
-
             .card { padding: 15px 10px; width: 100%; max-width: none; }
             .card img { width: 70px; height: 70px; margin-bottom: 10px; }
             .card h3 { font-size: 1.1rem; margin-bottom: 5px; }
             .card p { font-size: 0.8rem; line-height: 1.4; }
             .global-leader { padding: 15px 5px; width: 100%; }
             .global-leader img { width: 55px; height: 55px; }
-
             .list-row { padding: 10px; gap: 8px; } .rank-num { font-size: 1rem; width: 20px; } .list-img { width: 30px; height: 30px; } .list-name { font-size: 0.85rem; } .score-val { font-size: 0.95rem; }
             .tour-card { padding: 20px 15px; } .tour-title { font-size: 1.05rem; } .tour-desc { font-size: 0.85rem; margin-bottom: 12px;} .tour-footer { flex-direction: column; gap: 8px; } .info-badge { width: 100%; justify-content: center; font-size: 0.8rem; padding: 6px;}
             .server-tabs { flex-wrap: wrap !important; justify-content: center !important; gap: 10px; padding-bottom: 10px; }
@@ -324,7 +264,6 @@
     
     <div class="sidebar" id="sidebar">
         <i class="fa-solid fa-xmark close-btn" onclick="toggleMenu()"></i>
-        
         <a href="#hero" data-i18n="menu_home">الرئيسية</a>
         <a href="#news" data-i18n="menu_news">الأخبار</a>
         <a href="#arabic-leaders" data-i18n="menu_leaders">القادة العرب</a>
@@ -349,7 +288,6 @@
         <span class="ticker-content" id="news-text"></span>
     </div>
 
-    <!-- أزرار اللغة مع خاصية dir="rtl" لتثبيت أماكنها دائماً -->
     <div class="main-lang-switch" data-aos="fade-down" dir="rtl">
         <button class="lang-btn active" onclick="changeLang('ar')" id="btn-ar">العربية</button>
         <button class="lang-btn" onclick="changeLang('en')" id="btn-en">English</button>
@@ -416,7 +354,7 @@
         </div>
 
         <div class="global-leaders-grid" id="global-leaders-grid">
-            <!-- Dynamic Server Leaders -->
+            <!-- سيتم توليد القادة العالميين هنا عبر الجافاسكريبت مع زر النسخ -->
         </div>
     </section>
 
@@ -522,6 +460,7 @@
             document.getElementById('theme-icon').className = newTheme === 'light' ? 'fa-solid fa-sun theme-toggle' : 'fa-solid fa-moon theme-toggle';
         }
 
+        // دالة النسخ التي تظهر رسالة التنبيه (تُستخدم للبطولات وللقادة الأجانب)
         function copyAdminID(id) {
             navigator.clipboard.writeText(id).then(() => {
                 const toast = document.getElementById("toast");
@@ -567,6 +506,7 @@
             { name: "Frequency", server: "desi", color: "d97706", img: "IMG_7440.png" } 
         ];
         
+        // دالة إنشاء القادة الأجانب مع ميزة النقر والنسخ
         function renderGlobalLeaders() {
             const container = document.getElementById('global-leaders-grid');
             container.innerHTML = '';
@@ -575,7 +515,10 @@
                 container.innerHTML += `
                     <div class="global-leader glass-panel" data-server="${leader.server}">
                         <img src="${imageSource}" alt="${leader.name}">
-                        <h3 class="num-font">${leader.name}</h3>
+                        <div class="leader-name-box" onclick="copyAdminID('${leader.name}')" title="انسخ اليوزر">
+                            <h3 class="num-font">${leader.name}</h3>
+                            <i class="fa-regular fa-copy leader-copy-icon"></i>
+                        </div>
                     </div>
                 `;
             });
@@ -629,19 +572,15 @@
         let cachedSheetRows = null;
 
         function changeLang(lang) {
-            // 1. إيقاف حركة القائمة الجانبية مؤقتاً لمنع مرورها عبر الشاشة
             const sidebar = document.getElementById('sidebar');
             sidebar.style.transition = 'none';
 
-            // 2. تغيير لغة واتجاه الموقع
             document.documentElement.setAttribute('lang', lang); 
             document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
             
-            // 3. تبديل شكل الأزرار
             document.getElementById('btn-ar').classList.toggle('active', lang === 'ar');
             document.getElementById('btn-en').classList.toggle('active', lang === 'en');
             
-            // 4. ترجمة النصوص
             document.querySelectorAll('[data-i18n]').forEach(el => { 
                 if(translations[lang][el.getAttribute('data-i18n')]) {
                     el.innerText = translations[lang][el.getAttribute('data-i18n')]; 
@@ -649,11 +588,9 @@
             });
             document.getElementById('news-text').innerText = translations[lang]['news_text'];
             
-            // 5. تحديث الشيت وتخزين اللغة
             if (cachedSheetRows) renderDynamicData();
             localStorage.setItem('lang', lang);
 
-            // 6. إعادة تشغيل الحركة للقائمة بعد لحظة قصيرة جداً
             setTimeout(() => {
                 sidebar.style.transition = '';
             }, 50);
