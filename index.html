@@ -244,11 +244,20 @@
         #toast { visibility: hidden; min-width: 200px; background: rgba(15, 15, 20, 0.95); backdrop-filter: blur(10px); color: #fff; text-align: center; border-radius: 10px; padding: 12px 20px; position: fixed; z-index: 9999; left: 50%; bottom: 25px; transform: translateX(-50%); font-size: 14px; transition: 0.4s; opacity: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid var(--primary); font-family: 'Cairo', sans-serif; font-weight:bold;}
         #toast.show { visibility: visible; bottom: 85px; opacity: 1; }
         
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1500; display: none; backdrop-filter: blur(5px);}
+        /* إزالة الضبابية من الـ Overlay لتسريع الاستجابة */
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1500; display: none; }
         .overlay.active { display: block; }
 
-        /* تعديلات مخصصة لتخفيف الضغط على متصفح الجوال (سفاري) */
+        /* تعديلات مخصصة لتخفيف الضغط على متصفح الجوال (سفاري) وحل مشكلة AOS */
         @media (max-width: 600px) {
+            /* إجبار العناصر على الظهور فوراً في الجوال وتخطي تعليق مكتبة AOS */
+            [data-aos] {
+                opacity: 1 !important;
+                transform: none !important;
+                transition: none !important;
+                animation: none !important;
+            }
+
             .blob { filter: blur(40px); opacity: 0.25; } 
             .glass-panel, .navbar { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
 
@@ -455,7 +464,6 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // إيقاف الحركات في الجوال لمنع اختفاء العناصر في متصفح سفاري
         AOS.init({ 
             duration: 500, 
             once: true,
