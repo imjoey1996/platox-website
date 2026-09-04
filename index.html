@@ -39,6 +39,10 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        /* التمرير السلس */
+        html { scroll-behavior: smooth; }
+
         body { color: var(--text-main); font-family: 'Cairo', sans-serif; overflow-x: hidden; transition: background 0.4s, color 0.4s; background-color: var(--bg-main); }
         html[dir="ltr"] body, .num-font, .navbar h1 { font-family: 'Rajdhani', sans-serif; }
 
@@ -256,12 +260,12 @@
             <button class="lang-btn" onclick="changeLang('en')" id="btn-en">English</button>
         </div>
 
-        <a href="#hero" onclick="toggleMenu()" data-i18n="menu_home">الرئيسية</a>
-        <a href="#news" onclick="toggleMenu()" data-i18n="menu_news">الأخبار</a>
-        <a href="#arabic-leaders" onclick="toggleMenu()" data-i18n="menu_leaders">القادة العرب</a>
-        <a href="#tournaments" onclick="toggleMenu()" data-i18n="menu_tournaments">البطولات</a>
-        <a href="#top-spending" onclick="toggleMenu()" data-i18n="menu_spending">الإنفاق</a>
-        <a href="#accounts" onclick="toggleMenu()" data-i18n="menu_players">اللاعبين</a>
+        <a href="#hero" data-i18n="menu_home">الرئيسية</a>
+        <a href="#news" data-i18n="menu_news">الأخبار</a>
+        <a href="#arabic-leaders" data-i18n="menu_leaders">القادة العرب</a>
+        <a href="#tournaments" data-i18n="menu_tournaments">البطولات</a>
+        <a href="#top-spending" data-i18n="menu_spending">الإنفاق</a>
+        <a href="#accounts" data-i18n="menu_players">اللاعبين</a>
     </div>
 
     <nav class="navbar">
@@ -700,6 +704,27 @@
                 }
             });
         }
+
+        // كود التنقل السلس وإغلاق القائمة
+        document.querySelectorAll('.sidebar a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault(); 
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    toggleMenu(); 
+                    
+                    setTimeout(() => {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }, 300);
+                }
+            });
+        });
 
         window.onload = () => {
             const savedTheme = localStorage.getItem('theme') || 'dark'; 
