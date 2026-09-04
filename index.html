@@ -40,6 +40,12 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
+        /* التمرير السلس الأصلي مع حساب مساحة الهيدر تلقائياً */
+        html { 
+            scroll-behavior: smooth; 
+            scroll-padding-top: 85px; 
+        }
+
         body { color: var(--text-main); font-family: 'Cairo', sans-serif; overflow-x: hidden; transition: background 0.4s, color 0.4s; background-color: var(--bg-main); }
         html[dir="ltr"] body, .num-font, .navbar h1 { font-family: 'Rajdhani', sans-serif; }
 
@@ -207,7 +213,11 @@
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1500; display: none; backdrop-filter: blur(5px);}
         .overlay.active { display: block; }
 
+        /* تعديلات مخصصة لتخفيف الضغط على متصفح الجوال (سفاري) */
         @media (max-width: 600px) {
+            .blob { filter: blur(40px); opacity: 0.25; } 
+            .glass-panel, .sidebar, .navbar { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+
             section { padding: 50px 12px 25px; }
             .hero { height: 45vh; margin-top: 30px;}
             .hero h2 { font-size: 2.2rem; } .hero p { font-size: 1rem; }
@@ -411,7 +421,12 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({ duration: 500, once: true });
+        // إيقاف الحركات في الجوال لمنع اختفاء العناصر في متصفح سفاري
+        AOS.init({ 
+            duration: 500, 
+            once: true,
+            disable: 'mobile'
+        });
 
         function toggleMenu() { document.getElementById('sidebar').classList.toggle('active'); document.querySelector('.overlay').classList.toggle('active'); }
 
@@ -539,7 +554,6 @@
             }
         };
 
-        // متغير لحفظ بيانات جوجل شيت في الذاكرة لتسريع تغيير اللغة
         let cachedSheetRows = null;
 
         function changeLang(lang) {
@@ -551,13 +565,11 @@
             document.querySelectorAll('[data-i18n]').forEach(el => { if(translations[lang][el.getAttribute('data-i18n')]) el.innerText = translations[lang][el.getAttribute('data-i18n')]; });
             document.getElementById('news-text').innerText = translations[lang]['news_text'];
             
-            // تحديث بيانات الشيت من الذاكرة فوراً بدون تحميل من الإنترنت
             if (cachedSheetRows) renderDynamicData();
             
             localStorage.setItem('lang', lang);
         }
 
-        // دالة التحميل من الإنترنت (تحدث مرة واحدة فقط عند فتح الصفحة)
         async function loadDynamicData() {
             const sheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/export?format=csv"; 
             try {
@@ -570,7 +582,6 @@
             }
         }
 
-        // دالة الطباعة السريعة في الموقع (تعتمد على الذاكرة)
         function renderDynamicData() {
             if (!cachedSheetRows) return;
             const tourContainer = document.getElementById('tournaments-container');
@@ -693,34 +704,10 @@
             });
         }
 
-        // كود التنقل المحسن لتخفيف الضغط على المتصفح
-        document.querySelectorAll('.sidebar a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault(); 
-                
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                if (targetElement) {
-                    // 1. إغلاق القائمة فوراً
-                    toggleMenu(); 
-                    
-                    // 2. الانتظار حتى تنغلق القائمة لتخفيف الضغط
-                    setTimeout(() => {
-                        const headerOffset = 80; 
-                        const elementPosition = targetElement.getBoundingClientRect().top;
-                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                        
-                        window.scrollTo({
-                            top: offsetPosition,
-                            behavior: 'smooth'
-                        });
-                        
-                        // 3. إنعاش الحركات
-                        setTimeout(() => AOS.refresh(), 500);
-                        
-                    }, 400); 
-                }
+        // إغلاق القائمة فوراً عند اختيار قسم والاعتماد على التمرير الأصلي للمتصفح
+        document.querySelectorAll('.sidebar a').forEach(anchor => {
+            anchor.addEventListener('click', () => {
+                toggleMenu(); 
             });
         });
 
