@@ -732,11 +732,18 @@
                 const cols = row.split(','); 
                 if(cols.length < 7 || !cols[0].trim()) return;
 
+                // التعديل الخاص بمتصفح سفاري وتوقيت السعودية
                 const rawTimeStr = cols[0].replace(/"/g, '').trim(); 
-                let safeTimeStr = rawTimeStr.replace(' ', 'T');
-                if (!safeTimeStr.includes('+')) safeTimeStr += '+03:00';
+                let safeTimeStr = rawTimeStr.replace(/-/g, '/'); 
+                if (!safeTimeStr.includes('+') && !safeTimeStr.toUpperCase().includes('GMT')) {
+                    safeTimeStr += ' GMT+0300';
+                }
 
                 const targetTimeMs = new Date(safeTimeStr).getTime();
+                
+                // تجاوز الخطأ في حال كانت الخانة فارغة أو مكتوبة بشكل خاطئ تماماً
+                if (isNaN(targetTimeMs)) return; 
+
                 const diff = targetTimeMs - nowTime;
 
                 const nameAr = cols[1].replace(/"/g, '').trim();
@@ -760,7 +767,7 @@
                 groupsSpending[nameAr].total += numValue;
 
                 if (diff > -twentyFourHoursMs) {
-                    tournamentsList.push({ targetTimeMs, safeTimeStr, nameAr, nameEn, image, prizeStr, game, admin, diff });
+                    tournamentsList.push({ targetTimeMs, nameAr, nameEn, image, prizeStr, game, admin, diff });
                 }
             });
 
@@ -773,6 +780,7 @@
                 const displayName = currentLang === 'ar' ? tour.nameAr : tour.nameEn;
                 const borderStyle = isLtr ? `border-left-color: var(--primary);` : `border-right-color: var(--primary);`;
 
+                // الاعتماد على الرقم مباشرة بدل النص لحل مشكلة السفاري نهائياً
                 tourHTML += `
                     <div class="tour-card glass-panel" style="${borderStyle}">
                         <div class="tour-header">
@@ -780,7 +788,7 @@
                                 <img src="${tour.image}" class="entity-img" style="border-radius:8px; width:35px; height:35px; object-fit:cover;">
                                 <div class="tour-title">${displayName}</div>
                             </div>
-                            <div class="countdown-box sheet-timer" data-time="${tour.safeTimeStr}">
+                            <div class="countdown-box sheet-timer" data-time="${tour.targetTimeMs}">
                                 <i class="fa-regular fa-clock"></i> <span class="num-font countdown-val">00:00:00</span>
                             </div>
                         </div>
@@ -835,8 +843,10 @@
         function updateSheetTimers() {
             const nowTime = getAccurateTime();
             document.querySelectorAll('.sheet-timer').forEach(el => {
-                const targetStr = el.getAttribute('data-time');
-                const diff = new Date(targetStr).getTime() - nowTime;
+                const targetMs = parseInt(el.getAttribute('data-time'));
+                if (isNaN(targetMs)) return;
+
+                const diff = targetMs - nowTime;
                 const valSpan = el.querySelector('.countdown-val');
                 if(!valSpan) return;
                 
@@ -867,10 +877,10 @@
             document.documentElement.setAttribute('data-theme', savedTheme); 
             document.getElementById('theme-icon').className = savedTheme === 'light' ? 'fa-solid fa-sun theme-toggle' : 'fa-solid fa-moon theme-toggle';
             
-            const start = new Date('2026-09-03T00:00:00+03:00'); 
-            const added = Math.max(0, Math.floor((getAccurateTime() - start.getTime()) / (1000 * 60 * 60 * 24))); 
+            const start = new Date('2026/09/03 00:00:00 GMT+0300').getTime(); 
+            const added = Math.max(0, Math.floor((getAccurateTime() - start) / (1000 * 60 * 60 * 24))); 
             document.querySelectorAll('.auto-days').forEach(td => { 
-                td.innerText = (parseInt(td.getAttribute('data-base-days')) + added); 
+                td.innerText = (parseInt(td.getAttribute('data-base-days')) + (isNaN(added) ? 0 : added)); 
             });
             
             renderGlobalLeaders();
