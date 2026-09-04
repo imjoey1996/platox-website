@@ -327,19 +327,20 @@
 
     <!-- قسم البلاغات الجديد -->
     <section id="bug-report">
-        <h2 class="section-title" data-aos="fade-right" data-i18n="bug_title">تقديم بلاغ Bugs</h2>
+        <h2 class="section-title" data-aos="fade-right" data-i18n="bug_title">تقديم بلاغ</h2>
         <div class="glass-panel" style="width: 100%; max-width: 650px; padding: 30px; border-radius: 16px;" data-aos="fade-up">
             
-            <label style="display:block; margin-bottom: 15px; font-weight: bold; font-size: 1.1rem;" data-i18n="bug_type_label">نوع المشكلة:</label>
+            <label style="display:block; margin-bottom: 5px; font-weight: bold; font-size: 1.1rem;" data-i18n="bug_type_label">نوع المشكلة:</label>
+            <span style="display:block; margin-bottom: 15px; font-size: 0.85rem; color: var(--text-muted); font-weight: 700;" data-i18n="bug_note">هذا القسم غير مخصص للمشاكل الشخصية.</span>
             
             <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
                 <label class="bug-radio">
                     <input type="radio" name="bugType" value="Exploits" onchange="showBugForm()">
-                    <span><strong>Exploits:</strong> <span data-i18n="bug_exp_desc" style="color: var(--text-muted); font-size: 0.9rem;">ثغرات، أخطاء برمجية، أو نسخ معدلة</span></span>
+                    <span><strong data-i18n="bug_opt1_title">الثغرات (Exploits):</strong> <span data-i18n="bug_exp_desc" style="color: var(--text-muted); font-size: 0.9rem;">ثغرات، أخطاء برمجية، أو نسخ معدلة.</span></span>
                 </label>
                 <label class="bug-radio">
                     <input type="radio" name="bugType" value="Serious Technical Issue" onchange="showBugForm()">
-                    <span><strong>Serious Technical Issue:</strong> <span data-i18n="bug_tech_desc" style="color: var(--text-muted); font-size: 0.9rem;">أخطاء تقنية جسيمة أو مشاكل نظام قابلة للاستغلال المتكرر.</span></span>
+                    <span><strong data-i18n="bug_opt2_title">مشكلة تقنية جسيمة:</strong> <span data-i18n="bug_tech_desc" style="color: var(--text-muted); font-size: 0.9rem;">أخطاء تقنية ذات تأثير عالي أو مشاكل نظام قابلة للاستغلال المتكرر.</span></span>
                 </label>
             </div>
 
@@ -637,7 +638,7 @@
                 news_text: "احدث اخبار بلاتو: سيتم تنظيف المتجر من عناصر الكوينز كليًا",
                 hero_title_sub: "المجتمع العربي", hero_desc: "يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.",
                 leaders_title: "القادة العرب", global_leaders_title: "قادة السيرفرات العالمية", news_board_title: "لوحة أخبار المجتمع", players_title: "اللاعبين الاقدم", spending_title: "ترتيب المجموعات الأكثر إنفاقًا", tournaments_title: "مركز البطولات المعتمدة",
-                bug_title: "تقديم بلاغ Bugs", bug_type_label: "نوع المشكلة:", bug_exp_desc: "ثغرات، أخطاء برمجية، أو نسخ معدلة", bug_tech_desc: "أخطاء تقنية جسيمة أو مشاكل نظام قابلة للاستغلال المتكرر.", bug_submit: "إرسال البلاغ",
+                bug_title: "تقديم بلاغ", bug_type_label: "نوع المشكلة:", bug_note: "هذا القسم غير مخصص للمشاكل الشخصية.", bug_opt1_title: "الثغرات (Exploits):", bug_opt2_title: "مشكلة تقنية جسيمة:", bug_exp_desc: "ثغرات، أخطاء برمجية، أو نسخ معدلة.", bug_tech_desc: "أخطاء تقنية ذات تأثير عالي أو مشاكل نظام قابلة للاستغلال المتكرر.", bug_submit: "إرسال البلاغ",
                 desc_yyy: "صانع الأثر، يقود برؤية مستقبلية لخلق بيئة إيجابية لا تعرف المستحيل.", desc_hat: "حضور راسخ، تقود المجتمع بثقة راسخة وترسم معايير الرقي.", desc_bbb: "الحكمة في اتخاذ القرار، يوازن بين الحزم والهدوء لإدارة الأزمات باحترافية.",
                 news_1_title: "إطلاق ألعاب وميزات جديدة قريباً!", news_1_body: "لدينا لعبتان جديدتان نأمل أن نُطلقهما خلال الشهر المقبل أو نحو ذلك، إلى جانب العديد من الميزات الجديدة التي لم نُعلن عنها بعد. ستكون الأشهر القادمة حافلة بالتحديثات، ونستعد لتقديم المزيد لكم حتى نهاية هذا العام. ترقبوا الإعلانات القادمة!",
                 discord_more: "للمزيد من الأخبار انضموا إلى الديسكورد", tag_update: "خبر هام",
@@ -649,7 +650,7 @@
                 news_text: "LATEST PLATO NEWS: The store will be completely cleared of coin items.",
                 hero_title_sub: "COMMUNITY", hero_desc: "Where gaming enthusiasts meet to experience thrilling moments, build true friendships, and create eternal memories.",
                 leaders_title: "ARABIC LEADERS", global_leaders_title: "GLOBAL SERVERS LEADERS", news_board_title: "COMMUNITY NEWS BOARD", players_title: "OLDEST PLAYERS", spending_title: "TOP SPENDING GROUPS", tournaments_title: "APPROVED TOURNAMENTS",
-                bug_title: "Bug Reporting", bug_type_label: "Issue Type:", bug_exp_desc: "Bugs, glitches, or modified clients", bug_tech_desc: "High-impact bugs or system problems that can be repeatedly abused.", bug_submit: "Submit Report",
+                bug_title: "Bug Reporting", bug_type_label: "Issue Type:", bug_note: "This section is not for personal issues.", bug_opt1_title: "Exploits:", bug_opt2_title: "Serious Technical Issue:", bug_exp_desc: "Bugs, glitches, or modified clients.", bug_tech_desc: "High-impact bugs or system problems that can be repeatedly abused.", bug_submit: "Submit Report",
                 desc_yyy: "The Impact Maker, leading with a futuristic vision to create a positive environment.", desc_hat: "A grounded presence, leading the community with solid confidence and setting standards.", desc_bbb: "Wisdom in decision making, balancing firmness and calmness in management.",
                 news_1_title: "New Games & Features Launch!", news_1_body: "We have two new games that we hope to release within the next month or so, along with many other new features that we haven't announced yet. The coming months will be packed with new updates, and were getting ready to bring you even more through the end of this year.",
                 discord_more: "For more news, join our Discord server", tag_update: "HOT NEWS",
