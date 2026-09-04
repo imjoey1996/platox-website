@@ -43,7 +43,15 @@
         html[dir="ltr"] body, .num-font, .navbar h1 { font-family: 'Rajdhani', sans-serif; }
 
         .liquid-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3; overflow: hidden; background: var(--bg-main); }
-        .blob { position: absolute; filter: blur(90px); opacity: 0.45; z-index: -2; animation: liquidFlow 25s infinite alternate ease-in-out; }
+        
+        /* إضافة تسريع المعالج (GPU Acceleration) للخلفية لتجنب اللاق */
+        .blob { 
+            position: absolute; filter: blur(90px); opacity: 0.45; z-index: -2; 
+            animation: liquidFlow 25s infinite alternate ease-in-out; 
+            will-change: transform;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+        }
         [data-theme="light"] .blob { opacity: 0.3; filter: blur(70px); }
         .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--primary); animation-delay: 0s; }
         .blob-2 { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: var(--glow-bbb); animation-delay: -5s; }
@@ -56,14 +64,26 @@
         }
 
         .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; pointer-events: none; }
-        .particle { position: absolute; color: #fff; opacity: 0.15; animation: floatUp infinite linear; filter: blur(1px); } 
+        
+        /* إضافة تسريع المعالج للجزيئات المتطايرة */
+        .particle { 
+            position: absolute; color: #fff; opacity: 0.15; 
+            animation: floatUp infinite linear; filter: blur(1px); 
+            will-change: transform, opacity;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+        } 
         [data-theme="light"] .particle { color: var(--primary); opacity: 0.08; }
         @keyframes floatUp { 0% { transform: translateY(100vh) rotate(0deg) scale(0.8); opacity: 0; } 20% { opacity: 0.15; } 80% { opacity: 0.15; } 100% { transform: translateY(-10vh) rotate(360deg) scale(1.5); opacity: 0; } }
 
+        /* إضافة تسريع المعالج للزجاج لمنع الفريز وقت التمرير */
         .glass-panel {
             background: var(--bg-card); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
             border: 1px solid var(--glass-border); border-top: 1px solid rgba(255, 255, 255, 0.12);
             border-left: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); border-radius: 16px;
+            will-change: transform, opacity;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
         }
         html[dir="ltr"] .glass-panel { border-left: 1px solid var(--glass-border); border-right: 1px solid rgba(255, 255, 255, 0.05); }
         [data-theme="light"] .glass-panel { box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07); border-top: 1px solid rgba(255, 255, 255, 0.6); }
@@ -326,15 +346,13 @@
         </div>
 
         <div class="global-leaders-grid" id="global-leaders-grid">
-            <!-- Dynamic Server Leaders -->
-        </div>
+            </div>
     </section>
 
     <div class="cyber-divider"><div class="center-node"></div></div>
 
     <section id="tournaments">
         <h2 class="section-title" data-aos="fade-right" data-i18n="tournaments_title">مركز البطولات المعتمدة</h2>
-        <!-- البطولات ستظهر هنا تلقائياً من الشيت -->
         <div class="tournaments-grid" id="tournaments-container" data-aos="fade-up"></div>
     </section>
 
@@ -342,7 +360,6 @@
 
     <section id="top-spending">
         <h2 class="section-title" data-aos="fade-right" data-i18n="spending_title">ترتيب المجموعات الأكثر إنفاقًا</h2>
-        <!-- المجموعات وقيم الإنفاق ستظهر هنا تلقائياً بناءً على البطولات -->
         <div class="premium-list" id="spenders-container" data-aos="fade-up"></div>
     </section>
 
@@ -544,12 +561,17 @@
             if(typeof loadDynamicData === 'function') loadDynamicData();
             localStorage.setItem('lang', lang);
             
+            /* تحسين طريقة إعادة الأنيميشن لعدم تجميد الموقع */
             const animatedElements = document.querySelectorAll('[data-aos]');
-            animatedElements.forEach(el => { el.classList.remove('aos-animate'); void el.offsetWidth; });
-            setTimeout(() => { animatedElements.forEach(el => el.classList.add('aos-animate')); }, 50);
+            animatedElements.forEach(el => el.classList.remove('aos-animate'));
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    animatedElements.forEach(el => el.classList.add('aos-animate'));
+                });
+            });
         }
 
-        // الدالة الشاملة لجلب البطولات وحساب الإنفاق معاً من الشيت
+        // الدالة الشاملة لجلب البطولات وحساب الإنفاق معاً من الشيت (تم تسريع الطباعة)
         async function loadDynamicData() {
             const sheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/export?format=csv"; 
             try {
@@ -560,13 +582,12 @@
                 const tourContainer = document.getElementById('tournaments-container');
                 const spendContainer = document.getElementById('spenders-container');
                 
-                tourContainer.innerHTML = '';
-                spendContainer.innerHTML = '';
-                
                 const currentLang = document.documentElement.getAttribute('lang') || 'ar';
                 const isLtr = currentLang === 'en';
 
                 let groupsSpending = {}; 
+                let tourHTML = ''; // متغير لتخزين كود البطولات
+                let spendHTML = ''; // متغير لتخزين كود الإنفاق
 
                 rows.forEach((row) => {
                     const cols = row.split(','); 
@@ -583,8 +604,8 @@
                     const displayName = currentLang === 'ar' ? nameAr : nameEn;
                     const borderStyle = isLtr ? `border-left-color: var(--primary);` : `border-right-color: var(--primary);`;
 
-                    // 1. إضافة بطاقة البطولة
-                    tourContainer.innerHTML += `
+                    // تجميع البطولات في المتغير (لتسريع المتصفح)
+                    tourHTML += `
                         <div class="tour-card glass-panel" style="${borderStyle}">
                             <div class="tour-header">
                                 <div class="tour-title-box">
@@ -605,7 +626,7 @@
                         </div>
                     `;
 
-                    // 2. حساب رصيد المجموعات للإنفاق
+                    // حساب رصيد المجموعات
                     let numValue = 0;
                     let cleanStr = prizeStr.toUpperCase().replace(/[^0-9.K]/g, '');
                     if (cleanStr.includes('K')) {
@@ -620,7 +641,7 @@
                     groupsSpending[nameAr].total += numValue;
                 });
 
-                // 3. ترتيب وعرض قائمة المجموعات الأكثر إنفاقاً
+                // ترتيب المجموعات وتجميعها في المتغير
                 let sortedGroups = Object.values(groupsSpending).sort((a, b) => b.total - a.total);
                 let highestTotal = sortedGroups.length > 0 ? sortedGroups[0].total : 1;
 
@@ -637,7 +658,7 @@
 
                     let displayScore = group.total >= 1000 ? (group.total / 1000) + 'K' : group.total;
 
-                    spendContainer.innerHTML += `
+                    spendHTML += `
                         <div class="list-row glass-panel ${rankClass}">
                             <div class="rank-num num-font">${rank}</div>
                             <div class="list-info">
@@ -652,13 +673,16 @@
                     `;
                 });
                 
+                // طباعة البيانات في الموقع دفعة واحدة لتسريع الأداء
+                tourContainer.innerHTML = tourHTML;
+                spendContainer.innerHTML = spendHTML;
+
                 updateSheetTimers(); 
             } catch (error) {
                 console.error("حدث خطأ أثناء جلب البيانات:", error);
             }
         }
 
-        // دالة العداد التنازلي المباشر للبطولات
         function updateSheetTimers() {
             const nowTime = new Date().getTime();
             document.querySelectorAll('.sheet-timer').forEach(el => {
