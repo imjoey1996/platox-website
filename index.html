@@ -96,10 +96,31 @@
         @keyframes ticker-rtl { from { transform: translateX(-100vw); } to { transform: translateX(100vw); } }
         @keyframes ticker-ltr { from { transform: translateX(100vw); } to { transform: translateX(-100vw); } }
 
-        .sidebar { position: fixed; top: 0; right: -280px; width: 280px; height: 100vh; background: var(--bg-card); backdrop-filter: blur(30px); border-left: 1px solid var(--glass-border); z-index: 2000; transition: right 0.4s ease; display: flex; flex-direction: column; padding: 25px; box-shadow: -10px 0 30px rgba(0,0,0,0.5);}
-        html[dir="ltr"] .sidebar { right: auto; left: -280px; border-left: none; border-right: 1px solid var(--glass-border); transition: left 0.4s ease; box-shadow: 10px 0 30px rgba(0,0,0,0.5);}
-        .sidebar.active { right: 0; }
-        html[dir="ltr"] .sidebar.active { left: 0; right: auto; }
+        /* تعديلات القائمة الجانبية لحل مشكلة اختفاء النصوص في سفاري */
+        .sidebar { 
+            position: fixed; top: 0; right: 0; width: 280px; height: 100vh; 
+            background: rgba(10, 10, 12, 0.98); 
+            backdrop-filter: none !important; 
+            -webkit-backdrop-filter: none !important;
+            border-left: 1px solid var(--glass-border); z-index: 2000; 
+            display: flex; flex-direction: column; padding: 25px; 
+            box-shadow: -10px 0 30px rgba(0,0,0,0.8);
+            transform: translateX(100%); 
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            -webkit-backface-visibility: hidden; 
+        }
+        [data-theme="light"] .sidebar { background: rgba(250, 250, 250, 0.98); }
+
+        html[dir="ltr"] .sidebar { 
+            right: auto; left: 0; 
+            border-left: none; border-right: 1px solid var(--glass-border); 
+            box-shadow: 10px 0 30px rgba(0,0,0,0.8);
+            transform: translateX(-100%); 
+        }
+
+        .sidebar.active { transform: translateX(0); }
+        html[dir="ltr"] .sidebar.active { transform: translateX(0); }
+        
         .close-btn { align-self: flex-end; font-size: 26px; cursor: pointer; margin-bottom: 15px; }
         html[dir="ltr"] .close-btn { align-self: flex-start; }
         
@@ -108,7 +129,20 @@
         .lang-btn:hover { color: var(--primary); border-color: var(--primary); }
         .lang-btn.active { color: #fff; background: var(--primary); border-color: var(--primary); box-shadow: 0 0 15px var(--primary-glow); }
 
-        .sidebar a { color: var(--text-main); text-decoration: none; font-size: 1.05rem; font-weight: 700; padding: 12px 0; border-bottom: 1px solid var(--glass-border); transition: 0.3s; text-transform: uppercase; }
+        /* روابط القائمة الجانبية (معالجة اختفاء النص) */
+        .sidebar a { 
+            color: var(--text-main); 
+            text-decoration: none; 
+            font-size: 1.05rem; 
+            font-weight: 700; 
+            padding: 12px 0; 
+            border-bottom: 1px solid var(--glass-border); 
+            transition: 0.3s; 
+            text-transform: uppercase;
+            position: relative;
+            -webkit-transform: translateZ(0); 
+            -webkit-backface-visibility: hidden;
+        }
         .sidebar a:hover { color: var(--primary); padding-right: 8px; text-shadow: 0 0 10px var(--primary-glow); }
         html[dir="ltr"] .sidebar a:hover { padding-right: 0; padding-left: 8px; }
 
@@ -216,7 +250,7 @@
         /* تعديلات مخصصة لتخفيف الضغط على متصفح الجوال (سفاري) */
         @media (max-width: 600px) {
             .blob { filter: blur(40px); opacity: 0.25; } 
-            .glass-panel, .sidebar, .navbar { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+            .glass-panel, .navbar { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
 
             section { padding: 50px 12px 25px; }
             .hero { height: 45vh; margin-top: 30px;}
