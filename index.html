@@ -494,6 +494,7 @@
             <div class="card glass-panel card-hat">
                 <img src="f3b8c20da38a9320fa2f250f52f7f16a.png" alt="HAT">
                 <h3>HAT</h3>
+                <div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: var(--glow-hat);"></i> <span data-i18n="bday_hat">1 سبتمبر</span></div>
                 <p data-i18n="desc_hat">حضور راسخ، تقود المجتمع بثقة راسخة وترسم معايير الرقي.</p>
             </div>
             <div class="card glass-panel card-bbb">
@@ -729,32 +730,35 @@
         };
 
         const globalLeadersData = [
-            { name: "Fear", server: "english", img: "55fb9c5469409aa250bb7f2eeae0fbea.png" }, 
-            { name: "abc", server: "english", img: "84fbda49d60a3ab730108bb40c635feb.png" }, 
-            { name: "Rose", server: "english", img: "IMG_7437.png" }, 
+            { name: "Fear", server: "english", img: "55fb9c5469409aa250bb7f2eeae0fbea.png", birthday: { en: "December 15", ar: "15 ديسمبر" } }, 
+            { name: "abc", server: "english", img: "84fbda49d60a3ab730108bb40c635feb.png", birthday: { en: "February 23", ar: "23 فبراير" } }, 
+            { name: "Rose", server: "english", img: "IMG_7437.png", birthday: { en: "June 8", ar: "8 يونيو" } }, 
             { name: "Risk", server: "english", img: "57914b7385432b7831bcc1470723baa7.png" },
             { 
                 name: "7777777", 
                 server: "persian", 
                 img: "03cdd5503fd8725e76641fb8e06c2937.png",
+                birthday: { en: "July 26", ar: "26 يوليو" },
                 desc: { ar: "قائد مهتم يقدر المجتمع وينشئ مجموعات وفعاليات لنشر الفرح.", en: "A caring leader who values the community and creates groups and events to bring joy." }
             }, 
-            { name: "Armin", server: "persian", img: "IMG_7428.png" }, 
-            { name: "Reza", server: "persian", img: "IMG_7443.png" }, 
+            { name: "Armin", server: "persian", img: "IMG_7428.png", birthday: { en: "August 17", ar: "17 أغسطس" } }, 
+            { name: "Reza", server: "persian", img: "IMG_7443.png", birthday: { en: "November 17", ar: "17 نوفمبر" } }, 
             { 
                 name: "NarGc", 
                 server: "persian", 
                 img: "13b8f453f2ee334ab01a7e53fc4c23fb.png",
+                birthday: { en: "November 10", ar: "10 نوفمبر" },
                 desc: { ar: "قائدة نشيطة ومبدعة ومهتمة، تتميز بالتفاني والعمل الجاد.", en: "An energetic, creative, and caring leader who is dedicated and hardworking." }
             },
             { 
                 name: "H22", 
                 server: "french", 
                 img: "IMG_7442.png",
+                birthday: { en: "December 21", ar: "21 ديسمبر" },
                 desc: { ar: "ودود ومحفز، مستعد دائماً للمساعدة والتواصل مع الأشخاص.", en: "Friendly and encouraging, always willing to help and connect with people from all servers." }
             },
             { name: "love_hope", server: "french", img: "f74613af2e55aecdde0d31ff33964698.png" }, 
-            { name: "Mdame", server: "french", img: "de6ac96df41f0d3378e934e467ccee32.png" }, 
+            { name: "Mdame", server: "french", img: "de6ac96df41f0d3378e934e467ccee32.png", birthday: { en: "March 20", ar: "20 مارس" } }, 
             { name: "Algerien", server: "french", img: "IMG_7444.png" }, 
             { name: "Nefya", server: "turkish", img: "IMG_7438.png" },
             { 
@@ -768,27 +772,37 @@
                 name: "Fyy", 
                 server: "melayu", 
                 img: "f36561c947960941324127485f6b5886.png",
+                birthday: { en: "April 29", ar: "29 أبريل" },
                 desc: { ar: "قائدة محبة للمرح تجلب الدفء والطاقة الإيجابية مع بناء روابط ذات معنى.", en: "A fun-loving leader who brings warmth and energy while fostering meaningful connections." }
             }, 
             { 
                 name: "Lyn", 
                 server: "melayu", 
                 img: "92202278eed703e1100a0b963a8834c6.png",
+                birthday: { en: "February 23", ar: "23 فبراير" },
                 desc: { ar: "تحافظ على العدل والتنظيم والهدوء لكي يستمتع الجميع بالمجتمع.", en: "Keeping things fair, organized, and drama-free so everyone can enjoy the community." }
             },
             { 
                 name: "abo", 
                 server: "melayu", 
                 img: "IMG_7448.png",
+                birthday: { en: "April 10", ar: "10 أبريل" },
                 desc: { ar: "تحافظ على إيجابية وتنظيم السيرفر وخلوه من المشاكل، مع كونها ودودة وداعمة للجميع.", en: "Keeping the server positive, organized, and drama-free while being approachable and supportive." }
             }, 
             { 
                 name: "morango", 
                 server: "brazil", 
                 img: "c5d766cb9eefad03e43d5c60b6663f68.png",
+                birthday: { en: "May 7", ar: "7 مايو" },
                 desc: { ar: "قائدة ودودة ومتفانية تخلق مجتمعاً ممتعاً ومرحباً وشاملاً.", en: "A friendly and dedicated leader who creates a fun, welcoming, and inclusive community." }
             }, 
-            { name: "vsf", server: "brazil", img: "5d6814526ccd5b04a915127d03325e4b.png" },
+            { 
+                name: "vsf", 
+                server: "brazil", 
+                img: "5d6814526ccd5b04a915127d03325e4b.png",
+                birthday: { en: "October 4", ar: "4 أكتوبر" },
+                desc: { ar: "قائدة متفانية تسعى لتحقيق العدالة والاحترام وتوفير مساحة آمنة ومرحبة للجميع.", en: "A dedicated leader striving for fairness, respect, and a safe, welcoming space for everyone." }
+            },
             { name: "Marito", server: "spanish", img: "IMG_7447.png" }, 
             { name: "kroxtar", server: "spanish", img: "8a2638546f3cb1961c3e198fc5817b45.png" },
             { 
@@ -801,9 +815,10 @@
                 name: "nrasl", 
                 server: "thai", 
                 img: "IMG_7439.png",
+                birthday: { en: "May 26", ar: "26 مايو" },
                 desc: { ar: "قائدة صريحة وودودة ومحايدة، تستمع للجميع وتقدم لهم الدعم.", en: "A straightforward, approachable, and unbiased leader who listens and supports everyone." }
             },
-            { name: "Frequency", server: "desi", img: "IMG_7440.png" } 
+            { name: "Frequency", server: "desi", img: "IMG_7440.png", birthday: { en: "May 19", ar: "19 مايو" } } 
         ];
         
         function renderGlobalLeaders() {
@@ -883,7 +898,7 @@
                 guide_4: "لا تنشر محتوى يشجع على العنف في الحياة الواقعية، أو يشجع على إيذاء النفس أو الانتحار، أو يشجع على العنف تجاه مجموعة معينة من الأشخاص.",
                 guide_5: "الدردشة فقط بلغة الخادم الذي تختاره.",
                 guide_warning: "يقوم قادة الخادم بتطبيق الإرشادات المذكورة أعلاه. سيؤدي انتهاك هذه الإرشادات إلى فقدان القدرة على الدردشة لمدة 4 ساعات وقد يؤدي إلى حظر دائم لحسابك إذا تكرر.",
-                bday_yyy: "1 يناير"
+                bday_yyy: "1 يناير", bday_hat: "1 سبتمبر"
             },
             en: {
                 menu_home: "HOME", menu_leaders: "LEADERS", menu_news: "NEWS", menu_bugs: "REPORT BUG", menu_players: "PLAYERS", menu_spending: "SPENDING", menu_tournaments: "TOURNAMENTS", pull_refresh: "Updating...", menu_guidelines: "GUIDELINES",
@@ -903,7 +918,7 @@
                 guide_4: "Do not post content that encourages violence in real life, or encourages self-harm or suicide, or encourages violence towards a specific group of people.",
                 guide_5: "Chat only in the language of the server you select.",
                 guide_warning: "Server Leaders enforce the guidelines listed above. Breaking these Public Room Chat Guidelines will result in losing the ability to chat for 4 hours and may result in a permanent ban of your account if frequent.",
-                bday_yyy: "January 1"
+                bday_yyy: "January 1", bday_hat: "September 1"
             }
         };
 
