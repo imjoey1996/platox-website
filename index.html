@@ -37,6 +37,7 @@
             --glow-bbb: #0096b4;
         }
 
+        /* حماية شاملة ضد تحديد النصوص والضغط المطول والزوم */
         * { 
             box-sizing: border-box; 
             margin: 0; 
@@ -46,6 +47,7 @@
             -webkit-touch-callout: none; 
         }
         
+        /* تجميد الصور نهائياً لمنع الزوم والحفظ */
         img {
             -webkit-user-drag: none;
             pointer-events: none; 
@@ -219,8 +221,7 @@
         .server-tab:hover { color: var(--text-main); border-color: var(--text-main); }
         
         .global-leaders-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; width: 100%; max-width: 950px; justify-items: center; }
-        .global-leader { width: 100%; padding: 20px 15px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px; animation: fadeScale 0.4s ease-out forwards; }
-        @keyframes fadeScale { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        .global-leader { width: 100%; padding: 20px 15px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px; }
         
         .global-leader img { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.1); transition: 0.3s; margin-bottom: 2px; }
         .global-leader:hover { border-color: var(--server-color); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.3);}
@@ -359,8 +360,8 @@
     </div>
 
     <div class="main-lang-switch" dir="rtl">
-        <button class="lang-btn active" onclick="changeLang('ar')" id="btn-ar">العربية</button>
-        <button class="lang-btn" onclick="changeLang('en')" id="btn-en">English</button>
+        <button type="button" class="lang-btn active" onclick="changeLang('ar')" id="btn-ar">العربية</button>
+        <button type="button" class="lang-btn" onclick="changeLang('en')" id="btn-en">English</button>
     </div>
 
     <section class="hero" id="hero">
@@ -376,14 +377,14 @@
             
             <div class="news-bottom-wrapper">
                 <div class="slider-controls">
-                    <button class="nav-btn disabled" id="btnNewer">
+                    <button type="button" class="nav-btn disabled" id="btnNewer">
                         <span class="nav-label num-font" data-i18n="news_newer">الأحدث</span>
                         <i class="fa-solid fa-arrow-right arrow-icon prev-icon"></i>
                     </button>
                     
                     <div class="slider-dots" id="newsDots"></div>
 
-                    <button class="nav-btn disabled" id="btnOlder">
+                    <button type="button" class="nav-btn disabled" id="btnOlder">
                         <span class="nav-label num-font" data-i18n="news_older">الأقدم</span>
                         <i class="fa-solid fa-arrow-left arrow-icon next-icon"></i>
                     </button>
@@ -421,8 +422,8 @@
                 <textarea id="bug-desc" class="bug-input" rows="4" placeholder="وصف المشكلة..." style="resize: vertical;"></textarea>
                 
                 <div style="display: flex; gap: 10px;">
-                    <button onclick="submitBugReport();" class="submit-btn" data-i18n="bug_submit">إرسال البلاغ</button>
-                    <button onclick="hideBugForm();" class="cancel-btn" data-i18n="bug_cancel">إلغاء</button>
+                    <button type="button" onclick="submitBugReport();" class="submit-btn" data-i18n="bug_submit">إرسال البلاغ</button>
+                    <button type="button" onclick="hideBugForm();" class="cancel-btn" data-i18n="bug_cancel">إلغاء</button>
                 </div>
             </div>
         </div>
@@ -457,15 +458,15 @@
         <h2 class="section-title" data-i18n="global_leaders_title">قادة السيرفرات العالمية</h2>
         
         <div class="server-tabs" dir="ltr">
-            <button class="server-tab active" data-target="english" onclick="filterServer('english')">English</button>
-            <button class="server-tab" data-target="persian" onclick="filterServer('persian')">Persian</button>
-            <button class="server-tab" data-target="french" onclick="filterServer('french')">French</button>
-            <button class="server-tab" data-target="turkish" onclick="filterServer('turkish')">Turkish</button>
-            <button class="server-tab" data-target="melayu" onclick="filterServer('melayu')">Melayu</button>
-            <button class="server-tab" data-target="brazil" onclick="filterServer('brazil')">Brazil</button>
-            <button class="server-tab" data-target="spanish" onclick="filterServer('spanish')">Spanish</button>
-            <button class="server-tab" data-target="thai" onclick="filterServer('thai')">Thai</button>
-            <button class="server-tab" data-target="desi" onclick="filterServer('desi')">Desi</button>
+            <button type="button" class="server-tab active" data-target="english" onclick="filterServer('english')">English</button>
+            <button type="button" class="server-tab" data-target="persian" onclick="filterServer('persian')">Persian</button>
+            <button type="button" class="server-tab" data-target="french" onclick="filterServer('french')">French</button>
+            <button type="button" class="server-tab" data-target="turkish" onclick="filterServer('turkish')">Turkish</button>
+            <button type="button" class="server-tab" data-target="melayu" onclick="filterServer('melayu')">Melayu</button>
+            <button type="button" class="server-tab" data-target="brazil" onclick="filterServer('brazil')">Brazil</button>
+            <button type="button" class="server-tab" data-target="spanish" onclick="filterServer('spanish')">Spanish</button>
+            <button type="button" class="server-tab" data-target="thai" onclick="filterServer('thai')">Thai</button>
+            <button type="button" class="server-tab" data-target="desi" onclick="filterServer('desi')">Desi</button>
         </div>
 
         <div class="global-leaders-grid" id="global-leaders-grid"></div>
@@ -1247,14 +1248,18 @@
         const ptrEl = document.getElementById('ptr-loader');
         
         document.addEventListener('touchstart', e => {
-            if(window.scrollY === 0) { ptrStartY = e.touches[0].screenY; isPulling = true; }
+            if(window.scrollY <= 5) { 
+                ptrStartY = e.touches[0].screenY; 
+                ptrCurrentY = ptrStartY; // تصفير ذاكرة اللمس هنا
+                isPulling = true; 
+            }
         }, {passive: true});
         
         document.addEventListener('touchmove', e => {
             if(!isPulling) return;
             ptrCurrentY = e.touches[0].screenY;
             let pull = ptrCurrentY - ptrStartY;
-            if(pull > 0 && window.scrollY === 0) {
+            if(pull > 0 && window.scrollY <= 5) {
                 ptrEl.style.transform = `translateY(${Math.min(pull - 60, 0)}px)`;
                 if(pull > 80) ptrEl.querySelector('i').style.transform = 'rotate(180deg)';
                 else ptrEl.querySelector('i').style.transform = 'rotate(0deg)';
@@ -1265,7 +1270,7 @@
             if(!isPulling) return;
             isPulling = false;
             let pull = ptrCurrentY - ptrStartY;
-            if(pull > 80 && window.scrollY === 0) {
+            if(pull > 80 && window.scrollY <= 5) {
                 ptrEl.classList.add('refreshing');
                 ptrEl.style.transform = 'translateY(0)';
                 Promise.all([loadNewsData(), loadDynamicData()]).then(() => {
@@ -1279,14 +1284,12 @@
             }
         }, {passive: true});
 
-        // حل مشكلة التقطيع أثناء التنقل بالقائمة الجانبية
         document.querySelectorAll('.sidebar a').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
-                toggleMenu(); // يغلق القائمة
+                toggleMenu();
                 const targetId = this.getAttribute('href');
                 
-                // ينتظر إغلاق القائمة (400 ملي ثانية) ثم يمرر الشاشة بسلاسة
                 setTimeout(() => {
                     const targetEl = document.querySelector(targetId);
                     if(targetEl) {
