@@ -255,7 +255,11 @@
         
         .hero { height: 35dvh; justify-content: center; text-align: center; padding: 0 15px; margin-top: 5px;}
         .hero h2 { font-size: 3.2rem; font-weight: 900; margin-bottom: 10px; color: #fff; text-shadow: 0 0 30px rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; flex-wrap: wrap;}
-        .hero h2 span.hero-x { color: var(--primary); text-shadow: 0 0 20px var(--primary-glow); font-size: 1.25em; margin-inline-start: 2px; margin-inline-end: 10px; transform: translateY(2px);}
+        
+        /* ضبط مسافات حرف X */
+        .hero h2 span.hero-x { color: var(--primary); text-shadow: 0 0 20px var(--primary-glow); font-size: 1.25em; margin-inline-end: 10px; transform: translateY(2px);}
+        html[dir="rtl"] .hero h2 span.hero-x { margin-inline-start: 10px; }
+        
         [data-theme="light"] .hero h2 { color: #000; text-shadow: none; }
         .hero p { font-size: 1.1rem; max-width: 600px; line-height: 1.7; margin: 0 auto; color: rgba(255,255,255,0.8);}
         [data-theme="light"] .hero p { color: var(--text-muted); }
@@ -493,7 +497,7 @@
 
     <main id="view-home" class="tab-view active-view">
         <section class="hero" id="hero">
-            <h2><span data-i18n="hero_title_pre">مجتمع</span> Plato<span class="hero-x">X</span> <span data-i18n="hero_title_sub">العربي</span></h2>
+            <h2><span data-i18n="hero_title_pre">مجتمع</span><span class="hero-x">X</span> <span data-i18n="hero_title_sub">العربي</span></h2>
             <p data-i18n="hero_desc">يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.</p>
         </section>
 
@@ -1146,7 +1150,7 @@
             en: {
                 nav_home: "Home", nav_leaders: "About Leaders", nav_leaderboard: "Leaderboard",
                 pull_refresh: "Updating...", menu_guidelines: "GUIDELINES",
-                hero_title_pre: "", hero_title_sub: "COMMUNITY", hero_desc: "Where gaming enthusiasts meet to experience thrilling moments, build true friendships, and create eternal memories.",
+                hero_title_pre: "Plato", hero_title_sub: "Community", hero_desc: "Where gaming enthusiasts meet to experience thrilling moments, build true friendships, and create eternal memories.",
                 leaders_title: "ARABIC LEADERS", global_leaders_title: "GLOBAL SERVERS LEADERS", news_board_title: "COMMUNITY NEWS BOARD", players_title: "OLDEST PLAYERS", spending_title: "TOP SPENDING GROUPS", tournaments_title: "APPROVED TOURNAMENTS",
                 bug_title: "Bug Reporting", bug_type_label: "Issue Type:", bug_note: "This section is not for personal issues.", bug_opt1_title: "Exploits:", bug_opt2_title: "Serious Technical Issue:", bug_exp_desc: "Bugs, glitches, or modified clients.", bug_tech_desc: "High-impact bugs or system problems that can be repeatedly abused.", bug_submit: "Submit Report", bug_cancel: "Cancel",
                 who_are_leaders: "Who are the Leaders?",
