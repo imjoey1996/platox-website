@@ -1525,5 +1525,50 @@
             setInterval(updateSheetTimers, 1000);
         });
     </script>
+        <!-- كود الإغلاق النهائي للزوم (الجوال والبي سي) -->
+    <script>
+        // 1. منع زوم الإصبعين (Pinch Zoom) في الجوالات
+        document.addEventListener('touchstart', function(e) {
+            if (e.touches.length > 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        // مخصص لأجهزة آيفون (Safari) لمنع التكبير بالسحب
+        document.addEventListener('touchmove', function(e) {
+            if (e.scale !== 1 && e.scale !== undefined) { 
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        // 2. منع زوم النقر المزدوج (Double Tap Zoom)
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(e) {
+            let now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                e.preventDefault();
+                // حتى تشتغل الأزرار والروابط إذا نقر عليها مرتين بسرعة
+                const target = e.target;
+                if(target.tagName === 'BUTTON' || target.tagName === 'A' || target.closest('a') || target.closest('button')) {
+                    target.click();
+                }
+            }
+            lastTouchEnd = now;
+        }, { passive: false });
+
+        // 3. منع الزوم في البي سي (Ctrl + العجلة أو Ctrl + / -)
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && (e.key === '+' || e.key === '-' || e.key === '=')) {
+                e.preventDefault();
+            }
+        });
+
+        document.addEventListener('wheel', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+    </script>
+
 </body>
 </html>
