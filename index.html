@@ -310,6 +310,16 @@
         .prize-badge { border-color: rgba(227, 179, 65, 0.3); background: rgba(227, 179, 65, 0.1); color: var(--glow-yyy); }
         .admin-copy-btn { cursor: pointer; transition: 0.3s; } .admin-copy-btn:hover { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 0 15px var(--primary-glow);}
 
+        /* ---------------- تنسيقات الروابط الإضافية ---------------- */
+        .links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; width: 100%; max-width: 850px; }
+        .link-card { display: flex; align-items: center; gap: 15px; padding: 20px; text-decoration: none; color: var(--text-main); transition: 0.4s; border-radius: 16px; position: relative; overflow: hidden; }
+        .link-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 10px 25px var(--primary-glow); }
+        .link-icon { font-size: 1.8rem; color: var(--primary); transition: 0.3s; }
+        .link-card:hover .link-icon { transform: scale(1.1); color: #fff; }
+        .link-info { display: flex; flex-direction: column; gap: 4px; }
+        .link-title { font-weight: 900; font-size: 1.1rem; }
+        .link-sub { font-size: 0.8rem; color: var(--text-muted); font-weight: bold; }
+
         #toast { visibility: hidden; min-width: 200px; background: rgba(15, 15, 20, 0.95); backdrop-filter: blur(10px); color: #fff; text-align: center; border-radius: 10px; padding: 12px 20px; position: fixed; z-index: 9999; left: 50%; bottom: 25px; transform: translateX(-50%); font-size: 14px; transition: 0.4s; opacity: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid var(--primary); font-family: 'Cairo', sans-serif; font-weight:bold;}
         #toast.show { visibility: visible; bottom: 85px; opacity: 1; }
         
@@ -339,6 +349,7 @@
             
             .grid-container { display: grid !important; grid-template-columns: 1fr !important; gap: 15px; width: 100%; }
             .global-leaders-grid { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 12px; width: 100%; } 
+            .links-grid { display: grid !important; grid-template-columns: 1fr !important; gap: 12px; width: 100%; }
             
             .card { padding: 15px 10px; width: 100%; max-width: none; }
             .card img { width: 70px; height: 70px; margin-bottom: 10px; }
@@ -570,7 +581,7 @@
 
     <div class="cyber-divider"><div class="center-node"></div></div>
 
-    <section id="accounts" style="padding-bottom: 120px;">
+    <section id="accounts">
         <h2 class="section-title" data-i18n="players_title">اللاعبين الاقدم</h2>
         <div class="premium-list">
             <div class="list-row glass-panel rank-1">
@@ -620,6 +631,50 @@
         </div>
     </section>
 
+    <div class="cyber-divider"><div class="center-node"></div></div>
+
+    <!-- قسم المواقع الأخرى المضاف حديثاً -->
+    <section id="related-links" style="padding-bottom: 120px;">
+        <h2 class="section-title" data-i18n="links_title">مواقع ذات صلة</h2>
+        <div class="links-grid">
+            <a href="https://platoapp.com/en" target="_blank" class="link-card glass-panel">
+                <i class="fa-solid fa-globe link-icon"></i>
+                <div class="link-info">
+                    <span class="link-title num-font">Plato Web</span>
+                    <span class="link-sub" data-i18n="link_plato_en">النسخة الإنجليزية</span>
+                </div>
+            </a>
+            <a href="https://platoapp.com/ar" target="_blank" class="link-card glass-panel">
+                <i class="fa-solid fa-earth-americas link-icon"></i>
+                <div class="link-info">
+                    <span class="link-title num-font">Plato Web</span>
+                    <span class="link-sub" data-i18n="link_plato_ar">النسخة العربية</span>
+                </div>
+            </a>
+            <a href="https://platopedia.com" target="_blank" class="link-card glass-panel">
+                <i class="fa-solid fa-book-open link-icon"></i>
+                <div class="link-info">
+                    <span class="link-title num-font" data-i18n="link_platopedia">Platopedia</span>
+                    <span class="link-sub">Wiki & Stats</span>
+                </div>
+            </a>
+            <a href="https://werepedia.com/en" target="_blank" class="link-card glass-panel">
+                <i class="fa-solid fa-moon link-icon"></i>
+                <div class="link-info">
+                    <span class="link-title num-font" data-i18n="link_werepedia">Werepedia</span>
+                    <span class="link-sub">Werewolf Guide</span>
+                </div>
+            </a>
+            <a href="https://platopedia.com" target="_blank" class="link-card glass-panel">
+                <i class="fa-solid fa-dragon link-icon"></i>
+                <div class="link-info">
+                    <span class="link-title num-font" data-i18n="link_monsterpedia">Monsterpedia</span>
+                    <span class="link-sub">Match Monsters</span>
+                </div>
+            </a>
+        </div>
+    </section>
+
     <div id="toast"></div>
 
     <script>
@@ -662,7 +717,6 @@
             document.getElementById('bug-desc').value = '';
         }
 
-        // دالة تنظيف البيانات لمنع ثغرات الـ XSS
         function escapeHTML(str) {
             return str.replace(/[&<>'"]/g, 
                 tag => ({
@@ -698,7 +752,7 @@
             const bugType = bugTypeElement.value;
             const embedColor = bugType === 'Exploits' ? 16711680 : 16744192; 
 
-            // تم إبقاء الـ Webhook كما هو (سيتم التعديل عليه لاحقاً)
+            // تم الإبقاء على الـ Webhook حالياً
             const webhookId = "1545703090920099854"; 
             const webhookToken = "we1jm4gx7h6c92AEtcUl5SFSZ_smAvPjWtIYYLdti1AtPCzzUEH68EclCSZb9gc48KTo";
             const webhookUrl = `https://discord.com/api/webhooks/${webhookId}/${webhookToken}`;
@@ -777,7 +831,7 @@
             { name: "Risk", server: "english", img: "57914b7385432b7831bcc1470723baa7.png", birthday: { en: "June 4", ar: "4 يونيو" } },
             { name: "7777777", server: "persian", img: "03cdd5503fd8725e76641fb8e06c2937.png", birthday: { en: "July 26", ar: "26 يوليو" }, desc: { ar: "قائد مهتم يقدر المجتمع وينشئ مجموعات وفعاليات لنشر الفرح.", en: "A caring leader who values the community and creates groups and events to bring joy." } }, 
             { name: "Armin", server: "persian", img: "IMG_7428.png", birthday: { en: "August 17", ar: "17 أغسطس" } }, 
-            { name: "Reza", server: "persian", img: "IMG_7443.png", birthday: { en: "November 17", ar: "17 نوفمبر" } }, 
+            { name: "Reza", server: "persian", img: "IMG_7443.png", birthday: { en: "November 17", ar: "17 نوفمبر" }, desc: { ar: "قائد محترم وودود، دائماً متعاون وهادئ، ومكرس لخدمة مجتمع صحي.", en: "A respected and approachable leader, always helpful, calm, and dedicated to a healthy community." } }, 
             { name: "NarGc", server: "persian", img: "13b8f453f2ee334ab01a7e53fc4c23fb.png", birthday: { en: "November 10", ar: "10 نوفمبر" }, desc: { ar: "قائدة نشيطة ومبدعة ومهتمة، تتميز بالتفاني والعمل الجاد.", en: "An energetic, creative, and caring leader who is dedicated and hardworking." } },
             { name: "H22", server: "french", img: "IMG_7442.png", birthday: { en: "December 21", ar: "21 ديسمبر" }, desc: { ar: "ودود ومحفز، مستعد دائماً للمساعدة والتواصل مع الأشخاص.", en: "Friendly and encouraging, always willing to help and connect with people from all servers." } },
             { name: "love_hope", server: "french", img: "f74613af2e55aecdde0d31ff33964698.png", birthday: { en: "February 13", ar: "13 فبراير" } }, 
@@ -873,7 +927,8 @@
                 guide_4: "لا تنشر محتوى يشجع على العنف في الحياة الواقعية، أو يشجع على إيذاء النفس أو الانتحار، أو يشجع على العنف تجاه مجموعة معينة من الأشخاص.",
                 guide_5: "الدردشة فقط بلغة الخادم الذي تختاره.",
                 guide_warning: "يقوم قادة الخادم بتطبيق الإرشادات المذكورة أعلاه. سيؤدي انتهاك هذه الإرشادات إلى فقدان القدرة على الدردشة لمدة 4 ساعات وقد يؤدي إلى حظر دائم لحسابك إذا تكرر.",
-                bday_yyy: "1 يناير", bday_hat: "1 سبتمبر"
+                bday_yyy: "1 يناير", bday_hat: "1 سبتمبر",
+                links_title: "مواقع ذات صلة", link_plato_en: "النسخة الإنجليزية", link_plato_ar: "النسخة العربية", link_platopedia: "Platopedia", link_werepedia: "Werepedia", link_monsterpedia: "Monsterpedia"
             },
             en: {
                 menu_home: "HOME", menu_leaders: "LEADERS", menu_news: "NEWS", menu_bugs: "REPORT BUG", menu_players: "PLAYERS", menu_spending: "SPENDING", menu_tournaments: "TOURNAMENTS", pull_refresh: "Updating...", menu_guidelines: "GUIDELINES",
@@ -892,7 +947,8 @@
                 guide_4: "Do not post content that encourages violence in real life, or encourages self-harm or suicide, or encourages violence towards a specific group of people.",
                 guide_5: "Chat only in the language of the server you select.",
                 guide_warning: "Server Leaders enforce the guidelines listed above. Breaking these Public Room Chat Guidelines will result in losing the ability to chat for 4 hours and may result in a permanent ban of your account if frequent.",
-                bday_yyy: "January 1", bday_hat: "September 1"
+                bday_yyy: "January 1", bday_hat: "September 1",
+                links_title: "RELATED SITES", link_plato_en: "English Version", link_plato_ar: "Arabic Version", link_platopedia: "Platopedia", link_werepedia: "Werepedia", link_monsterpedia: "Monsterpedia"
             }
         };
 
@@ -935,7 +991,6 @@
                 const cacheTime = localStorage.getItem('plato_news_cache_time');
                 const now = Date.now();
                 
-                // جلب الكاش إذا لم ينتهِ (صلاحية 30 دقيقة)
                 if (!force && cached && cacheTime && (now - parseInt(cacheTime) < 1800000)) {
                     processNewsData(cached);
                     return; 
@@ -1011,7 +1066,6 @@
                 const cacheTime = localStorage.getItem('plato_dynamic_cache_time');
                 const now = Date.now();
                 
-                // جلب الكاش إذا لم ينتهِ (صلاحية 30 دقيقة)
                 if (!force && cached && cacheTime && (now - parseInt(cacheTime) < 1800000)) {
                     cachedSheetRows = cached.split('\n').slice(1);
                     renderDynamicData();
@@ -1260,16 +1314,14 @@
                     numValue = parseFloat(cleanStr) || 0;
                 }
 
-                // إضافة الإنفاق دائماً بغض النظر عن وقت البطولة
                 if (!groupsSpending[nameAr]) {
                     groupsSpending[nameAr] = { nameAr, nameEn, image, total: 0 };
                 }
                 groupsSpending[nameAr].total += numValue;
 
-                // البطولة تختفي بعد 30 دقيقة من وقتها 
                 if (!isNaN(targetTimeMs)) {
                     const diff = targetTimeMs - nowTime;
-                    if (diff > -1800000) { // 30 دقيقة = 1,800,000 ملي ثانية
+                    if (diff > -1800000) {
                         tournamentsList.push({ targetTimeMs, nameAr, nameEn, image, prizeStr, game, admin, diff });
                     }
                 }
@@ -1345,7 +1397,6 @@
             tourContainer.innerHTML = tourHTML;
             spendContainer.innerHTML = spendHTML;
             
-            // تخزين العدادات في الذاكرة لتخفيف العبء على المتصفح
             activeTourTimers = Array.from(tourContainer.querySelectorAll('.sheet-timer')).map(el => ({
                 el: el,
                 valSpan: el.querySelector('.countdown-val'),
@@ -1357,7 +1408,6 @@
 
         function updateSheetTimers() {
             const nowTime = getAccurateTime();
-            // تحديث العدادات من الذاكرة بدل البحث بالـ DOM
             activeTourTimers.forEach(timer => {
                 const diff = timer.targetMs - nowTime;
                 if(!timer.valSpan) return;
@@ -1419,7 +1469,6 @@
             if(pull > 80 && window.scrollY <= 5 && !isHorizontal) {
                 ptrEl.classList.add('refreshing');
                 ptrEl.style.transform = 'translateY(0)';
-                // إجبار التحديث وتخطي الكاش
                 Promise.all([loadNewsData(true), loadDynamicData(true)]).then(() => {
                     setTimeout(() => {
                         ptrEl.classList.remove('refreshing');
@@ -1447,7 +1496,7 @@
             });
         });
 
-        document.addEventListener("DOMContentLoaded", async () => {
+        document.addEventListener("DOMContentLoaded", () => {
             const savedTheme = localStorage.getItem('theme') || 'dark'; 
             document.getElementById('theme-icon').className = savedTheme === 'light' ? 'fa-solid fa-sun theme-toggle' : 'fa-solid fa-moon theme-toggle';
             
@@ -1477,15 +1526,23 @@
                 showSkeletons();
             }
             
-            await syncRealTime(); 
-            
+            // 1. تشغيل جلب البيانات فوراً دون انتظار الوقت
             loadNewsData();
             loadDynamicData();
             
+            // 2. حساب اللاعبين الأقدم فوراً باستخدام وقت الجهاز لتجنب التأخير
             const start = new Date('2026/09/03 00:00:00 GMT+0300').getTime(); 
-            const added = Math.max(0, Math.floor((getAccurateTime() - start) / (1000 * 60 * 60 * 24))); 
-            document.querySelectorAll('.auto-days').forEach(td => { 
-                td.innerText = (parseInt(td.getAttribute('data-base-days')) + (isNaN(added) ? 0 : added)); 
+            const updateOldestPlayers = () => {
+                const added = Math.max(0, Math.floor((getAccurateTime() - start) / (1000 * 60 * 60 * 24))); 
+                document.querySelectorAll('.auto-days').forEach(td => { 
+                    td.innerText = (parseInt(td.getAttribute('data-base-days')) + (isNaN(added) ? 0 : added)); 
+                });
+            };
+            updateOldestPlayers();
+
+            // 3. جلب الوقت الدقيق في الخلفية وتصحيح الحسابات عند وصول الرد
+            syncRealTime().then(() => {
+                updateOldestPlayers();
             });
             
             renderGlobalLeaders();
@@ -1495,21 +1552,18 @@
             setInterval(updateSheetTimers, 1000);
         });
 
-        // 1. منع زوم الإصبعين (Pinch Zoom) في الجوالات
         document.addEventListener('touchstart', function(e) {
             if (e.touches.length > 1) {
                 e.preventDefault();
             }
         }, { passive: false });
 
-        // مخصص لأجهزة آيفون (Safari) لمنع التكبير بالسحب
         document.addEventListener('touchmove', function(e) {
             if (e.scale !== 1 && e.scale !== undefined) { 
                 e.preventDefault();
             }
         }, { passive: false });
 
-        // 2. منع زوم النقر المزدوج (Double Tap Zoom)
         let lastTouchEnd = 0;
         document.addEventListener('touchend', function(e) {
             let now = (new Date()).getTime();
@@ -1519,7 +1573,6 @@
             lastTouchEnd = now;
         }, { passive: false });
 
-        // 3. منع الزوم في البي سي (Ctrl + العجلة أو Ctrl + / -)
         document.addEventListener('keydown', function(e) {
             if ((e.ctrlKey || e.metaKey) && (e.key === '+' || e.key === '-' || e.key === '=')) {
                 e.preventDefault();
