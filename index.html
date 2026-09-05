@@ -120,13 +120,13 @@
         html[dir="ltr"] .section-title::before { right: auto; left: -15px; }
 
         /* ---------------- تنسيقات شريط الأخبار الأصلية بدون لاق وبتأثير النيون ---------------- */
-        .news-carousel-container { width: 100%; max-width: 800px; position: relative; display: flex; flex-direction: column; gap: 10px; margin-bottom: 5px;}
+        .news-carousel-container { width: 100%; max-width: 800px; position: relative; display: flex; flex-direction: column; gap: 5px; margin-bottom: 5px;}
         
-        /* استعادة السحب السلس الأصلي */
-        .news-slider { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none; padding-bottom: 5px;}
+        .news-slider { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none; padding-bottom: 10px; padding-top: 10px;}
         .news-slider::-webkit-scrollbar { display: none; }
         
-        .news-slide-card { min-width: 100%; flex: 0 0 auto; scroll-snap-align: center; padding: 30px; border-radius: 16px; transition: transform 0.4s; }
+        /* التعديل الجذري: تحديد العرض بدقة لمنع الكارت من التمدد خارج الشاشة */
+        .news-slide-card { width: 100%; flex: 0 0 100%; scroll-snap-align: center; padding: 30px; border-radius: 16px; transition: transform 0.4s; overflow: hidden; }
         .news-slide-card:hover { transform: translateY(-3px); }
         
         .news-header-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; }
@@ -134,16 +134,16 @@
         .news-date-sub { font-family: 'Rajdhani', sans-serif; font-size: 0.85rem; color: var(--text-muted); font-weight: bold;}
         .news-headline { font-size: 1.4rem; font-weight: 900; line-height: 1.4; color: var(--text-main); margin-top: 15px; margin-bottom: 8px;}
         
-        /* عرض النص بالكامل بدون قص */
-        .news-body { color: rgba(255,255,255,0.85); line-height: 1.8; font-size: 0.95rem; white-space: pre-wrap; word-wrap: break-word;}
+        /* التعديل الجذري: كسر الكلمات الطويلة لإجبارها على النزول سطر جديد (إلغاء التمدد) */
+        .news-body { color: rgba(255,255,255,0.85); line-height: 1.8; font-size: 0.95rem; white-space: pre-line; word-break: break-word; overflow-wrap: break-word; }
         [data-theme="light"] .news-body { color: var(--text-muted); }
         
-        .more-news-link { display: inline-flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 0.9rem; text-decoration: none; transition: 0.3s; font-weight: bold; background: var(--bg-card); padding: 8px 20px; border-radius: 20px; border: 1px solid var(--glass-border); backdrop-filter: blur(10px);}
+        .more-news-link { display: inline-flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 0.9rem; text-decoration: none; transition: 0.3s; font-weight: bold; background: var(--bg-card); padding: 8px 20px; border-radius: 20px; border: 1px solid var(--glass-border); backdrop-filter: blur(10px); align-self: center; margin-top: 15px;}
         .more-news-link i { color: var(--discord-color); font-size: 1.1rem; }
         .more-news-link:hover { color: var(--text-main); transform: translateY(-2px); border-color: var(--discord-color); box-shadow: 0 5px 15px rgba(88, 101, 242, 0.2);}
 
         /* تقريب المسافات للأسفل */
-        .slider-controls { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0 15px; margin-top: 5px;}
+        .slider-controls { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0 10px; margin-top: 0px;}
         .nav-btn { background: transparent; border: none; color: var(--text-muted); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px; transition: 0.3s; font-family: inherit;}
         .nav-btn:hover { color: var(--primary); transform: scale(1.08); }
         .nav-label { font-size: 0.8rem; font-weight: 900; letter-spacing: 1px; opacity: 0.8;}
@@ -152,7 +152,7 @@
         [data-theme="light"] .arrow-icon { background: rgba(255, 255, 255, 0.8); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
         html[dir="ltr"] .prev-icon, html[dir="ltr"] .next-icon { transform: rotate(180deg); }
 
-        .slider-dots { display: flex; gap: 8px; }
+        .slider-dots { display: flex; gap: 8px; margin-top: -15px;}
         .dot { width: 8px; height: 8px; background: var(--glass-border); border-radius: 50%; transition: 0.4s; }
         .dot.active { background: var(--primary); width: 22px; border-radius: 10px; box-shadow: 0 0 10px var(--primary-glow); }
         [data-theme="light"] .dot { background: rgba(0,0,0,0.1); }
@@ -258,12 +258,12 @@
             .hero h2 { font-size: 2.2rem; } .hero p { font-size: 1rem; }
             .section-title { font-size: 1.4rem; margin-bottom: 25px; }
             
-            /* تعديلات الموبايل للمسافات المتقاربة */
-            .news-slide-card { min-width: 90%; padding: 25px 20px; } 
-            .news-slider { padding: 0 5% 5px; gap: 15px; } 
+            /* تعديلات الموبايل للمسافات المتقاربة والحجم المضبوط */
+            .news-slide-card { width: 92%; flex: 0 0 92%; padding: 25px 20px; } 
+            .news-slider { padding: 0 4% 10px; gap: 15px; } 
             .news-headline { font-size: 1.25rem; } 
             .news-body { font-size: 0.95rem; }
-            .slider-controls { margin-top: 5px; padding: 0 15px; }
+            .slider-controls { margin-top: 0px; padding: 0 20px; }
             
             .grid-container { display: grid !important; grid-template-columns: 1fr !important; gap: 15px; width: 100%; }
             .global-leaders-grid { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 10px; width: 100%; }
@@ -327,13 +327,13 @@
         <p data-aos="fade-up" data-aos-delay="200" data-i18n="hero_desc">يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.</p>
     </section>
 
-    <!-- ---------------- قسم الأخبار الأصلي بدون لاق مع التعديلات ---------------- -->
+    <!-- ---------------- قسم الأخبار الزجاجي السلس بدون لاق ---------------- -->
     <section id="news" style="padding-top: 10px;">
         <h2 class="section-title" data-aos="fade-right" data-i18n="news_board_title">لوحة أخبار المجتمع</h2>
 
         <div class="news-carousel-container" data-aos="zoom-in">
             <div class="news-slider" id="newsSlider">
-                <!-- سيتم توليد الكروت هنا -->
+                <!-- سيتم توليد الكروت الزجاجية هنا -->
             </div>
             
             <div class="slider-controls">
@@ -351,11 +351,11 @@
                     <i class="fa-solid fa-arrow-left arrow-icon next-icon"></i>
                 </button>
             </div>
+            
+            <a href="https://discord.gg/plato" target="_blank" class="more-news-link" style="margin-top: 10px;">
+                <i class="fa-brands fa-discord"></i> <span data-i18n="discord_more">للمزيد من الأخبار انضموا إلى الديسكورد</span>
+            </a>
         </div>
-
-        <a href="https://discord.gg/plato" target="_blank" class="more-news-link" data-aos="fade-up" data-aos-delay="100" style="margin-top: 10px;">
-            <i class="fa-brands fa-discord"></i> <span data-i18n="discord_more">للمزيد من الأخبار انضموا إلى الديسكورد</span>
-        </a>
     </section>
 
     <div class="cyber-divider"><div class="center-node"></div></div>
@@ -707,7 +707,6 @@
         const tourSheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/export?format=csv"; 
         const newsSheetURL = "https://docs.google.com/spreadsheets/d/10YreDjSMCJc1hvGFbyfVJO4zAmzFGO0eeyoq5qKwf_E/export?format=csv";
 
-        // الجلب الفوري للأخبار والبطولات (Zero Delay)
         async function loadNewsData() {
             try {
                 const response = await fetch(newsSheetURL);
@@ -807,7 +806,6 @@
             setTimeout(() => { sidebar.style.transition = ''; }, 50);
         }
 
-        // ---------------- دالة جلب وبناء الأخبار مع النيون (Zero Lag) ----------------
         function buildNewsHTML() {
             const slider = document.getElementById('newsSlider');
             const dotsContainer = document.getElementById('newsDots');
@@ -828,41 +826,42 @@
                 const displayTitle = isAr ? titleAr : (titleEn || titleAr);
                 const displayBody = isAr ? bodyAr : (bodyEn || bodyAr);
 
-                let tagColor = '#9d4edd', tagBg = 'rgba(157, 78, 221, 0.15)', tagBorder = 'rgba(157, 78, 221, 0.5)', icon = 'fa-bolt', shadowColor = 'rgba(157, 78, 221, 0.3)';
+                let tagColor = 'var(--primary)', tagBg = 'rgba(157, 78, 221, 0.15)', icon = 'fa-bolt', shadowColor = 'rgba(157, 78, 221, 0.4)';
                 let displayTag = tagType;
                 const tagLower = tagType.toLowerCase();
 
-                // التلوين التلقائي حسب التاج ليعطي تأثير النيون المناسب
+                // التلوين الأوتوماتيكي والنيون
                 if (!isAr) {
                     if (tagLower.includes('إعلان') || tagLower.includes('announcement')) {
-                        displayTag = 'Announcement'; tagColor = '#3b82f6'; tagBg = 'rgba(59, 130, 246, 0.15)'; tagBorder = 'rgba(59, 130, 246, 0.5)'; icon = 'fa-bullhorn'; shadowColor = 'rgba(59, 130, 246, 0.3)';
+                        displayTag = 'Announcement'; tagColor = '#3b82f6'; tagBg = 'rgba(59, 130, 246, 0.15)'; shadowColor = 'rgba(59, 130, 246, 0.4)'; icon = 'fa-bullhorn';
                     } else if (tagLower.includes('إشعار') || tagLower.includes('notice')) {
-                        displayTag = 'Notice'; tagColor = '#eab308'; tagBg = 'rgba(234, 179, 8, 0.15)'; tagBorder = 'rgba(234, 179, 8, 0.5)'; icon = 'fa-bell'; shadowColor = 'rgba(234, 179, 8, 0.3)';
+                        displayTag = 'Notice'; tagColor = '#eab308'; tagBg = 'rgba(234, 179, 8, 0.15)'; shadowColor = 'rgba(234, 179, 8, 0.4)'; icon = 'fa-bell';
                     } else if (tagLower.includes('تذكير') || tagLower.includes('reminder')) {
-                        displayTag = 'Reminder'; tagColor = '#9d4edd'; tagBg = 'rgba(157, 78, 221, 0.15)'; tagBorder = 'rgba(157, 78, 221, 0.5)'; icon = 'fa-clock'; shadowColor = 'rgba(157, 78, 221, 0.3)';
+                        displayTag = 'Reminder'; tagColor = '#9d4edd'; tagBg = 'rgba(157, 78, 221, 0.15)'; shadowColor = 'rgba(157, 78, 221, 0.4)'; icon = 'fa-clock';
                     } else if (tagLower.includes('تحديث') || tagLower.includes('update')) {
-                        displayTag = 'Update'; tagColor = '#10b981'; tagBg = 'rgba(16, 185, 129, 0.15)'; tagBorder = 'rgba(16, 185, 129, 0.5)'; icon = 'fa-wrench'; shadowColor = 'rgba(16, 185, 129, 0.3)';
+                        displayTag = 'Update'; tagColor = '#10b981'; tagBg = 'rgba(16, 185, 129, 0.15)'; shadowColor = 'rgba(16, 185, 129, 0.4)'; icon = 'fa-wrench';
                     } else if (tagLower.includes('مهم') || tagLower.includes('important')) {
-                        displayTag = 'Important'; tagColor = '#ef4444'; tagBg = 'rgba(239, 68, 68, 0.15)'; tagBorder = 'rgba(239, 68, 68, 0.5)'; icon = 'fa-circle-exclamation'; shadowColor = 'rgba(239, 68, 68, 0.3)';
+                        displayTag = 'Important'; tagColor = '#ef4444'; tagBg = 'rgba(239, 68, 68, 0.15)'; shadowColor = 'rgba(239, 68, 68, 0.4)'; icon = 'fa-circle-exclamation';
                     }
                 } else {
                     if (tagLower.includes('إعلان') || tagLower.includes('announcement')) {
-                        displayTag = 'إعلان'; tagColor = '#3b82f6'; tagBg = 'rgba(59, 130, 246, 0.15)'; tagBorder = 'rgba(59, 130, 246, 0.5)'; icon = 'fa-bullhorn'; shadowColor = 'rgba(59, 130, 246, 0.3)';
+                        displayTag = 'إعلان'; tagColor = '#3b82f6'; tagBg = 'rgba(59, 130, 246, 0.15)'; shadowColor = 'rgba(59, 130, 246, 0.4)'; icon = 'fa-bullhorn';
                     } else if (tagLower.includes('إشعار') || tagLower.includes('notice')) {
-                        displayTag = 'إشعار'; tagColor = '#eab308'; tagBg = 'rgba(234, 179, 8, 0.15)'; tagBorder = 'rgba(234, 179, 8, 0.5)'; icon = 'fa-bell'; shadowColor = 'rgba(234, 179, 8, 0.3)';
+                        displayTag = 'إشعار'; tagColor = '#eab308'; tagBg = 'rgba(234, 179, 8, 0.15)'; shadowColor = 'rgba(234, 179, 8, 0.4)'; icon = 'fa-bell';
                     } else if (tagLower.includes('تذكير') || tagLower.includes('reminder')) {
-                        displayTag = 'تذكير'; tagColor = '#9d4edd'; tagBg = 'rgba(157, 78, 221, 0.15)'; tagBorder = 'rgba(157, 78, 221, 0.5)'; icon = 'fa-clock'; shadowColor = 'rgba(157, 78, 221, 0.3)';
+                        displayTag = 'تذكير'; tagColor = '#9d4edd'; tagBg = 'rgba(157, 78, 221, 0.15)'; shadowColor = 'rgba(157, 78, 221, 0.4)'; icon = 'fa-clock';
                     } else if (tagLower.includes('تحديث') || tagLower.includes('update')) {
-                        displayTag = 'تحديث'; tagColor = '#10b981'; tagBg = 'rgba(16, 185, 129, 0.15)'; tagBorder = 'rgba(16, 185, 129, 0.5)'; icon = 'fa-wrench'; shadowColor = 'rgba(16, 185, 129, 0.3)';
+                        displayTag = 'تحديث'; tagColor = '#10b981'; tagBg = 'rgba(16, 185, 129, 0.15)'; shadowColor = 'rgba(16, 185, 129, 0.4)'; icon = 'fa-wrench';
                     } else if (tagLower.includes('مهم') || tagLower.includes('important')) {
-                        displayTag = 'مهم'; tagColor = '#ef4444'; tagBg = 'rgba(239, 68, 68, 0.15)'; tagBorder = 'rgba(239, 68, 68, 0.5)'; icon = 'fa-circle-exclamation'; shadowColor = 'rgba(239, 68, 68, 0.3)';
+                        displayTag = 'مهم'; tagColor = '#ef4444'; tagBg = 'rgba(239, 68, 68, 0.15)'; shadowColor = 'rgba(239, 68, 68, 0.4)'; icon = 'fa-circle-exclamation';
                     }
                 }
 
+                // تطبيق النيون على الحواف مع الحفاظ على الشكل الزجاجي المربع
                 sliderHTML += `
-                    <div class="news-slide-card glass-panel" style="border: 1px solid ${tagBorder}; box-shadow: 0 0 20px ${shadowColor}, inset 0 0 10px ${shadowColor};">
+                    <div class="news-slide-card glass-panel" style="border-color: ${tagColor}; box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 12px ${shadowColor};">
                         <div class="news-header-top">
-                            <span class="news-badge" style="color:${tagColor}; border-color:${tagBorder}; background:${tagBg};"><i class="fa-solid ${icon}"></i> <span>${displayTag}</span></span>
+                            <span class="news-badge" style="color:${tagColor}; border-color:${tagColor}; background:${tagBg};"><i class="fa-solid ${icon}"></i> <span>${displayTag}</span></span>
                             <span class="news-date-sub num-font">${dateStr}</span>
                         </div>
                         <h3 class="news-headline">${displayTitle}</h3>
@@ -884,7 +883,6 @@
             slider.scrollBy({ left: cardWidth * (isRTL ? -direction : direction), behavior: 'smooth' });
         }
 
-        // تفاعل النقاط السفلية (Dots) مع السحب
         document.getElementById('newsSlider')?.addEventListener('scroll', () => {
             const slider = document.getElementById('newsSlider');
             const dots = document.querySelectorAll('.dot');
