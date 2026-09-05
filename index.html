@@ -65,9 +65,11 @@
             -webkit-user-select: none;
         }
 
-        .glass-panel, section, .liquid-bg, .blob {
+        /* حصر المعالج الرسومي على الخلفية فقط لمنع اختفاء العناصر عند النزول السريع */
+        .liquid-bg, .blob, .particles {
             -webkit-transform: translateZ(0);
             transform: translateZ(0);
+            will-change: transform;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
         }
@@ -135,7 +137,7 @@
         @keyframes ticker-rtl { from { transform: translateX(-100vw); } to { transform: translateX(100vw); } }
         @keyframes ticker-ltr { from { transform: translateX(100vw); } to { transform: translateX(-100vw); } }
 
-        .sidebar { position: fixed; top: 0; right: 0; width: 280px; height: 100dvh; background: rgba(10, 10, 12, 0.98); border-left: 1px solid var(--glass-border); z-index: 2000; display: flex; flex-direction: column; padding: 25px; box-shadow: -10px 0 30px rgba(0,0,0,0.8); transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .sidebar { position: fixed; top: 0; right: 0; width: 280px; height: 100dvh; background: rgba(10, 10, 12, 0.98); border-left: 1px solid var(--glass-border); z-index: 2000; display: flex; flex-direction: column; padding: 25px; box-shadow: -10px 0 30px rgba(0,0,0,0.8); transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); will-change: transform; }
         [data-theme="light"] .sidebar { background: rgba(250, 250, 250, 0.98); }
         html[dir="ltr"] .sidebar { right: auto; left: 0; border-left: none; border-right: 1px solid var(--glass-border); box-shadow: 10px 0 30px rgba(0,0,0,0.8); transform: translateX(-100%); }
         .sidebar.active { transform: translateX(0); }
@@ -323,8 +325,9 @@
         #toast { visibility: hidden; min-width: 200px; background: rgba(15, 15, 20, 0.95); backdrop-filter: blur(10px); color: #fff; text-align: center; border-radius: 10px; padding: 12px 20px; position: fixed; z-index: 9999; left: 50%; bottom: 25px; transform: translateX(-50%); font-size: 14px; transition: 0.4s; opacity: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid var(--primary); font-family: 'Cairo', sans-serif; font-weight:bold;}
         #toast.show { visibility: visible; bottom: 85px; opacity: 1; }
         
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1500; display: none; }
-        .overlay.active { display: block; }
+        /* إصلاح تأثير הـ Reflow عند فتح القائمة بإستخدام Opacity بدلاً من Display */
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1500; visibility: hidden; opacity: 0; transition: opacity 0.3s ease, visibility 0.3s ease; }
+        .overlay.active { visibility: visible; opacity: 1; }
 
         @media (max-width: 600px) {
             .main-lang-switch { margin-top: 95px; margin-bottom: -15px; }
@@ -633,7 +636,6 @@
 
     <div class="cyber-divider"><div class="center-node"></div></div>
 
-    <!-- قسم المواقع الأخرى المضاف حديثاً -->
     <section id="related-links" style="padding-bottom: 120px;">
         <h2 class="section-title" data-i18n="links_title">مواقع ذات صلة</h2>
         <div class="links-grid">
@@ -644,13 +646,6 @@
                     <span class="link-sub" data-i18n="link_plato_en">النسخة الإنجليزية</span>
                 </div>
             </a>
-            <a href="https://platoapp.com/ar" target="_blank" class="link-card glass-panel">
-                <i class="fa-solid fa-earth-americas link-icon"></i>
-                <div class="link-info">
-                    <span class="link-title num-font">Plato Web</span>
-                    <span class="link-sub" data-i18n="link_plato_ar">النسخة العربية</span>
-                </div>
-            </a>
             <a href="https://platopedia.com" target="_blank" class="link-card glass-panel">
                 <i class="fa-solid fa-book-open link-icon"></i>
                 <div class="link-info">
@@ -659,7 +654,7 @@
                 </div>
             </a>
             <a href="https://werepedia.com/en" target="_blank" class="link-card glass-panel">
-                <i class="fa-solid fa-moon link-icon"></i>
+                <i class="fa-solid fa-paw link-icon"></i>
                 <div class="link-info">
                     <span class="link-title num-font" data-i18n="link_werepedia">Werepedia</span>
                     <span class="link-sub">Werewolf Guide</span>
@@ -752,7 +747,6 @@
             const bugType = bugTypeElement.value;
             const embedColor = bugType === 'Exploits' ? 16711680 : 16744192; 
 
-            // تم الإبقاء على الـ Webhook حالياً
             const webhookId = "1545703090920099854"; 
             const webhookToken = "we1jm4gx7h6c92AEtcUl5SFSZ_smAvPjWtIYYLdti1AtPCzzUEH68EclCSZb9gc48KTo";
             const webhookUrl = `https://discord.com/api/webhooks/${webhookId}/${webhookToken}`;
@@ -928,7 +922,7 @@
                 guide_5: "الدردشة فقط بلغة الخادم الذي تختاره.",
                 guide_warning: "يقوم قادة الخادم بتطبيق الإرشادات المذكورة أعلاه. سيؤدي انتهاك هذه الإرشادات إلى فقدان القدرة على الدردشة لمدة 4 ساعات وقد يؤدي إلى حظر دائم لحسابك إذا تكرر.",
                 bday_yyy: "1 يناير", bday_hat: "1 سبتمبر",
-                links_title: "مواقع ذات صلة", link_plato_en: "النسخة الإنجليزية", link_plato_ar: "النسخة العربية", link_platopedia: "Platopedia", link_werepedia: "Werepedia", link_monsterpedia: "Monsterpedia"
+                links_title: "مواقع ذات صلة", link_plato_en: "النسخة الإنجليزية", link_platopedia: "Platopedia", link_werepedia: "Werepedia", link_monsterpedia: "Monsterpedia"
             },
             en: {
                 menu_home: "HOME", menu_leaders: "LEADERS", menu_news: "NEWS", menu_bugs: "REPORT BUG", menu_players: "PLAYERS", menu_spending: "SPENDING", menu_tournaments: "TOURNAMENTS", pull_refresh: "Updating...", menu_guidelines: "GUIDELINES",
@@ -948,7 +942,7 @@
                 guide_5: "Chat only in the language of the server you select.",
                 guide_warning: "Server Leaders enforce the guidelines listed above. Breaking these Public Room Chat Guidelines will result in losing the ability to chat for 4 hours and may result in a permanent ban of your account if frequent.",
                 bday_yyy: "January 1", bday_hat: "September 1",
-                links_title: "RELATED SITES", link_plato_en: "English Version", link_plato_ar: "Arabic Version", link_platopedia: "Platopedia", link_werepedia: "Werepedia", link_monsterpedia: "Monsterpedia"
+                links_title: "RELATED SITES", link_plato_en: "English Version", link_platopedia: "Platopedia", link_werepedia: "Werepedia", link_monsterpedia: "Monsterpedia"
             }
         };
 
@@ -1211,23 +1205,15 @@
             setTimeout(updateCarouselButtons, 50);
         }
 
-        let isSliding = false; 
+        // تم إزالة القفل الزمني (isSliding) لجعل الانتقال سلساً وسريعاً عند الضغط المتكرر
         function slideNews(direction) {
-            if (isSliding) return; 
-            
             const slider = document.getElementById('newsSlider');
             const cards = slider.querySelectorAll('.news-slide-card');
             if(cards.length === 0) return;
             
-            isSliding = true; 
-            
             let scrollAmount = cards[0].offsetWidth + 15; 
             const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
             slider.scrollBy({ left: scrollAmount * (isRTL ? -direction : direction), behavior: 'smooth' });
-            
-            setTimeout(() => {
-                isSliding = false;
-            }, 450); 
         }
 
         document.querySelectorAll('.nav-btn').forEach(btn => {
@@ -1526,11 +1512,9 @@
                 showSkeletons();
             }
             
-            // 1. تشغيل جلب البيانات فوراً دون انتظار الوقت
             loadNewsData();
             loadDynamicData();
             
-            // 2. حساب اللاعبين الأقدم فوراً باستخدام وقت الجهاز لتجنب التأخير
             const start = new Date('2026/09/03 00:00:00 GMT+0300').getTime(); 
             const updateOldestPlayers = () => {
                 const added = Math.max(0, Math.floor((getAccurateTime() - start) / (1000 * 60 * 60 * 24))); 
@@ -1540,7 +1524,6 @@
             };
             updateOldestPlayers();
 
-            // 3. جلب الوقت الدقيق في الخلفية وتصحيح الحسابات عند وصول الرد
             syncRealTime().then(() => {
                 updateOldestPlayers();
             });
