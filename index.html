@@ -24,9 +24,6 @@
             --text-muted: #94a3b8;
             --ticker-bg: rgba(17, 17, 24, 0.8);
             --ticker-text: #e2e8f0;
-            --glow-yyy: #e3b341;
-            --glow-hat: #9d4edd;
-            --glow-bbb: #00c3e3;
             --discord-color: #5865F2;
         }
 
@@ -39,8 +36,6 @@
             --text-muted: #475569;
             --ticker-bg: rgba(226, 232, 240, 0.9);
             --ticker-text: #1e293b;
-            --glow-yyy: #d4af37; 
-            --glow-bbb: #0096b4;
         }
 
         * { 
@@ -96,8 +91,8 @@
         .blob { position: absolute; filter: blur(90px); opacity: 0.45; z-index: -2; will-change: transform, background-color;}
         [data-theme="light"] .blob { opacity: 0.3; filter: blur(70px); }
         .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--primary); animation: liquidFlow 25s infinite alternate ease-in-out; }
-        .blob-2 { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: var(--glow-bbb); animation: liquidFlow 25s infinite alternate ease-in-out -5s; }
-        .blob-3 { top: 40%; left: 30%; width: 40vw; height: 40vw; opacity: 0.25; animation: liquidFlow 25s infinite alternate ease-in-out -10s, colorShift 18s infinite linear; }
+        .blob-2 { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: #1A2F66; animation: liquidFlow 25s infinite alternate ease-in-out -5s; }
+        .blob-3 { top: 40%; left: 30%; width: 40vw; height: 40vw; opacity: 0.35; animation: liquidFlow 25s infinite alternate ease-in-out -10s, colorShift 25s infinite alternate ease-in-out; }
         
         @keyframes liquidFlow {
             0% { transform: translate(0, 0) scale(1) rotate(0deg); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
@@ -105,7 +100,15 @@
             100% { transform: translate(-5%, -5%) scale(0.9) rotate(360deg); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
         }
 
-        @keyframes colorShift { 0% { background: var(--glow-yyy); } 33% { background: var(--primary); } 66% { background: var(--glow-bbb); } 100% { background: var(--glow-yyy); } }
+        /* Server Colors Shifting Animation */
+        @keyframes colorShift { 
+            0% { background: #1A2F66; } /* Turkish */
+            20% { background: #CBA276; } /* French */
+            40% { background: #8FBEF5; } /* Thai */
+            60% { background: #F197A9; } /* Melayu */
+            80% { background: #8CC84B; } /* Desi */
+            100% { background: #D8B4F8; } /* Brazil */
+        }
 
         @media (prefers-reduced-motion: reduce) {
             .blob, .particle { animation: none !important; }
@@ -141,6 +144,7 @@
         .nav-actions i { font-size: 20px; cursor: pointer; color: var(--text-main); transition: 0.3s; }
         .nav-actions i:hover { color: var(--primary); text-shadow: 0 0 10px var(--primary-glow); }
         
+        /* Centered News Ticker */
         .news-ticker { 
             position: fixed; 
             top: 55px; 
@@ -149,11 +153,11 @@
             height: 38px;
             display: flex; 
             align-items: center; 
+            justify-content: center;
             background: var(--ticker-bg); 
             backdrop-filter: blur(15px); 
             color: var(--ticker-text); 
             overflow: hidden; 
-            white-space: nowrap; 
             z-index: 999; 
             border-bottom: 1px solid var(--glass-border); 
             font-weight: 700; 
@@ -163,13 +167,19 @@
         .ticker-content { 
             display: inline-flex; 
             align-items: center; 
+            justify-content: center;
             height: 100%; 
-            animation: ticker-rtl 40s linear infinite; 
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            animation: pulseText 3s infinite alternate ease-in-out; 
+            padding: 0 15px;
         }
-        html[dir="ltr"] .ticker-content { animation: ticker-ltr 40s linear infinite; }
-        .news-ticker:hover .ticker-content { animation-play-state: paused; }
-        @keyframes ticker-rtl { from { transform: translateX(-100vw); } to { transform: translateX(100%); } }
-        @keyframes ticker-ltr { from { transform: translateX(100vw); } to { transform: translateX(-100%); } }
+        @keyframes pulseText { 
+            0% { opacity: 0.8; } 
+            100% { opacity: 1; text-shadow: 0 0 8px var(--primary-glow); } 
+        }
 
         .lang-btn { 
             border: 1px solid var(--glass-border); 
@@ -295,7 +305,7 @@
         .cyber-divider::before, .cyber-divider::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--text-muted), transparent); }
         .cyber-divider .center-node { width: 15px; height: 3px; background: var(--text-muted); margin: 0 10px; transform: skewX(-45deg); }
 
-        .section-title { font-size: 1.6rem; font-weight: 900; margin-bottom: 35px; text-transform: uppercase; position: relative; letter-spacing: 0.5px;}
+        .section-title { font-size: 1.6rem; font-weight: 900; margin-bottom: 35px; text-transform: uppercase; position: relative; letter-spacing: 0.5px; text-align: center;}
         .section-title::before { content: ''; position: absolute; right: -15px; top: 50%; transform: translateY(-50%); width: 6px; height: 20px; background: var(--primary); border-radius: 3px; box-shadow: 0 0 15px var(--primary-glow);}
         html[dir="ltr"] .section-title::before { right: auto; left: -15px; }
 
@@ -362,7 +372,7 @@
         .guideline-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--glass-border); }
         .guideline-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
         .guideline-icon { color: var(--text-main); font-size: 1.1rem; margin-top: 3px; flex-shrink: 0; }
-        .guideline-text { font-size: 0.9rem; line-height: 1.6; color: rgba(255,255,255,0.85); }
+        .guideline-text { font-size: 0.95rem; line-height: 1.6; color: rgba(255,255,255,0.85); }
         [data-theme="light"] .guideline-text { color: var(--text-main); }
         .guideline-warning { background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.3); color: #ef4444; padding: 12px; border-radius: 8px; font-size: 0.85rem; font-weight: 700; line-height: 1.6; margin-top: 15px; display: flex; gap: 10px; align-items: center; }
 
@@ -370,12 +380,19 @@
         [data-theme="light"] .birthday-badge { background: rgba(0, 0, 0, 0.03); }
         .card:hover .birthday-badge, .global-leader:hover .birthday-badge { color: var(--text-main); border-color: rgba(255,255,255,0.2); }
 
+        /* Server Badge Pill */
+        .server-badge { display: inline-flex; justify-content: center; align-items: center; width: 50px; height: 26px; border-radius: 13px; font-size: 0.9rem; margin-bottom: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; width: 100%; max-width: 900px; justify-items: center; }
-        .card { width: 100%; padding: 35px 20px; text-align: center; transition: transform 0.4s; position: relative; overflow: hidden; border-radius: 16px;}
+        .card { width: 100%; padding: 35px 20px; text-align: center; transition: transform 0.4s; position: relative; overflow: hidden; border-radius: 16px; display: flex; flex-direction: column; align-items: center;}
         .card:hover { transform: translateY(-8px); }
-        .card-yyy:hover { border-color: rgba(227, 179, 65, 0.4); box-shadow: 0 15px 35px rgba(227, 179, 65, 0.15); } .card-yyy h3 { color: var(--glow-yyy); font-size: 1.4rem; margin-bottom:8px; text-shadow: 0 0 15px rgba(227, 179, 65, 0.4);}
-        .card-hat:hover { border-color: rgba(157, 78, 221, 0.4); box-shadow: 0 15px 35px rgba(157, 78, 221, 0.15); } .card-hat h3 { color: var(--glow-hat); font-size: 1.4rem; margin-bottom:8px; text-shadow: 0 0 15px rgba(157, 78, 221, 0.4);}
-        .card-bbb:hover { border-color: rgba(0, 195, 227, 0.4); box-shadow: 0 15px 35px rgba(0, 195, 227, 0.15); } .card-bbb h3 { color: var(--glow-bbb); font-size: 1.4rem; margin-bottom:8px; text-shadow: 0 0 15px rgba(0, 195, 227, 0.4);}
+        .card img { width: 85px; height: 85px; border-radius: 50%; object-fit: cover; margin-bottom: 10px; border: 2px solid rgba(255,255,255,0.1); }
+        
+        /* White Names unaffected by Theme */
+        .card h3 { font-size: 1.4rem; margin-bottom:8px; color: #ffffff !important; text-shadow: 0 2px 8px rgba(0,0,0,0.8) !important; font-family: 'Rajdhani', 'Cairo', sans-serif;}
+        .card-yyy:hover { border-color: rgba(255,255,255, 0.4); box-shadow: 0 15px 35px rgba(255,255,255, 0.1); } 
+        .card-hat:hover { border-color: rgba(255,255,255, 0.4); box-shadow: 0 15px 35px rgba(255,255,255, 0.1); } 
+        .card-bbb:hover { border-color: rgba(255,255,255, 0.4); box-shadow: 0 15px 35px rgba(255,255,255, 0.1); } 
         .card p { font-size: 0.9rem; color: rgba(255,255,255,0.7); line-height: 1.6;}
         [data-theme="light"] .card p { color: var(--text-muted); }
 
@@ -392,10 +409,9 @@
         .global-leader:hover img { border-color: var(--server-color); box-shadow: 0 0 15px var(--server-color); transform: scale(1.05); }
         
         .leader-name-box { display: flex; justify-content: center; align-items: center; gap: 6px; cursor: pointer; transition: 0.3s; }
-        .leader-name-box h3 { font-size: 1rem; color: var(--text-main); font-family: 'Rajdhani', 'Cairo', sans-serif; transition: 0.3s; }
+        .leader-name-box h3 { font-size: 1.05rem; font-family: 'Rajdhani', 'Cairo', sans-serif; transition: 0.3s; }
         .leader-copy-icon { font-size: 0.8rem; color: var(--text-muted); transition: 0.3s; }
-        .leader-name-box:hover h3, .leader-name-box:hover .leader-copy-icon { color: var(--primary); }
-        .leader-name-box:hover .leader-copy-icon { transform: scale(1.15); }
+        .leader-name-box:hover .leader-copy-icon { color: var(--primary); transform: scale(1.15); }
         
         .leader-desc { font-size: 0.8rem; color: rgba(255,255,255,0.7); line-height: 1.5; font-weight: 600; text-align: center; width: 100%; word-break: break-word;}
         [data-theme="light"] .leader-desc { color: var(--text-muted); }
@@ -405,7 +421,7 @@
         .list-row:hover { background: rgba(157, 78, 221, 0.08); border-color: rgba(157, 78, 221, 0.3); transform: scale(1.02); }
         .rank-num { font-size: 1.2rem; font-weight: 900; color: rgba(255,255,255,0.3); width: 30px; text-align: center; }
         [data-theme="light"] .rank-num { color: rgba(0,0,0,0.3); }
-        .rank-1 .rank-num { color: var(--glow-yyy); text-shadow: 0 0 10px rgba(227, 179, 65, 0.5);} .rank-2 .rank-num { color: #cbd5e1; } .rank-3 .rank-num { color: #cd7f32; }
+        .rank-1 .rank-num { color: #d4af37; text-shadow: 0 0 10px rgba(227, 179, 65, 0.5);} .rank-2 .rank-num { color: #cbd5e1; } .rank-3 .rank-num { color: #cd7f32; }
 
         .list-info { display: flex; align-items: center; gap: 12px; flex: 1; overflow: hidden; }
         .list-img { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.1); }
@@ -432,7 +448,7 @@
         .tour-footer { display: flex; gap: 8px; flex-wrap: wrap; }
         .info-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 5px 12px; border-radius: 4px; color: var(--text-main); font-weight: bold; font-size: 0.8rem; backdrop-filter: blur(5px);}
         [data-theme="light"] .info-badge { background: rgba(0,0,0,0.03); }
-        .prize-badge { border-color: rgba(227, 179, 65, 0.3); background: rgba(227, 179, 65, 0.1); color: var(--glow-yyy); }
+        .prize-badge { border-color: rgba(227, 179, 65, 0.3); background: rgba(227, 179, 65, 0.1); color: #d4af37; }
         .admin-copy-btn { cursor: pointer; transition: 0.3s; } .admin-copy-btn:hover { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 0 15px var(--primary-glow);}
 
         .links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; width: 100%; max-width: 850px; }
@@ -472,8 +488,7 @@
             .global-leaders-grid { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 12px; width: 100%; } 
             .links-grid { display: grid !important; grid-template-columns: 1fr !important; gap: 12px; width: 100%; }
             
-            .card { padding: 15px 10px; width: 100%; max-width: none; }
-            .card img { width: 70px; height: 70px; margin-bottom: 10px; }
+            .card { padding: 25px 10px; width: 100%; max-width: none; }
             .card h3 { font-size: 1.1rem; margin-bottom: 5px; }
             .card p { font-size: 0.8rem; line-height: 1.4; }
             
@@ -521,7 +536,6 @@
         <button type="button" class="lang-btn" onclick="changeLang('en')" id="btn-en">English</button>
     </div>
 
-    <!-- ==================== الصفحة 1: الرئيسية (HOME VIEW) ==================== -->
     <main id="view-home" class="tab-view active-view">
         <section class="hero" id="hero">
             <h2>Plato<span class="hero-x">X</span> <span data-i18n="hero_title_sub">المجتمع العربي</span></h2>
@@ -686,24 +700,72 @@
         </section>
     </main>
 
-    <!-- ==================== الصفحة 2: القادة والقوانين (LEADERS VIEW) ==================== -->
     <main id="view-leaders" class="tab-view">
+        
+        <section id="leaders-intro">
+            <div class="glass-panel" style="width: 100%; max-width: 850px; padding: 30px; border-radius: 16px; margin-bottom: 5px;">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                    <i class="fa-solid fa-circle-question" style="color: var(--primary); font-size: 1.5rem;"></i>
+                    <h3 style="font-size: 1.3rem; margin: 0; color: var(--text-main);" data-i18n="who_are_leaders">من هم القادة؟</h3>
+                </div>
+                <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.8; margin-bottom: 25px; font-weight: 700;" data-i18n="who_are_leaders_desc">
+                    القادة هم الممثلون الرسميون للمجتمع داخل اللعبة، وقد تم اختيارهم ليكونوا حلقة وصل بين اللاعبين وفريق تطوير اللعبة. ويتمثل دورهم في المساهمة في بناء بيئة لعب ممتعة، آمنة، وعادلة لجميع أفراد المجتمع.
+                </p>
+
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                    <i class="fa-solid fa-list-check" style="color: var(--primary); font-size: 1.5rem;"></i>
+                    <h3 style="font-size: 1.3rem; margin: 0; color: var(--text-main);" data-i18n="leaders_tasks">ما مهام القادة؟</h3>
+                </div>
+                <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px; margin:0;">
+                    <li class="guideline-item">
+                        <i class="fa-solid fa-bug guideline-icon" style="color: var(--primary);"></i> 
+                        <span class="guideline-text" data-i18n="task_1" style="font-weight: 600;">الإبلاغ عن الأخطاء والمشكلات التقنية، والمساعدة في تحديد أسبابها وخطوات إعادة إنتاجها.</span>
+                    </li>
+                    <li class="guideline-item">
+                        <i class="fa-solid fa-comment-dots guideline-icon" style="color: var(--primary);"></i> 
+                        <span class="guideline-text" data-i18n="task_2" style="font-weight: 600;">نقل ملاحظات اللاعبين ومشكلاتهم واقتراحاتهم إلى فريق التطوير.</span>
+                    </li>
+                    <li class="guideline-item">
+                        <i class="fa-solid fa-lightbulb guideline-icon" style="color: var(--primary);"></i> 
+                        <span class="guideline-text" data-i18n="task_3" style="font-weight: 600;">تقديم الأفكار والمقترحات الجديدة التي قد تسهم في تحسين تجربة اللاعبين.</span>
+                    </li>
+                    <li class="guideline-item">
+                        <i class="fa-solid fa-image-portrait guideline-icon" style="color: var(--primary);"></i> 
+                        <span class="guideline-text" data-i18n="task_4" style="font-weight: 600;">مراجعة وإزالة الصور الشخصية أو السير الذاتية المخالفة وفقًا للقواعد المعتمدة.</span>
+                    </li>
+                    <li class="guideline-item">
+                        <i class="fa-solid fa-user-lock guideline-icon" style="color: var(--primary);"></i> 
+                        <span class="guideline-text" data-i18n="task_5" style="font-weight: 600;">رفع طلبات حظر حسابات المستخدمين الذين يكررون المخالفات، وفقًا للإجراءات المتبعة.</span>
+                    </li>
+                    <li class="guideline-item">
+                        <i class="fa-solid fa-eye guideline-icon" style="color: var(--primary);"></i> 
+                        <span class="guideline-text" data-i18n="task_6" style="font-weight: 600;">الإشراف على الغرف واتخاذ الإجراءات المناسبة.</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="cyber-divider"><div class="center-node"></div></div>
+
         <section id="arabic-leaders">
             <h2 class="section-title" data-i18n="leaders_title">القادة العرب</h2>
             <div class="grid-container">
                 <div class="card glass-panel card-yyy">
+                    <div class="server-badge" style="background: #ffffff; color: #000000;"><i class="fa-solid fa-user-group"></i></div>
                     <img src="IMG_3154.png" alt="YYY">
                     <h3>YYY</h3>
-                    <div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: var(--glow-yyy);"></i> <span data-i18n="bday_yyy">1 يناير</span></div>
+                    <div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: #ffffff;"></i> <span data-i18n="bday_yyy">1 يناير</span></div>
                     <p data-i18n="desc_yyy">صانع الأثر، يقود برؤية مستقبلية لخلق بيئة إيجابية لا تعرف المستحيل.</p>
                 </div>
                 <div class="card glass-panel card-hat">
+                    <div class="server-badge" style="background: #ffffff; color: #000000;"><i class="fa-solid fa-user-group"></i></div>
                     <img src="f3b8c20da38a9320fa2f250f52f7f16a.png" alt="HAT">
                     <h3>HAT</h3>
-                    <div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: var(--glow-hat);"></i> <span data-i18n="bday_hat">1 سبتمبر</span></div>
+                    <div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: #ffffff;"></i> <span data-i18n="bday_hat">1 سبتمبر</span></div>
                     <p data-i18n="desc_hat">حضور راسخ، تقود المجتمع بثقة راسخة وترسم معايير الرقي.</p>
                 </div>
                 <div class="card glass-panel card-bbb">
+                    <div class="server-badge" style="background: #ffffff; color: #000000;"><i class="fa-solid fa-user-group"></i></div>
                     <img src="a_368d018a788facdb964b3f1df658ecde.gif" alt="BBB">
                     <h3>BBB</h3>
                     <p data-i18n="desc_bbb">الحكمة في اتخاذ القرار، يوازن بين الحزم والهدوء لإدارة الأزمات باحترافية.</p>
@@ -730,7 +792,6 @@
         </section>
     </main>
 
-    <!-- ==================== الصفحة 3: الترتيب والإحصائيات (LEADERBOARD VIEW) ==================== -->
     <main id="view-leaderboard" class="tab-view">
         <section id="tournaments">
             <h2 class="section-title" data-i18n="tournaments_title">مركز البطولات المعتمدة</h2>
@@ -797,7 +858,6 @@
         </section>
     </main>
 
-    <!-- ==================== الشريط السفلي العائم (FLOATING BOTTOM NAV) ==================== -->
     <nav class="bottom-nav-bar" dir="ltr">
         <div class="bottom-nav-item active" onclick="switchView('home', this)">
             <i class="fa-solid fa-house"></i>
@@ -966,16 +1026,17 @@
             }
         }
 
+        // ألوان السيرفرات مبنية على الشارات المرفقة
         const serverThemes = {
-            'english': { bg: '#D1D5DB', text: '#050508' },
-            'persian': { bg: '#DA0000', text: '#ffffff' },
-            'french':  { bg: '#D2B48C', text: '#050508' },
-            'turkish': { bg: '#3A60D0', text: '#ffffff' },
-            'melayu':  { bg: '#F48FB1', text: '#050508' },
-            'brazil':  { bg: '#CE93D8', text: '#050508' },
-            'spanish': { bg: '#46587E', text: '#ffffff' },
-            'thai':    { bg: '#89CFF0', text: '#050508' },
-            'desi':    { bg: '#78C93C', text: '#050508' }
+            'english': { bg: '#000000', text: '#ffffff', nameColor: '#000000', shadow: '0 0 5px rgba(255,255,255,0.7)' },
+            'persian': { bg: '#C92C23', text: '#ffffff', nameColor: '#C92C23', shadow: 'none' },
+            'french':  { bg: '#CBA276', text: '#ffffff', nameColor: '#CBA276', shadow: 'none' },
+            'turkish': { bg: '#1A2F66', text: '#ffffff', nameColor: '#1A2F66', shadow: 'none' },
+            'melayu':  { bg: '#F197A9', text: '#ffffff', nameColor: '#F197A9', shadow: 'none' },
+            'brazil':  { bg: '#D8B4F8', text: '#ffffff', nameColor: '#D8B4F8', shadow: 'none' },
+            'spanish': { bg: '#4A6076', text: '#ffffff', nameColor: '#4A6076', shadow: 'none' },
+            'thai':    { bg: '#8FBEF5', text: '#ffffff', nameColor: '#8FBEF5', shadow: 'none' },
+            'desi':    { bg: '#8CC84B', text: '#ffffff', nameColor: '#8CC84B', shadow: 'none' }
         };
 
         const globalLeadersData = [
@@ -989,7 +1050,7 @@
             { name: "NarGc", server: "persian", img: "13b8f453f2ee334ab01a7e53fc4c23fb.png", birthday: { en: "November 10", ar: "10 نوفمبر" }, desc: { ar: "قائدة نشيطة ومبدعة ومهتمة، تتميز بالتفاني والعمل الجاد.", en: "An energetic, creative, and caring leader who is dedicated and hardworking." } },
             { name: "H22", server: "french", img: "IMG_7442.png", birthday: { en: "December 21", ar: "21 ديسمبر" }, desc: { ar: "ودود ومحفز، مستعد دائماً للمساعدة والتواصل مع الأشخاص.", en: "Friendly and encouraging, always willing to help and connect with people from all servers." } },
             { name: "love_hope", server: "french", img: "f74613af2e55aecdde0d31ff33964698.png", birthday: { en: "February 13", ar: "13 فبراير" } }, 
-            { name: "Mdame", server: "french", img: "de6ac96df41f0d3378e934e467ccee32.png", birthday: { en: "March 20", ar: "20 مارس" } }, 
+            { name: "Mdame", server: "french", img: "de6ac96df41f0d3378e934e467ccee32.png", desc: { ar: "قائدة مجتمع متميزة، موثوق بها للحفاظ على المعايير وتعزيز مجتمع أقوى وأكثر أمانًا.", en: "A distinguished community leader, trusted to uphold standards and foster a stronger, safer community." } }, 
             { name: "Algerien", server: "french", img: "IMG_7444.png" }, 
             { name: "Nefya", server: "turkish", img: "IMG_7438.png" },
             { name: "esthell", server: "turkish", img: "8b85aa900d60b226406c24f3fef88da0.png", birthday: { en: "May 13", ar: "13 مايو" }, desc: { ar: "قائدة دافئة وملهمة تنشر الطاقة الإيجابية، وتدعم الآخرين، وتجعل الجميع يشعرون بالترحيب.", en: "A warm and inspiring leader who brings positive energy, supports others, and makes everyone feel welcome." } }, 
@@ -1011,23 +1072,24 @@
             const currentLang = document.documentElement.getAttribute('lang') || 'ar';
             
             globalLeadersData.forEach(leader => {
-                const colorHex = serverThemes[leader.server].bg;
-                const imageSource = leader.img ? leader.img : `https://ui-avatars.com/api/?name=${leader.name}&background=${colorHex.replace('#', '')}&color=fff&bold=true`;
+                const sTheme = serverThemes[leader.server];
+                const imageSource = leader.img ? leader.img : `https://ui-avatars.com/api/?name=${leader.name}&background=${sTheme.nameColor.replace('#', '')}&color=fff&bold=true`;
                 
                 let bdayText = "";
                 if (leader.birthday) {
                     bdayText = currentLang === 'ar' && leader.birthday.ar ? leader.birthday.ar : leader.birthday.en;
                 }
-                const bdayHTML = bdayText ? `<div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: ${colorHex};"></i> ${bdayText}</div>` : "";
+                const bdayHTML = bdayText ? `<div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: ${sTheme.nameColor};"></i> ${bdayText}</div>` : "";
                 
                 const descText = leader.desc ? (currentLang === 'ar' && leader.desc.ar ? leader.desc.ar : leader.desc.en) : "";
                 const descHTML = descText ? `<p class="leader-desc">${descText}</p>` : "";
                 
                 container.innerHTML += `
-                    <div class="global-leader glass-panel" data-server="${leader.server}" style="--server-color: ${colorHex};">
+                    <div class="global-leader glass-panel" data-server="${leader.server}" style="--server-color: ${sTheme.nameColor};">
+                        <div class="server-badge" style="background: ${sTheme.bg}; color: ${sTheme.text};"><i class="fa-solid fa-user-group"></i></div>
                         <img src="${imageSource}" alt="${leader.name}">
                         <div class="leader-name-box" onclick="copyAdminID('${leader.name}')" title="انسخ اليوزر">
-                            <h3 class="num-font" style="color: ${colorHex};">${leader.name}</h3>
+                            <h3 class="num-font" style="color: ${sTheme.nameColor} !important; text-shadow: ${sTheme.shadow} !important;">${leader.name}</h3>
                             <i class="fa-regular fa-copy leader-copy-icon"></i>
                         </div>
                         ${bdayHTML}
@@ -1071,6 +1133,15 @@
                 hero_title_sub: "المجتمع العربي", hero_desc: "يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.",
                 leaders_title: "القادة العرب", global_leaders_title: "قادة السيرفرات العالمية", news_board_title: "لوحة أخبار المجتمع", players_title: "اللاعبين الاقدم", spending_title: "ترتيب المجموعات الأكثر إنفاقًا", tournaments_title: "مركز البطولات المعتمدة",
                 bug_title: "تقديم بلاغ", bug_type_label: "نوع المشكلة:", bug_note: "هذا القسم غير مخصص للمشاكل الشخصية.", bug_opt1_title: "الثغرات (Exploits):", bug_opt2_title: "مشكلة تقنية:", bug_exp_desc: "ثغرات، أخطاء برمجية، أو نسخ معدلة.", bug_tech_desc: "أخطاء تقنية ذات تأثير عالي أو مشاكل نظام قابلة للاستغلال المتكرر.", bug_submit: "إرسال البلاغ", bug_cancel: "إلغاء",
+                who_are_leaders: "من هم القادة؟",
+                who_are_leaders_desc: "القادة هم الممثلون الرسميون للمجتمع داخل اللعبة، وقد تم اختيارهم ليكونوا حلقة وصل بين اللاعبين وفريق تطوير اللعبة. ويتمثل دورهم في المساهمة في بناء بيئة لعب ممتعة، آمنة، وعادلة لجميع أفراد المجتمع.",
+                leaders_tasks: "ما مهام القادة؟",
+                task_1: "الإبلاغ عن الأخطاء والمشكلات التقنية، والمساعدة في تحديد أسبابها وخطوات إعادة إنتاجها.",
+                task_2: "نقل ملاحظات اللاعبين ومشكلاتهم واقتراحاتهم إلى فريق التطوير.",
+                task_3: "تقديم الأفكار والمقترحات الجديدة التي قد تسهم في تحسين تجربة اللاعبين.",
+                task_4: "مراجعة وإزالة الصور الشخصية أو السير الذاتية المخالفة وفقًا للقواعد المعتمدة.",
+                task_5: "رفع طلبات حظر حسابات المستخدمين الذين يكررون المخالفات، وفقًا للإجراءات المتبعة.",
+                task_6: "الإشراف على الغرف واتخاذ الإجراءات المناسبة.",
                 desc_yyy: "صانع الأثر، يقود برؤية مستقبلية لخلق بيئة إيجابية لا تعرف المستحيل.", desc_hat: "حضور راسخ، تقود المجتمع بثقة راسخة وترسم معايير الرقي.", desc_bbb: "الحكمة في اتخاذ القرار، يوازن بين الحزم والهدوء لإدارة الأزمات باحترافية.",
                 news_newer: "الأحدث", news_older: "الأقدم",
                 discord_more: "للمزيد من الأخبار انضموا إلى الديسكورد",
@@ -1102,6 +1173,15 @@
                 hero_title_sub: "COMMUNITY", hero_desc: "Where gaming enthusiasts meet to experience thrilling moments, build true friendships, and create eternal memories.",
                 leaders_title: "ARABIC LEADERS", global_leaders_title: "GLOBAL SERVERS LEADERS", news_board_title: "COMMUNITY NEWS BOARD", players_title: "OLDEST PLAYERS", spending_title: "TOP SPENDING GROUPS", tournaments_title: "APPROVED TOURNAMENTS",
                 bug_title: "Bug Reporting", bug_type_label: "Issue Type:", bug_note: "This section is not for personal issues.", bug_opt1_title: "Exploits:", bug_opt2_title: "Serious Technical Issue:", bug_exp_desc: "Bugs, glitches, or modified clients.", bug_tech_desc: "High-impact bugs or system problems that can be repeatedly abused.", bug_submit: "Submit Report", bug_cancel: "Cancel",
+                who_are_leaders: "Who are the Leaders?",
+                who_are_leaders_desc: "Leaders are the official representatives of the community in-game, chosen to be a bridge between the players and the development team. Their role is to contribute to building a fun, safe, and fair gaming environment for all community members.",
+                leaders_tasks: "What are the Leaders' tasks?",
+                task_1: "Reporting bugs and technical issues, assisting in identifying their causes and reproduction steps.",
+                task_2: "Conveying player feedback, problems, and suggestions to the development team.",
+                task_3: "Providing new ideas and proposals that may contribute to improving the players' experience.",
+                task_4: "Reviewing and removing inappropriate profile pictures or bios according to approved rules.",
+                task_5: "Submitting ban requests for users who repeatedly violate rules, according to established procedures.",
+                task_6: "Moderating rooms and taking appropriate actions.",
                 desc_yyy: "The Impact Maker, leading with a futuristic vision to create a positive environment.", desc_hat: "A grounded presence, leading the community with solid confidence and setting standards.", desc_bbb: "Wisdom in decision making, balancing firmness and calmness in management.",
                 news_newer: "NEWER", news_older: "OLDER",
                 discord_more: "For more news, join our Discord server",
@@ -1207,7 +1287,7 @@
                 if(tEn) tickersEn.push(tEn);
             }
             
-            const separatorHTML = `<span style="color: var(--primary); margin: 0 25px; display: inline-flex; align-items: center;"><i class="fa-solid fa-gamepad"></i></span>`;
+            const separatorHTML = ` &nbsp; | &nbsp; `;
             
             if (tickersAr.length > 0) {
                 translations.ar['news_text'] = tickersAr.join(separatorHTML);
@@ -1544,7 +1624,7 @@
                 const percent = Math.min(100, Math.max(5, (group.total / highestTotal) * 100));
 
                 let rankClass = '', color = 'var(--text-muted)', barBg = 'rgba(255,255,255,0.2)';
-                if (rankNum === '1') { rankClass = 'rank-1'; color = 'var(--glow-yyy)'; barBg = 'var(--glow-yyy)'; }
+                if (rankNum === '1') { rankClass = 'rank-1'; color = '#d4af37'; barBg = '#d4af37'; }
                 else if (rankNum === '2') { rankClass = 'rank-2'; color = '#cbd5e1'; barBg = 'silver'; }
                 else if (rankNum === '3') { rankClass = 'rank-3'; color = '#cd7f32'; barBg = '#cd7f32'; }
 
