@@ -47,7 +47,6 @@
             -webkit-touch-callout: none; 
         }
         
-        /* تجميد الصور نهائياً لمنع الزوم والحفظ */
         img {
             -webkit-user-drag: none;
             pointer-events: none; 
@@ -143,14 +142,12 @@
         .section-title::before { content: ''; position: absolute; right: -15px; top: 50%; transform: translateY(-50%); width: 6px; height: 20px; background: var(--primary); border-radius: 3px; box-shadow: 0 0 15px var(--primary-glow);}
         html[dir="ltr"] .section-title::before { right: auto; left: -15px; }
 
-        /* ---------------- Pull to Refresh ---------------- */
         #ptr-loader { position: fixed; top: 0; left: 0; width: 100%; height: 60px; display: flex; justify-content: center; align-items: center; gap: 10px; background: var(--primary); color: #fff; font-weight: bold; font-family: 'Cairo', sans-serif; font-size: 1.1rem; transform: translateY(-100%); z-index: 9999; transition: transform 0.2s ease-out, background 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
         #ptr-loader i { transition: transform 0.3s; }
         #ptr-loader.refreshing { transform: translateY(0) !important; background: #3b82f6; }
         #ptr-loader.refreshing i { animation: spin 1s infinite linear; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* ---------------- التحميل النابض ---------------- */
         .skeleton { position: relative; overflow: hidden; background-color: rgba(255, 255, 255, 0.05) !important; border-color: transparent !important; box-shadow: none !important; }
         [data-theme="light"] .skeleton { background-color: rgba(0, 0, 0, 0.05) !important; }
         .skeleton::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent); animation: shimmer 1.5s infinite; }
@@ -205,6 +202,14 @@
         .cancel-btn:hover { background: rgba(220, 38, 38, 0.2); border-color: rgba(220, 38, 38, 0.5); color: #ef4444; transform: translateY(-2px); }
         [data-theme="light"] .cancel-btn { background: rgba(0,0,0,0.05); color: var(--text-muted); border-color: rgba(0,0,0,0.1); }
         [data-theme="light"] .cancel-btn:hover { background: rgba(220, 38, 38, 0.1); color: #ef4444; border-color: rgba(220, 38, 38, 0.3); }
+
+        /* ---------------- تنسيقات القوانين (الجديدة) ---------------- */
+        .guideline-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--glass-border); }
+        .guideline-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .guideline-icon { color: var(--primary); font-size: 1.1rem; margin-top: 3px; flex-shrink: 0; }
+        .guideline-text { font-size: 0.9rem; line-height: 1.6; color: rgba(255,255,255,0.85); }
+        [data-theme="light"] .guideline-text { color: var(--text-main); }
+        .guideline-warning { background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.3); color: #ef4444; padding: 12px; border-radius: 8px; font-size: 0.85rem; font-weight: 700; line-height: 1.6; margin-top: 15px; display: flex; gap: 10px; align-items: center; }
 
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; width: 100%; max-width: 900px; justify-items: center; }
         .card { width: 100%; padding: 35px 20px; text-align: center; transition: 0.4s; position: relative; overflow: hidden; border-radius: 16px;}
@@ -337,6 +342,7 @@
         <a href="#hero" data-i18n="menu_home">الرئيسية</a>
         <a href="#news" data-i18n="menu_news">الأخبار</a>
         <a href="#bug-report" data-i18n="menu_bugs">تقديم بلاغ</a>
+        <a href="#guidelines" data-i18n="menu_guidelines">القوانين</a>
         <a href="#arabic-leaders" data-i18n="menu_leaders">القادة العرب</a>
         <a href="#tournaments" data-i18n="menu_tournaments">البطولات</a>
         <a href="#top-spending" data-i18n="menu_spending">الإنفاق</a>
@@ -425,6 +431,47 @@
                     <button type="button" onclick="submitBugReport();" class="submit-btn" data-i18n="bug_submit">إرسال البلاغ</button>
                     <button type="button" onclick="hideBugForm();" class="cancel-btn" data-i18n="bug_cancel">إلغاء</button>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="cyber-divider"><div class="center-node"></div></div>
+
+    <!-- ---------------- قسم القوانين (الجديد) ---------------- -->
+    <section id="guidelines">
+        <h2 class="section-title" data-i18n="menu_guidelines">القوانين</h2>
+        <div class="glass-panel" style="width: 100%; max-width: 650px; padding: 25px; border-radius: 16px;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+                <i class="fa-solid fa-shield-halved" style="color: var(--primary); font-size: 1.5rem;"></i>
+                <h3 style="font-size: 1.2rem; margin: 0;" data-i18n="guide_title">إرشادات الدردشة في الغرف العامة</h3>
+            </div>
+
+            <div>
+                <div class="guideline-item">
+                    <i class="fa-solid fa-ban guideline-icon" style="color: #ef4444;"></i>
+                    <div class="guideline-text" data-i18n="guide_1">لا تنشر محتوى فاحشًا أو جنسيًا أو إباحيّا أو غير قانوني بشكل صريح.</div>
+                </div>
+                <div class="guideline-item">
+                    <i class="fa-solid fa-user-shield guideline-icon"></i>
+                    <div class="guideline-text" data-i18n="guide_2">لا تنشر معلومات شخصية و/أو سرية تخص مستخدمًا آخر قد تؤدي إلى إيذائه.</div>
+                </div>
+                <div class="guideline-item">
+                    <i class="fa-solid fa-comment-slash guideline-icon"></i>
+                    <div class="guideline-text" data-i18n="guide_3">لا تقم بإرسال رسائل غير مرغوب فيها (نشر الشيء نفسه أكثر من مرة) أو نشر نصوص تعطل تدفق الدردشة.</div>
+                </div>
+                <div class="guideline-item">
+                    <i class="fa-solid fa-hand-fist guideline-icon" style="color: #ef4444;"></i>
+                    <div class="guideline-text" data-i18n="guide_4">لا تنشر محتوى يشجع على العنف في الحياة الواقعية، أو يشجع على إيذاء النفس أو الانتحار، أو يشجع على العنف تجاه مجموعة معينة من الأشخاص.</div>
+                </div>
+                <div class="guideline-item">
+                    <i class="fa-solid fa-globe guideline-icon"></i>
+                    <div class="guideline-text" data-i18n="guide_5">الدردشة فقط بلغة الخادم الذي تختاره.</div>
+                </div>
+            </div>
+
+            <div class="guideline-warning">
+                <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.5rem; flex-shrink: 0;"></i>
+                <span data-i18n="guide_warning">يقوم قادة الخادم بتطبيق الإرشادات المذكورة أعلاه. سيؤدي انتهاك هذه الإرشادات إلى فقدان القدرة على الدردشة لمدة 4 ساعات وقد يؤدي إلى حظر دائم لحسابك إذا تكرر.</span>
             </div>
         </div>
     </section>
@@ -793,7 +840,7 @@
 
         const translations = {
             ar: {
-                menu_home: "الرئيسية", menu_leaders: "القادة", menu_news: "الأخبار", menu_bugs: "تقديم بلاغ", menu_players: "اللاعبين", menu_spending: "الإنفاق", menu_tournaments: "البطولات", pull_refresh: "جاري التحديث...",
+                menu_home: "الرئيسية", menu_leaders: "القادة", menu_news: "الأخبار", menu_bugs: "تقديم بلاغ", menu_players: "اللاعبين", menu_spending: "الإنفاق", menu_tournaments: "البطولات", pull_refresh: "جاري التحديث...", menu_guidelines: "القوانين",
                 news_text: "أهلاً بكم في مجتمع PlatoX العربي",
                 hero_title_sub: "المجتمع العربي", hero_desc: "يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.",
                 leaders_title: "القادة العرب", global_leaders_title: "قادة السيرفرات العالمية", news_board_title: "لوحة أخبار المجتمع", players_title: "اللاعبين الاقدم", spending_title: "ترتيب المجموعات الأكثر إنفاقًا", tournaments_title: "مركز البطولات المعتمدة",
@@ -802,10 +849,17 @@
                 news_newer: "الأحدث", news_older: "الأقدم",
                 discord_more: "للمزيد من الأخبار انضموا إلى الديسكورد", tag_update: "خبر هام",
                 th_player: "اللاعب", th_days: "يوم", th_group: "المجموعة", th_coins: "الإنفاق",
-                tab_english: "الإنجليزي", tab_persian: "الفارسي", tab_french: "الفرنسي", tab_melayu: "الماليزي", tab_turkish: "التركي", tab_spanish: "الإسباني", tab_thai: "التايلندي", tab_brazil: "البرازيلي", tab_desi: "الهندي"
+                tab_english: "الإنجليزي", tab_persian: "الفارسي", tab_french: "الفرنسي", tab_melayu: "الماليزي", tab_turkish: "التركي", tab_spanish: "الإسباني", tab_thai: "التايلندي", tab_brazil: "البرازيلي", tab_desi: "الهندي",
+                guide_title: "إرشادات الدردشة في الغرف العامة",
+                guide_1: "لا تنشر محتوى فاحشًا أو جنسيًا أو إباحيّا أو غير قانوني بشكل صريح.",
+                guide_2: "لا تنشر معلومات شخصية و/أو سرية تخص مستخدمًا آخر قد تؤدي إلى إيذائه.",
+                guide_3: "لا تقم بإرسال رسائل غير مرغوب فيها (نشر الشيء نفسه أكثر من مرة) أو نشر نصوص تعطل تدفق الدردشة.",
+                guide_4: "لا تنشر محتوى يشجع على العنف في الحياة الواقعية، أو يشجع على إيذاء النفس أو الانتحار، أو يشجع على العنف تجاه مجموعة معينة من الأشخاص.",
+                guide_5: "الدردشة فقط بلغة الخادم الذي تختاره.",
+                guide_warning: "يقوم قادة الخادم بتطبيق الإرشادات المذكورة أعلاه. سيؤدي انتهاك هذه الإرشادات إلى فقدان القدرة على الدردشة لمدة 4 ساعات وقد يؤدي إلى حظر دائم لحسابك إذا تكرر."
             },
             en: {
-                menu_home: "HOME", menu_leaders: "LEADERS", menu_news: "NEWS", menu_bugs: "REPORT BUG", menu_players: "PLAYERS", menu_spending: "SPENDING", menu_tournaments: "TOURNAMENTS", pull_refresh: "Updating...",
+                menu_home: "HOME", menu_leaders: "LEADERS", menu_news: "NEWS", menu_bugs: "REPORT BUG", menu_players: "PLAYERS", menu_spending: "SPENDING", menu_tournaments: "TOURNAMENTS", pull_refresh: "Updating...", menu_guidelines: "GUIDELINES",
                 news_text: "Welcome to PlatoX Community",
                 hero_title_sub: "COMMUNITY", hero_desc: "Where gaming enthusiasts meet to experience thrilling moments, build true friendships, and create eternal memories.",
                 leaders_title: "ARABIC LEADERS", global_leaders_title: "GLOBAL SERVERS LEADERS", news_board_title: "COMMUNITY NEWS BOARD", players_title: "OLDEST PLAYERS", spending_title: "TOP SPENDING GROUPS", tournaments_title: "APPROVED TOURNAMENTS",
@@ -814,7 +868,14 @@
                 news_newer: "NEWER", news_older: "OLDER",
                 discord_more: "For more news, join our Discord server", tag_update: "HOT NEWS",
                 th_player: "PLAYER", th_days: "DAYS", th_group: "GROUP", th_coins: "SPENDING",
-                tab_english: "English", tab_persian: "Persian", tab_french: "Français", tab_melayu: "Melayu", tab_turkish: "Turkish", tab_spanish: "Español", tab_thai: "Thai", tab_brazil: "Brasil", tab_desi: "Desi"
+                tab_english: "English", tab_persian: "Persian", tab_french: "Français", tab_melayu: "Melayu", tab_turkish: "Turkish", tab_spanish: "Español", tab_thai: "Thai", tab_brazil: "Brasil", tab_desi: "Desi",
+                guide_title: "Public Room Chat Guidelines",
+                guide_1: "Do not post content that is explicitly obscene, sexual, pornographic, or illegal.",
+                guide_2: "Do not post personal and/or confidential information belonging to another user that could potentially harm them.",
+                guide_3: "Do not spam (posting the same thing more than once) or otherwise post text that disrupts the flow of chat.",
+                guide_4: "Do not post content that encourages violence in real life, or encourages self-harm or suicide, or encourages violence towards a specific group of people.",
+                guide_5: "Chat only in the language of the server you select.",
+                guide_warning: "Server Leaders enforce the guidelines listed above. Breaking these Public Room Chat Guidelines will result in losing the ability to chat for 4 hours and may result in a permanent ban of your account if frequent."
             }
         };
 
@@ -1250,7 +1311,7 @@
         document.addEventListener('touchstart', e => {
             if(window.scrollY <= 5) { 
                 ptrStartY = e.touches[0].screenY; 
-                ptrCurrentY = ptrStartY; // تصفير ذاكرة اللمس هنا
+                ptrCurrentY = ptrStartY; 
                 isPulling = true; 
             }
         }, {passive: true});
