@@ -203,10 +203,10 @@
         [data-theme="light"] .cancel-btn { background: rgba(0,0,0,0.05); color: var(--text-muted); border-color: rgba(0,0,0,0.1); }
         [data-theme="light"] .cancel-btn:hover { background: rgba(220, 38, 38, 0.1); color: #ef4444; border-color: rgba(220, 38, 38, 0.3); }
 
-        /* ---------------- تنسيقات القوانين (الجديدة) ---------------- */
+        /* ---------------- تنسيقات القوانين ---------------- */
         .guideline-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--glass-border); }
         .guideline-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-        .guideline-icon { color: var(--primary); font-size: 1.1rem; margin-top: 3px; flex-shrink: 0; }
+        .guideline-icon { color: var(--text-main); font-size: 1.1rem; margin-top: 3px; flex-shrink: 0; }
         .guideline-text { font-size: 0.9rem; line-height: 1.6; color: rgba(255,255,255,0.85); }
         [data-theme="light"] .guideline-text { color: var(--text-main); }
         .guideline-warning { background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.3); color: #ef4444; padding: 12px; border-radius: 8px; font-size: 0.85rem; font-weight: 700; line-height: 1.6; margin-top: 15px; display: flex; gap: 10px; align-items: center; }
@@ -437,18 +437,17 @@
 
     <div class="cyber-divider"><div class="center-node"></div></div>
 
-    <!-- ---------------- قسم القوانين (الجديد) ---------------- -->
     <section id="guidelines">
         <h2 class="section-title" data-i18n="menu_guidelines">القوانين</h2>
         <div class="glass-panel" style="width: 100%; max-width: 650px; padding: 25px; border-radius: 16px;">
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
-                <i class="fa-solid fa-shield-halved" style="color: var(--primary); font-size: 1.5rem;"></i>
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--glass-border);">
+                <i class="fa-solid fa-shield-halved" style="color: var(--text-main); font-size: 1.5rem;"></i>
                 <h3 style="font-size: 1.2rem; margin: 0;" data-i18n="guide_title">إرشادات الدردشة في الغرف العامة</h3>
             </div>
 
             <div>
                 <div class="guideline-item">
-                    <i class="fa-solid fa-ban guideline-icon" style="color: #ef4444;"></i>
+                    <i class="fa-solid fa-ban guideline-icon"></i>
                     <div class="guideline-text" data-i18n="guide_1">لا تنشر محتوى فاحشًا أو جنسيًا أو إباحيّا أو غير قانوني بشكل صريح.</div>
                 </div>
                 <div class="guideline-item">
@@ -460,7 +459,7 @@
                     <div class="guideline-text" data-i18n="guide_3">لا تقم بإرسال رسائل غير مرغوب فيها (نشر الشيء نفسه أكثر من مرة) أو نشر نصوص تعطل تدفق الدردشة.</div>
                 </div>
                 <div class="guideline-item">
-                    <i class="fa-solid fa-hand-fist guideline-icon" style="color: #ef4444;"></i>
+                    <i class="fa-solid fa-hand-fist guideline-icon"></i>
                     <div class="guideline-text" data-i18n="guide_4">لا تنشر محتوى يشجع على العنف في الحياة الواقعية، أو يشجع على إيذاء النفس أو الانتحار، أو يشجع على العنف تجاه مجموعة معينة من الأشخاص.</div>
                 </div>
                 <div class="guideline-item">
