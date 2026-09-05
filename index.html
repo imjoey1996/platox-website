@@ -88,7 +88,7 @@
             background-color: var(--bg-main); 
             position: relative;
             overscroll-behavior-y: none;
-            padding-bottom: 115px; /* مساحة كافية لتجنب تغطية المحتوى بالشريط السفلي */
+            padding-bottom: 115px; 
         }
         
         html[dir="ltr"] body, .num-font, .navbar h1 { font-family: 'Rajdhani', sans-serif; }
@@ -121,15 +121,31 @@
         html[dir="ltr"] .glass-panel { border-left: 1px solid var(--glass-border); border-right: 1px solid rgba(255, 255, 255, 0.05); }
         [data-theme="light"] .glass-panel { box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07); border-top: 1px solid rgba(255, 255, 255, 0.6); }
 
-        .navbar { position: fixed; top: 0; left: 0; width: 100%; padding: 12px 25px; display: flex; justify-content: space-between; align-items: center; background: rgba(5, 5, 8, 0.5); backdrop-filter: blur(25px); border-bottom: 1px solid var(--glass-border); z-index: 1000; }
+        /* ---------------- النافبار المحسن والمثبت على LTR ---------------- */
+        .navbar { position: fixed; top: 0; left: 0; width: 100%; padding: 12px 25px; display: flex; justify-content: space-between; align-items: center; background: rgba(5, 5, 8, 0.5); backdrop-filter: blur(25px); border-bottom: 1px solid var(--glass-border); z-index: 1000; direction: ltr; }
         [data-theme="light"] .navbar { background: rgba(255, 255, 255, 0.7); }
-        .navbar h1 { font-size: 24px; font-weight: 900; letter-spacing: 1px; display: flex; align-items: baseline;}
-        .navbar h1 span { color: var(--primary); font-size: 1.3em; transform: translateY(2px); margin-inline-start: 1px;}
+        
+        .navbar h1 { font-size: 24px; font-weight: 900; letter-spacing: 1px; display: flex; align-items: baseline; margin: 0; }
+        
+        /* تأثير التوهج المخصص لحرف X في النافبار */
+        .navbar h1 span { 
+            color: var(--primary); 
+            font-size: 1.3em; 
+            transform: translateY(2px); 
+            margin-left: 2px;
+            text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary-glow);
+            animation: navXGlow 2.5s infinite alternate ease-in-out;
+        }
+        @keyframes navXGlow {
+            0% { text-shadow: 0 0 5px var(--primary), 0 0 10px var(--primary-glow); }
+            100% { text-shadow: 0 0 15px var(--primary), 0 0 30px #d8b4fe; }
+        }
         
         .nav-actions { display: flex; align-items: center; gap: 15px; }
         .nav-actions i { font-size: 20px; cursor: pointer; color: var(--text-main); transition: 0.3s; }
         .nav-actions i:hover { color: var(--primary); text-shadow: 0 0 10px var(--primary-glow); }
         
+        /* ---------------- إصلاح التوسيط العمودي في شريط الأخبار ---------------- */
         .news-ticker { 
             position: fixed; 
             top: 55px; 
@@ -137,7 +153,7 @@
             width: 100%; 
             height: 38px;
             display: flex; 
-            align-items: center;
+            align-items: center; /* التوسيط العمودي */
             background: var(--ticker-bg); 
             backdrop-filter: blur(15px); 
             color: var(--ticker-text); 
@@ -146,7 +162,8 @@
             z-index: 999; 
             border-bottom: 1px solid var(--glass-border); 
             font-weight: 700; 
-            font-size: 0.9rem; 
+            font-size: 0.95rem;
+            line-height: 1; /* منع تمدد الخطوط */
         }
         .ticker-content { 
             display: inline-flex; 
@@ -159,6 +176,7 @@
         @keyframes ticker-rtl { from { transform: translateX(-100vw); } to { transform: translateX(100%); } }
         @keyframes ticker-ltr { from { transform: translateX(100vw); } to { transform: translateX(-100%); } }
 
+        /* ---------------- أزرار اللغات ---------------- */
         .lang-btn { 
             border: 1px solid var(--glass-border); 
             padding: 6px 15px; 
@@ -173,7 +191,8 @@
             .lang-btn:hover:not(.active) { color: var(--primary); border-color: var(--primary); }
         }
 
-        .main-lang-switch { display: flex; justify-content: center; gap: 12px; margin: 105px auto 5px; position: relative; z-index: 10; }
+        /* إنزال المسافة العلوية (margin-top) للأسفل */
+        .main-lang-switch { display: flex; justify-content: center; gap: 12px; margin: 125px auto 15px; position: relative; z-index: 10; }
         .main-lang-switch .lang-btn { 
             background: rgba(15, 15, 20, 0.4); 
             color: var(--text-muted); 
@@ -188,9 +207,9 @@
         }
         .main-lang-switch .lang-btn.active, 
         [data-theme="light"] .main-lang-switch .lang-btn.active { 
-            color: #ffffff; 
-            background: var(--primary); 
-            border-color: var(--primary); 
+            color: #ffffff !important; 
+            background: var(--primary) !important; 
+            border-color: var(--primary) !important; 
             box-shadow: 0 0 15px var(--primary-glow); 
         }
 
@@ -438,7 +457,7 @@
         #toast.show { visibility: visible; bottom: 95px; opacity: 1; }
 
         @media (max-width: 600px) {
-            .main-lang-switch { margin-top: 95px; margin-bottom: -15px; }
+            .main-lang-switch { margin-top: 115px; margin-bottom: 5px; } /* تم إنزال الأزرار للموبايل */
             .main-lang-switch .lang-btn { padding: 5px 15px; font-size: 0.85rem; }
             .blob { filter: blur(40px); opacity: 0.25; } 
             .glass-panel, .navbar { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
@@ -492,14 +511,12 @@
     </div>
     <div class="particles" id="particles"></div>
 
-    <nav class="navbar">
+    <nav class="navbar" dir="ltr">
         <h1>Plato<span>X</span></h1>
-        <div class="nav-actions">
+        <div class="nav-actions" style="display: flex; gap:12px; align-items: center;">
             <i class="fa-solid fa-moon theme-toggle" id="theme-icon" onclick="toggleTheme();"></i>
-            <div class="social-icons" style="display: flex; gap:12px;">
-                <a href="https://discord.gg/plato" target="_blank"><i class="fa-brands fa-discord"></i></a>
-                <a href="https://instagram.com/platoarab" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-            </div>
+            <a href="https://discord.gg/plato" target="_blank"><i class="fa-brands fa-discord"></i></a>
+            <a href="https://instagram.com/platoarab" target="_blank"><i class="fa-brands fa-instagram"></i></a>
         </div>
     </nav>
 
@@ -762,18 +779,18 @@
     </main>
 
     <!-- ==================== الشريط السفلي العائم (FLOATING BOTTOM NAV) ==================== -->
-    <nav class="bottom-nav-bar">
+    <nav class="bottom-nav-bar" dir="ltr">
         <div class="bottom-nav-item active" onclick="switchView('home', this)">
             <i class="fa-solid fa-house"></i>
             <span data-i18n="nav_home">الرئيسية</span>
         </div>
         <div class="bottom-nav-item" onclick="switchView('leaders', this)">
             <i class="fa-solid fa-users"></i>
-            <span data-i18n="nav_leaders">القادة</span>
+            <span data-i18n="nav_leaders">عن القادة</span>
         </div>
         <div class="bottom-nav-item" onclick="switchView('leaderboard', this)">
             <i class="fa-solid fa-trophy"></i>
-            <span data-i18n="nav_leaderboard">التصنيف</span>
+            <span data-i18n="nav_leaderboard">لوحة الصدارة</span>
         </div>
     </nav>
 
@@ -1029,7 +1046,7 @@
 
         const translations = {
             ar: {
-                nav_home: "الرئيسية", nav_leaders: "القادة", nav_leaderboard: "التصنيف",
+                nav_home: "الرئيسية", nav_leaders: "عن القادة", nav_leaderboard: "لوحة الصدارة",
                 pull_refresh: "جاري التحديث...", menu_guidelines: "القوانين",
                 news_text: "أهلاً بكم في مجتمع PlatoX العربي",
                 hero_title_sub: "المجتمع العربي", hero_desc: "يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.",
@@ -1054,7 +1071,7 @@
                 link_monsterpedia_desc: "موسوعة متخصصة في لعبة الوحوش، تشرح محتوى اللعبة بالتفصيل."
             },
             en: {
-                nav_home: "Home", nav_leaders: "Leaders", nav_leaderboard: "Rankings",
+                nav_home: "Home", nav_leaders: "About Leaders", nav_leaderboard: "Leaderboard",
                 pull_refresh: "Updating...", menu_guidelines: "GUIDELINES",
                 news_text: "Welcome to PlatoX Community",
                 hero_title_sub: "COMMUNITY", hero_desc: "Where gaming enthusiasts meet to experience thrilling moments, build true friendships, and create eternal memories.",
@@ -1107,7 +1124,7 @@
             document.getElementById('tournaments-container').innerHTML = tourSkel;
 
             let spendSkel = '';
-            for(let i=0; i<5; i++) {
+            for(let i=0; i<3; i++) {
                 spendSkel += `<div class="list-row glass-panel skeleton" style="height: 60px;"></div>`;
             }
             document.getElementById('spenders-container').innerHTML = spendSkel;
@@ -1485,7 +1502,8 @@
                 `;
             });
 
-            let sortedGroups = Object.values(groupsSpending).sort((a, b) => b.total - a.total);
+            // اقتطاع المصفوفة للحصول على المراكز 1، 2، و3 فقط
+            let sortedGroups = Object.values(groupsSpending).sort((a, b) => b.total - a.total).slice(0, 3);
             let highestTotal = sortedGroups.length > 0 ? sortedGroups[0].total : 1;
 
             let spendHTML = ''; 
