@@ -22,8 +22,6 @@
             --glass-border: rgba(255, 255, 255, 0.08);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --ticker-bg: rgba(17, 17, 24, 0.8);
-            --ticker-text: #e2e8f0;
             --discord-color: #5865F2;
         }
 
@@ -34,8 +32,6 @@
             --glass-border: rgba(0, 0, 0, 0.1); 
             --text-main: #0f172a; 
             --text-muted: #475569;
-            --ticker-bg: rgba(226, 232, 240, 0.9);
-            --ticker-text: #1e293b;
         }
 
         * { 
@@ -143,43 +139,6 @@
         .nav-actions { display: flex; align-items: center; gap: 15px; }
         .nav-actions i { font-size: 20px; cursor: pointer; color: var(--text-main); transition: 0.3s; }
         .nav-actions i:hover { color: var(--primary); text-shadow: 0 0 10px var(--primary-glow); }
-        
-        /* Centered News Ticker */
-        .news-ticker { 
-            position: fixed; 
-            top: 55px; 
-            left: 0; 
-            width: 100%; 
-            height: 38px;
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            background: var(--ticker-bg); 
-            backdrop-filter: blur(15px); 
-            color: var(--ticker-text); 
-            overflow: hidden; 
-            z-index: 999; 
-            border-bottom: 1px solid var(--glass-border); 
-            font-weight: 700; 
-            font-size: 0.95rem;
-            line-height: 1; 
-        }
-        .ticker-content { 
-            display: inline-flex; 
-            align-items: center; 
-            justify-content: center;
-            height: 100%; 
-            text-align: center;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            animation: pulseText 3s infinite alternate ease-in-out; 
-            padding: 0 15px;
-        }
-        @keyframes pulseText { 
-            0% { opacity: 0.8; } 
-            100% { opacity: 1; text-shadow: 0 0 8px var(--primary-glow); } 
-        }
 
         .lang-btn { 
             border: 1px solid var(--glass-border); 
@@ -195,7 +154,7 @@
             .lang-btn:hover:not(.active) { color: var(--primary); border-color: var(--primary); }
         }
 
-        .main-lang-switch { display: flex; justify-content: center; gap: 12px; margin: 125px auto 15px; position: relative; z-index: 10; }
+        .main-lang-switch { display: flex; justify-content: center; gap: 12px; margin: 85px auto 15px; position: relative; z-index: 10; }
         .main-lang-switch .lang-btn { 
             background: rgba(15, 15, 20, 0.4); 
             color: var(--text-muted); 
@@ -464,7 +423,7 @@
         #toast.show { visibility: visible; bottom: 95px; opacity: 1; }
 
         @media (max-width: 600px) {
-            .main-lang-switch { margin-top: 115px; margin-bottom: 5px; } 
+            .main-lang-switch { margin-top: 75px; margin-bottom: 5px; } 
             .main-lang-switch .lang-btn { padding: 5px 15px; font-size: 0.85rem; }
             .blob { filter: blur(40px); opacity: 0.25; } 
             .glass-panel, .navbar { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
@@ -526,10 +485,6 @@
             <a href="https://instagram.com/platoarab" target="_blank"><i class="fa-brands fa-instagram"></i></a>
         </div>
     </nav>
-
-    <div class="news-ticker">
-        <span class="ticker-content" id="news-text"></span>
-    </div>
 
     <div class="main-lang-switch" dir="rtl">
         <button type="button" class="lang-btn active" onclick="changeLang('ar')" id="btn-ar">العربية</button>
@@ -737,11 +692,31 @@
                         <i class="fa-solid fa-user-lock guideline-icon" style="color: var(--primary);"></i> 
                         <span class="guideline-text" data-i18n="task_5" style="font-weight: 600;">رفع طلبات حظر حسابات المستخدمين الذين يكررون المخالفات، وفقًا للإجراءات المتبعة.</span>
                     </li>
-                    <li class="guideline-item">
+                    <li class="guideline-item" style="border: none; padding-bottom: 0; margin-bottom: 0;">
                         <i class="fa-solid fa-eye guideline-icon" style="color: var(--primary);"></i> 
                         <span class="guideline-text" data-i18n="task_6" style="font-weight: 600;">الإشراف على الغرف واتخاذ الإجراءات المناسبة.</span>
                     </li>
                 </ul>
+
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px; margin-top: 30px; padding-top: 25px; border-top: 1px solid var(--glass-border);">
+                    <i class="fa-solid fa-user-plus" style="color: var(--primary); font-size: 1.5rem;"></i>
+                    <h3 style="font-size: 1.3rem; margin: 0; color: var(--text-main);" data-i18n="how_to_be_leader">كيف تصبح قائدًا؟</h3>
+                </div>
+                <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px; margin:0;">
+                    <li class="guideline-item" style="border: none; padding-bottom: 0; margin-bottom: 0;">
+                        <i class="fa-solid fa-check-circle guideline-icon" style="color: var(--primary);"></i> 
+                        <span class="guideline-text" data-i18n="be_leader_1" style="font-weight: 600;">يتم اختيار القادة بناءً على مدى تفاعلهم الإيجابي في المجتمع.</span>
+                    </li>
+                    <li class="guideline-item" style="border: none; padding-bottom: 0; margin-bottom: 0;">
+                        <i class="fa-solid fa-check-circle guideline-icon" style="color: var(--primary);"></i> 
+                        <span class="guideline-text" data-i18n="be_leader_2" style="font-weight: 600;">يتم ترشيح واختيار القائد من قِبل القادة الحاليين، ثم يخضع الترشيح لموافقة مطوّر اللعبة قبل اعتماده رسميًا.</span>
+                    </li>
+                </ul>
+                <div class="guideline-warning" style="background: rgba(157, 78, 221, 0.1); border-color: rgba(157, 78, 221, 0.3); color: var(--text-main); margin-top: 15px;">
+                    <i class="fa-solid fa-circle-info" style="color: var(--primary); font-size: 1.5rem; flex-shrink: 0;"></i>
+                    <span data-i18n="be_leader_note" style="font-weight: 600;">ملاحظة: قد يتم تعيين قائد جديد عندما يرى القادة الحاليون وجود حاجة إلى قائد إضافي. ويُسمح بوجود 4 قادة كحد أقصى في كل سيرفر.</span>
+                </div>
+
             </div>
         </section>
 
@@ -1026,7 +1001,6 @@
             }
         }
 
-        // ألوان السيرفرات مبنية على الشارات المرفقة
         const serverThemes = {
             'english': { bg: '#000000', text: '#ffffff', nameColor: '#000000', shadow: '0 0 5px rgba(255,255,255,0.7)' },
             'persian': { bg: '#C92C23', text: '#ffffff', nameColor: '#C92C23', shadow: 'none' },
@@ -1129,7 +1103,6 @@
             ar: {
                 nav_home: "الرئيسية", nav_leaders: "عن القادة", nav_leaderboard: "لوحة الصدارة",
                 pull_refresh: "جاري التحديث...", menu_guidelines: "القوانين",
-                news_text: "أهلاً بكم في مجتمع PlatoX العربي",
                 hero_title_sub: "المجتمع العربي", hero_desc: "يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.",
                 leaders_title: "القادة العرب", global_leaders_title: "قادة السيرفرات العالمية", news_board_title: "لوحة أخبار المجتمع", players_title: "اللاعبين الاقدم", spending_title: "ترتيب المجموعات الأكثر إنفاقًا", tournaments_title: "مركز البطولات المعتمدة",
                 bug_title: "تقديم بلاغ", bug_type_label: "نوع المشكلة:", bug_note: "هذا القسم غير مخصص للمشاكل الشخصية.", bug_opt1_title: "الثغرات (Exploits):", bug_opt2_title: "مشكلة تقنية:", bug_exp_desc: "ثغرات، أخطاء برمجية، أو نسخ معدلة.", bug_tech_desc: "أخطاء تقنية ذات تأثير عالي أو مشاكل نظام قابلة للاستغلال المتكرر.", bug_submit: "إرسال البلاغ", bug_cancel: "إلغاء",
@@ -1142,6 +1115,10 @@
                 task_4: "مراجعة وإزالة الصور الشخصية أو السير الذاتية المخالفة وفقًا للقواعد المعتمدة.",
                 task_5: "رفع طلبات حظر حسابات المستخدمين الذين يكررون المخالفات، وفقًا للإجراءات المتبعة.",
                 task_6: "الإشراف على الغرف واتخاذ الإجراءات المناسبة.",
+                how_to_be_leader: "كيف تصبح قائدًا؟",
+                be_leader_1: "يتم اختيار القادة بناءً على مدى تفاعلهم الإيجابي في المجتمع.",
+                be_leader_2: "يتم ترشيح واختيار القائد من قِبل القادة الحاليين، ثم يخضع الترشيح لموافقة مطوّر اللعبة قبل اعتماده رسميًا.",
+                be_leader_note: "ملاحظة: قد يتم تعيين قائد جديد عندما يرى القادة الحاليون وجود حاجة إلى قائد إضافي. ويُسمح بوجود 4 قادة كحد أقصى في كل سيرفر.",
                 desc_yyy: "صانع الأثر، يقود برؤية مستقبلية لخلق بيئة إيجابية لا تعرف المستحيل.", desc_hat: "حضور راسخ، تقود المجتمع بثقة راسخة وترسم معايير الرقي.", desc_bbb: "الحكمة في اتخاذ القرار، يوازن بين الحزم والهدوء لإدارة الأزمات باحترافية.",
                 news_newer: "الأحدث", news_older: "الأقدم",
                 discord_more: "للمزيد من الأخبار انضموا إلى الديسكورد",
@@ -1169,7 +1146,6 @@
             en: {
                 nav_home: "Home", nav_leaders: "About Leaders", nav_leaderboard: "Leaderboard",
                 pull_refresh: "Updating...", menu_guidelines: "GUIDELINES",
-                news_text: "Welcome to PlatoX Community",
                 hero_title_sub: "COMMUNITY", hero_desc: "Where gaming enthusiasts meet to experience thrilling moments, build true friendships, and create eternal memories.",
                 leaders_title: "ARABIC LEADERS", global_leaders_title: "GLOBAL SERVERS LEADERS", news_board_title: "COMMUNITY NEWS BOARD", players_title: "OLDEST PLAYERS", spending_title: "TOP SPENDING GROUPS", tournaments_title: "APPROVED TOURNAMENTS",
                 bug_title: "Bug Reporting", bug_type_label: "Issue Type:", bug_note: "This section is not for personal issues.", bug_opt1_title: "Exploits:", bug_opt2_title: "Serious Technical Issue:", bug_exp_desc: "Bugs, glitches, or modified clients.", bug_tech_desc: "High-impact bugs or system problems that can be repeatedly abused.", bug_submit: "Submit Report", bug_cancel: "Cancel",
@@ -1182,6 +1158,10 @@
                 task_4: "Reviewing and removing inappropriate profile pictures or bios according to approved rules.",
                 task_5: "Submitting ban requests for users who repeatedly violate rules, according to established procedures.",
                 task_6: "Moderating rooms and taking appropriate actions.",
+                how_to_be_leader: "How to Become a Leader?",
+                be_leader_1: "Leaders are selected based on their positive engagement and active involvement within the community.",
+                be_leader_2: "Candidates are nominated and selected by the current Leaders, after which the nomination must be approved by the game developer before the candidate is officially appointed.",
+                be_leader_note: "Note: A new Leader may be appointed when the current Leaders feel one is needed. Each server can have up to 4 Leaders.",
                 desc_yyy: "The Impact Maker, leading with a futuristic vision to create a positive environment.", desc_hat: "A grounded presence, leading the community with solid confidence and setting standards.", desc_bbb: "Wisdom in decision making, balancing firmness and calmness in management.",
                 news_newer: "NEWER", news_older: "OLDER",
                 discord_more: "For more news, join our Discord server",
@@ -1276,34 +1256,6 @@
         function processNewsData(data) {
             const rows = data.split('\n').slice(1).filter(row => row.trim().length > 0);
             
-            let tickersAr = [];
-            let tickersEn = [];
-            
-            for(let r of rows) {
-                const c = r.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-                let tAr = c[6] ? escapeHTML(c[6].replace(/"/g, '').trim()) : "";
-                let tEn = c[7] ? escapeHTML(c[7].replace(/"/g, '').trim()) : "";
-                if(tAr) tickersAr.push(tAr);
-                if(tEn) tickersEn.push(tEn);
-            }
-            
-            const separatorHTML = ` &nbsp; | &nbsp; `;
-            
-            if (tickersAr.length > 0) {
-                translations.ar['news_text'] = tickersAr.join(separatorHTML);
-            } else {
-                translations.ar['news_text'] = "أهلاً بكم في مجتمع PlatoX العربي"; 
-            }
-            
-            if (tickersEn.length > 0) {
-                translations.en['news_text'] = tickersEn.join(separatorHTML);
-            } else {
-                translations.en['news_text'] = "Welcome to PlatoX Community";
-            }
-
-            const currentLang = document.documentElement.getAttribute('lang') || 'ar';
-            document.getElementById('news-text').innerHTML = translations[currentLang]['news_text'];
-
             let allNews = rows.map(row => {
                 const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
                 if (!cols[0] || !cols[1]) return null; 
@@ -1391,7 +1343,6 @@
                 }
             });
             
-            document.getElementById('news-text').innerHTML = translations[lang]['news_text'];
             document.getElementById('plato-id').placeholder = lang === 'ar' ? 'يوزرك في اللعبة' : 'Your Plato ID';
             document.getElementById('bug-desc').placeholder = lang === 'ar' ? 'وصف المشكلة...' : 'Issue description...';
             
