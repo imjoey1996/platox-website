@@ -226,7 +226,8 @@
         .server-tab:hover { color: var(--text-main); border-color: var(--text-main); }
         
         .global-leaders-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; width: 100%; max-width: 950px; justify-items: center; }
-        .global-leader { width: 100%; padding: 20px 15px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        .global-leader { width: 100%; padding: 20px 15px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px; animation: fadeScale 0.4s ease-out forwards; }
+        @keyframes fadeScale { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
         
         .global-leader img { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.1); transition: 0.3s; margin-bottom: 2px; }
         .global-leader:hover { border-color: var(--server-color); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.3);}
@@ -441,7 +442,8 @@
         <h2 class="section-title" data-i18n="menu_guidelines">القوانين</h2>
         <div class="glass-panel" style="width: 100%; max-width: 650px; padding: 25px; border-radius: 16px;">
             <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--glass-border);">
-                <i class="fa-solid fa-shield-halved" style="color: var(--text-main); font-size: 1.5rem;"></i>
+                <!-- هنا تم تغيير اللون للبنفسجي var(--primary) -->
+                <i class="fa-solid fa-shield-halved" style="color: var(--primary); font-size: 1.5rem;"></i>
                 <h3 style="font-size: 1.2rem; margin: 0;" data-i18n="guide_title">إرشادات الدردشة في الغرف العامة</h3>
             </div>
 
