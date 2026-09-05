@@ -65,7 +65,6 @@
             -webkit-user-select: none;
         }
 
-        /* حصر المعالج الرسومي على الخلفية فقط لمنع اختفاء العناصر عند النزول السريع */
         .liquid-bg, .blob, .particles {
             -webkit-transform: translateZ(0);
             transform: translateZ(0);
@@ -81,10 +80,11 @@
             overscroll-behavior-y: none;
         }
 
+        /* تم استبدال hidden بـ clip لمنع مشكلة الشاشة السوداء في آيفون Safari Repaint Bug */
         body { 
             color: var(--text-main); 
             font-family: 'Cairo', sans-serif; 
-            overflow-x: hidden; 
+            overflow-x: clip; 
             width: 100%;
             transition: background 0.4s, color 0.4s; 
             background-color: var(--bg-main); 
@@ -118,14 +118,18 @@
         [data-theme="light"] .particle { color: var(--primary); opacity: 0.08; }
         @keyframes floatUp { 0% { transform: translateY(100dvh) rotate(0deg) scale(0.8); opacity: 0; } 20% { opacity: 0.15; } 80% { opacity: 0.15; } 100% { transform: translateY(-10dvh) rotate(360deg) scale(1.5); opacity: 0; } }
 
-        .glass-panel { background: var(--bg-card); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-top: 1px solid rgba(255, 255, 255, 0.12); border-left: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); border-radius: 16px; }
+        /* إضافة backface-visibility لحماية الكروت من الاختفاء في النزول السريع */
+        .glass-panel { background: var(--bg-card); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-top: 1px solid rgba(255, 255, 255, 0.12); border-left: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); border-radius: 16px; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
         html[dir="ltr"] .glass-panel { border-left: 1px solid var(--glass-border); border-right: 1px solid rgba(255, 255, 255, 0.05); }
         [data-theme="light"] .glass-panel { box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07); border-top: 1px solid rgba(255, 255, 255, 0.6); }
 
         .navbar { position: fixed; top: 0; width: 100%; padding: 12px 25px; display: flex; justify-content: space-between; align-items: center; background: rgba(5, 5, 8, 0.5); backdrop-filter: blur(25px); border-bottom: 1px solid var(--glass-border); z-index: 1000; }
         [data-theme="light"] .navbar { background: rgba(255, 255, 255, 0.7); }
-        .navbar h1 { font-size: 24px; font-weight: 900; letter-spacing: 1px; }
-        .navbar h1 span { color: var(--primary); }
+        
+        /* تكبير حرف X في النافبار */
+        .navbar h1 { font-size: 24px; font-weight: 900; letter-spacing: 1px; display: flex; align-items: baseline;}
+        .navbar h1 span { color: var(--primary); font-size: 1.3em; transform: translateY(2px); margin-inline-start: 1px;}
+        
         .nav-actions { display: flex; align-items: center; gap: 15px; }
         .nav-actions i { font-size: 20px; cursor: pointer; color: var(--text-main); transition: 0.3s; }
         .nav-actions i:hover { color: var(--primary); text-shadow: 0 0 10px var(--primary-glow); }
@@ -157,9 +161,11 @@
         html[dir="ltr"] .sidebar a:hover { padding-right: 0; padding-left: 8px; }
 
         section { padding: 70px 15px 30px; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; }
+        
         .hero { height: 45dvh; justify-content: center; text-align: center; padding: 0 15px; margin-top: 10px;}
-        .hero h2 { font-size: 3.2rem; font-weight: 900; margin-bottom: 10px; color: #fff; text-shadow: 0 0 30px rgba(255,255,255,0.2); }
-        .hero h2 span { color: var(--primary); text-shadow: 0 0 20px var(--primary-glow); }
+        /* تكبير حرف X في الواجهة الرئيسية */
+        .hero h2 { font-size: 3.2rem; font-weight: 900; margin-bottom: 10px; color: #fff; text-shadow: 0 0 30px rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; flex-wrap: wrap;}
+        .hero h2 span.hero-x { color: var(--primary); text-shadow: 0 0 20px var(--primary-glow); font-size: 1.25em; margin-inline-start: 2px; margin-inline-end: 10px; transform: translateY(2px);}
         [data-theme="light"] .hero h2 { color: #000; text-shadow: none; }
         .hero p { font-size: 1.1rem; max-width: 600px; line-height: 1.7; margin: 0 auto; color: rgba(255,255,255,0.8);}
         [data-theme="light"] .hero p { color: var(--text-muted); }
@@ -277,7 +283,8 @@
         .leader-desc { font-size: 0.8rem; color: rgba(255,255,255,0.7); line-height: 1.5; font-weight: 600; text-align: center; width: 100%; word-break: break-word;}
         [data-theme="light"] .leader-desc { color: var(--text-muted); }
 
-        .premium-list { width: 100%; max-width: 700px; display: flex; flex-direction: column; gap: 10px; }
+        /* إضافة z-index وحماية القائمة من الاختفاء */
+        .premium-list { width: 100%; max-width: 700px; display: flex; flex-direction: column; gap: 10px; position: relative; z-index: 2;}
         .list-row { padding: 12px 15px; display: flex; align-items: center; gap: 15px; transition: 0.3s; }
         .list-row:hover { background: rgba(157, 78, 221, 0.08); border-color: rgba(157, 78, 221, 0.3); transform: scale(1.02); }
         .rank-num { font-size: 1.2rem; font-weight: 900; color: rgba(255,255,255,0.3); width: 30px; text-align: center; }
@@ -325,7 +332,6 @@
         #toast { visibility: hidden; min-width: 200px; background: rgba(15, 15, 20, 0.95); backdrop-filter: blur(10px); color: #fff; text-align: center; border-radius: 10px; padding: 12px 20px; position: fixed; z-index: 9999; left: 50%; bottom: 25px; transform: translateX(-50%); font-size: 14px; transition: 0.4s; opacity: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid var(--primary); font-family: 'Cairo', sans-serif; font-weight:bold;}
         #toast.show { visibility: visible; bottom: 85px; opacity: 1; }
         
-        /* إصلاح تأثير הـ Reflow عند فتح القائمة بإستخدام Opacity بدلاً من Display */
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1500; visibility: hidden; opacity: 0; transition: opacity 0.3s ease, visibility 0.3s ease; }
         .overlay.active { visibility: visible; opacity: 1; }
 
@@ -395,6 +401,8 @@
         <a href="#tournaments" data-i18n="menu_tournaments">البطولات</a>
         <a href="#top-spending" data-i18n="menu_spending">الإنفاق</a>
         <a href="#accounts" data-i18n="menu_players">اللاعبين</a>
+        <!-- إضافة المواقع ذات الصلة للقائمة الجانبية -->
+        <a href="#related-links" data-i18n="menu_links">مواقع ذات صلة</a>
     </div>
 
     <nav class="navbar">
@@ -419,7 +427,7 @@
     </div>
 
     <section class="hero" id="hero">
-        <h2>Plato<span>X</span> <span data-i18n="hero_title_sub">المجتمع العربي</span></h2>
+        <h2>Plato<span class="hero-x">X</span> <span data-i18n="hero_title_sub">المجتمع العربي</span></h2>
         <p data-i18n="hero_desc">يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.</p>
     </section>
 
@@ -643,7 +651,7 @@
                 <i class="fa-solid fa-globe link-icon"></i>
                 <div class="link-info">
                     <span class="link-title num-font">Plato Web</span>
-                    <span class="link-sub" data-i18n="link_plato_en">النسخة الإنجليزية</span>
+                    <span class="link-sub">platoapp.com</span>
                 </div>
             </a>
             <a href="https://platopedia.com" target="_blank" class="link-card glass-panel">
@@ -654,7 +662,8 @@
                 </div>
             </a>
             <a href="https://werepedia.com/en" target="_blank" class="link-card glass-panel">
-                <i class="fa-solid fa-paw link-icon"></i>
+                <!-- تغيير أيقونة اللعبة إلى أنياب شرسة للعبة الذئب -->
+                <i class="fa-solid fa-teeth-open link-icon"></i>
                 <div class="link-info">
                     <span class="link-title num-font" data-i18n="link_werepedia">Werepedia</span>
                     <span class="link-sub">Werewolf Guide</span>
@@ -839,7 +848,7 @@
             { name: "morango", server: "brazil", img: "c5d766cb9eefad03e43d5c60b6663f68.png", birthday: { en: "May 7", ar: "7 مايو" }, desc: { ar: "قائدة ودودة ومتفانية تخلق مجتمعاً ممتعاً ومرحباً وشاملاً.", en: "A friendly and dedicated leader who creates a fun, welcoming, and inclusive community." } }, 
             { name: "vsf", server: "brazil", img: "5d6814526ccd5b04a915127d03325e4b.png", birthday: { en: "October 4", ar: "4 أكتوبر" }, desc: { ar: "قائدة متفانية تسعى لتحقيق العدالة والاحترام وتوفير مساحة آمنة ومرحبة للجميع.", en: "A dedicated leader striving for fairness, respect, and a safe, welcoming space for everyone." } },
             { name: "Marito", server: "spanish", img: "IMG_7447.png" }, 
-            { name: "kroxtar", server: "spanish", img: "8a2638546f3cb1961c3e198fc5817b45.png" },
+            { name: "kroxtar", server: "spanish", img: "8a2638546f3cb1961c3e198fc5817b45.png", birthday: { en: "January 3", ar: "3 يناير" }, desc: { ar: "أعظم لاعب ذئب على الإطلاق. قائد سيرفر محترم جداً، ومتعاون بالتأكيد.", en: "Greatest Werewolf player to ever exist. Very decent Server Leader as well, helpful for sure." } },
             { name: "sroti", server: "thai", img: "IMG_7441.png", desc: { ar: "تستمتع بلعب بلاتو، وتتواصل مع المجتمع وتحافظ على أجواء المرح.", en: "Enjoys playing Plato, connecting with the community, and keeping things fun." } }, 
             { name: "nrasl", server: "thai", img: "IMG_7439.png", birthday: { en: "May 26", ar: "26 مايو" }, desc: { ar: "قائدة صريحة وودودة ومحايدة، تستمع للجميع وتقدم لهم الدعم.", en: "A straightforward, approachable, and unbiased leader who listens and supports everyone." } },
             { name: "Frequency", server: "desi", img: "IMG_7440.png", birthday: { en: "May 19", ar: "19 مايو" } } 
@@ -905,7 +914,7 @@
 
         const translations = {
             ar: {
-                menu_home: "الرئيسية", menu_leaders: "القادة", menu_news: "الأخبار", menu_bugs: "تقديم بلاغ", menu_players: "اللاعبين", menu_spending: "الإنفاق", menu_tournaments: "البطولات", pull_refresh: "جاري التحديث...", menu_guidelines: "القوانين",
+                menu_home: "الرئيسية", menu_leaders: "القادة", menu_news: "الأخبار", menu_bugs: "تقديم بلاغ", menu_players: "اللاعبين", menu_spending: "الإنفاق", menu_tournaments: "البطولات", pull_refresh: "جاري التحديث...", menu_guidelines: "القوانين", menu_links: "مواقع ذات صلة",
                 news_text: "أهلاً بكم في مجتمع PlatoX العربي",
                 hero_title_sub: "المجتمع العربي", hero_desc: "يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.",
                 leaders_title: "القادة العرب", global_leaders_title: "قادة السيرفرات العالمية", news_board_title: "لوحة أخبار المجتمع", players_title: "اللاعبين الاقدم", spending_title: "ترتيب المجموعات الأكثر إنفاقًا", tournaments_title: "مركز البطولات المعتمدة",
@@ -922,10 +931,10 @@
                 guide_5: "الدردشة فقط بلغة الخادم الذي تختاره.",
                 guide_warning: "يقوم قادة الخادم بتطبيق الإرشادات المذكورة أعلاه. سيؤدي انتهاك هذه الإرشادات إلى فقدان القدرة على الدردشة لمدة 4 ساعات وقد يؤدي إلى حظر دائم لحسابك إذا تكرر.",
                 bday_yyy: "1 يناير", bday_hat: "1 سبتمبر",
-                links_title: "مواقع ذات صلة", link_plato_en: "النسخة الإنجليزية", link_platopedia: "Platopedia", link_werepedia: "Werepedia", link_monsterpedia: "Monsterpedia"
+                links_title: "مواقع ذات صلة", link_platopedia: "Platopedia", link_werepedia: "Werepedia", link_monsterpedia: "Monsterpedia"
             },
             en: {
-                menu_home: "HOME", menu_leaders: "LEADERS", menu_news: "NEWS", menu_bugs: "REPORT BUG", menu_players: "PLAYERS", menu_spending: "SPENDING", menu_tournaments: "TOURNAMENTS", pull_refresh: "Updating...", menu_guidelines: "GUIDELINES",
+                menu_home: "HOME", menu_leaders: "LEADERS", menu_news: "NEWS", menu_bugs: "REPORT BUG", menu_players: "PLAYERS", menu_spending: "SPENDING", menu_tournaments: "TOURNAMENTS", pull_refresh: "Updating...", menu_guidelines: "GUIDELINES", menu_links: "RELATED SITES",
                 news_text: "Welcome to PlatoX Community",
                 hero_title_sub: "COMMUNITY", hero_desc: "Where gaming enthusiasts meet to experience thrilling moments, build true friendships, and create eternal memories.",
                 leaders_title: "ARABIC LEADERS", global_leaders_title: "GLOBAL SERVERS LEADERS", news_board_title: "COMMUNITY NEWS BOARD", players_title: "OLDEST PLAYERS", spending_title: "TOP SPENDING GROUPS", tournaments_title: "APPROVED TOURNAMENTS",
@@ -942,7 +951,7 @@
                 guide_5: "Chat only in the language of the server you select.",
                 guide_warning: "Server Leaders enforce the guidelines listed above. Breaking these Public Room Chat Guidelines will result in losing the ability to chat for 4 hours and may result in a permanent ban of your account if frequent.",
                 bday_yyy: "January 1", bday_hat: "September 1",
-                links_title: "RELATED SITES", link_plato_en: "English Version", link_platopedia: "Platopedia", link_werepedia: "Werepedia", link_monsterpedia: "Monsterpedia"
+                links_title: "RELATED SITES", link_platopedia: "Platopedia", link_werepedia: "Werepedia", link_monsterpedia: "Monsterpedia"
             }
         };
 
@@ -979,15 +988,12 @@
             document.getElementById('spenders-container').innerHTML = spendSkel;
         }
 
+        // استخدام نظام الاسترداد الفوري والتحديث في الخلفية (Stale-While-Revalidate)
         async function loadNewsData(force = false) {
             try {
                 const cached = localStorage.getItem('plato_news_cache');
-                const cacheTime = localStorage.getItem('plato_news_cache_time');
-                const now = Date.now();
-                
-                if (!force && cached && cacheTime && (now - parseInt(cacheTime) < 1800000)) {
-                    processNewsData(cached);
-                    return; 
+                if (cached) {
+                    processNewsData(cached); 
                 }
 
                 const response = await fetch(newsSheetURL);
@@ -996,7 +1002,6 @@
                 
                 if (data !== cached || force) {
                     localStorage.setItem('plato_news_cache', data);
-                    localStorage.setItem('plato_news_cache_time', now.toString());
                     processNewsData(data);
                 }
             } catch (error) { 
@@ -1054,16 +1059,13 @@
             buildNewsHTML();
         }
 
+        // استخدام نظام الاسترداد الفوري للبطولات أيضاً
         async function loadDynamicData(force = false) {
             try {
                 const cached = localStorage.getItem('plato_dynamic_cache');
-                const cacheTime = localStorage.getItem('plato_dynamic_cache_time');
-                const now = Date.now();
-                
-                if (!force && cached && cacheTime && (now - parseInt(cacheTime) < 1800000)) {
+                if (cached) {
                     cachedSheetRows = cached.split('\n').slice(1);
                     renderDynamicData();
-                    return;
                 }
 
                 const response = await fetch(tourSheetURL);
@@ -1071,7 +1073,6 @@
                 
                 if (data !== cached || force) {
                     localStorage.setItem('plato_dynamic_cache', data);
-                    localStorage.setItem('plato_dynamic_cache_time', now.toString());
                     cachedSheetRows = data.split('\n').slice(1);
                     renderDynamicData();
                 }
@@ -1205,7 +1206,7 @@
             setTimeout(updateCarouselButtons, 50);
         }
 
-        // تم إزالة القفل الزمني (isSliding) لجعل الانتقال سلساً وسريعاً عند الضغط المتكرر
+        // تم حذف التأخير للاستجابة الفورية عند الضغط السريع
         function slideNews(direction) {
             const slider = document.getElementById('newsSlider');
             const cards = slider.querySelectorAll('.news-slide-card');
@@ -1512,6 +1513,7 @@
                 showSkeletons();
             }
             
+            // جلب البيانات مع تطبيق نظام الاسترداد الفوري
             loadNewsData();
             loadDynamicData();
             
