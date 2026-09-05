@@ -65,10 +65,9 @@
             -webkit-user-select: none;
         }
 
-        .liquid-bg, .blob, .particles {
+        .blob, .particles {
             -webkit-transform: translateZ(0);
             transform: translateZ(0);
-            will-change: transform;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
         }
@@ -85,7 +84,7 @@
             font-family: 'Cairo', sans-serif; 
             overflow-x: clip; 
             width: 100%;
-            background-color: var(--bg-main); 
+            background-color: transparent; /* تم جعلها شفافة لتظهر الأيقونات والخلفية المائية */
             position: relative;
             overscroll-behavior-y: none;
             padding-bottom: 115px; 
@@ -113,21 +112,19 @@
         }
 
         .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; pointer-events: none; }
-        .particle { position: absolute; color: #fff; opacity: 0.15; animation: floatUp infinite linear; filter: blur(1px); } 
+        /* تمت إزالة filter: blur لتخفيف الضغط وجعلها سلسة تماماً */
+        .particle { position: absolute; color: #fff; opacity: 0.12; animation: floatUp infinite linear; } 
         [data-theme="light"] .particle { color: var(--primary); opacity: 0.08; }
-        @keyframes floatUp { 0% { transform: translateY(100dvh) rotate(0deg) scale(0.8); opacity: 0; } 20% { opacity: 0.15; } 80% { opacity: 0.15; } 100% { transform: translateY(-10dvh) rotate(360deg) scale(1.5); opacity: 0; } }
+        @keyframes floatUp { 0% { transform: translateY(100dvh) rotate(0deg) scale(0.8); opacity: 0; } 20% { opacity: 0.12; } 80% { opacity: 0.12; } 100% { transform: translateY(-10dvh) rotate(360deg) scale(1.5); opacity: 0; } }
 
         .glass-panel { background: var(--bg-card); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-top: 1px solid rgba(255, 255, 255, 0.12); border-left: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); border-radius: 16px; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
         html[dir="ltr"] .glass-panel { border-left: 1px solid var(--glass-border); border-right: 1px solid rgba(255, 255, 255, 0.05); }
         [data-theme="light"] .glass-panel { box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07); border-top: 1px solid rgba(255, 255, 255, 0.6); }
 
-        /* ---------------- النافبار المحسن والمثبت على LTR ---------------- */
         .navbar { position: fixed; top: 0; left: 0; width: 100%; padding: 12px 25px; display: flex; justify-content: space-between; align-items: center; background: rgba(5, 5, 8, 0.5); backdrop-filter: blur(25px); border-bottom: 1px solid var(--glass-border); z-index: 1000; direction: ltr; }
         [data-theme="light"] .navbar { background: rgba(255, 255, 255, 0.7); }
         
         .navbar h1 { font-size: 24px; font-weight: 900; letter-spacing: 1px; display: flex; align-items: baseline; margin: 0; }
-        
-        /* تأثير التوهج المخصص لحرف X في النافبار */
         .navbar h1 span { 
             color: var(--primary); 
             font-size: 1.3em; 
@@ -145,7 +142,6 @@
         .nav-actions i { font-size: 20px; cursor: pointer; color: var(--text-main); transition: 0.3s; }
         .nav-actions i:hover { color: var(--primary); text-shadow: 0 0 10px var(--primary-glow); }
         
-        /* ---------------- إصلاح التوسيط العمودي في شريط الأخبار ---------------- */
         .news-ticker { 
             position: fixed; 
             top: 55px; 
@@ -153,7 +149,7 @@
             width: 100%; 
             height: 38px;
             display: flex; 
-            align-items: center; /* التوسيط العمودي */
+            align-items: center; 
             background: var(--ticker-bg); 
             backdrop-filter: blur(15px); 
             color: var(--ticker-text); 
@@ -163,7 +159,7 @@
             border-bottom: 1px solid var(--glass-border); 
             font-weight: 700; 
             font-size: 0.95rem;
-            line-height: 1; /* منع تمدد الخطوط */
+            line-height: 1; 
         }
         .ticker-content { 
             display: inline-flex; 
@@ -176,7 +172,6 @@
         @keyframes ticker-rtl { from { transform: translateX(-100vw); } to { transform: translateX(100%); } }
         @keyframes ticker-ltr { from { transform: translateX(100vw); } to { transform: translateX(-100%); } }
 
-        /* ---------------- أزرار اللغات ---------------- */
         .lang-btn { 
             border: 1px solid var(--glass-border); 
             padding: 6px 15px; 
@@ -191,7 +186,6 @@
             .lang-btn:hover:not(.active) { color: var(--primary); border-color: var(--primary); }
         }
 
-        /* إنزال المسافة العلوية (margin-top) للأسفل */
         .main-lang-switch { display: flex; justify-content: center; gap: 12px; margin: 125px auto 15px; position: relative; z-index: 10; }
         .main-lang-switch .lang-btn { 
             background: rgba(15, 15, 20, 0.4); 
@@ -213,7 +207,6 @@
             box-shadow: 0 0 15px var(--primary-glow); 
         }
 
-        /* ---------------- إدارة التبويبات والصفحات ---------------- */
         .tab-view {
             display: none;
             width: 100%;
@@ -227,7 +220,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ---------------- الشريط السفلي العائم ---------------- */
         .bottom-nav-bar {
             position: fixed;
             bottom: 20px;
@@ -457,7 +449,7 @@
         #toast.show { visibility: visible; bottom: 95px; opacity: 1; }
 
         @media (max-width: 600px) {
-            .main-lang-switch { margin-top: 115px; margin-bottom: 5px; } /* تم إنزال الأزرار للموبايل */
+            .main-lang-switch { margin-top: 115px; margin-bottom: 5px; } 
             .main-lang-switch .lang-btn { padding: 5px 15px; font-size: 0.85rem; }
             .blob { filter: blur(40px); opacity: 0.25; } 
             .glass-panel, .navbar { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
@@ -509,6 +501,7 @@
         <div class="blob blob-2"></div>
         <div class="blob blob-3"></div>
     </div>
+    
     <div class="particles" id="particles"></div>
 
     <nav class="navbar" dir="ltr">
@@ -818,7 +811,7 @@
 
         const icons = ['fa-gamepad', 'fa-dice', 'fa-chess-knight', 'fa-bowling-ball', 'fa-ghost', 'fa-futbol'];
         const particlesContainer = document.getElementById('particles');
-        for(let i=0; i<15; i++){
+        for(let i=0; i<12; i++){
             let icon = document.createElement('i');
             icon.className = 'fa-solid ' + icons[Math.floor(Math.random() * icons.length)] + ' particle';
             icon.style.left = Math.random() * 100 + 'vw';
@@ -1502,7 +1495,6 @@
                 `;
             });
 
-            // اقتطاع المصفوفة للحصول على المراكز 1، 2، و3 فقط
             let sortedGroups = Object.values(groupsSpending).sort((a, b) => b.total - a.total).slice(0, 3);
             let highestTotal = sortedGroups.length > 0 ? sortedGroups[0].total : 1;
 
