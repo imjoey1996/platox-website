@@ -987,12 +987,13 @@
             document.getElementById('spenders-container').innerHTML = spendSkel;
         }
 
-        async function loadNewsData(force = false) {
+                async function loadNewsData(force = false) {
             try {
                 const cached = localStorage.getItem('plato_news_cache');
                 const cacheTime = localStorage.getItem('plato_news_cache_time');
                 const now = Date.now();
                 
+                // جلب الكاش إذا لم ينتهِ (صلاحية 30 دقيقة)
                 if (!force && cached && cacheTime && (now - parseInt(cacheTime) < 1800000)) {
                     processNewsData(cached);
                     return; 
@@ -1002,19 +1003,55 @@
                 if (!response.ok) throw new Error("تأكد من الشيت");
                 const data = await response.text();
                 
-                if (data !== cached || force) {
-                    localStorage.setItem('plato_news_cache', data);
-                    localStorage.setItem('plato_news_cache_time', now.toString());
-                    processNewsData(data);
-                }
+                // تحديث الكاش وعرض البيانات دائماً
+                localStorage.setItem('plato_news_cache', data);
+                localStorage.setItem('plato_news_cache_time', now.toString());
+                processNewsData(data);
+                
             } catch (error) { 
                 console.error("حدث خطأ:", error); 
-                if(!localStorage.getItem('plato_news_cache')) {
+                // في حال انقطاع النت، اعرض البيانات القديمة إن وجدت
+                if(localStorage.getItem('plato_news_cache')) {
+                    processNewsData(localStorage.getItem('plato_news_cache'));
+                } else {
                     document.getElementById('newsSlider').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">تعذر الاتصال بالشبكة.</p>`;
                 }
             }
         }
 
+        async function loadDynamicData(force = false) {
+            try {
+                const cached = localStorage.getItem('plato_dynamic_cache');
+                const cacheTime = localStorage.getItem('plato_dynamic_cache_time');
+                const now = Date.now();
+                
+                // جلب الكاش إذا لم ينتهِ
+                if (!force && cached && cacheTime && (now - parseInt(cacheTime) < 1800000)) {
+                    cachedSheetRows = cached.split('\n').slice(1);
+                    renderDynamicData();
+                    return;
+                }
+
+                const response = await fetch(tourSheetURL);
+                const data = await response.text();
+                
+                // تحديث الكاش وعرض البيانات دائماً
+                localStorage.setItem('plato_dynamic_cache', data);
+                localStorage.setItem('plato_dynamic_cache_time', now.toString());
+                cachedSheetRows = data.split('\n').slice(1);
+                renderDynamicData();
+                
+            } catch (error) { 
+                console.error("حدث خطأ:", error); 
+                if(localStorage.getItem('plato_dynamic_cache')) {
+                    cachedSheetRows = localStorage.getItem('plato_dynamic_cache').split('\n').slice(1);
+                    renderDynamicData();
+                } else {
+                    document.getElementById('tournaments-container').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">تعذر الاتصال بالشبكة.</p>`;
+                    document.getElementById('spenders-container').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">تعذر الاتصال بالشبكة.</p>`;
+                }
+            }
+        }
         function processNewsData(data) {
             const rows = data.split('\n').slice(1).filter(row => row.trim().length > 0);
             
