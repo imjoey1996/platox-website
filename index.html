@@ -153,6 +153,11 @@
         
         .news-slide-card { width: 100%; flex: 0 0 100%; scroll-snap-align: center; padding: 30px; border-radius: 16px; transition: transform 0.4s; position: relative; }
         
+        .glowing-card {
+            border-color: var(--neon-color) !important;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5), 0 0 25px var(--neon-shadow), inset 0 0 15px var(--neon-shadow) !important;
+        }
+        
         .news-header-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; }
         .news-badge { padding: 5px 12px; border-radius: 8px; font-weight: 900; font-size: 0.8rem; display: flex; align-items: center; gap: 8px; border: 1px solid transparent; }
         .news-date-sub { font-family: 'Rajdhani', sans-serif; font-size: 0.85rem; color: var(--text-muted); font-weight: bold;}
@@ -333,24 +338,24 @@
     
     <div class="sidebar" id="sidebar">
         <i class="fa-solid fa-xmark close-btn" onclick="toggleMenu()"></i>
-        <a href="#hero" data-i18n="menu_home" onclick="haptic()">الرئيسية</a>
-        <a href="#news" data-i18n="menu_news" onclick="haptic()">الأخبار</a>
-        <a href="#bug-report" data-i18n="menu_bugs" onclick="haptic()">تقديم بلاغ</a>
-        <a href="#arabic-leaders" data-i18n="menu_leaders" onclick="haptic()">القادة العرب</a>
-        <a href="#tournaments" data-i18n="menu_tournaments" onclick="haptic()">البطولات</a>
-        <a href="#top-spending" data-i18n="menu_spending" onclick="haptic()">الإنفاق</a>
-        <a href="#accounts" data-i18n="menu_players" onclick="haptic()">اللاعبين</a>
+        <a href="#hero" data-i18n="menu_home">الرئيسية</a>
+        <a href="#news" data-i18n="menu_news">الأخبار</a>
+        <a href="#bug-report" data-i18n="menu_bugs">تقديم بلاغ</a>
+        <a href="#arabic-leaders" data-i18n="menu_leaders">القادة العرب</a>
+        <a href="#tournaments" data-i18n="menu_tournaments">البطولات</a>
+        <a href="#top-spending" data-i18n="menu_spending">الإنفاق</a>
+        <a href="#accounts" data-i18n="menu_players">اللاعبين</a>
     </div>
 
     <nav class="navbar">
         <h1>Plato<span>X</span></h1>
         <div class="nav-actions">
-            <i class="fa-solid fa-moon theme-toggle" id="theme-icon" onclick="haptic(); toggleTheme();"></i>
+            <i class="fa-solid fa-moon theme-toggle" id="theme-icon" onclick="toggleTheme();"></i>
             <div class="social-icons" style="display: flex; gap:12px;">
-                <a href="https://discord.gg/plato" target="_blank" onclick="haptic()"><i class="fa-brands fa-discord"></i></a>
-                <a href="https://instagram.com/platoarab" target="_blank" onclick="haptic()"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://discord.gg/plato" target="_blank"><i class="fa-brands fa-discord"></i></a>
+                <a href="https://instagram.com/platoarab" target="_blank"><i class="fa-brands fa-instagram"></i></a>
             </div>
-            <i class="fa-solid fa-bars menu-btn" onclick="haptic(); toggleMenu();" style="margin-left: 5px;"></i>
+            <i class="fa-solid fa-bars menu-btn" onclick="toggleMenu();" style="margin-left: 5px;"></i>
         </div>
     </nav>
 
@@ -359,8 +364,8 @@
     </div>
 
     <div class="main-lang-switch" data-aos="fade-down" dir="rtl">
-        <button class="lang-btn active" onclick="haptic(); changeLang('ar')" id="btn-ar">العربية</button>
-        <button class="lang-btn" onclick="haptic(); changeLang('en')" id="btn-en">English</button>
+        <button class="lang-btn active" onclick="changeLang('ar')" id="btn-ar">العربية</button>
+        <button class="lang-btn" onclick="changeLang('en')" id="btn-en">English</button>
     </div>
 
     <section class="hero" id="hero">
@@ -391,7 +396,7 @@
                     </button>
                 </div>
                 
-                <a href="https://discord.gg/plato" target="_blank" class="more-news-link" onclick="haptic()">
+                <a href="https://discord.gg/plato" target="_blank" class="more-news-link">
                     <i class="fa-brands fa-discord"></i> <span data-i18n="discord_more">للمزيد من الأخبار انضموا إلى الديسكورد</span>
                 </a>
             </div>
@@ -408,11 +413,11 @@
             <span style="display:block; margin-bottom: 15px; font-size: 0.85rem; color: var(--text-muted); font-weight: 700;" data-i18n="bug_note">هذا القسم غير مخصص للمشاكل الشخصية.</span>
             
             <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
-                <label class="bug-radio" onclick="haptic()">
+                <label class="bug-radio">
                     <input type="radio" name="bugType" value="Exploits" onchange="showBugForm()">
                     <span><strong data-i18n="bug_opt1_title">الثغرات (Exploits):</strong> <span data-i18n="bug_exp_desc" style="color: var(--text-muted); font-size: 0.9rem;">ثغرات، أخطاء برمجية، أو نسخ معدلة.</span></span>
                 </label>
-                <label class="bug-radio" onclick="haptic()">
+                <label class="bug-radio">
                     <input type="radio" name="bugType" value="Serious Technical Issue" onchange="showBugForm()">
                     <span><strong data-i18n="bug_opt2_title">مشكلة تقنية:</strong> <span data-i18n="bug_tech_desc" style="color: var(--text-muted); font-size: 0.9rem;">أخطاء تقنية ذات تأثير عالي أو مشاكل نظام قابلة للاستغلال المتكرر.</span></span>
                 </label>
@@ -423,8 +428,8 @@
                 <textarea id="bug-desc" class="bug-input" rows="4" placeholder="وصف المشكلة..." style="resize: vertical;"></textarea>
                 
                 <div style="display: flex; gap: 10px;">
-                    <button onclick="haptic(); submitBugReport();" class="submit-btn" data-i18n="bug_submit">إرسال البلاغ</button>
-                    <button onclick="haptic(); hideBugForm();" class="cancel-btn" data-i18n="bug_cancel">إلغاء</button>
+                    <button onclick="submitBugReport();" class="submit-btn" data-i18n="bug_submit">إرسال البلاغ</button>
+                    <button onclick="hideBugForm();" class="cancel-btn" data-i18n="bug_cancel">إلغاء</button>
                 </div>
             </div>
         </div>
@@ -459,15 +464,15 @@
         <h2 class="section-title" data-aos="fade-right" data-i18n="global_leaders_title">قادة السيرفرات العالمية</h2>
         
         <div class="server-tabs" data-aos="fade-up" dir="ltr">
-            <button class="server-tab active" data-target="english" onclick="haptic(); filterServer('english')">English</button>
-            <button class="server-tab" data-target="persian" onclick="haptic(); filterServer('persian')">Persian</button>
-            <button class="server-tab" data-target="french" onclick="haptic(); filterServer('french')">French</button>
-            <button class="server-tab" data-target="turkish" onclick="haptic(); filterServer('turkish')">Turkish</button>
-            <button class="server-tab" data-target="melayu" onclick="haptic(); filterServer('melayu')">Melayu</button>
-            <button class="server-tab" data-target="brazil" onclick="haptic(); filterServer('brazil')">Brazil</button>
-            <button class="server-tab" data-target="spanish" onclick="haptic(); filterServer('spanish')">Spanish</button>
-            <button class="server-tab" data-target="thai" onclick="haptic(); filterServer('thai')">Thai</button>
-            <button class="server-tab" data-target="desi" onclick="haptic(); filterServer('desi')">Desi</button>
+            <button class="server-tab active" data-target="english" onclick="filterServer('english')">English</button>
+            <button class="server-tab" data-target="persian" onclick="filterServer('persian')">Persian</button>
+            <button class="server-tab" data-target="french" onclick="filterServer('french')">French</button>
+            <button class="server-tab" data-target="turkish" onclick="filterServer('turkish')">Turkish</button>
+            <button class="server-tab" data-target="melayu" onclick="filterServer('melayu')">Melayu</button>
+            <button class="server-tab" data-target="brazil" onclick="filterServer('brazil')">Brazil</button>
+            <button class="server-tab" data-target="spanish" onclick="filterServer('spanish')">Spanish</button>
+            <button class="server-tab" data-target="thai" onclick="filterServer('thai')">Thai</button>
+            <button class="server-tab" data-target="desi" onclick="filterServer('desi')">Desi</button>
         </div>
 
         <div class="global-leaders-grid" id="global-leaders-grid"></div>
@@ -549,13 +554,6 @@
             disable: 'mobile'
         });
 
-        // Haptic Feedback Engine
-        function haptic() {
-            if (navigator.vibrate) {
-                navigator.vibrate(15);
-            }
-        }
-
         function toggleMenu() { document.getElementById('sidebar').classList.toggle('active'); document.querySelector('.overlay').classList.toggle('active'); }
 
         const icons = ['fa-gamepad', 'fa-dice', 'fa-chess-knight', 'fa-bowling-ball', 'fa-ghost', 'fa-futbol'];
@@ -579,7 +577,6 @@
         }
 
         function copyAdminID(id) {
-            haptic();
             navigator.clipboard.writeText(id).then(() => {
                 const toast = document.getElementById("toast");
                 toast.innerHTML = (document.documentElement.getAttribute('lang') === 'ar') ? `<i class="fa-solid fa-check"></i> تم النسخ: ${id}` : `<i class="fa-solid fa-check"></i> Copied: ${id}`;
@@ -776,7 +773,6 @@
                 const data = await response.text();
                 const rows = data.split('\n').slice(1).filter(row => row.trim().length > 0);
                 
-                // --- ميزة قراءة شريط الأخبار بالكامل وبشكل مدمج ---
                 let tickersAr = [];
                 let tickersEn = [];
                 
@@ -948,20 +944,7 @@
             setTimeout(updateCarouselButtons, 50);
         }
 
-        // ==================== الحماية المطلقة ضد زوم الآيفون المزدوج ====================
-        let lastTouchTime = 0;
-        document.addEventListener('touchstart', function (e) {
-            if (e.touches.length > 1) { e.preventDefault(); }
-        }, { passive: false });
-
-        document.addEventListener('touchend', function (e) {
-            let now = Date.now();
-            if (now - lastTouchTime <= 300) { e.preventDefault(); }
-            lastTouchTime = now;
-        }, { passive: false });
-
         function slideNews(direction) {
-            haptic();
             const slider = document.getElementById('newsSlider');
             const cards = slider.querySelectorAll('.news-slide-card');
             if(cards.length === 0) return;
@@ -1190,7 +1173,6 @@
             isPulling = false;
             let pull = ptrCurrentY - ptrStartY;
             if(pull > 80 && window.scrollY === 0) {
-                haptic();
                 ptrEl.classList.add('refreshing');
                 ptrEl.style.transform = 'translateY(0)';
                 Promise.all([loadNewsData(), loadDynamicData()]).then(() => {
