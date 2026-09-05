@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+.<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -1491,6 +1491,43 @@
             if(activeTab) filterServer(activeTab.dataset.target); 
             
             setInterval(updateSheetTimers, 1000);
+        });
+    </script>
+        <!-- كود الحماية الذكي لمنع الزوم بدون التأثير على سلاسة التمرير -->
+    <script>
+        // 1. منع الزوم بإصبعين (Pinch Zoom)
+        document.addEventListener('touchstart', function (e) {
+            if (e.touches.length > 1) { 
+                e.preventDefault(); 
+            }
+        }, { passive: false });
+
+        // 2. منع الزوم بالنقر المزدوج السريع (Double Tap Zoom)
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (e) {
+            let now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                // استثناء الأزرار والعناصر التفاعلية حتى لا تتعلق
+                const isInteractable = e.target.closest('button') || 
+                                     e.target.closest('a') || 
+                                     e.target.closest('input') || 
+                                     e.target.closest('.bug-radio') || 
+                                     e.target.closest('.leader-name-box') || 
+                                     e.target.closest('.server-tab') ||
+                                     e.target.closest('.nav-actions i') || 
+                                     e.target.closest('.close-btn') ||
+                                     e.target.closest('.admin-copy-btn');
+                
+                if(!isInteractable) { 
+                    e.preventDefault(); 
+                }
+            }
+            lastTouchEnd = now;
+        }, { passive: false });
+
+        // 3. إجبار أجهزة آبل (سفاري) على منع الزوم العشوائي
+        document.addEventListener('gesturestart', function(e) {
+            e.preventDefault();
         });
     </script>
 </body>
