@@ -119,7 +119,7 @@
         .section-title::before { content: ''; position: absolute; right: -15px; top: 50%; transform: translateY(-50%); width: 6px; height: 20px; background: var(--primary); border-radius: 3px; box-shadow: 0 0 15px var(--primary-glow);}
         html[dir="ltr"] .section-title::before { right: auto; left: -15px; }
 
-        /* ---------------- تنسيقات شريط الأخبار 3D ---------------- */
+        /* ---------------- تنسيقات شريط الأخبار 3D الجديد ---------------- */
         .news-carousel-container { width: 100%; max-width: 900px; position: relative; display: flex; flex-direction: column; gap: 20px; margin-bottom: 15px; padding-bottom: 15px; }
         
         .news-slider-3d { position: relative; display: flex; justify-content: center; align-items: center; height: 280px; width: 100%; perspective: 1000px; margin-bottom: 10px;}
@@ -714,7 +714,6 @@
         const newsSheetURL = "https://docs.google.com/spreadsheets/d/10YreDjSMCJc1hvGFbyfVJO4zAmzFGO0eeyoq5qKwf_E/export?format=csv";
 
         // ================= الإلغاء الفوري للتأخير في السحب =================
-        // تم نقل دوال الجلب خارج onload لتعمل فور فتح الموقع
         async function loadNewsData() {
             try {
                 const response = await fetch(newsSheetURL);
@@ -722,10 +721,20 @@
                 const data = await response.text();
                 const rows = data.split('\n').slice(1).filter(row => row.trim().length > 0);
                 
-                newsCardsData = rows.slice(0, 5).map(row => {
+                let allNews = rows.map(row => {
                     const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
                     return cols.length >= 2 ? cols : null;
                 }).filter(Boolean);
+                
+                // --- نظام الفلترة الذكي: ترتيب الأخبار من الأحدث للأقدم حسب التاريخ ---
+                allNews.sort((a, b) => {
+                    const dateA = new Date((a[0] || '').replace(/"/g, '').trim()).getTime() || 0;
+                    const dateB = new Date((b[0] || '').replace(/"/g, '').trim()).getTime() || 0;
+                    return dateB - dateA;
+                });
+
+                // أخذ أحدث 5 أخبار فقط بعد الترتيب
+                newsCardsData = allNews.slice(0, 5);
                 
                 buildNewsHTML();
             } catch (error) { console.error("Error loading news", error); }
@@ -791,7 +800,7 @@
             document.getElementById('bug-desc').placeholder = lang === 'ar' ? 'وصف المشكلة...' : 'Issue description...';
             
             if (cachedSheetRows) renderDynamicData();
-            if (newsCardsData.length > 0) buildNewsHTML(); // سيقوم الكود بترجمة التاجات تلقائياً عند تغيير اللغة
+            if (newsCardsData.length > 0) buildNewsHTML();
             
             localStorage.setItem('lang', lang);
 
@@ -818,13 +827,12 @@
                 const displayTitle = isAr ? titleAr : (titleEn || titleAr);
                 const displayBody = isAr ? bodyAr : (bodyEn || bodyAr);
 
-                // ---------------- الترجمة والألوان التلقائية للتاجات ----------------
+                // الترجمة والألوان التلقائية للتاجات
                 let tagColor = 'var(--primary)', tagBg = 'rgba(157, 78, 221, 0.15)', tagBorder = 'rgba(157, 78, 221, 0.3)', icon = 'fa-bolt';
                 let displayTag = tagType;
                 const tagLower = tagType.toLowerCase();
 
-                // التلوين والترجمة حسب الكلمة
-                if (!isAr) { // إذا كانت اللغة إنجليزية
+                if (!isAr) {
                     if (tagLower.includes('إعلان') || tagLower.includes('announcement')) {
                         displayTag = 'Announcement'; tagColor = '#3b82f6'; tagBg = 'rgba(59, 130, 246, 0.15)'; tagBorder = 'rgba(59, 130, 246, 0.3)'; icon = 'fa-bullhorn';
                     } else if (tagLower.includes('إشعار') || tagLower.includes('notice')) {
@@ -836,7 +844,7 @@
                     } else if (tagLower.includes('مهم') || tagLower.includes('important')) {
                         displayTag = 'Important'; tagColor = '#ef4444'; tagBg = 'rgba(239, 68, 68, 0.15)'; tagBorder = 'rgba(239, 68, 68, 0.3)'; icon = 'fa-circle-exclamation';
                     }
-                } else { // إذا كانت اللغة عربية
+                } else {
                     if (tagLower.includes('إعلان') || tagLower.includes('announcement')) {
                         displayTag = 'إعلان'; tagColor = '#3b82f6'; tagBg = 'rgba(59, 130, 246, 0.15)'; tagBorder = 'rgba(59, 130, 246, 0.3)'; icon = 'fa-bullhorn';
                     } else if (tagLower.includes('إشعار') || tagLower.includes('notice')) {
