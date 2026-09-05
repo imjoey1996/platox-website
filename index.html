@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>PlatoX | مجتمع اللاعبين العرب</title>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Rajdhani:wght@600;700;900&display=swap" rel="stylesheet">
@@ -38,10 +38,9 @@
             --glow-bbb: #0096b4;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; touch-action: manipulation; }
         
         html, body { 
-            touch-action: manipulation; 
             scroll-behavior: smooth; 
             scroll-padding-top: 85px; 
             color: var(--text-main); 
@@ -49,6 +48,7 @@
             overflow-x: hidden; 
             transition: background 0.4s, color 0.4s; 
             background-color: var(--bg-main); 
+            overscroll-behavior-y: none;
         }
         
         html[dir="ltr"] body, .num-font, .navbar h1 { font-family: 'Rajdhani', sans-serif; }
@@ -127,7 +127,7 @@
         .section-title::before { content: ''; position: absolute; right: -15px; top: 50%; transform: translateY(-50%); width: 6px; height: 20px; background: var(--primary); border-radius: 3px; box-shadow: 0 0 15px var(--primary-glow);}
         html[dir="ltr"] .section-title::before { right: auto; left: -15px; }
 
-        /* ---------------- تنسيقات الأخبار المحسّنة (بدون قص وبسرعة استجابة) ---------------- */
+        /* ---------------- تنسيقات الأخبار ---------------- */
         .news-carousel-container { width: 100%; max-width: 800px; position: relative; display: flex; flex-direction: column; gap: 5px; margin-bottom: 5px;}
         
         .news-slider { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; -ms-overflow-style: none; scrollbar-width: none; padding: 25px 20px;}
@@ -135,7 +135,6 @@
         
         .news-slide-card { width: 100%; flex: 0 0 100%; scroll-snap-align: center; padding: 30px; border-radius: 16px; transition: transform 0.4s; position: relative; }
         
-        /* الكارد الشفاف الأنيق */
         .glowing-card {
             border-color: var(--neon-color) !important;
             box-shadow: 0 15px 40px rgba(0,0,0,0.5), 0 0 25px var(--neon-shadow), inset 0 0 15px var(--neon-shadow) !important;
@@ -158,10 +157,7 @@
             gap: 15px;
         }
 
-        /* محاذاة الأسهم لتكون مساوية لزر الديسكورد بالملّي */
-        .slider-controls { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0; touch-action: manipulation;}
-        .slider-controls * { touch-action: manipulation !important; user-select: none !important; -webkit-user-select: none !important; }
-        
+        .slider-controls { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0;}
         .nav-btn { background: transparent; border: none; color: var(--text-muted); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px; transition: 0.3s; font-family: inherit; -webkit-tap-highlight-color: transparent;}
         .nav-btn:hover:not(.disabled) { color: var(--primary); transform: scale(1.08); }
         .nav-btn.disabled { opacity: 0.3; pointer-events: none; }
@@ -282,7 +278,6 @@
             .hero h2 { font-size: 2.2rem; } .hero p { font-size: 1rem; }
             .section-title { font-size: 1.4rem; margin-bottom: 25px; }
             
-            /* حل مشكلة سفاري بتثبيت العرض مع margin-inline */
             .news-slider { padding: 25px 0; gap: 15px; } 
             .news-slide-card { width: 88vw; flex: 0 0 88vw; padding: 25px 20px; } 
             .news-slide-card:first-child { margin-inline-start: 6vw; }
@@ -291,7 +286,6 @@
             .news-headline { font-size: 1.25rem; } 
             .news-body { font-size: 0.95rem; }
             
-            /* الأسهم والديسكورد بمقاس متطابق تماماً 320px */
             .news-bottom-wrapper { max-width: 320px; gap: 15px; margin-top: 0; }
             .slider-controls { margin-top: 0px; padding: 0; } 
             
@@ -357,7 +351,7 @@
         <p data-aos="fade-up" data-aos-delay="200" data-i18n="hero_desc">يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.</p>
     </section>
 
-    <!-- ---------------- قسم الأخبار الزجاجي السريع والمنظم ---------------- -->
+    <!-- ---------------- قسم الأخبار السلس والمحمي تماماً ---------------- -->
     <section id="news" style="padding-top: 10px;">
         <h2 class="section-title" data-aos="fade-right" data-i18n="news_board_title">لوحة أخبار المجتمع</h2>
 
@@ -368,7 +362,7 @@
             
             <div class="news-bottom-wrapper">
                 <div class="slider-controls">
-                    <button class="nav-btn disabled" id="btnNewer">
+                    <button class="nav-btn disabled" id="btnNewer" onclick="slideNews(-1)">
                         <span class="nav-label num-font" data-i18n="news_newer">الأحدث</span>
                         <i class="fa-solid fa-arrow-right arrow-icon prev-icon"></i>
                     </button>
@@ -377,7 +371,7 @@
                         <!-- سيتم إضافة النقاط برمجياً -->
                     </div>
 
-                    <button class="nav-btn disabled" id="btnOlder">
+                    <button class="nav-btn disabled" id="btnOlder" onclick="slideNews(1)">
                         <span class="nav-label num-font" data-i18n="news_older">الأقدم</span>
                         <i class="fa-solid fa-arrow-left arrow-icon next-icon"></i>
                     </button>
@@ -739,7 +733,7 @@
         const tourSheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/export?format=csv"; 
         const newsSheetURL = "https://docs.google.com/spreadsheets/d/10YreDjSMCJc1hvGFbyfVJO4zAmzFGO0eeyoq5qKwf_E/export?format=csv";
 
-        // الجلب الفوري للأخبار والبطولات
+        // ================= الجلب الفوري للأخبار والبطولات =================
         async function loadNewsData() {
             try {
                 const response = await fetch(newsSheetURL);
@@ -787,6 +781,7 @@
             } catch (error) { console.error("حدث خطأ أثناء جلب البيانات:", error); }
         }
         
+        // جلب البيانات فوراً لضمان السرعة القصوى (Zero Lag Display)
         loadNewsData();
         loadDynamicData();
 
@@ -839,7 +834,7 @@
             setTimeout(() => { sidebar.style.transition = ''; }, 50);
         }
 
-        // ---------------- دالة بناء الأخبار والتحديثات ----------------
+        // ---------------- دالة بناء الأخبار والتحديثات بالشكل الزجاجي الخفيف ----------------
         function buildNewsHTML() {
             const slider = document.getElementById('newsSlider');
             const dotsContainer = document.getElementById('newsDots');
@@ -908,7 +903,20 @@
             setTimeout(updateCarouselButtons, 50);
         }
 
-        // ---------------- التنقل السريع الخالي من اللاق بالأسهم ----------------
+        // ==================== الحماية المطلقة ضد زوم الآيفون المزدوج ====================
+        
+        let lastTouchTime = 0;
+        document.addEventListener('touchstart', function (e) {
+            if (e.touches.length > 1) { e.preventDefault(); }
+        }, { passive: false });
+
+        document.addEventListener('touchend', function (e) {
+            let now = Date.now();
+            if (now - lastTouchTime <= 300) { e.preventDefault(); }
+            lastTouchTime = now;
+        }, { passive: false });
+
+        // ---------------- التنقل السريع الخالي من اللاق ----------------
         
         function slideNews(direction) {
             const slider = document.getElementById('newsSlider');
@@ -920,30 +928,6 @@
             const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
             slider.scrollBy({ left: scrollAmount * (isRTL ? -direction : direction), behavior: 'smooth' });
         }
-
-        // الحماية من الزوم عند الضغط السريع على أزرار الأسهم
-        document.querySelectorAll('.nav-btn').forEach(btn => {
-            let lastTap = 0;
-            btn.addEventListener('touchend', function(e) {
-                let currentTime = new Date().getTime();
-                let tapLength = currentTime - lastTap;
-                if (tapLength < 400 && tapLength > 0) {
-                    e.preventDefault(); 
-                    if(!btn.classList.contains('disabled')) {
-                        const dir = btn.id === 'btnNewer' ? -1 : 1;
-                        slideNews(dir);
-                    }
-                }
-                lastTap = currentTime;
-            });
-            
-            btn.addEventListener('click', function(e) {
-                if(!btn.classList.contains('disabled')) {
-                    const dir = btn.id === 'btnNewer' ? -1 : 1;
-                    slideNews(dir);
-                }
-            });
-        });
 
         function updateCarouselButtons() {
             const slider = document.getElementById('newsSlider');
