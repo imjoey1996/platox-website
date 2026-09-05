@@ -127,7 +127,7 @@
         .section-title::before { content: ''; position: absolute; right: -15px; top: 50%; transform: translateY(-50%); width: 6px; height: 20px; background: var(--primary); border-radius: 3px; box-shadow: 0 0 15px var(--primary-glow);}
         html[dir="ltr"] .section-title::before { right: auto; left: -15px; }
 
-        /* ---------------- Pull to Refresh (شريط السحب للتحديث) ---------------- */
+        /* ---------------- Pull to Refresh ---------------- */
         #ptr-loader { position: fixed; top: 0; left: 0; width: 100%; height: 60px; display: flex; justify-content: center; align-items: center; gap: 10px; background: var(--primary); color: #fff; font-weight: bold; font-family: 'Cairo', sans-serif; font-size: 1.1rem; transform: translateY(-100%); z-index: 9999; transition: transform 0.2s ease-out, background 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
         #ptr-loader i { transition: transform 0.3s; }
         #ptr-loader.refreshing { transform: translateY(0) !important; background: #3b82f6; }
@@ -152,11 +152,6 @@
         .news-slider::-webkit-scrollbar { display: none; }
         
         .news-slide-card { width: 100%; flex: 0 0 100%; scroll-snap-align: center; padding: 30px; border-radius: 16px; transition: transform 0.4s; position: relative; }
-        
-        .glowing-card {
-            border-color: var(--neon-color) !important;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.5), 0 0 25px var(--neon-shadow), inset 0 0 15px var(--neon-shadow) !important;
-        }
         
         .news-header-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; }
         .news-badge { padding: 5px 12px; border-radius: 8px; font-weight: 900; font-size: 0.8rem; display: flex; align-items: center; gap: 8px; border: 1px solid transparent; }
@@ -231,18 +226,25 @@
         .server-tab:hover { color: var(--text-main); border-color: var(--text-main); }
         .server-tab.active { background: var(--text-main); color: var(--bg-main); border-color: var(--text-main); box-shadow: none; }
         
-        .global-leaders-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px; width: 100%; max-width: 950px; justify-items: center; }
-        .global-leader { width: 100%; padding: 20px 10px; text-align: center; display: none; animation: fadeScale 0.4s ease-out forwards; }
+        /* ---------------- تنسيقات القادة (الجديدة والأفقية) ---------------- */
+        .global-leaders-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; width: 100%; max-width: 950px; justify-items: center; }
+        .global-leader { width: 100%; padding: 15px; display: flex; align-items: center; gap: 15px; text-align: right; animation: fadeScale 0.4s ease-out forwards; }
+        html[dir="ltr"] .global-leader { text-align: left; }
         @keyframes fadeScale { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-        .global-leader img { width: 65px; height: 65px; border-radius: 50%; margin-bottom: 12px; object-fit: cover; border: 2px solid rgba(255,255,255,0.1); transition: 0.3s; }
+        
+        .global-leader img { width: 65px; height: 65px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.1); transition: 0.3s; flex-shrink: 0; margin-bottom: 0; }
         .global-leader:hover { border-color: var(--primary); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.3);}
         .global-leader:hover img { border-color: var(--primary); box-shadow: 0 0 15px var(--primary-glow); transform: scale(1.05); }
         
-        .leader-name-box { display: flex; justify-content: center; align-items: center; gap: 6px; cursor: pointer; transition: 0.3s; }
-        .leader-name-box h3 { font-size: 0.95rem; color: var(--text-main); font-family: 'Rajdhani', 'Cairo', sans-serif; transition: 0.3s; }
-        .leader-copy-icon { font-size: 0.8rem; color: var(--text-muted); transition: 0.3s; }
-        .leader-name-box:hover h3, .leader-name-box:hover .leader-copy-icon { color: var(--primary); }
+        .leader-info { display: flex; flex-direction: column; gap: 5px; flex: 1; align-items: flex-start; justify-content: center; overflow: hidden; }
+        .leader-name-box { display: flex; justify-content: flex-start; align-items: center; gap: 6px; cursor: pointer; transition: 0.3s; width: fit-content; }
+        .leader-name-box h3 { font-size: 1.05rem; font-family: 'Rajdhani', 'Cairo', sans-serif; transition: 0.3s; color: var(--text-main); }
+        .leader-copy-icon { font-size: 0.85rem; color: var(--text-muted); transition: 0.3s; }
+        .leader-name-box:hover h3, .leader-name-box:hover .leader-copy-icon { color: var(--primary) !important; }
         .leader-name-box:hover .leader-copy-icon { transform: scale(1.15); }
+        
+        .leader-desc { font-size: 0.85rem; color: rgba(255,255,255,0.7); line-height: 1.5; font-weight: 600; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        [data-theme="light"] .leader-desc { color: var(--text-muted); }
 
         .premium-list { width: 100%; max-width: 700px; display: flex; flex-direction: column; gap: 10px; }
         .list-row { padding: 12px 15px; display: flex; align-items: center; gap: 15px; transition: 0.3s; }
@@ -308,13 +310,15 @@
             .slider-controls { margin-top: 0px; padding: 0; } 
             
             .grid-container { display: grid !important; grid-template-columns: 1fr !important; gap: 15px; width: 100%; }
-            .global-leaders-grid { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 10px; width: 100%; }
+            .global-leaders-grid { display: grid !important; grid-template-columns: 1fr !important; gap: 10px; width: 100%; } /* القادة كروت عرضية بالموبايل */
             .card { padding: 15px 10px; width: 100%; max-width: none; }
             .card img { width: 70px; height: 70px; margin-bottom: 10px; }
             .card h3 { font-size: 1.1rem; margin-bottom: 5px; }
             .card p { font-size: 0.8rem; line-height: 1.4; }
-            .global-leader { padding: 15px 5px; width: 100%; }
+            
+            .global-leader { padding: 15px; }
             .global-leader img { width: 55px; height: 55px; }
+            
             .list-row { padding: 10px; gap: 8px; } .rank-num { font-size: 1rem; width: 20px; } .list-img { width: 30px; height: 30px; } .list-name { font-size: 0.85rem; } .score-val { font-size: 0.95rem; }
             .tour-card { padding: 20px 15px; } .tour-title { font-size: 1.05rem; } .tour-desc { font-size: 0.85rem; margin-bottom: 12px;} .tour-footer { flex-direction: column; gap: 8px; } .info-badge { width: 100%; justify-content: center; font-size: 0.8rem; padding: 6px;}
             .server-tabs { flex-wrap: wrap !important; justify-content: center !important; gap: 10px; padding-bottom: 10px; }
@@ -378,7 +382,6 @@
 
         <div class="news-carousel-container" data-aos="zoom-in">
             <div class="news-slider" id="newsSlider">
-                <!-- Skeletons will be injected here initially -->
             </div>
             
             <div class="news-bottom-wrapper">
@@ -648,12 +651,19 @@
             });
         }
 
+        // تم دمج بيانات الشرح للقادة
         const globalLeadersData = [
             { name: "Fear", server: "english", color: "0a2a75", img: "55fb9c5469409aa250bb7f2eeae0fbea.png" }, 
             { name: "abc", server: "english", color: "0a2a75", img: "84fbda49d60a3ab730108bb40c635feb.png" }, 
             { name: "Rose", server: "english", color: "0a2a75", img: "IMG_7437.png" }, 
             { name: "Risk", server: "english", color: "0a2a75", img: "57914b7385432b7831bcc1470723baa7.png" },
-            { name: "7777777", server: "persian", color: "10b981", img: "03cdd5503fd8725e76641fb8e06c2937.png" }, 
+            { 
+                name: "7777777", 
+                server: "persian", 
+                color: "10b981", 
+                img: "03cdd5503fd8725e76641fb8e06c2937.png",
+                desc: { ar: "قائد مهتم، يعتبر مشاكل المجتمع مهمة مثل مشاكله الخاصة.", en: "A caring leader who sees the community's problems as important as his own." }
+            }, 
             { name: "Armin", server: "persian", color: "10b981", img: "IMG_7428.png" }, 
             { name: "Reza", server: "persian", color: "10b981", img: "IMG_7443.png" }, 
             { name: "NarGc", server: "persian", color: "10b981", img: "13b8f453f2ee334ab01a7e53fc4c23fb.png" },
@@ -678,14 +688,24 @@
         function renderGlobalLeaders() {
             const container = document.getElementById('global-leaders-grid');
             container.innerHTML = '';
+            const currentLang = document.documentElement.getAttribute('lang') || 'ar';
+            
             globalLeadersData.forEach(leader => {
                 const imageSource = leader.img ? leader.img : `https://ui-avatars.com/api/?name=${leader.name}&background=${leader.color}&color=fff&bold=true`;
+                
+                // جلب الشرح حسب اللغة إذا كان متوفراً
+                const descText = leader.desc ? (currentLang === 'ar' && leader.desc.ar ? leader.desc.ar : leader.desc.en) : "";
+                const descHTML = descText ? `<p class="leader-desc">${descText}</p>` : "";
+                
                 container.innerHTML += `
                     <div class="global-leader glass-panel" data-server="${leader.server}">
                         <img src="${imageSource}" alt="${leader.name}">
-                        <div class="leader-name-box" onclick="copyAdminID('${leader.name}')" title="انسخ اليوزر">
-                            <h3 class="num-font">${leader.name}</h3>
-                            <i class="fa-regular fa-copy leader-copy-icon"></i>
+                        <div class="leader-info">
+                            <div class="leader-name-box" onclick="copyAdminID('${leader.name}')" title="انسخ اليوزر">
+                                <h3 class="num-font">${leader.name}</h3>
+                                <i class="fa-regular fa-copy leader-copy-icon"></i>
+                            </div>
+                            ${descHTML}
                         </div>
                     </div>
                 `;
@@ -698,7 +718,7 @@
             });
             document.querySelectorAll('.global-leader').forEach(card => {
                 if(card.dataset.server === serverName) {
-                    card.style.display = 'block';
+                    card.style.display = 'flex';
                     card.style.animation = 'none'; 
                     setTimeout(() => { card.style.animation = 'fadeScale 0.4s ease-out forwards'; }, 10);
                 } else {
@@ -869,6 +889,11 @@
             document.getElementById('plato-id').placeholder = lang === 'ar' ? 'يوزرك في اللعبة' : 'Your Plato ID';
             document.getElementById('bug-desc').placeholder = lang === 'ar' ? 'وصف المشكلة...' : 'Issue description...';
             
+            // تحديث تصميم قسم القادة ليتوافق مع اللغة
+            renderGlobalLeaders();
+            const activeTab = document.querySelector('.server-tab.active');
+            if(activeTab) filterServer(activeTab.dataset.target);
+            
             if (cachedSheetRows) renderDynamicData();
             if (newsCardsData.length > 0) buildNewsHTML();
             
@@ -943,6 +968,17 @@
             
             setTimeout(updateCarouselButtons, 50);
         }
+
+        let lastTouchTime = 0;
+        document.addEventListener('touchstart', function (e) {
+            if (e.touches.length > 1) { e.preventDefault(); }
+        }, { passive: false });
+
+        document.addEventListener('touchend', function (e) {
+            let now = Date.now();
+            if (now - lastTouchTime <= 300) { e.preventDefault(); }
+            lastTouchTime = now;
+        }, { passive: false });
 
         function slideNews(direction) {
             const slider = document.getElementById('newsSlider');
@@ -1212,7 +1248,8 @@
             });
             
             renderGlobalLeaders();
-            filterServer('english'); 
+            const activeTab = document.querySelector('.server-tab.active');
+            if(activeTab) filterServer(activeTab.dataset.target); 
             
             setInterval(updateSheetTimers, 1000);
         });
