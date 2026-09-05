@@ -488,7 +488,7 @@
             <div class="card glass-panel card-yyy">
                 <img src="IMG_3154.png" alt="YYY">
                 <h3>YYY</h3>
-                <div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: var(--glow-yyy);"></i> 1/1</div>
+                <div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: var(--glow-yyy);"></i> <span data-i18n="bday_yyy">1 يناير</span></div>
                 <p data-i18n="desc_yyy">صانع الأثر، يقود برؤية مستقبلية لخلق بيئة إيجابية لا تعرف المستحيل.</p>
             </div>
             <div class="card glass-panel card-hat">
@@ -757,7 +757,13 @@
             { name: "Mdame", server: "french", img: "de6ac96df41f0d3378e934e467ccee32.png" }, 
             { name: "Algerien", server: "french", img: "IMG_7444.png" }, 
             { name: "Nefya", server: "turkish", img: "IMG_7438.png" },
-            { name: "esthell", server: "turkish", img: "8b85aa900d60b226406c24f3fef88da0.png" }, 
+            { 
+                name: "esthell", 
+                server: "turkish", 
+                img: "8b85aa900d60b226406c24f3fef88da0.png",
+                birthday: { en: "May 13", ar: "13 مايو" },
+                desc: { ar: "قائدة دافئة وملهمة تنشر الطاقة الإيجابية، وتدعم الآخرين، وتجعل الجميع يشعرون بالترحيب.", en: "A warm and inspiring leader who brings positive energy, supports others, and makes everyone feel welcome." }
+            }, 
             { 
                 name: "Fyy", 
                 server: "melayu", 
@@ -809,7 +815,12 @@
                 const colorHex = serverThemes[leader.server].bg;
                 const imageSource = leader.img ? leader.img : `https://ui-avatars.com/api/?name=${leader.name}&background=${colorHex.replace('#', '')}&color=fff&bold=true`;
                 
-                const bdayHTML = leader.birthday ? `<div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: ${colorHex};"></i> ${leader.birthday}</div>` : "";
+                let bdayText = "";
+                if (leader.birthday) {
+                    bdayText = currentLang === 'ar' && leader.birthday.ar ? leader.birthday.ar : leader.birthday.en;
+                }
+                const bdayHTML = bdayText ? `<div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: ${colorHex};"></i> ${bdayText}</div>` : "";
+                
                 const descText = leader.desc ? (currentLang === 'ar' && leader.desc.ar ? leader.desc.ar : leader.desc.en) : "";
                 const descHTML = descText ? `<p class="leader-desc">${descText}</p>` : "";
                 
@@ -871,7 +882,8 @@
                 guide_3: "لا تقم بإرسال رسائل غير مرغوب فيها (نشر الشيء نفسه أكثر من مرة) أو نشر نصوص تعطل تدفق الدردشة.",
                 guide_4: "لا تنشر محتوى يشجع على العنف في الحياة الواقعية، أو يشجع على إيذاء النفس أو الانتحار، أو يشجع على العنف تجاه مجموعة معينة من الأشخاص.",
                 guide_5: "الدردشة فقط بلغة الخادم الذي تختاره.",
-                guide_warning: "يقوم قادة الخادم بتطبيق الإرشادات المذكورة أعلاه. سيؤدي انتهاك هذه الإرشادات إلى فقدان القدرة على الدردشة لمدة 4 ساعات وقد يؤدي إلى حظر دائم لحسابك إذا تكرر."
+                guide_warning: "يقوم قادة الخادم بتطبيق الإرشادات المذكورة أعلاه. سيؤدي انتهاك هذه الإرشادات إلى فقدان القدرة على الدردشة لمدة 4 ساعات وقد يؤدي إلى حظر دائم لحسابك إذا تكرر.",
+                bday_yyy: "1 يناير"
             },
             en: {
                 menu_home: "HOME", menu_leaders: "LEADERS", menu_news: "NEWS", menu_bugs: "REPORT BUG", menu_players: "PLAYERS", menu_spending: "SPENDING", menu_tournaments: "TOURNAMENTS", pull_refresh: "Updating...", menu_guidelines: "GUIDELINES",
@@ -890,7 +902,8 @@
                 guide_3: "Do not spam (posting the same thing more than once) or otherwise post text that disrupts the flow of chat.",
                 guide_4: "Do not post content that encourages violence in real life, or encourages self-harm or suicide, or encourages violence towards a specific group of people.",
                 guide_5: "Chat only in the language of the server you select.",
-                guide_warning: "Server Leaders enforce the guidelines listed above. Breaking these Public Room Chat Guidelines will result in losing the ability to chat for 4 hours and may result in a permanent ban of your account if frequent."
+                guide_warning: "Server Leaders enforce the guidelines listed above. Breaking these Public Room Chat Guidelines will result in losing the ability to chat for 4 hours and may result in a permanent ban of your account if frequent.",
+                bday_yyy: "January 1"
             }
         };
 
