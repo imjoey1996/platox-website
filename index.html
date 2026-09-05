@@ -80,7 +80,6 @@
             overscroll-behavior-y: none;
         }
 
-        /* تم استبدال hidden بـ clip لمنع مشكلة الشاشة السوداء في آيفون Safari Repaint Bug */
         body { 
             color: var(--text-main); 
             font-family: 'Cairo', sans-serif; 
@@ -118,15 +117,12 @@
         [data-theme="light"] .particle { color: var(--primary); opacity: 0.08; }
         @keyframes floatUp { 0% { transform: translateY(100dvh) rotate(0deg) scale(0.8); opacity: 0; } 20% { opacity: 0.15; } 80% { opacity: 0.15; } 100% { transform: translateY(-10dvh) rotate(360deg) scale(1.5); opacity: 0; } }
 
-        /* إضافة backface-visibility لحماية الكروت من الاختفاء في النزول السريع */
         .glass-panel { background: var(--bg-card); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-top: 1px solid rgba(255, 255, 255, 0.12); border-left: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); border-radius: 16px; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
         html[dir="ltr"] .glass-panel { border-left: 1px solid var(--glass-border); border-right: 1px solid rgba(255, 255, 255, 0.05); }
         [data-theme="light"] .glass-panel { box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07); border-top: 1px solid rgba(255, 255, 255, 0.6); }
 
         .navbar { position: fixed; top: 0; width: 100%; padding: 12px 25px; display: flex; justify-content: space-between; align-items: center; background: rgba(5, 5, 8, 0.5); backdrop-filter: blur(25px); border-bottom: 1px solid var(--glass-border); z-index: 1000; }
         [data-theme="light"] .navbar { background: rgba(255, 255, 255, 0.7); }
-        
-        /* تكبير حرف X في النافبار */
         .navbar h1 { font-size: 24px; font-weight: 900; letter-spacing: 1px; display: flex; align-items: baseline;}
         .navbar h1 span { color: var(--primary); font-size: 1.3em; transform: translateY(2px); margin-inline-start: 1px;}
         
@@ -163,7 +159,6 @@
         section { padding: 70px 15px 30px; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; }
         
         .hero { height: 45dvh; justify-content: center; text-align: center; padding: 0 15px; margin-top: 10px;}
-        /* تكبير حرف X في الواجهة الرئيسية */
         .hero h2 { font-size: 3.2rem; font-weight: 900; margin-bottom: 10px; color: #fff; text-shadow: 0 0 30px rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; flex-wrap: wrap;}
         .hero h2 span.hero-x { color: var(--primary); text-shadow: 0 0 20px var(--primary-glow); font-size: 1.25em; margin-inline-start: 2px; margin-inline-end: 10px; transform: translateY(2px);}
         [data-theme="light"] .hero h2 { color: #000; text-shadow: none; }
@@ -194,7 +189,6 @@
         .skel-title { height: 25px; width: 60%; }
         .skel-badge { height: 30px; width: 80px; border-radius: 8px; }
 
-        /* ---------------- تنسيقات الأخبار ---------------- */
         .news-carousel-container { width: 100%; max-width: 800px; position: relative; display: flex; flex-direction: column; gap: 5px; margin-bottom: 5px;}
         .news-slider { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; -ms-overflow-style: none; scrollbar-width: none; padding: 25px 20px; cursor: grab;}
         .news-slider:active { cursor: grabbing; }
@@ -224,7 +218,6 @@
         .more-news-link i { color: var(--discord-color); font-size: 1.1rem; }
         .more-news-link:hover { color: var(--text-main); transform: translateY(-2px); border-color: var(--discord-color); box-shadow: 0 5px 15px rgba(88, 101, 242, 0.2);}
 
-        /* ---------------- تنسيقات البلاغات ---------------- */
         .bug-radio { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border); transition: 0.3s; background: rgba(0,0,0,0.2); }
         .bug-radio:hover { background: rgba(157, 78, 221, 0.08); border-color: var(--primary); }
         .bug-radio input { margin-top: 4px; accent-color: var(--primary); transform: scale(1.2); }
@@ -240,7 +233,6 @@
         [data-theme="light"] .cancel-btn { background: rgba(0,0,0,0.05); color: var(--text-muted); border-color: rgba(0,0,0,0.1); }
         [data-theme="light"] .cancel-btn:hover { background: rgba(220, 38, 38, 0.1); color: #ef4444; border-color: rgba(220, 38, 38, 0.3); }
 
-        /* ---------------- تنسيقات القوانين ---------------- */
         .guideline-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--glass-border); }
         .guideline-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
         .guideline-icon { color: var(--text-main); font-size: 1.1rem; margin-top: 3px; flex-shrink: 0; }
@@ -248,7 +240,6 @@
         [data-theme="light"] .guideline-text { color: var(--text-main); }
         .guideline-warning { background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.3); color: #ef4444; padding: 12px; border-radius: 8px; font-size: 0.85rem; font-weight: 700; line-height: 1.6; margin-top: 15px; display: flex; gap: 10px; align-items: center; }
 
-        /* ---------------- تنسيق شريطة عيد الميلاد ---------------- */
         .birthday-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border); padding: 3px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-top: -3px; margin-bottom: 8px; transition: 0.3s; }
         [data-theme="light"] .birthday-badge { background: rgba(0, 0, 0, 0.03); }
         .card:hover .birthday-badge, .global-leader:hover .birthday-badge { color: var(--text-main); border-color: rgba(255,255,255,0.2); }
@@ -283,7 +274,6 @@
         .leader-desc { font-size: 0.8rem; color: rgba(255,255,255,0.7); line-height: 1.5; font-weight: 600; text-align: center; width: 100%; word-break: break-word;}
         [data-theme="light"] .leader-desc { color: var(--text-muted); }
 
-        /* إضافة z-index وحماية القائمة من الاختفاء */
         .premium-list { width: 100%; max-width: 700px; display: flex; flex-direction: column; gap: 10px; position: relative; z-index: 2;}
         .list-row { padding: 12px 15px; display: flex; align-items: center; gap: 15px; transition: 0.3s; }
         .list-row:hover { background: rgba(157, 78, 221, 0.08); border-color: rgba(157, 78, 221, 0.3); transform: scale(1.02); }
@@ -319,7 +309,6 @@
         .prize-badge { border-color: rgba(227, 179, 65, 0.3); background: rgba(227, 179, 65, 0.1); color: var(--glow-yyy); }
         .admin-copy-btn { cursor: pointer; transition: 0.3s; } .admin-copy-btn:hover { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 0 15px var(--primary-glow);}
 
-        /* ---------------- تنسيقات الروابط الإضافية ---------------- */
         .links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; width: 100%; max-width: 850px; }
         .link-card { display: flex; align-items: center; gap: 15px; padding: 20px; text-decoration: none; color: var(--text-main); transition: 0.4s; border-radius: 16px; position: relative; overflow: hidden; }
         .link-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 10px 25px var(--primary-glow); }
@@ -327,7 +316,7 @@
         .link-card:hover .link-icon { transform: scale(1.1); color: #fff; }
         .link-info { display: flex; flex-direction: column; gap: 4px; }
         .link-title { font-weight: 900; font-size: 1.1rem; }
-        .link-sub { font-size: 0.8rem; color: var(--text-muted); font-weight: bold; }
+        .link-sub { font-size: 0.8rem; color: var(--text-muted); font-weight: bold; line-height: 1.4; }
 
         #toast { visibility: hidden; min-width: 200px; background: rgba(15, 15, 20, 0.95); backdrop-filter: blur(10px); color: #fff; text-align: center; border-radius: 10px; padding: 12px 20px; position: fixed; z-index: 9999; left: 50%; bottom: 25px; transform: translateX(-50%); font-size: 14px; transition: 0.4s; opacity: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid var(--primary); font-family: 'Cairo', sans-serif; font-weight:bold;}
         #toast.show { visibility: visible; bottom: 85px; opacity: 1; }
@@ -401,7 +390,6 @@
         <a href="#tournaments" data-i18n="menu_tournaments">البطولات</a>
         <a href="#top-spending" data-i18n="menu_spending">الإنفاق</a>
         <a href="#accounts" data-i18n="menu_players">اللاعبين</a>
-        <!-- إضافة المواقع ذات الصلة للقائمة الجانبية -->
         <a href="#related-links" data-i18n="menu_links">مواقع ذات صلة</a>
     </div>
 
@@ -651,29 +639,28 @@
                 <i class="fa-solid fa-globe link-icon"></i>
                 <div class="link-info">
                     <span class="link-title num-font">Plato Web</span>
-                    <span class="link-sub">platoapp.com</span>
+                    <span class="link-sub" data-i18n="link_plato_desc">الموقع الرسمي والأساسي للعبة بلاتو، ويضم المعلومات والخدمات الرئيسية المتعلقة باللعبة.</span>
                 </div>
             </a>
-            <a href="https://platopedia.com" target="_blank" class="link-card glass-panel">
+            <a href="https://platopedia.com/profilebuilder" target="_blank" class="link-card glass-panel">
                 <i class="fa-solid fa-book-open link-icon"></i>
                 <div class="link-info">
                     <span class="link-title num-font" data-i18n="link_platopedia">Platopedia</span>
-                    <span class="link-sub">Wiki & Stats</span>
+                    <span class="link-sub" data-i18n="link_platopedia_desc">موسوعة متخصصة في بلاتو، توفر معلومات شاملة حول العناصر المتاحة، إلى جانب خيارات تخصيص الملفات الشخصية ومتابعة تفاصيلها.</span>
                 </div>
             </a>
             <a href="https://werepedia.com/en" target="_blank" class="link-card glass-panel">
-                <!-- تغيير أيقونة اللعبة إلى أنياب شرسة للعبة الذئب -->
-                <i class="fa-solid fa-teeth-open link-icon"></i>
+                <i class="fa-solid fa-skull link-icon"></i>
                 <div class="link-info">
                     <span class="link-title num-font" data-i18n="link_werepedia">Werepedia</span>
-                    <span class="link-sub">Werewolf Guide</span>
+                    <span class="link-sub" data-i18n="link_werepedia_desc">موقع متخصص في لعبة الذئب، يقدّم شرحًا مفصلًا للبطاقات والأدوار، بالإضافة إلى استراتيجيات ونصائح تساعد على تطوير أسلوب اللعب.</span>
                 </div>
             </a>
             <a href="https://platopedia.com" target="_blank" class="link-card glass-panel">
                 <i class="fa-solid fa-dragon link-icon"></i>
                 <div class="link-info">
                     <span class="link-title num-font" data-i18n="link_monsterpedia">Monsterpedia</span>
-                    <span class="link-sub">Match Monsters</span>
+                    <span class="link-sub" data-i18n="link_monsterpedia_desc">موسوعة متخصصة في لعبة الوحوش، تشرح محتوى اللعبة بالتفصيل.</span>
                 </div>
             </a>
         </div>
@@ -848,7 +835,7 @@
             { name: "morango", server: "brazil", img: "c5d766cb9eefad03e43d5c60b6663f68.png", birthday: { en: "May 7", ar: "7 مايو" }, desc: { ar: "قائدة ودودة ومتفانية تخلق مجتمعاً ممتعاً ومرحباً وشاملاً.", en: "A friendly and dedicated leader who creates a fun, welcoming, and inclusive community." } }, 
             { name: "vsf", server: "brazil", img: "5d6814526ccd5b04a915127d03325e4b.png", birthday: { en: "October 4", ar: "4 أكتوبر" }, desc: { ar: "قائدة متفانية تسعى لتحقيق العدالة والاحترام وتوفير مساحة آمنة ومرحبة للجميع.", en: "A dedicated leader striving for fairness, respect, and a safe, welcoming space for everyone." } },
             { name: "Marito", server: "spanish", img: "IMG_7447.png" }, 
-            { name: "kroxtar", server: "spanish", img: "8a2638546f3cb1961c3e198fc5817b45.png", desc: { ar: "أعظم لاعب ذئب على الإطلاق. قائد سيرفر محترم جداً، ومتعاون بالتأكيد.", en: "Greatest Werewolf player to ever exist. Very decent Server Leader as well, helpful for sure." } },
+            { name: "kroxtar", server: "spanish", img: "8a2638546f3cb1961c3e198fc5817b45.png", birthday: { en: "January 3", ar: "3 يناير" }, desc: { ar: "أعظم لاعب ذئب على الإطلاق. قائد سيرفر محترم جداً، ومتعاون بالتأكيد.", en: "Greatest Werewolf player to ever exist. Very decent Server Leader as well, helpful for sure." } },
             { name: "sroti", server: "thai", img: "IMG_7441.png", desc: { ar: "تستمتع بلعب بلاتو، وتتواصل مع المجتمع وتحافظ على أجواء المرح.", en: "Enjoys playing Plato, connecting with the community, and keeping things fun." } }, 
             { name: "nrasl", server: "thai", img: "IMG_7439.png", birthday: { en: "May 26", ar: "26 مايو" }, desc: { ar: "قائدة صريحة وودودة ومحايدة، تستمع للجميع وتقدم لهم الدعم.", en: "A straightforward, approachable, and unbiased leader who listens and supports everyone." } },
             { name: "Frequency", server: "desi", img: "IMG_7440.png", birthday: { en: "May 19", ar: "19 مايو" } } 
@@ -931,7 +918,11 @@
                 guide_5: "الدردشة فقط بلغة الخادم الذي تختاره.",
                 guide_warning: "يقوم قادة الخادم بتطبيق الإرشادات المذكورة أعلاه. سيؤدي انتهاك هذه الإرشادات إلى فقدان القدرة على الدردشة لمدة 4 ساعات وقد يؤدي إلى حظر دائم لحسابك إذا تكرر.",
                 bday_yyy: "1 يناير", bday_hat: "1 سبتمبر",
-                links_title: "مواقع ذات صلة", link_platopedia: "Platopedia", link_werepedia: "Werepedia", link_monsterpedia: "Monsterpedia"
+                links_title: "مواقع ذات صلة", link_platopedia: "Platopedia", link_werepedia: "Werepedia", link_monsterpedia: "Monsterpedia",
+                link_plato_desc: "الموقع الرسمي والأساسي للعبة بلاتو، ويضم المعلومات والخدمات الرئيسية المتعلقة باللعبة.",
+                link_platopedia_desc: "موسوعة متخصصة في بلاتو، توفر معلومات شاملة حول العناصر المتاحة، إلى جانب خيارات تخصيص الملفات الشخصية ومتابعة تفاصيلها.",
+                link_werepedia_desc: "موقع متخصص في لعبة الذئب، يقدّم شرحًا مفصلًا للبطاقات والأدوار، بالإضافة إلى استراتيجيات ونصائح تساعد على تطوير أسلوب اللعب.",
+                link_monsterpedia_desc: "موسوعة متخصصة في لعبة الوحوش، تشرح محتوى اللعبة بالتفصيل."
             },
             en: {
                 menu_home: "HOME", menu_leaders: "LEADERS", menu_news: "NEWS", menu_bugs: "REPORT BUG", menu_players: "PLAYERS", menu_spending: "SPENDING", menu_tournaments: "TOURNAMENTS", pull_refresh: "Updating...", menu_guidelines: "GUIDELINES", menu_links: "RELATED SITES",
@@ -951,7 +942,11 @@
                 guide_5: "Chat only in the language of the server you select.",
                 guide_warning: "Server Leaders enforce the guidelines listed above. Breaking these Public Room Chat Guidelines will result in losing the ability to chat for 4 hours and may result in a permanent ban of your account if frequent.",
                 bday_yyy: "January 1", bday_hat: "September 1",
-                links_title: "RELATED SITES", link_platopedia: "Platopedia", link_werepedia: "Werepedia", link_monsterpedia: "Monsterpedia"
+                links_title: "RELATED SITES", link_platopedia: "Platopedia", link_werepedia: "Werepedia", link_monsterpedia: "Monsterpedia",
+                link_plato_desc: "The official website for Plato, featuring the game's main services and information.",
+                link_platopedia_desc: "A Plato encyclopedia covering items and profile customization.",
+                link_werepedia_desc: "A Werewolf guide covering cards, roles, and gameplay strategies.",
+                link_monsterpedia_desc: "A Monster guide covering the game's content in detail."
             }
         };
 
@@ -988,7 +983,6 @@
             document.getElementById('spenders-container').innerHTML = spendSkel;
         }
 
-        // استخدام نظام الاسترداد الفوري والتحديث في الخلفية (Stale-While-Revalidate)
         async function loadNewsData(force = false) {
             try {
                 const cached = localStorage.getItem('plato_news_cache');
@@ -1059,7 +1053,6 @@
             buildNewsHTML();
         }
 
-        // استخدام نظام الاسترداد الفوري للبطولات أيضاً
         async function loadDynamicData(force = false) {
             try {
                 const cached = localStorage.getItem('plato_dynamic_cache');
@@ -1206,7 +1199,6 @@
             setTimeout(updateCarouselButtons, 50);
         }
 
-        // تم حذف التأخير للاستجابة الفورية عند الضغط السريع
         function slideNews(direction) {
             const slider = document.getElementById('newsSlider');
             const cards = slider.querySelectorAll('.news-slide-card');
@@ -1513,7 +1505,6 @@
                 showSkeletons();
             }
             
-            // جلب البيانات مع تطبيق نظام الاسترداد الفوري
             loadNewsData();
             loadDynamicData();
             
