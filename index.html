@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>PlatoX | مجتمع اللاعبين العرب</title>
+    
+    <!-- نقل كود الثيم هنا لمنع ومضة اللون المزعجة عند التحديث -->
+    <script>
+        let savedTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
+
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Rajdhani:wght@600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -37,6 +44,7 @@
             --glow-bbb: #0096b4;
         }
 
+        /* حماية شاملة ضد تحديد النصوص ومنع زوم النقر المزدوج برمجياً */
         * { 
             box-sizing: border-box; 
             margin: 0; 
@@ -641,9 +649,19 @@
             const bugTypeElement = document.querySelector('input[name="bugType"]:checked');
             const platoId = document.getElementById('plato-id').value.trim();
             const bugDesc = document.getElementById('bug-desc').value.trim();
+            const isAr = document.documentElement.lang === 'ar';
 
             if(!bugTypeElement || !platoId || !bugDesc) {
-                alert(document.documentElement.lang === 'ar' ? "يرجى تعبئة جميع الحقول أولاً!" : "Please fill all fields first!");
+                alert(isAr ? "يرجى تعبئة جميع الحقول أولاً!" : "Please fill all fields first!");
+                return;
+            }
+
+            // نظام حماية التكرار (Cooldown 60 Minutes)
+            const lastReport = localStorage.getItem('last_bug_report_time');
+            const now = Date.now();
+            if (lastReport && now - parseInt(lastReport) < 3600000) { 
+                const waitMins = Math.ceil((3600000 - (now - parseInt(lastReport))) / 60000);
+                alert(isAr ? `يرجى الانتظار ${waitMins} دقيقة قبل إرسال بلاغ جديد لتجنب الضغط على الإدارة.` : `Please wait ${waitMins} minutes before sending a new report.`);
                 return;
             }
 
@@ -670,7 +688,7 @@
 
             const submitBtn = document.querySelector('.submit-btn');
             const originalText = submitBtn.innerText;
-            submitBtn.innerText = document.documentElement.lang === 'ar' ? 'جاري الإرسال...' : 'Sending...';
+            submitBtn.innerText = isAr ? 'جاري الإرسال...' : 'Sending...';
             submitBtn.disabled = true;
 
             fetch(webhookUrl, {
@@ -679,14 +697,18 @@
                 body: JSON.stringify(payload)
             }).then(response => {
                 if (!response.ok) throw new Error('Network response was not ok');
+                
+                // حفظ وقت الإرسال لتفعيل الـ Cooldown
+                localStorage.setItem('last_bug_report_time', now);
+                
                 const toast = document.getElementById("toast");
-                toast.innerHTML = (document.documentElement.lang === 'ar') ? `<i class="fa-solid fa-check"></i> تم إرسال البلاغ للإدارة بنجاح` : `<i class="fa-solid fa-check"></i> Report Submitted to Admins`;
+                toast.innerHTML = isAr ? `<i class="fa-solid fa-check"></i> تم إرسال البلاغ للإدارة بنجاح` : `<i class="fa-solid fa-check"></i> Report Submitted to Admins`;
                 toast.className = "show";
                 setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
                 hideBugForm();
             }).catch(err => {
                 console.error("Error sending webhook:", err);
-                alert(document.documentElement.lang === 'ar' ? "حدث خطأ أثناء الإرسال، حاول مجدداً." : "Error submitting report, try again.");
+                alert(isAr ? "حدث خطأ أثناء الإرسال، حاول مجدداً." : "Error submitting report, try again.");
             }).finally(() => {
                 submitBtn.innerText = originalText;
                 submitBtn.disabled = false;
@@ -1202,7 +1224,6 @@
             let tournamentsList = [];
 
             cachedSheetRows.forEach((row) => {
-                // تقسيم السطر بطريقة آمنة للفواصل داخل الجوائز
                 const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/); 
                 if(cols.length < 7) return;
 
@@ -1213,7 +1234,6 @@
                 let targetTimeMs = NaN;
 
                 if (rawTimeStr) {
-                    // إصلاح آمن 100% لجميع المتصفحات دون تعطيل القراءة
                     let safeTimeStr = rawTimeStr.replace(/-/g, '/'); 
                     if (!safeTimeStr.includes('+') && !safeTimeStr.toUpperCase().includes('GMT') && !safeTimeStr.toUpperCase().includes('Z')) {
                         safeTimeStr += ' GMT+0300';
@@ -1227,7 +1247,6 @@
                 const game = cols[5] ? cols[5].replace(/"/g, '').trim() : "";
                 const admin = cols[6] ? cols[6].replace(/"/g, '').trim() : "";
 
-                // حساب الإنفاق بشكل منفصل (يعمل حتى لو لم يكن هناك تاريخ)
                 let numValue = 0;
                 let cleanStr = prizeStr.toUpperCase().replace(/[^0-9.K]/g, '');
                 if (cleanStr.includes('K')) {
@@ -1241,7 +1260,6 @@
                 }
                 groupsSpending[nameAr].total += numValue;
 
-                // إضافة للبطولات فقط إذا كان التاريخ صالحاً
                 if (!isNaN(targetTimeMs)) {
                     const diff = targetTimeMs - nowTime;
                     if (diff > -twentyFourHoursMs) {
@@ -1258,12 +1276,15 @@
             sortedTournaments.forEach(tour => {
                 const displayName = currentLang === 'ar' ? tour.nameAr : tour.nameEn;
                 const borderStyle = isLtr ? `border-left-color: var(--primary);` : `border-right-color: var(--primary);`;
+                
+                // إضافة الصورة فقط إذا كان الرابط موجوداً (إخفاء تلقائي في حالة الخطأ)
+                const imgTag = tour.image ? `<img src="${tour.image}" class="entity-img" style="border-radius:8px; width:35px; height:35px; object-fit:cover;" onerror="this.style.display='none'">` : ``;
 
                 tourHTML += `
                     <div class="tour-card glass-panel" style="${borderStyle}">
                         <div class="tour-header">
                             <div class="tour-title-box">
-                                <img src="${tour.image}" class="entity-img" style="border-radius:8px; width:35px; height:35px; object-fit:cover;">
+                                ${imgTag}
                                 <div class="tour-title">${displayName}</div>
                             </div>
                             <div class="countdown-box sheet-timer" data-time="${tour.targetTimeMs}">
@@ -1297,12 +1318,15 @@
                 else if (rankNum === '3') { rankClass = 'rank-3'; color = '#cd7f32'; barBg = '#cd7f32'; }
 
                 let displayScore = group.total >= 1000 ? (group.total / 1000) + 'K' : group.total;
+                
+                // إضافة الصورة فقط إذا كان الرابط موجوداً (إخفاء تلقائي في حالة الخطأ)
+                const imgTag = group.image ? `<img src="${group.image}" class="list-img group-img" style="object-fit:cover;" onerror="this.style.display='none'">` : ``;
 
                 spendHTML += `
                     <div class="list-row glass-panel ${rankClass}">
                         <div class="rank-num num-font">${rank}</div>
                         <div class="list-info">
-                            <img src="${group.image}" class="list-img group-img" style="object-fit:cover;">
+                            ${imgTag}
                             <div class="progress-container">
                                 <div class="list-name">${displayName}</div>
                                 <div class="progress-track"><div class="progress-fill" style="width: ${percent}%; background: ${barBg};"></div></div>
@@ -1344,7 +1368,6 @@
             });
         }
 
-        // دعم التحديث بالسحب وذكاء التفريق بين السحب الأفقي والعمودي
         let ptrStartX = 0, ptrStartY = 0, ptrCurrentY = 0, isPulling = false, isHorizontal = false;
         const ptrEl = document.getElementById('ptr-loader');
         
@@ -1412,13 +1435,11 @@
 
         document.addEventListener("DOMContentLoaded", async () => {
             const savedTheme = localStorage.getItem('theme') || 'dark'; 
-            document.documentElement.setAttribute('data-theme', savedTheme); 
             document.getElementById('theme-icon').className = savedTheme === 'light' ? 'fa-solid fa-sun theme-toggle' : 'fa-solid fa-moon theme-toggle';
             
             const savedLang = localStorage.getItem('lang') || 'ar'; 
             changeLang(savedLang);
             
-            // تفعيل السحب بالماوس (للكمبيوتر) لشريط الأخبار
             const nSlider = document.getElementById('newsSlider');
             let isDown = false, startX, sLeft;
             nSlider.addEventListener('mousedown', (e) => {
