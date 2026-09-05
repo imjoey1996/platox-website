@@ -657,7 +657,10 @@
             }
 
             const lastReport = localStorage.getItem('last_bug_report_time');
-            const now = Date.now();
+            
+            // التعديل هنا: استخدام التوقيت العالمي الموثوق من الإنترنت بدلاً من توقيت الجهاز
+            const now = getAccurateTime();
+            
             if (lastReport && now - parseInt(lastReport) < 3600000) { 
                 const waitMins = Math.ceil((3600000 - (now - parseInt(lastReport))) / 60000);
                 alert(isAr ? `يرجى الانتظار ${waitMins} دقيقة قبل إرسال بلاغ جديد لتجنب الضغط على الإدارة.` : `Please wait ${waitMins} minutes before sending a new report.`);
@@ -667,7 +670,6 @@
             const bugType = bugTypeElement.value;
             const embedColor = bugType === 'Exploits' ? 16711680 : 16744192; 
 
-            // تم إخفاء الرابط لحمايته من روبوتات GitHub
             const webhookId = "1545703090920099854"; 
             const webhookToken = "we1jm4gx7h6c92AEtcUl5SFSZ_smAvPjWtIYYLdti1AtPCzzUEH68EclCSZb9gc48KTo";
             const webhookUrl = `https://discord.com/api/webhooks/${webhookId}/${webhookToken}`;
