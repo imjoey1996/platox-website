@@ -119,7 +119,7 @@
         .section-title::before { content: ''; position: absolute; right: -15px; top: 50%; transform: translateY(-50%); width: 6px; height: 20px; background: var(--primary); border-radius: 3px; box-shadow: 0 0 15px var(--primary-glow);}
         html[dir="ltr"] .section-title::before { right: auto; left: -15px; }
 
-        /* ---------------- تنسيقات الأخبار المحسّنة (بدون قص وبسرعة استجابة) ---------------- */
+        /* ---------------- تنسيقات الأخبار المحسّنة والمحمية ضد الزوم والقص ---------------- */
         .news-carousel-container { width: 100%; max-width: 800px; position: relative; display: flex; flex-direction: column; gap: 5px; margin-bottom: 5px;}
         
         .news-slider { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; -ms-overflow-style: none; scrollbar-width: none; padding: 25px 20px;}
@@ -127,7 +127,6 @@
         
         .news-slide-card { width: 100%; flex: 0 0 100%; scroll-snap-align: center; padding: 30px; border-radius: 16px; transition: transform 0.4s; position: relative; }
         
-        /* تأثير النيون الثابت (لا يؤثر على الأداء) */
         .glowing-card {
             border-color: var(--neon-color) !important;
             box-shadow: 0 15px 40px rgba(0,0,0,0.5), 0 0 25px var(--neon-shadow), inset 0 0 15px var(--neon-shadow) !important;
@@ -138,22 +137,23 @@
         .news-date-sub { font-family: 'Rajdhani', sans-serif; font-size: 0.85rem; color: var(--text-muted); font-weight: bold;}
         .news-headline { font-size: 1.4rem; font-weight: 900; line-height: 1.4; color: var(--text-main); margin-top: 15px; margin-bottom: 8px;}
         
-        /* النص كاملاً بدون قص */
         .news-body { color: rgba(255,255,255,0.85); line-height: 1.8; font-size: 0.95rem; white-space: pre-line; word-break: break-word; overflow-wrap: break-word; }
         [data-theme="light"] .news-body { color: var(--text-muted); }
         
-        /* الحاوية السفلية لترتيب الأسهم مع الديسكورد بدقة */
         .news-bottom-wrapper {
             display: flex;
             flex-direction: column;
             width: 100%;
-            max-width: 360px; /* العرض الثابت لضمان المحاذاة الدقيقة */
+            max-width: 360px;
             margin: 0 auto;
             gap: 15px;
         }
 
-        .slider-controls { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0;}
-        .nav-btn { background: transparent; border: none; color: var(--text-muted); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px; transition: 0.3s; font-family: inherit; touch-action: manipulation; -webkit-tap-highlight-color: transparent;}
+        /* حماية ضد الزوم لجميع أزرار التحكم */
+        .slider-controls { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0; touch-action: manipulation;}
+        .slider-controls * { touch-action: manipulation !important; user-select: none !important; -webkit-user-select: none !important; }
+        
+        .nav-btn { background: transparent; border: none; color: var(--text-muted); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px; transition: 0.3s; font-family: inherit; -webkit-tap-highlight-color: transparent;}
         .nav-btn:hover:not(.disabled) { color: var(--primary); transform: scale(1.08); }
         .nav-btn.disabled { opacity: 0.3; pointer-events: none; }
         
@@ -273,15 +273,17 @@
             .hero h2 { font-size: 2.2rem; } .hero p { font-size: 1rem; }
             .section-title { font-size: 1.4rem; margin-bottom: 25px; }
             
-            /* حل مشكلة قص الحواف في سفاري باستخدام العرض المرن vw */
-            .news-slider { padding: 25px 6vw; gap: 4vw; } 
+            /* حل مشكلة قص الحواف بشكل نهائي باستخدام الـ margin-inline */
+            .news-slider { padding: 25px 0; gap: 15px; } 
             .news-slide-card { width: 88vw; flex: 0 0 88vw; padding: 25px 20px; } 
+            .news-slide-card:first-child { margin-inline-start: 6vw; }
+            .news-slide-card:last-child { margin-inline-end: 6vw; }
             
             .news-headline { font-size: 1.25rem; } 
             .news-body { font-size: 0.95rem; }
             
-            /* حاوية الأسهم وزر الديسكورد للتطابق التام */
             .news-bottom-wrapper { max-width: 320px; gap: 15px; margin-top: 0; }
+            .slider-controls { margin-top: 0px; padding: 0 15px; gap: 20px; } 
             
             .grid-container { display: grid !important; grid-template-columns: 1fr !important; gap: 15px; width: 100%; }
             .global-leaders-grid { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 10px; width: 100%; }
@@ -345,7 +347,7 @@
         <p data-aos="fade-up" data-aos-delay="200" data-i18n="hero_desc">يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.</p>
     </section>
 
-    <!-- ---------------- قسم الأخبار الزجاجي السريع والمنظم ---------------- -->
+    <!-- ---------------- قسم الأخبار الخالي من اللاق والمحمي ضد الزوم ---------------- -->
     <section id="news" style="padding-top: 10px;">
         <h2 class="section-title" data-aos="fade-right" data-i18n="news_board_title">لوحة أخبار المجتمع</h2>
 
@@ -356,7 +358,7 @@
             
             <div class="news-bottom-wrapper">
                 <div class="slider-controls">
-                    <button class="nav-btn disabled" id="btnNewer" onclick="slideNews(-1)">
+                    <button class="nav-btn disabled" id="btnNewer">
                         <span class="nav-label num-font" data-i18n="news_newer">الأحدث</span>
                         <i class="fa-solid fa-arrow-right arrow-icon prev-icon"></i>
                     </button>
@@ -365,7 +367,7 @@
                         <!-- سيتم إضافة النقاط برمجياً -->
                     </div>
 
-                    <button class="nav-btn disabled" id="btnOlder" onclick="slideNews(1)">
+                    <button class="nav-btn disabled" id="btnOlder">
                         <span class="nav-label num-font" data-i18n="news_older">الأقدم</span>
                         <i class="fa-solid fa-arrow-left arrow-icon next-icon"></i>
                     </button>
@@ -827,7 +829,6 @@
             setTimeout(() => { sidebar.style.transition = ''; }, 50);
         }
 
-        // ---------------- دالة بناء الأخبار مع النيون الثابت (Zero Lag) ----------------
         function buildNewsHTML() {
             const slider = document.getElementById('newsSlider');
             const dotsContainer = document.getElementById('newsDots');
@@ -852,7 +853,6 @@
                 let displayTag = tagType;
                 const tagLower = tagType.toLowerCase();
 
-                // التلوين الأوتوماتيكي والنيون
                 if (!isAr) {
                     if (tagLower.includes('إعلان') || tagLower.includes('announcement')) {
                         displayTag = 'Announcement'; tagColor = '#3b82f6'; tagBg = 'rgba(59, 130, 246, 0.15)'; shadowColor = 'rgba(59, 130, 246, 0.4)'; icon = 'fa-bullhorn';
@@ -880,7 +880,7 @@
                 }
 
                 sliderHTML += `
-                    <div class="news-slide-card glass-panel glowing-card" style="border-color: ${tagColor}; box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 15px ${shadowColor}, inset 0 0 8px ${shadowColor};">
+                    <div class="news-slide-card glass-panel glowing-card" style="--neon-color: ${tagColor}; --neon-shadow: ${shadowColor};">
                         <div class="news-header-top">
                             <span class="news-badge" style="color:${tagColor}; border-color:${tagColor}; background:${tagBg};"><i class="fa-solid ${icon}"></i> <span>${displayTag}</span></span>
                             <span class="news-date-sub num-font">${dateStr}</span>
@@ -897,7 +897,47 @@
             setTimeout(updateCarouselButtons, 50);
         }
 
-        // ---------------- التنقل السريع الخالي من اللاق بالأسهم ----------------
+        // ---------------- حماية ضد الزوم والتعليق والتنقل الفوري بالأسهم ----------------
+        
+        // إجبار المتصفح على السحب الفوري عن طريق قياس المسافة برمجياً
+        function slideNews(direction) {
+            const slider = document.getElementById('newsSlider');
+            const cards = slider.querySelectorAll('.news-slide-card');
+            if(cards.length === 0) return;
+            
+            let scrollAmount = cards[0].offsetWidth + 15; // العرض بالإضافة إلى المسافة (Gap)
+            
+            const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
+            slider.scrollBy({ left: scrollAmount * (isRTL ? -direction : direction), behavior: 'smooth' });
+        }
+
+        // كود سحري لمنع متصفح الآيفون من الزوم عند الضغط المزدوج السريع على الأسهم، وتنفيذ السحب مباشرة
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            let lastTap = 0;
+            btn.addEventListener('touchend', function(e) {
+                let currentTime = new Date().getTime();
+                let tapLength = currentTime - lastTap;
+                
+                // إذا تم الضغط بسرعة، نلغي الزوم وننفذ السحب برمجياً
+                if (tapLength < 400 && tapLength > 0) {
+                    e.preventDefault(); 
+                    if(!btn.classList.contains('disabled')) {
+                        const dir = btn.id === 'btnNewer' ? -1 : 1;
+                        slideNews(dir);
+                    }
+                }
+                lastTap = currentTime;
+            });
+            
+            // ربط الضغطة العادية أيضاً
+            btn.addEventListener('click', function(e) {
+                if(!btn.classList.contains('disabled')) {
+                    const dir = btn.id === 'btnNewer' ? -1 : 1;
+                    slideNews(dir);
+                }
+            });
+        });
+
         function updateCarouselButtons() {
             const slider = document.getElementById('newsSlider');
             const dots = document.querySelectorAll('.dot');
@@ -905,7 +945,7 @@
             
             if(!cardElement || !dots.length) return;
             
-            let index = Math.round(Math.abs(slider.scrollLeft) / (cardElement.offsetWidth + 20));
+            let index = Math.round(Math.abs(slider.scrollLeft) / (cardElement.offsetWidth + 15));
             if (index >= dots.length) index = dots.length - 1;
             
             dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
@@ -913,27 +953,10 @@
             const btnNewer = document.getElementById('btnNewer');
             const btnOlder = document.getElementById('btnOlder');
             
-            // تعطيل الزر عند الوصول للبداية أو النهاية
             if (btnNewer) btnNewer.classList.toggle('disabled', index === 0);
             if (btnOlder) btnOlder.classList.toggle('disabled', index === dots.length - 1);
         }
 
-        function slideNews(direction) {
-            const slider = document.getElementById('newsSlider');
-            const cards = slider.querySelectorAll('.news-slide-card');
-            if(cards.length === 0) return;
-            
-            // الحساب الدقيق للمسافة بين الكروت لضمان سحب دقيق
-            let scrollAmount = cards[0].offsetWidth + 20; 
-            if (cards.length > 1) {
-                scrollAmount = Math.abs(cards[1].offsetLeft - cards[0].offsetLeft);
-            }
-            
-            const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
-            slider.scrollBy({ left: scrollAmount * (isRTL ? -direction : direction), behavior: 'smooth' });
-        }
-
-        // لتجنب الحمل الزائد أثناء السحب
         let scrollTimeout;
         document.getElementById('newsSlider')?.addEventListener('scroll', () => {
             if (scrollTimeout) window.cancelAnimationFrame(scrollTimeout);
