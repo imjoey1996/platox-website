@@ -211,6 +211,11 @@
         [data-theme="light"] .guideline-text { color: var(--text-main); }
         .guideline-warning { background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.3); color: #ef4444; padding: 12px; border-radius: 8px; font-size: 0.85rem; font-weight: 700; line-height: 1.6; margin-top: 15px; display: flex; gap: 10px; align-items: center; }
 
+        /* ---------------- تنسيق شريطة عيد الميلاد ---------------- */
+        .birthday-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border); padding: 3px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-top: -3px; margin-bottom: 8px; transition: 0.3s; }
+        [data-theme="light"] .birthday-badge { background: rgba(0, 0, 0, 0.03); }
+        .card:hover .birthday-badge, .global-leader:hover .birthday-badge { color: var(--text-main); border-color: rgba(255,255,255,0.2); }
+
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; width: 100%; max-width: 900px; justify-items: center; }
         .card { width: 100%; padding: 35px 20px; text-align: center; transition: 0.4s; position: relative; overflow: hidden; border-radius: 16px;}
         .card:hover { transform: translateY(-8px); }
@@ -483,6 +488,7 @@
             <div class="card glass-panel card-yyy">
                 <img src="IMG_3154.png" alt="YYY">
                 <h3>YYY</h3>
+                <div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: var(--glow-yyy);"></i> 1/1</div>
                 <p data-i18n="desc_yyy">صانع الأثر، يقود برؤية مستقبلية لخلق بيئة إيجابية لا تعرف المستحيل.</p>
             </div>
             <div class="card glass-panel card-hat">
@@ -803,6 +809,7 @@
                 const colorHex = serverThemes[leader.server].bg;
                 const imageSource = leader.img ? leader.img : `https://ui-avatars.com/api/?name=${leader.name}&background=${colorHex.replace('#', '')}&color=fff&bold=true`;
                 
+                const bdayHTML = leader.birthday ? `<div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: ${colorHex};"></i> ${leader.birthday}</div>` : "";
                 const descText = leader.desc ? (currentLang === 'ar' && leader.desc.ar ? leader.desc.ar : leader.desc.en) : "";
                 const descHTML = descText ? `<p class="leader-desc">${descText}</p>` : "";
                 
@@ -813,6 +820,7 @@
                             <h3 class="num-font" style="color: ${colorHex};">${leader.name}</h3>
                             <i class="fa-regular fa-copy leader-copy-icon"></i>
                         </div>
+                        ${bdayHTML}
                         ${descHTML}
                     </div>
                 `;
