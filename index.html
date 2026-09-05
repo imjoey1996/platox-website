@@ -2,6 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <!-- حماية مضاعفة ضد الزوم -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>PlatoX | مجتمع اللاعبين العرب</title>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -40,9 +41,18 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
-        html { scroll-behavior: smooth; scroll-padding-top: 85px; }
-
-        body { color: var(--text-main); font-family: 'Cairo', sans-serif; overflow-x: hidden; transition: background 0.4s, color 0.4s; background-color: var(--bg-main); }
+        /* إيقاف الزوم المزدوج بشكل إجباري على كل العناصر */
+        html, body { 
+            touch-action: manipulation; 
+            scroll-behavior: smooth; 
+            scroll-padding-top: 85px; 
+            color: var(--text-main); 
+            font-family: 'Cairo', sans-serif; 
+            overflow-x: hidden; 
+            transition: background 0.4s, color 0.4s; 
+            background-color: var(--bg-main); 
+        }
+        
         html[dir="ltr"] body, .num-font, .navbar h1 { font-family: 'Rajdhani', sans-serif; }
 
         .liquid-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3; overflow: hidden; background: var(--bg-main); }
@@ -119,18 +129,15 @@
         .section-title::before { content: ''; position: absolute; right: -15px; top: 50%; transform: translateY(-50%); width: 6px; height: 20px; background: var(--primary); border-radius: 3px; box-shadow: 0 0 15px var(--primary-glow);}
         html[dir="ltr"] .section-title::before { right: auto; left: -15px; }
 
-        /* ---------------- تنسيقات الأخبار المحسّنة والمحمية ضد الزوم والقص ---------------- */
+        /* ---------------- تنسيقات الأخبار المحسّنة (الشكل الشفاف الأنيق بدون نيون للسرعة القصوى) ---------------- */
         .news-carousel-container { width: 100%; max-width: 800px; position: relative; display: flex; flex-direction: column; gap: 5px; margin-bottom: 5px;}
         
         .news-slider { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; -ms-overflow-style: none; scrollbar-width: none; padding: 25px 20px;}
         .news-slider::-webkit-scrollbar { display: none; }
         
-        .news-slide-card { width: 100%; flex: 0 0 100%; scroll-snap-align: center; padding: 30px; border-radius: 16px; transition: transform 0.4s; position: relative; }
-        
-        .glowing-card {
-            border-color: var(--neon-color) !important;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.5), 0 0 25px var(--neon-shadow), inset 0 0 15px var(--neon-shadow) !important;
-        }
+        /* إيقاف الزوم وتمرير سلس */
+        .news-slide-card { width: 100%; flex: 0 0 100%; scroll-snap-align: center; padding: 30px; border-radius: 16px; transition: transform 0.4s; position: relative; touch-action: pan-x pan-y; }
+        .news-slide-card:hover { transform: translateY(-3px); }
         
         .news-header-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; }
         .news-badge { padding: 5px 12px; border-radius: 8px; font-weight: 900; font-size: 0.8rem; display: flex; align-items: center; gap: 8px; border: 1px solid transparent; }
@@ -149,10 +156,7 @@
             gap: 15px;
         }
 
-        /* حماية ضد الزوم لجميع أزرار التحكم */
-        .slider-controls { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0; touch-action: manipulation;}
-        .slider-controls * { touch-action: manipulation !important; user-select: none !important; -webkit-user-select: none !important; }
-        
+        .slider-controls { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0;}
         .nav-btn { background: transparent; border: none; color: var(--text-muted); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px; transition: 0.3s; font-family: inherit; -webkit-tap-highlight-color: transparent;}
         .nav-btn:hover:not(.disabled) { color: var(--primary); transform: scale(1.08); }
         .nav-btn.disabled { opacity: 0.3; pointer-events: none; }
@@ -347,7 +351,7 @@
         <p data-aos="fade-up" data-aos-delay="200" data-i18n="hero_desc">يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.</p>
     </section>
 
-    <!-- ---------------- قسم الأخبار الخالي من اللاق والمحمي ضد الزوم ---------------- -->
+    <!-- ---------------- قسم الأخبار الأصلي والسلس ---------------- -->
     <section id="news" style="padding-top: 10px;">
         <h2 class="section-title" data-aos="fade-right" data-i18n="news_board_title">لوحة أخبار المجتمع</h2>
 
@@ -829,6 +833,7 @@
             setTimeout(() => { sidebar.style.transition = ''; }, 50);
         }
 
+        // ---------------- دالة بناء الأخبار (بدون لاق) ----------------
         function buildNewsHTML() {
             const slider = document.getElementById('newsSlider');
             const dotsContainer = document.getElementById('newsDots');
@@ -849,38 +854,40 @@
                 const displayTitle = isAr ? titleAr : (titleEn || titleAr);
                 const displayBody = isAr ? bodyAr : (bodyEn || bodyAr);
 
-                let tagColor = 'var(--primary)', tagBg = 'rgba(157, 78, 221, 0.15)', icon = 'fa-bolt', shadowColor = 'rgba(157, 78, 221, 0.4)';
+                let tagColor = 'var(--primary)', tagBg = 'rgba(157, 78, 221, 0.15)', icon = 'fa-bolt';
                 let displayTag = tagType;
                 const tagLower = tagType.toLowerCase();
 
+                // التلوين الأوتوماتيكي
                 if (!isAr) {
                     if (tagLower.includes('إعلان') || tagLower.includes('announcement')) {
-                        displayTag = 'Announcement'; tagColor = '#3b82f6'; tagBg = 'rgba(59, 130, 246, 0.15)'; shadowColor = 'rgba(59, 130, 246, 0.4)'; icon = 'fa-bullhorn';
+                        displayTag = 'Announcement'; tagColor = '#3b82f6'; tagBg = 'rgba(59, 130, 246, 0.15)'; icon = 'fa-bullhorn';
                     } else if (tagLower.includes('إشعار') || tagLower.includes('notice')) {
-                        displayTag = 'Notice'; tagColor = '#eab308'; tagBg = 'rgba(234, 179, 8, 0.15)'; shadowColor = 'rgba(234, 179, 8, 0.4)'; icon = 'fa-bell';
+                        displayTag = 'Notice'; tagColor = '#eab308'; tagBg = 'rgba(234, 179, 8, 0.15)'; icon = 'fa-bell';
                     } else if (tagLower.includes('تذكير') || tagLower.includes('reminder')) {
-                        displayTag = 'Reminder'; tagColor = '#9d4edd'; tagBg = 'rgba(157, 78, 221, 0.15)'; shadowColor = 'rgba(157, 78, 221, 0.4)'; icon = 'fa-clock';
+                        displayTag = 'Reminder'; tagColor = '#9d4edd'; tagBg = 'rgba(157, 78, 221, 0.15)'; icon = 'fa-clock';
                     } else if (tagLower.includes('تحديث') || tagLower.includes('update')) {
-                        displayTag = 'Update'; tagColor = '#10b981'; tagBg = 'rgba(16, 185, 129, 0.15)'; shadowColor = 'rgba(16, 185, 129, 0.4)'; icon = 'fa-wrench';
+                        displayTag = 'Update'; tagColor = '#10b981'; tagBg = 'rgba(16, 185, 129, 0.15)'; icon = 'fa-wrench';
                     } else if (tagLower.includes('مهم') || tagLower.includes('important')) {
-                        displayTag = 'Important'; tagColor = '#ef4444'; tagBg = 'rgba(239, 68, 68, 0.15)'; shadowColor = 'rgba(239, 68, 68, 0.4)'; icon = 'fa-circle-exclamation';
+                        displayTag = 'Important'; tagColor = '#ef4444'; tagBg = 'rgba(239, 68, 68, 0.15)'; icon = 'fa-circle-exclamation';
                     }
                 } else {
                     if (tagLower.includes('إعلان') || tagLower.includes('announcement')) {
-                        displayTag = 'إعلان'; tagColor = '#3b82f6'; tagBg = 'rgba(59, 130, 246, 0.15)'; shadowColor = 'rgba(59, 130, 246, 0.4)'; icon = 'fa-bullhorn';
+                        displayTag = 'إعلان'; tagColor = '#3b82f6'; tagBg = 'rgba(59, 130, 246, 0.15)'; icon = 'fa-bullhorn';
                     } else if (tagLower.includes('إشعار') || tagLower.includes('notice')) {
-                        displayTag = 'إشعار'; tagColor = '#eab308'; tagBg = 'rgba(234, 179, 8, 0.15)'; shadowColor = 'rgba(234, 179, 8, 0.4)'; icon = 'fa-bell';
+                        displayTag = 'إشعار'; tagColor = '#eab308'; tagBg = 'rgba(234, 179, 8, 0.15)'; icon = 'fa-bell';
                     } else if (tagLower.includes('تذكير') || tagLower.includes('reminder')) {
-                        displayTag = 'تذكير'; tagColor = '#9d4edd'; tagBg = 'rgba(157, 78, 221, 0.15)'; shadowColor = 'rgba(157, 78, 221, 0.4)'; icon = 'fa-clock';
+                        displayTag = 'تذكير'; tagColor = '#9d4edd'; tagBg = 'rgba(157, 78, 221, 0.15)'; icon = 'fa-clock';
                     } else if (tagLower.includes('تحديث') || tagLower.includes('update')) {
-                        displayTag = 'تحديث'; tagColor = '#10b981'; tagBg = 'rgba(16, 185, 129, 0.15)'; shadowColor = 'rgba(16, 185, 129, 0.4)'; icon = 'fa-wrench';
+                        displayTag = 'تحديث'; tagColor = '#10b981'; tagBg = 'rgba(16, 185, 129, 0.15)'; icon = 'fa-wrench';
                     } else if (tagLower.includes('مهم') || tagLower.includes('important')) {
-                        displayTag = 'مهم'; tagColor = '#ef4444'; tagBg = 'rgba(239, 68, 68, 0.15)'; shadowColor = 'rgba(239, 68, 68, 0.4)'; icon = 'fa-circle-exclamation';
+                        displayTag = 'مهم'; tagColor = '#ef4444'; tagBg = 'rgba(239, 68, 68, 0.15)'; icon = 'fa-circle-exclamation';
                     }
                 }
 
+                // الكارت بشكله الزجاجي الأصلي المريح للعين لمنع اللاق
                 sliderHTML += `
-                    <div class="news-slide-card glass-panel glowing-card" style="--neon-color: ${tagColor}; --neon-shadow: ${shadowColor};">
+                    <div class="news-slide-card glass-panel">
                         <div class="news-header-top">
                             <span class="news-badge" style="color:${tagColor}; border-color:${tagColor}; background:${tagBg};"><i class="fa-solid ${icon}"></i> <span>${displayTag}</span></span>
                             <span class="news-date-sub num-font">${dateStr}</span>
@@ -897,7 +904,7 @@
             setTimeout(updateCarouselButtons, 50);
         }
 
-        // ---------------- حماية ضد الزوم والتعليق والتنقل الفوري بالأسهم ----------------
+        // ---------------- التنقل السريع الخالي من اللاق بالأسهم ----------------
         
         // إجبار المتصفح على السحب الفوري عن طريق قياس المسافة برمجياً
         function slideNews(direction) {
@@ -905,20 +912,18 @@
             const cards = slider.querySelectorAll('.news-slide-card');
             if(cards.length === 0) return;
             
-            let scrollAmount = cards[0].offsetWidth + 15; // العرض بالإضافة إلى المسافة (Gap)
+            let scrollAmount = cards[0].offsetWidth + 15; 
             
             const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
             slider.scrollBy({ left: scrollAmount * (isRTL ? -direction : direction), behavior: 'smooth' });
         }
 
-        // كود سحري لمنع متصفح الآيفون من الزوم عند الضغط المزدوج السريع على الأسهم، وتنفيذ السحب مباشرة
+        // الحماية من الزوم عند الضغط السريع على أزرار الأسهم
         document.querySelectorAll('.nav-btn').forEach(btn => {
             let lastTap = 0;
             btn.addEventListener('touchend', function(e) {
                 let currentTime = new Date().getTime();
                 let tapLength = currentTime - lastTap;
-                
-                // إذا تم الضغط بسرعة، نلغي الزوم وننفذ السحب برمجياً
                 if (tapLength < 400 && tapLength > 0) {
                     e.preventDefault(); 
                     if(!btn.classList.contains('disabled')) {
@@ -929,7 +934,6 @@
                 lastTap = currentTime;
             });
             
-            // ربط الضغطة العادية أيضاً
             btn.addEventListener('click', function(e) {
                 if(!btn.classList.contains('disabled')) {
                     const dir = btn.id === 'btnNewer' ? -1 : 1;
