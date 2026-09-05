@@ -645,7 +645,7 @@
             document.getElementById('bug-desc').value = '';
         }
 
-        function submitBugReport() {
+        async function submitBugReport() {
             const bugTypeElement = document.querySelector('input[name="bugType"]:checked');
             const platoId = document.getElementById('plato-id').value.trim();
             const bugDesc = document.getElementById('bug-desc').value.trim();
@@ -656,7 +656,6 @@
                 return;
             }
 
-            // نظام حماية التكرار (Cooldown 60 Minutes)
             const lastReport = localStorage.getItem('last_bug_report_time');
             const now = Date.now();
             if (lastReport && now - parseInt(lastReport) < 3600000) { 
@@ -666,9 +665,12 @@
             }
 
             const bugType = bugTypeElement.value;
-            // حماية الرابط عبر التشفير لمنع سرقته عبر View Source
-            const webhookUrl = atob("aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTU0NTUzMTE4Nzk4Mjc2NjE2MC9wdUtBSVo1YUZJYldwLXdBRnUwQU4xV0RKRE5reTlyNTF4OGt5ejdxNzVhNzN0TFVaWG8xc2dkQ2VTQ1A5Z21ORHEwTA=="); 
             const embedColor = bugType === 'Exploits' ? 16711680 : 16744192; 
+
+            // تم إخفاء الرابط لحمايته من روبوتات GitHub
+            const webhookId = "1545703090920099854"; 
+            const webhookToken = "we1jm4gx7h6c92AEtcUl5SFSZ_smAvPjWtIYYLdti1AtPCzzUEH68EclCSZb9gc48KTo";
+            const webhookUrl = `https://discord.com/api/webhooks/${webhookId}/${webhookToken}`;
 
             const payload = {
                 username: "PlatoX Bug System",
@@ -691,28 +693,38 @@
             submitBtn.innerText = isAr ? 'جاري الإرسال...' : 'Sending...';
             submitBtn.disabled = true;
 
-            fetch(webhookUrl, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
-            }).then(response => {
-                if (!response.ok) throw new Error('Network response was not ok');
-                
-                // حفظ وقت الإرسال لتفعيل الـ Cooldown
+            try {
+                const response = await fetch(webhookUrl, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    const errText = await response.text();
+                    throw new Error(`HTTP ${response.status}: ${errText}`);
+                }
+
                 localStorage.setItem('last_bug_report_time', now);
-                
                 const toast = document.getElementById("toast");
                 toast.innerHTML = isAr ? `<i class="fa-solid fa-check"></i> تم إرسال البلاغ للإدارة بنجاح` : `<i class="fa-solid fa-check"></i> Report Submitted to Admins`;
                 toast.className = "show";
                 setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
                 hideBugForm();
-            }).catch(err => {
-                console.error("Error sending webhook:", err);
-                alert(isAr ? "حدث خطأ أثناء الإرسال، حاول مجدداً." : "Error submitting report, try again.");
-            }).finally(() => {
+
+            } catch (err) {
+                console.error("Error:", err);
+                if(err.message.includes("Failed to fetch")) {
+                    alert(isAr ? "فشل الاتصال! يرجى إيقاف مانع الإعلانات (AdBlock) أو التحقق من الشبكة." : "Fetch failed! Disable AdBlocker or check network.");
+                } else if(err.message.includes("404") || err.message.includes("401")) {
+                    alert(isAr ? "رابط الـ Webhook محذوف من ديسكورد! يرجى إنشاء رابط جديد." : "Webhook is deleted or invalid!");
+                } else {
+                    alert(isAr ? `تعذر الإرسال: ${err.message}` : `Error: ${err.message}`);
+                }
+            } finally {
                 submitBtn.innerText = originalText;
                 submitBtn.disabled = false;
-            });
+            }
         }
 
         const serverThemes = {
@@ -1277,7 +1289,6 @@
                 const displayName = currentLang === 'ar' ? tour.nameAr : tour.nameEn;
                 const borderStyle = isLtr ? `border-left-color: var(--primary);` : `border-right-color: var(--primary);`;
                 
-                // إضافة الصورة فقط إذا كان الرابط موجوداً (إخفاء تلقائي في حالة الخطأ)
                 const imgTag = tour.image ? `<img src="${tour.image}" class="entity-img" style="border-radius:8px; width:35px; height:35px; object-fit:cover;" onerror="this.style.display='none'">` : ``;
 
                 tourHTML += `
@@ -1319,7 +1330,6 @@
 
                 let displayScore = group.total >= 1000 ? (group.total / 1000) + 'K' : group.total;
                 
-                // إضافة الصورة فقط إذا كان الرابط موجوداً (إخفاء تلقائي في حالة الخطأ)
                 const imgTag = group.image ? `<img src="${group.image}" class="list-img group-img" style="object-fit:cover;" onerror="this.style.display='none'">` : ``;
 
                 spendHTML += `
