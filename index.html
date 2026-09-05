@@ -37,12 +37,10 @@
             --glow-bbb: #0096b4;
         }
 
-        /* حماية شاملة ضد تحديد النصوص والضغط المطول والزوم */
         * { 
             box-sizing: border-box; 
             margin: 0; 
             padding: 0; 
-            touch-action: manipulation; 
             -webkit-tap-highlight-color: transparent; 
             -webkit-touch-callout: none; 
         }
@@ -59,16 +57,16 @@
             scroll-padding-top: 85px; 
             color: var(--text-main); 
             font-family: 'Cairo', sans-serif; 
+            max-width: 100vw;
             overflow-x: hidden; 
             transition: background 0.4s, color 0.4s; 
             background-color: var(--bg-main); 
             overscroll-behavior-y: none;
-            touch-action: pan-x pan-y; 
         }
         
         html[dir="ltr"] body, .num-font, .navbar h1 { font-family: 'Rajdhani', sans-serif; }
 
-        .liquid-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3; overflow: hidden; background: var(--bg-main); }
+        .liquid-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3; overflow: hidden; background: var(--bg-main); pointer-events: none; }
         .blob { position: absolute; filter: blur(90px); opacity: 0.45; z-index: -2; }
         [data-theme="light"] .blob { opacity: 0.3; filter: blur(70px); }
         .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--primary); animation: liquidFlow 25s infinite alternate ease-in-out; }
@@ -614,11 +612,6 @@
                 if(!isButton) { e.preventDefault(); }
             }
             lastTouchEnd = now;
-        }, { passive: false });
-        
-        let lastTouchTime = 0;
-        document.addEventListener('touchstart', function (e) {
-            if (e.touches.length > 1) { e.preventDefault(); }
         }, { passive: false });
     </script>
 
