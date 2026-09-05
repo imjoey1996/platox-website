@@ -63,7 +63,7 @@
         
         img {
             -webkit-user-drag: none;
-            pointer-events: none; 
+            pointer-events: none; /* حماية الصور كما طلبت */
             user-select: none;
             -webkit-user-select: none;
         }
@@ -79,7 +79,8 @@
         html {
             scroll-behavior: smooth; 
             scroll-padding-top: 85px; 
-            background-color: var(--bg-main); 
+            background-color: var(--bg-main);
+            overscroll-behavior-y: none; /* لمنع تعارض السحب في أجهزة iOS */
         }
 
         body { 
@@ -90,11 +91,13 @@
             transition: background 0.4s, color 0.4s; 
             background-color: var(--bg-main); 
             position: relative;
+            overscroll-behavior-y: none; /* لمنع تعارض السحب في أجهزة iOS */
         }
         
         html[dir="ltr"] body, .num-font, .navbar h1 { font-family: 'Rajdhani', sans-serif; }
 
-        .liquid-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3; overflow: hidden; background: var(--bg-main); pointer-events: none; }
+        /* تغيير vh إلى dvh لدعم متصفحات الجوال بشكل أفضل */
+        .liquid-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh; z-index: -3; overflow: hidden; background: var(--bg-main); pointer-events: none; }
         .blob { position: absolute; filter: blur(90px); opacity: 0.45; z-index: -2; will-change: transform, background-color;}
         [data-theme="light"] .blob { opacity: 0.3; filter: blur(70px); }
         .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--primary); animation: liquidFlow 25s infinite alternate ease-in-out; }
@@ -109,10 +112,15 @@
 
         @keyframes colorShift { 0% { background: var(--glow-yyy); } 33% { background: var(--primary); } 66% { background: var(--glow-bbb); } 100% { background: var(--glow-yyy); } }
 
+        /* توفير طاقة البطارية للأجهزة التي تفعل وضع تقليل الحركة */
+        @media (prefers-reduced-motion: reduce) {
+            .blob, .particle { animation: none !important; }
+        }
+
         .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; pointer-events: none; }
         .particle { position: absolute; color: #fff; opacity: 0.15; animation: floatUp infinite linear; filter: blur(1px); } 
         [data-theme="light"] .particle { color: var(--primary); opacity: 0.08; }
-        @keyframes floatUp { 0% { transform: translateY(100vh) rotate(0deg) scale(0.8); opacity: 0; } 20% { opacity: 0.15; } 80% { opacity: 0.15; } 100% { transform: translateY(-10vh) rotate(360deg) scale(1.5); opacity: 0; } }
+        @keyframes floatUp { 0% { transform: translateY(100dvh) rotate(0deg) scale(0.8); opacity: 0; } 20% { opacity: 0.15; } 80% { opacity: 0.15; } 100% { transform: translateY(-10dvh) rotate(360deg) scale(1.5); opacity: 0; } }
 
         .glass-panel { background: var(--bg-card); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-top: 1px solid rgba(255, 255, 255, 0.12); border-left: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); border-radius: 16px; }
         html[dir="ltr"] .glass-panel { border-left: 1px solid var(--glass-border); border-right: 1px solid rgba(255, 255, 255, 0.05); }
@@ -133,7 +141,8 @@
         @keyframes ticker-rtl { from { transform: translateX(-100vw); } to { transform: translateX(100vw); } }
         @keyframes ticker-ltr { from { transform: translateX(100vw); } to { transform: translateX(-100vw); } }
 
-        .sidebar { position: fixed; top: 0; right: 0; width: 280px; height: 100vh; background: rgba(10, 10, 12, 0.98); border-left: 1px solid var(--glass-border); z-index: 2000; display: flex; flex-direction: column; padding: 25px; box-shadow: -10px 0 30px rgba(0,0,0,0.8); transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        /* تغيير vh إلى dvh */
+        .sidebar { position: fixed; top: 0; right: 0; width: 280px; height: 100dvh; background: rgba(10, 10, 12, 0.98); border-left: 1px solid var(--glass-border); z-index: 2000; display: flex; flex-direction: column; padding: 25px; box-shadow: -10px 0 30px rgba(0,0,0,0.8); transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         [data-theme="light"] .sidebar { background: rgba(250, 250, 250, 0.98); }
         html[dir="ltr"] .sidebar { right: auto; left: 0; border-left: none; border-right: 1px solid var(--glass-border); box-shadow: 10px 0 30px rgba(0,0,0,0.8); transform: translateX(-100%); }
         .sidebar.active { transform: translateX(0); }
@@ -153,7 +162,8 @@
         html[dir="ltr"] .sidebar a:hover { padding-right: 0; padding-left: 8px; }
 
         section { padding: 70px 15px 30px; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; }
-        .hero { height: 45vh; justify-content: center; text-align: center; padding: 0 15px; margin-top: 10px;}
+        /* تغيير vh إلى dvh */
+        .hero { height: 45dvh; justify-content: center; text-align: center; padding: 0 15px; margin-top: 10px;}
         .hero h2 { font-size: 3.2rem; font-weight: 900; margin-bottom: 10px; color: #fff; text-shadow: 0 0 30px rgba(255,255,255,0.2); }
         .hero h2 span { color: var(--primary); text-shadow: 0 0 20px var(--primary-glow); }
         [data-theme="light"] .hero h2 { color: #000; text-shadow: none; }
@@ -320,7 +330,8 @@
             .blob { filter: blur(40px); opacity: 0.25; } 
             .glass-panel, .navbar { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
             section { padding: 50px 12px 25px; }
-            .hero { height: 45vh; margin-top: 20px;}
+            /* تغيير vh إلى dvh */
+            .hero { height: 45dvh; margin-top: 20px;}
             .hero h2 { font-size: 2.2rem; } .hero p { font-size: 1rem; }
             .section-title { font-size: 1.4rem; margin-bottom: 25px; }
             
@@ -621,48 +632,6 @@
 
     <div id="toast"></div>
 
-    <!-- كود الحماية الذكي لمنع الزوم بدون التأثير على سلاسة التمرير -->
-    <script>
-        // 1. منع الزوم بإصبعين (Pinch Zoom)
-        document.addEventListener('touchstart', function (e) {
-            if (e.touches.length > 1) { 
-                e.preventDefault(); 
-            }
-        }, { passive: false });
-
-        // 2. منع الزوم بالنقر المزدوج السريع (Double Tap Zoom)
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', function (e) {
-            let now = (new Date()).getTime();
-            if (now - lastTouchEnd <= 300) {
-                // إذا كان العنصر معطلاً، نمنع الحدث فوراً لتفادي الزوم
-                if (e.target.disabled || e.target.classList.contains('disabled')) {
-                    e.preventDefault();
-                } else {
-                    const isInteractable = e.target.closest('button') || 
-                                         e.target.closest('a') || 
-                                         e.target.closest('input') || 
-                                         e.target.closest('.bug-radio') || 
-                                         e.target.closest('.leader-name-box') || 
-                                         e.target.closest('.server-tab') ||
-                                         e.target.closest('.nav-actions i') || 
-                                         e.target.closest('.close-btn') ||
-                                         e.target.closest('.admin-copy-btn');
-                    
-                    if(!isInteractable) { 
-                        e.preventDefault(); 
-                    }
-                }
-            }
-            lastTouchEnd = now;
-        }, { passive: false });
-
-        // 3. إجبار أجهزة آبل (سفاري) على منع الزوم العشوائي
-        document.addEventListener('gesturestart', function(e) {
-            e.preventDefault();
-        });
-    </script>
-
     <script>
         function toggleMenu() { document.getElementById('sidebar').classList.toggle('active'); document.querySelector('.overlay').classList.toggle('active'); }
 
@@ -726,6 +695,7 @@
             const bugType = bugTypeElement.value;
             const embedColor = bugType === 'Exploits' ? 16711680 : 16744192; 
 
+            // [تنبيه: سيتم ربط هذا بسيرفر وسيط غداً لحماية التوكن كما طلبت]
             const webhookId = "1545703090920099854"; 
             const webhookToken = "we1jm4gx7h6c92AEtcUl5SFSZ_smAvPjWtIYYLdti1AtPCzzUEH68EclCSZb9gc48KTo";
             const webhookUrl = `https://discord.com/api/webhooks/${webhookId}/${webhookToken}`;
