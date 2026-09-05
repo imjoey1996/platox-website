@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>PlatoX | مجتمع اللاعبين العرب</title>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Rajdhani:wght@600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -1280,8 +1279,22 @@
             }
         }, {passive: true});
 
+        // حل مشكلة التقطيع أثناء التنقل بالقائمة الجانبية
         document.querySelectorAll('.sidebar a').forEach(anchor => {
-            anchor.addEventListener('click', () => { toggleMenu(); });
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                toggleMenu(); // يغلق القائمة
+                const targetId = this.getAttribute('href');
+                
+                // ينتظر إغلاق القائمة (400 ملي ثانية) ثم يمرر الشاشة بسلاسة
+                setTimeout(() => {
+                    const targetEl = document.querySelector(targetId);
+                    if(targetEl) {
+                        const y = targetEl.getBoundingClientRect().top + window.pageYOffset - 80;
+                        window.scrollTo({top: y, behavior: 'smooth'});
+                    }
+                }, 400); 
+            });
         });
 
         document.addEventListener("DOMContentLoaded", async () => {
