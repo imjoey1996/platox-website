@@ -65,9 +65,10 @@
             -webkit-user-select: none;
         }
 
-        .blob, .particles {
+        .liquid-bg, .blob, .particles {
             -webkit-transform: translateZ(0);
             transform: translateZ(0);
+            will-change: transform;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
         }
@@ -84,7 +85,7 @@
             font-family: 'Cairo', sans-serif; 
             overflow-x: clip; 
             width: 100%;
-            background-color: transparent; /* تم جعلها شفافة لتظهر الأيقونات والخلفية المائية */
+            background-color: var(--bg-main); 
             position: relative;
             overscroll-behavior-y: none;
             padding-bottom: 115px; 
@@ -112,10 +113,9 @@
         }
 
         .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; pointer-events: none; }
-        /* تمت إزالة filter: blur لتخفيف الضغط وجعلها سلسة تماماً */
-        .particle { position: absolute; color: #fff; opacity: 0.12; animation: floatUp infinite linear; } 
+        .particle { position: absolute; color: #fff; opacity: 0.15; animation: floatUp infinite linear; filter: blur(1px); } 
         [data-theme="light"] .particle { color: var(--primary); opacity: 0.08; }
-        @keyframes floatUp { 0% { transform: translateY(100dvh) rotate(0deg) scale(0.8); opacity: 0; } 20% { opacity: 0.12; } 80% { opacity: 0.12; } 100% { transform: translateY(-10dvh) rotate(360deg) scale(1.5); opacity: 0; } }
+        @keyframes floatUp { 0% { transform: translateY(100dvh) rotate(0deg) scale(0.8); opacity: 0; } 20% { opacity: 0.15; } 80% { opacity: 0.15; } 100% { transform: translateY(-10dvh) rotate(360deg) scale(1.5); opacity: 0; } }
 
         .glass-panel { background: var(--bg-card); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-top: 1px solid rgba(255, 255, 255, 0.12); border-left: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); border-radius: 16px; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
         html[dir="ltr"] .glass-panel { border-left: 1px solid var(--glass-border); border-right: 1px solid rgba(255, 255, 255, 0.05); }
@@ -585,6 +585,75 @@
 
         <div class="cyber-divider"><div class="center-node"></div></div>
 
+        <section id="guidelines">
+            <h2 class="section-title" data-i18n="menu_guidelines">القوانين</h2>
+            
+            <!-- إرشادات المجتمع المضافة حديثاً -->
+            <div class="glass-panel" style="width: 100%; max-width: 650px; padding: 25px; border-radius: 16px; margin-bottom: 25px;">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid var(--glass-border);">
+                    <i class="fa-solid fa-users" style="color: var(--primary); font-size: 1.5rem;"></i>
+                    <h3 style="font-size: 1.2rem; margin: 0; color: var(--primary);" data-i18n="community_guide_title">إرشادات المجتمع</h3>
+                </div>
+                <p style="margin-bottom: 15px; font-weight: bold; font-size: 0.95rem;" data-i18n="community_guide_sub">لا يمكنك القيام بما يلي على بلاتو:</p>
+                <div>
+                    <div class="guideline-item">
+                        <i class="fa-solid fa-bug guideline-icon"></i>
+                        <div class="guideline-text" data-i18n="comm_guide_1">كسر بلاتو أو القيام بشيء يؤدي إلى تعطيله لشخص آخر.</div>
+                    </div>
+                    <div class="guideline-item">
+                        <i class="fa-solid fa-ranking-star guideline-icon"></i>
+                        <div class="guideline-text" data-i18n="comm_guide_2">الانخراط في تبادل الفوز أو التلاعب بنظام التصنيف.</div>
+                    </div>
+                    <div class="guideline-item">
+                        <i class="fa-solid fa-robot guideline-icon"></i>
+                        <div class="guideline-text" data-i18n="comm_guide_3">استخدام برنامج طرف ثالث لزيادة مهارتك أو معرفتك بشكل مصطنع.</div>
+                    </div>
+                    <div class="guideline-item">
+                        <i class="fa-solid fa-money-bill-transfer guideline-icon"></i>
+                        <div class="guideline-text" data-i18n="comm_guide_4">شراء أو بيع الحسابات مقابل المال الحقيقي.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- إرشادات الدردشة العامة الموجودة سابقاً -->
+            <div class="glass-panel" style="width: 100%; max-width: 650px; padding: 25px; border-radius: 16px;">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--glass-border);">
+                    <i class="fa-solid fa-shield-halved" style="color: var(--primary); font-size: 1.5rem;"></i>
+                    <h3 style="font-size: 1.2rem; margin: 0;" data-i18n="guide_title">إرشادات الدردشة في الغرف العامة</h3>
+                </div>
+
+                <div>
+                    <div class="guideline-item">
+                        <i class="fa-solid fa-ban guideline-icon"></i>
+                        <div class="guideline-text" data-i18n="guide_1">لا تنشر محتوى فاحشًا أو جنسيًا أو إباحيّا أو غير قانوني بشكل صريح.</div>
+                    </div>
+                    <div class="guideline-item">
+                        <i class="fa-solid fa-user-shield guideline-icon"></i>
+                        <div class="guideline-text" data-i18n="guide_2">لا تنشر معلومات شخصية و/أو سرية تخص مستخدمًا آخر قد تؤدي إلى إيذائه.</div>
+                    </div>
+                    <div class="guideline-item">
+                        <i class="fa-solid fa-comment-slash guideline-icon"></i>
+                        <div class="guideline-text" data-i18n="guide_3">لا تقم بإرسال رسائل غير مرغوب فيها (نشر الشيء نفسه أكثر من مرة) أو نشر نصوص تعطل تدفق الدردشة.</div>
+                    </div>
+                    <div class="guideline-item">
+                        <i class="fa-solid fa-hand-fist guideline-icon"></i>
+                        <div class="guideline-text" data-i18n="guide_4">لا تنشر محتوى يشجع على العنف في الحياة الواقعية، أو يشجع على إيذاء النفس أو الانتحار، أو يشجع على العنف تجاه مجموعة معينة من الأشخاص.</div>
+                    </div>
+                    <div class="guideline-item">
+                        <i class="fa-solid fa-globe guideline-icon"></i>
+                        <div class="guideline-text" data-i18n="guide_5">الدردشة فقط بلغة الخادم الذي تختاره.</div>
+                    </div>
+                </div>
+
+                <div class="guideline-warning">
+                    <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.5rem; flex-shrink: 0;"></i>
+                    <span data-i18n="guide_warning">يقوم قادة الخادم بتطبيق الإرشادات المذكورة أعلاه. سيؤدي انتهاك هذه الإرشادات إلى فقدان القدرة على الدردشة لمدة 4 ساعات وقد يؤدي إلى حظر دائم لحسابك إذا تكرر.</span>
+                </div>
+            </div>
+        </section>
+
+        <div class="cyber-divider"><div class="center-node"></div></div>
+
         <section id="related-links">
             <h2 class="section-title" data-i18n="links_title">مواقع ذات صلة</h2>
             <div class="links-grid">
@@ -661,46 +730,6 @@
                 <button type="button" class="server-tab" data-target="desi" onclick="filterServer('desi')">Desi</button>
             </div>
             <div class="global-leaders-grid" id="global-leaders-grid"></div>
-        </section>
-
-        <div class="cyber-divider"><div class="center-node"></div></div>
-
-        <section id="guidelines">
-            <h2 class="section-title" data-i18n="menu_guidelines">القوانين</h2>
-            <div class="glass-panel" style="width: 100%; max-width: 650px; padding: 25px; border-radius: 16px;">
-                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--glass-border);">
-                    <i class="fa-solid fa-shield-halved" style="color: var(--primary); font-size: 1.5rem;"></i>
-                    <h3 style="font-size: 1.2rem; margin: 0;" data-i18n="guide_title">إرشادات الدردشة في الغرف العامة</h3>
-                </div>
-
-                <div>
-                    <div class="guideline-item">
-                        <i class="fa-solid fa-ban guideline-icon"></i>
-                        <div class="guideline-text" data-i18n="guide_1">لا تنشر محتوى فاحشًا أو جنسيًا أو إباحيّا أو غير قانوني بشكل صريح.</div>
-                    </div>
-                    <div class="guideline-item">
-                        <i class="fa-solid fa-user-shield guideline-icon"></i>
-                        <div class="guideline-text" data-i18n="guide_2">لا تنشر معلومات شخصية و/أو سرية تخص مستخدمًا آخر قد تؤدي إلى إيذائه.</div>
-                    </div>
-                    <div class="guideline-item">
-                        <i class="fa-solid fa-comment-slash guideline-icon"></i>
-                        <div class="guideline-text" data-i18n="guide_3">لا تقم بإرسال رسائل غير مرغوب فيها (نشر الشيء نفسه أكثر من مرة) أو نشر نصوص تعطل تدفق الدردشة.</div>
-                    </div>
-                    <div class="guideline-item">
-                        <i class="fa-solid fa-hand-fist guideline-icon"></i>
-                        <div class="guideline-text" data-i18n="guide_4">لا تنشر محتوى يشجع على العنف في الحياة الواقعية، أو يشجع على إيذاء النفس أو الانتحار، أو يشجع على العنف تجاه مجموعة معينة من الأشخاص.</div>
-                    </div>
-                    <div class="guideline-item">
-                        <i class="fa-solid fa-globe guideline-icon"></i>
-                        <div class="guideline-text" data-i18n="guide_5">الدردشة فقط بلغة الخادم الذي تختاره.</div>
-                    </div>
-                </div>
-
-                <div class="guideline-warning">
-                    <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.5rem; flex-shrink: 0;"></i>
-                    <span data-i18n="guide_warning">يقوم قادة الخادم بتطبيق الإرشادات المذكورة أعلاه. سيؤدي انتهاك هذه الإرشادات إلى فقدان القدرة على الدردشة لمدة 4 ساعات وقد يؤدي إلى حظر دائم لحسابك إذا تكرر.</span>
-                </div>
-            </div>
         </section>
     </main>
 
@@ -1049,6 +1078,12 @@
                 news_newer: "الأحدث", news_older: "الأقدم",
                 discord_more: "للمزيد من الأخبار انضموا إلى الديسكورد",
                 th_player: "اللاعب", th_days: "يوم",
+                community_guide_title: "إرشادات المجتمع",
+                community_guide_sub: "لا يمكنك القيام بما يلي على بلاتو:",
+                comm_guide_1: "كسر بلاتو أو القيام بشيء يؤدي إلى تعطيله لشخص آخر.",
+                comm_guide_2: "الانخراط في تبادل الفوز أو التلاعب بنظام التصنيف.",
+                comm_guide_3: "استخدام برنامج طرف ثالث لزيادة مهارتك أو معرفتك بشكل مصطنع.",
+                comm_guide_4: "شراء أو بيع الحسابات مقابل المال الحقيقي.",
                 guide_title: "إرشادات الدردشة في الغرف العامة",
                 guide_1: "لا تنشر محتوى فاحشًا أو جنسيًا أو إباحيّا أو غير قانوني بشكل صريح.",
                 guide_2: "لا تنشر معلومات شخصية و/أو سرية تخص مستخدمًا آخر قد تؤدي إلى إيذائه.",
@@ -1074,6 +1109,12 @@
                 news_newer: "NEWER", news_older: "OLDER",
                 discord_more: "For more news, join our Discord server",
                 th_player: "PLAYER", th_days: "DAYS",
+                community_guide_title: "Community Guidelines",
+                community_guide_sub: "You can't do the following on Plato:",
+                comm_guide_1: "Breaking Plato or doing something that breaks Plato for another person.",
+                comm_guide_2: "Engaging in win-trading or otherwise manipulating the ranking system.",
+                comm_guide_3: "Using a third-party program to artificially increase your skill or knowledge.",
+                comm_guide_4: "Buying or selling accounts for real money.",
                 guide_title: "Public Room Chat Guidelines",
                 guide_1: "Do not post content that is explicitly obscene, sexual, pornographic, or illegal.",
                 guide_2: "Do not post personal and/or confidential information belonging to another user that could potentially harm them.",
