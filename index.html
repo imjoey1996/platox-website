@@ -120,7 +120,7 @@
         html[dir="ltr"] .glass-panel { border-left: 1px solid var(--glass-border); border-right: 1px solid rgba(255, 255, 255, 0.05); }
         [data-theme="light"] .glass-panel { box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07); border-top: 1px solid rgba(255, 255, 255, 0.6); }
 
-        .navbar { position: fixed; top: 0; width: 100%; padding: 12px 25px; display: flex; justify-content: space-between; align-items: center; background: rgba(5, 5, 8, 0.5); backdrop-filter: blur(25px); border-bottom: 1px solid var(--glass-border); z-index: 1000; }
+        .navbar { position: fixed; top: 0; left: 0; width: 100%; padding: 12px 25px; display: flex; justify-content: space-between; align-items: center; background: rgba(5, 5, 8, 0.5); backdrop-filter: blur(25px); border-bottom: 1px solid var(--glass-border); z-index: 1000; }
         [data-theme="light"] .navbar { background: rgba(255, 255, 255, 0.7); }
         .navbar h1 { font-size: 24px; font-weight: 900; letter-spacing: 1px; display: flex; align-items: baseline;}
         .navbar h1 span { color: var(--primary); font-size: 1.3em; transform: translateY(2px); margin-inline-start: 1px;}
@@ -129,24 +129,28 @@
         .nav-actions i { font-size: 20px; cursor: pointer; color: var(--text-main); transition: 0.3s; }
         .nav-actions i:hover { color: var(--primary); text-shadow: 0 0 10px var(--primary-glow); }
         
-        .news-ticker { position: fixed; top: 55px; width: 100%; background: var(--ticker-bg); backdrop-filter: blur(15px); color: var(--ticker-text); padding: 6px 0; overflow: hidden; white-space: nowrap; z-index: 999; border-bottom: 1px solid var(--glass-border); font-weight: 700; font-size: 0.85rem; }
+        /* إضافة left: 0 لضمان امتداد شريط الأخبار بشكل كامل */
+        .news-ticker { position: fixed; top: 55px; left: 0; width: 100%; background: var(--ticker-bg); backdrop-filter: blur(15px); color: var(--ticker-text); padding: 6px 0; overflow: hidden; white-space: nowrap; z-index: 999; border-bottom: 1px solid var(--glass-border); font-weight: 700; font-size: 0.85rem; }
         .ticker-content { display: inline-block; animation: ticker-rtl 40s linear infinite; }
         html[dir="ltr"] .ticker-content { animation: ticker-ltr 40s linear infinite; }
         .news-ticker:hover .ticker-content { animation-play-state: paused; }
         @keyframes ticker-rtl { from { transform: translateX(-100vw); } to { transform: translateX(100vw); } }
         @keyframes ticker-ltr { from { transform: translateX(100vw); } to { transform: translateX(-100vw); } }
 
-        .sidebar { position: fixed; top: 0; right: 0; width: 280px; height: 100dvh; background: rgba(10, 10, 12, 0.98); border-left: 1px solid var(--glass-border); z-index: 2000; display: flex; flex-direction: column; padding: 25px; box-shadow: -10px 0 30px rgba(0,0,0,0.8); transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); will-change: transform; }
+        /* إزالة الظل الخارجي في الحالة المغلقة حتى لا يتسرب لداخل الشاشة */
+        .sidebar { position: fixed; top: 0; right: 0; width: 280px; height: 100dvh; background: rgba(10, 10, 12, 0.98); border-left: 1px solid var(--glass-border); z-index: 2000; display: flex; flex-direction: column; padding: 25px; box-shadow: none; transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s; will-change: transform; }
         [data-theme="light"] .sidebar { background: rgba(250, 250, 250, 0.98); }
-        html[dir="ltr"] .sidebar { right: auto; left: 0; border-left: none; border-right: 1px solid var(--glass-border); box-shadow: 10px 0 30px rgba(0,0,0,0.8); transform: translateX(-100%); }
-        .sidebar.active { transform: translateX(0); }
-        html[dir="ltr"] .sidebar.active { transform: translateX(0); }
+        html[dir="ltr"] .sidebar { right: auto; left: 0; border-left: none; border-right: 1px solid var(--glass-border); transform: translateX(-100%); box-shadow: none; }
+        /* تفعيل الظل فقط عند فتح القائمة */
+        .sidebar.active { transform: translateX(0); box-shadow: -10px 0 30px rgba(0,0,0,0.8); }
+        html[dir="ltr"] .sidebar.active { transform: translateX(0); box-shadow: 10px 0 30px rgba(0,0,0,0.8); }
         .close-btn { align-self: flex-end; font-size: 26px; cursor: pointer; margin-bottom: 15px; }
         html[dir="ltr"] .close-btn { align-self: flex-start; }
         
         .lang-btn { background: transparent; color: var(--text-muted); border: 1px solid var(--glass-border); padding: 6px 15px; border-radius: 20px; cursor: pointer; transition: 0.3s; font-family: 'Cairo', sans-serif; font-weight: 700; font-size: 0.9rem;}
         .lang-btn:hover { color: var(--primary); border-color: var(--primary); }
-        .lang-btn.active { color: #fff; background: var(--primary); border-color: var(--primary); box-shadow: 0 0 15px var(--primary-glow); }
+        /* إضافة !important لحماية زر التفعيل من التغيير في الأوضاع الأخرى */
+        .lang-btn.active { color: #fff !important; background: var(--primary) !important; border-color: var(--primary) !important; box-shadow: 0 0 15px var(--primary-glow); }
         .main-lang-switch { display: flex; justify-content: center; gap: 12px; margin: 105px auto -10px; position: relative; z-index: 10; }
         .main-lang-switch .lang-btn { background: rgba(15, 15, 20, 0.4); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); box-shadow: 0 4px 15px rgba(0,0,0,0.2); padding: 6px 25px; }
         [data-theme="light"] .main-lang-switch .lang-btn { background: rgba(255, 255, 255, 0.6); }
