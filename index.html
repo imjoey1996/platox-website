@@ -38,20 +38,18 @@
             --glow-bbb: #0096b4;
         }
 
-        /* حماية شاملة ضد تحديد النصوص والضغط المطول والزوم */
         * { 
             box-sizing: border-box; 
             margin: 0; 
             padding: 0; 
             touch-action: manipulation; 
             -webkit-tap-highlight-color: transparent; 
-            -webkit-touch-callout: none; /* تمنع ظهور قائمة الحفظ عند الضغط المطول */
+            -webkit-touch-callout: none; 
         }
         
-        /* تجميد الصور نهائياً لمنع الزوم والحفظ */
         img {
             -webkit-user-drag: none;
-            pointer-events: none; /* يلغي تفاعل الصورة مع اللمس تماماً */
+            pointer-events: none; 
             user-select: none;
             -webkit-user-select: none;
         }
@@ -65,7 +63,7 @@
             transition: background 0.4s, color 0.4s; 
             background-color: var(--bg-main); 
             overscroll-behavior-y: none;
-            touch-action: pan-x pan-y; /* يسمح بالسحب ويمنع الزوم بقوة */
+            touch-action: pan-x pan-y; 
         }
         
         html[dir="ltr"] body, .num-font, .navbar h1 { font-family: 'Rajdhani', sans-serif; }
@@ -280,7 +278,6 @@
         .overlay.active { display: block; }
 
         @media (max-width: 600px) {
-            [data-aos] { opacity: 1 !important; transform: none !important; transition: none !important; animation: none !important; }
             .main-lang-switch { margin-top: 95px; margin-bottom: -15px; }
             .main-lang-switch .lang-btn { padding: 5px 15px; font-size: 0.85rem; }
             .blob { filter: blur(40px); opacity: 0.25; } 
@@ -305,7 +302,6 @@
             .global-leaders-grid { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 12px; width: 100%; } 
             
             .card { padding: 15px 10px; width: 100%; max-width: none; }
-            /* الكروت الفوق ما تتأثر بالزوم */
             .card img { width: 70px; height: 70px; margin-bottom: 10px; }
             .card h3 { font-size: 1.1rem; margin-bottom: 5px; }
             .card p { font-size: 0.8rem; line-height: 1.4; }
@@ -363,20 +359,20 @@
         <span class="ticker-content" id="news-text"></span>
     </div>
 
-    <div class="main-lang-switch" data-aos="fade-down" dir="rtl">
+    <div class="main-lang-switch" dir="rtl">
         <button class="lang-btn active" onclick="changeLang('ar')" id="btn-ar">العربية</button>
         <button class="lang-btn" onclick="changeLang('en')" id="btn-en">English</button>
     </div>
 
     <section class="hero" id="hero">
-        <h2 data-aos="fade-down">Plato<span>X</span> <span data-i18n="hero_title_sub">المجتمع العربي</span></h2>
-        <p data-aos="fade-up" data-aos-delay="200" data-i18n="hero_desc">يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.</p>
+        <h2>Plato<span>X</span> <span data-i18n="hero_title_sub">المجتمع العربي</span></h2>
+        <p data-i18n="hero_desc">يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.</p>
     </section>
 
     <section id="news" style="padding-top: 10px;">
-        <h2 class="section-title" data-aos="fade-right" data-i18n="news_board_title">لوحة أخبار المجتمع</h2>
+        <h2 class="section-title" data-i18n="news_board_title">لوحة أخبار المجتمع</h2>
 
-        <div class="news-carousel-container" data-aos="zoom-in">
+        <div class="news-carousel-container">
             <div class="news-slider" id="newsSlider"></div>
             
             <div class="news-bottom-wrapper">
@@ -404,8 +400,8 @@
     <div class="cyber-divider"><div class="center-node"></div></div>
 
     <section id="bug-report">
-        <h2 class="section-title" data-aos="fade-right" data-i18n="bug_title">تقديم بلاغ</h2>
-        <div class="glass-panel" style="width: 100%; max-width: 650px; padding: 30px; border-radius: 16px;" data-aos="fade-up">
+        <h2 class="section-title" data-i18n="bug_title">تقديم بلاغ</h2>
+        <div class="glass-panel" style="width: 100%; max-width: 650px; padding: 30px; border-radius: 16px;">
             
             <label style="display:block; margin-bottom: 5px; font-weight: bold; font-size: 1.1rem;" data-i18n="bug_type_label">نوع المشكلة:</label>
             <span style="display:block; margin-bottom: 15px; font-size: 0.85rem; color: var(--text-muted); font-weight: 700;" data-i18n="bug_note">هذا القسم غير مخصص للمشاكل الشخصية.</span>
@@ -436,19 +432,19 @@
     <div class="cyber-divider"><div class="center-node"></div></div>
 
     <section id="arabic-leaders">
-        <h2 class="section-title" data-aos="fade-right" data-i18n="leaders_title">القادة العرب</h2>
+        <h2 class="section-title" data-i18n="leaders_title">القادة العرب</h2>
         <div class="grid-container">
-            <div class="card glass-panel card-yyy" data-aos="fade-up" data-aos-delay="100">
+            <div class="card glass-panel card-yyy">
                 <img src="IMG_3154.png" alt="YYY">
                 <h3>YYY</h3>
                 <p data-i18n="desc_yyy">صانع الأثر، يقود برؤية مستقبلية لخلق بيئة إيجابية لا تعرف المستحيل.</p>
             </div>
-            <div class="card glass-panel card-hat" data-aos="fade-up" data-aos-delay="200">
+            <div class="card glass-panel card-hat">
                 <img src="f3b8c20da38a9320fa2f250f52f7f16a.png" alt="HAT">
                 <h3>HAT</h3>
                 <p data-i18n="desc_hat">حضور راسخ، تقود المجتمع بثقة راسخة وترسم معايير الرقي.</p>
             </div>
-            <div class="card glass-panel card-bbb" data-aos="fade-up" data-aos-delay="300">
+            <div class="card glass-panel card-bbb">
                 <img src="a_368d018a788facdb964b3f1df658ecde.gif" alt="BBB">
                 <h3>BBB</h3>
                 <p data-i18n="desc_bbb">الحكمة في اتخاذ القرار، يوازن بين الحزم والهدوء لإدارة الأزمات باحترافية.</p>
@@ -459,9 +455,9 @@
     <div class="cyber-divider"><div class="center-node"></div></div>
 
     <section id="global-leaders">
-        <h2 class="section-title" data-aos="fade-right" data-i18n="global_leaders_title">قادة السيرفرات العالمية</h2>
+        <h2 class="section-title" data-i18n="global_leaders_title">قادة السيرفرات العالمية</h2>
         
-        <div class="server-tabs" data-aos="fade-up" dir="ltr">
+        <div class="server-tabs" dir="ltr">
             <button class="server-tab active" data-target="english" onclick="filterServer('english')">English</button>
             <button class="server-tab" data-target="persian" onclick="filterServer('persian')">Persian</button>
             <button class="server-tab" data-target="french" onclick="filterServer('french')">French</button>
@@ -479,22 +475,22 @@
     <div class="cyber-divider"><div class="center-node"></div></div>
 
     <section id="tournaments">
-        <h2 class="section-title" data-aos="fade-right" data-i18n="tournaments_title">مركز البطولات المعتمدة</h2>
-        <div class="tournaments-grid" id="tournaments-container" data-aos="fade-up"></div>
+        <h2 class="section-title" data-i18n="tournaments_title">مركز البطولات المعتمدة</h2>
+        <div class="tournaments-grid" id="tournaments-container"></div>
     </section>
 
     <div class="cyber-divider"><div class="center-node"></div></div>
 
     <section id="top-spending">
-        <h2 class="section-title" data-aos="fade-right" data-i18n="spending_title">ترتيب المجموعات الأكثر إنفاقًا</h2>
-        <div class="premium-list" id="spenders-container" data-aos="fade-up"></div>
+        <h2 class="section-title" data-i18n="spending_title">ترتيب المجموعات الأكثر إنفاقًا</h2>
+        <div class="premium-list" id="spenders-container"></div>
     </section>
 
     <div class="cyber-divider"><div class="center-node"></div></div>
 
     <section id="accounts" style="padding-bottom: 120px;">
-        <h2 class="section-title" data-aos="fade-right" data-i18n="players_title">اللاعبين الاقدم</h2>
-        <div class="premium-list" data-aos="fade-up">
+        <h2 class="section-title" data-i18n="players_title">اللاعبين الاقدم</h2>
+        <div class="premium-list">
             <div class="list-row glass-panel rank-1">
                 <div class="rank-num num-font">01</div>
                 <div class="list-info">
@@ -545,32 +541,27 @@
     <div id="toast"></div>
 
     <script>
-        // ---------------- الحماية القصوى ضد الزوم في سفاري والايفون ----------------
-        // نمنع إيماءات التكبير الخاصة بسفاري (Pinch to zoom)
         document.addEventListener('gesturestart', function(e) { e.preventDefault(); });
         document.addEventListener('gesturechange', function(e) { e.preventDefault(); });
         document.addEventListener('gestureend', function(e) { e.preventDefault(); });
 
-        // نمنع الزوم باللمس المزدوج مع الحفاظ على عمل الأزرار
         let lastTouchEnd = 0;
         document.addEventListener('touchend', function (e) {
             let now = (new Date()).getTime();
             if (now - lastTouchEnd <= 300) {
-                // استثناء الأزرار حتى ما يضيع الضغط السريع عليها
-                const isButton = e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('.bug-radio') || e.target.closest('.leader-name-box');
-                if(!isButton) {
-                    e.preventDefault(); 
-                }
+                const isButton = e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('.bug-radio') || e.target.closest('.leader-name-box') || e.target.closest('.server-tab');
+                if(!isButton) { e.preventDefault(); }
             }
             lastTouchEnd = now;
         }, { passive: false });
-        // ----------------------------------------------------------------------------
+        
+        let lastTouchTime = 0;
+        document.addEventListener('touchstart', function (e) {
+            if (e.touches.length > 1) { e.preventDefault(); }
+        }, { passive: false });
     </script>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({ duration: 500, once: true, disable: 'mobile' });
-
         function toggleMenu() { document.getElementById('sidebar').classList.toggle('active'); document.querySelector('.overlay').classList.toggle('active'); }
 
         const icons = ['fa-gamepad', 'fa-dice', 'fa-chess-knight', 'fa-bowling-ball', 'fa-ghost', 'fa-futbol'];
@@ -700,7 +691,7 @@
                 name: "H22", 
                 server: "french", 
                 img: "IMG_7442.png",
-                desc: { ar: "ودود ومحفز، مستعد دائماً للمساعدة والتواصل مع الأشخاص.   .", en: "Friendly and encouraging, always willing to help and connect with people from all servers." }
+                desc: { ar: "ودود ومحفز، مستعد دائماً للمساعدة والتواصل مع الأشخاص.", en: "Friendly and encouraging, always willing to help and connect with people from all servers." }
             },
             { name: "love_hope", server: "french", img: "f74613af2e55aecdde0d31ff33964698.png" }, 
             { name: "Mdame", server: "french", img: "de6ac96df41f0d3378e934e467ccee32.png" }, 
@@ -794,8 +785,6 @@
             document.querySelectorAll('.global-leader').forEach(card => {
                 if(card.dataset.server === serverName) {
                     card.style.display = 'flex';
-                    card.style.animation = 'none'; 
-                    setTimeout(() => { card.style.animation = 'fadeScale 0.4s ease-out forwards'; }, 10);
                 } else {
                     card.style.display = 'none';
                 }
@@ -863,62 +852,83 @@
 
         async function loadNewsData() {
             try {
+                const cached = localStorage.getItem('plato_news_cache');
+                if (cached) processNewsData(cached);
+
                 const response = await fetch(newsSheetURL);
                 if (!response.ok) throw new Error("تأكد من الشيت");
                 const data = await response.text();
-                const rows = data.split('\n').slice(1).filter(row => row.trim().length > 0);
                 
-                let tickersAr = [];
-                let tickersEn = [];
-                
-                for(let r of rows) {
-                    const c = r.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-                    let tAr = c[6] ? c[6].replace(/"/g, '').trim() : "";
-                    let tEn = c[7] ? c[7].replace(/"/g, '').trim() : "";
-                    if(tAr) tickersAr.push(tAr);
-                    if(tEn) tickersEn.push(tEn);
+                if (data !== cached) {
+                    localStorage.setItem('plato_news_cache', data);
+                    processNewsData(data);
                 }
-                
-                const separatorHTML = `<span style="color: var(--primary); margin: 0 25px;"><i class="fa-solid fa-gamepad"></i></span>`;
-                
-                if (tickersAr.length > 0) {
-                    translations.ar['news_text'] = tickersAr.join(separatorHTML);
-                } else {
-                    translations.ar['news_text'] = "أهلاً بكم في مجتمع PlatoX العربي"; 
-                }
-                
-                if (tickersEn.length > 0) {
-                    translations.en['news_text'] = tickersEn.join(separatorHTML);
-                } else {
-                    translations.en['news_text'] = "Welcome to PlatoX Community";
-                }
-
-                const currentLang = document.documentElement.getAttribute('lang') || 'ar';
-                document.getElementById('news-text').innerHTML = translations[currentLang]['news_text'];
-
-                let allNews = rows.map(row => {
-                    const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-                    if (!cols[0] || !cols[1]) return null; 
-                    return cols.length >= 2 ? cols : null;
-                }).filter(Boolean);
-                
-                allNews.sort((a, b) => {
-                    const dateA = new Date((a[0] || '').replace(/"/g, '').trim()).getTime() || 0;
-                    const dateB = new Date((b[0] || '').replace(/"/g, '').trim()).getTime() || 0;
-                    return dateB - dateA;
-                });
-
-                newsCardsData = allNews.slice(0, 5);
-                buildNewsHTML();
             } catch (error) { console.error("Error loading news", error); }
+        }
+
+        function processNewsData(data) {
+            const rows = data.split('\n').slice(1).filter(row => row.trim().length > 0);
+            
+            let tickersAr = [];
+            let tickersEn = [];
+            
+            for(let r of rows) {
+                const c = r.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                let tAr = c[6] ? c[6].replace(/"/g, '').trim() : "";
+                let tEn = c[7] ? c[7].replace(/"/g, '').trim() : "";
+                if(tAr) tickersAr.push(tAr);
+                if(tEn) tickersEn.push(tEn);
+            }
+            
+            const separatorHTML = `<span style="color: var(--primary); margin: 0 25px;"><i class="fa-solid fa-gamepad"></i></span>`;
+            
+            if (tickersAr.length > 0) {
+                translations.ar['news_text'] = tickersAr.join(separatorHTML);
+            } else {
+                translations.ar['news_text'] = "أهلاً بكم في مجتمع PlatoX العربي"; 
+            }
+            
+            if (tickersEn.length > 0) {
+                translations.en['news_text'] = tickersEn.join(separatorHTML);
+            } else {
+                translations.en['news_text'] = "Welcome to PlatoX Community";
+            }
+
+            const currentLang = document.documentElement.getAttribute('lang') || 'ar';
+            document.getElementById('news-text').innerHTML = translations[currentLang]['news_text'];
+
+            let allNews = rows.map(row => {
+                const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                if (!cols[0] || !cols[1]) return null; 
+                return cols.length >= 2 ? cols : null;
+            }).filter(Boolean);
+            
+            allNews.sort((a, b) => {
+                const dateA = new Date((a[0] || '').replace(/"/g, '').trim()).getTime() || 0;
+                const dateB = new Date((b[0] || '').replace(/"/g, '').trim()).getTime() || 0;
+                return dateB - dateA;
+            });
+
+            newsCardsData = allNews.slice(0, 5);
+            buildNewsHTML();
         }
 
         async function loadDynamicData() {
             try {
+                const cached = localStorage.getItem('plato_dynamic_cache');
+                if (cached) {
+                    cachedSheetRows = cached.split('\n').slice(1);
+                    renderDynamicData();
+                }
+
                 const response = await fetch(tourSheetURL);
                 const data = await response.text();
-                cachedSheetRows = data.split('\n').slice(1);
-                renderDynamicData();
+                
+                if (data !== cached) {
+                    localStorage.setItem('plato_dynamic_cache', data);
+                    cachedSheetRows = data.split('\n').slice(1);
+                    renderDynamicData();
+                }
             } catch (error) { console.error("حدث خطأ أثناء جلب البيانات:", error); }
         }
 
@@ -1282,7 +1292,11 @@
             const savedLang = localStorage.getItem('lang') || 'ar'; 
             changeLang(savedLang);
             
-            showSkeletons();
+            const cachedNews = localStorage.getItem('plato_news_cache');
+            const cachedDyn = localStorage.getItem('plato_dynamic_cache');
+            if (!cachedNews || !cachedDyn) {
+                showSkeletons();
+            }
             
             await syncRealTime(); 
             
