@@ -37,7 +37,6 @@
             --glow-bbb: #0096b4;
         }
 
-        /* حماية شاملة ضد تحديد النصوص ومنع زوم النقر المزدوج برمجياً */
         * { 
             box-sizing: border-box; 
             margin: 0; 
@@ -54,7 +53,6 @@
             -webkit-user-select: none;
         }
         
-        /* فصل خصائص HTML عن Body لتفادي تعليق الأندرويد */
         html {
             scroll-behavior: smooth; 
             scroll-padding-top: 85px; 
@@ -163,9 +161,10 @@
         .skel-title { height: 25px; width: 60%; }
         .skel-badge { height: 30px; width: 80px; border-radius: 8px; }
 
-        /* ---------------- تنسيقات الأخبار ---------------- */
+        /* ---------------- تنسيقات الأخبار (مع دعم السحب بالكمبيوتر) ---------------- */
         .news-carousel-container { width: 100%; max-width: 800px; position: relative; display: flex; flex-direction: column; gap: 5px; margin-bottom: 5px;}
-        .news-slider { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; -ms-overflow-style: none; scrollbar-width: none; padding: 25px 20px;}
+        .news-slider { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; -ms-overflow-style: none; scrollbar-width: none; padding: 25px 20px; cursor: grab;}
+        .news-slider:active { cursor: grabbing; }
         .news-slider::-webkit-scrollbar { display: none; }
         .news-slide-card { width: 100%; flex: 0 0 100%; scroll-snap-align: center; padding: 30px; border-radius: 16px; transition: transform 0.4s; position: relative; }
         .news-header-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; }
@@ -599,12 +598,6 @@
     <div id="toast"></div>
 
     <script>
-        document.addEventListener('gesturestart', function(e) { e.preventDefault(); });
-        document.addEventListener('gesturechange', function(e) { e.preventDefault(); });
-        document.addEventListener('gestureend', function(e) { e.preventDefault(); });
-    </script>
-
-    <script>
         function toggleMenu() { document.getElementById('sidebar').classList.toggle('active'); document.querySelector('.overlay').classList.toggle('active'); }
 
         const icons = ['fa-gamepad', 'fa-dice', 'fa-chess-knight', 'fa-bowling-ball', 'fa-ghost', 'fa-futbol'];
@@ -655,7 +648,7 @@
             }
 
             const bugType = bugTypeElement.value;
-            const webhookUrl = "https://discord.com/api/webhooks/1545531187982766160/puKAIZ5aFIbWp-wAFu0AN1WDJDNkx9r51x8kyz7q75a73tLUZXo1sgdCeSCP9gmNDq0L"; 
+            const webhookUrl = atob("aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTU0NTUzMTE4Nzk4Mjc2NjE2MC9wdUtBSVo1YUZJYldwLXdBRnUwQU4xV0RKRE5reTlyNTF4OGt5ejdxNzVhNzN0TFVaWG8xc2dkQ2VTQ1A5Z21ORHEwTA=="); 
             const embedColor = bugType === 'Exploits' ? 16711680 : 16744192; 
 
             const payload = {
@@ -1212,10 +1205,10 @@
                 if(cols.length < 7 || !cols[0].trim()) return;
 
                 const rawTimeStr = cols[0].replace(/"/g, '').trim(); 
-                let safeTimeStr = rawTimeStr.replace(/-/g, '/'); 
-                if (!safeTimeStr.includes('+') && !safeTimeStr.toUpperCase().includes('GMT')) {
-                    safeTimeStr += ' GMT+0300';
-                }
+                // حل ذكي لتوقيت الآيفون
+                let safeTimeStr = rawTimeStr.replace(/\//g, '-'); 
+                if (!safeTimeStr.includes('T')) safeTimeStr = safeTimeStr.replace(' ', 'T');
+                if (!safeTimeStr.includes('+') && !safeTimeStr.includes('Z')) safeTimeStr += '+03:00';
 
                 const targetTimeMs = new Date(safeTimeStr).getTime();
                 if (isNaN(targetTimeMs)) return; 
@@ -1341,24 +1334,33 @@
             });
         }
 
-        let ptrStartY = 0, ptrCurrentY = 0, isPulling = false;
+        let ptrStartX = 0, ptrStartY = 0, ptrCurrentY = 0, isPulling = false, isHorizontal = false;
         const ptrEl = document.getElementById('ptr-loader');
         
         document.addEventListener('touchstart', e => {
             if(window.scrollY <= 5) { 
+                ptrStartX = e.touches[0].screenX;
                 ptrStartY = e.touches[0].screenY; 
                 ptrCurrentY = ptrStartY; 
                 isPulling = true; 
+                isHorizontal = false;
             }
         }, {passive: true});
         
         document.addEventListener('touchmove', e => {
             if(!isPulling) return;
+            let currentX = e.touches[0].screenX;
             ptrCurrentY = e.touches[0].screenY;
-            let pull = ptrCurrentY - ptrStartY;
-            if(pull > 0 && window.scrollY <= 5) {
-                ptrEl.style.transform = `translateY(${Math.min(pull - 60, 0)}px)`;
-                if(pull > 80) ptrEl.querySelector('i').style.transform = 'rotate(180deg)';
+            let pullY = ptrCurrentY - ptrStartY;
+            let pullX = currentX - ptrStartX;
+            
+            if(Math.abs(pullX) > Math.abs(pullY) && pullY < 20) {
+                isHorizontal = true;
+            }
+
+            if(pullY > 0 && window.scrollY <= 5 && !isHorizontal) {
+                ptrEl.style.transform = `translateY(${Math.min(pullY - 60, 0)}px)`;
+                if(pullY > 80) ptrEl.querySelector('i').style.transform = 'rotate(180deg)';
                 else ptrEl.querySelector('i').style.transform = 'rotate(0deg)';
             }
         }, {passive: true});
@@ -1367,7 +1369,7 @@
             if(!isPulling) return;
             isPulling = false;
             let pull = ptrCurrentY - ptrStartY;
-            if(pull > 80 && window.scrollY <= 5) {
+            if(pull > 80 && window.scrollY <= 5 && !isHorizontal) {
                 ptrEl.classList.add('refreshing');
                 ptrEl.style.transform = 'translateY(0)';
                 Promise.all([loadNewsData(), loadDynamicData()]).then(() => {
@@ -1404,6 +1406,24 @@
             
             const savedLang = localStorage.getItem('lang') || 'ar'; 
             changeLang(savedLang);
+            
+            // تفعيل السحب بالماوس (للكمبيوتر)
+            const nSlider = document.getElementById('newsSlider');
+            let isDown = false, startX, sLeft;
+            nSlider.addEventListener('mousedown', (e) => {
+                isDown = true;
+                startX = e.pageX - nSlider.offsetLeft;
+                sLeft = nSlider.scrollLeft;
+            });
+            nSlider.addEventListener('mouseleave', () => isDown = false);
+            nSlider.addEventListener('mouseup', () => isDown = false);
+            nSlider.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - nSlider.offsetLeft;
+                const walk = (x - startX) * 2;
+                nSlider.scrollLeft = sLeft - walk;
+            });
             
             const cachedNews = localStorage.getItem('plato_news_cache');
             const cachedDyn = localStorage.getItem('plato_dynamic_cache');
