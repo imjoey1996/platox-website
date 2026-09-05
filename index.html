@@ -63,7 +63,7 @@
         
         img {
             -webkit-user-drag: none;
-            pointer-events: none; /* حماية الصور كما طلبت */
+            pointer-events: none; 
             user-select: none;
             -webkit-user-select: none;
         }
@@ -80,7 +80,7 @@
             scroll-behavior: smooth; 
             scroll-padding-top: 85px; 
             background-color: var(--bg-main);
-            overscroll-behavior-y: none; /* لمنع تعارض السحب في أجهزة iOS */
+            overscroll-behavior-y: none;
         }
 
         body { 
@@ -91,12 +91,11 @@
             transition: background 0.4s, color 0.4s; 
             background-color: var(--bg-main); 
             position: relative;
-            overscroll-behavior-y: none; /* لمنع تعارض السحب في أجهزة iOS */
+            overscroll-behavior-y: none;
         }
         
         html[dir="ltr"] body, .num-font, .navbar h1 { font-family: 'Rajdhani', sans-serif; }
 
-        /* تغيير vh إلى dvh لدعم متصفحات الجوال بشكل أفضل */
         .liquid-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh; z-index: -3; overflow: hidden; background: var(--bg-main); pointer-events: none; }
         .blob { position: absolute; filter: blur(90px); opacity: 0.45; z-index: -2; will-change: transform, background-color;}
         [data-theme="light"] .blob { opacity: 0.3; filter: blur(70px); }
@@ -112,7 +111,6 @@
 
         @keyframes colorShift { 0% { background: var(--glow-yyy); } 33% { background: var(--primary); } 66% { background: var(--glow-bbb); } 100% { background: var(--glow-yyy); } }
 
-        /* توفير طاقة البطارية للأجهزة التي تفعل وضع تقليل الحركة */
         @media (prefers-reduced-motion: reduce) {
             .blob, .particle { animation: none !important; }
         }
@@ -141,7 +139,6 @@
         @keyframes ticker-rtl { from { transform: translateX(-100vw); } to { transform: translateX(100vw); } }
         @keyframes ticker-ltr { from { transform: translateX(100vw); } to { transform: translateX(-100vw); } }
 
-        /* تغيير vh إلى dvh */
         .sidebar { position: fixed; top: 0; right: 0; width: 280px; height: 100dvh; background: rgba(10, 10, 12, 0.98); border-left: 1px solid var(--glass-border); z-index: 2000; display: flex; flex-direction: column; padding: 25px; box-shadow: -10px 0 30px rgba(0,0,0,0.8); transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         [data-theme="light"] .sidebar { background: rgba(250, 250, 250, 0.98); }
         html[dir="ltr"] .sidebar { right: auto; left: 0; border-left: none; border-right: 1px solid var(--glass-border); box-shadow: 10px 0 30px rgba(0,0,0,0.8); transform: translateX(-100%); }
@@ -162,7 +159,6 @@
         html[dir="ltr"] .sidebar a:hover { padding-right: 0; padding-left: 8px; }
 
         section { padding: 70px 15px 30px; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; }
-        /* تغيير vh إلى dvh */
         .hero { height: 45dvh; justify-content: center; text-align: center; padding: 0 15px; margin-top: 10px;}
         .hero h2 { font-size: 3.2rem; font-weight: 900; margin-bottom: 10px; color: #fff; text-shadow: 0 0 30px rgba(255,255,255,0.2); }
         .hero h2 span { color: var(--primary); text-shadow: 0 0 20px var(--primary-glow); }
@@ -330,7 +326,6 @@
             .blob { filter: blur(40px); opacity: 0.25; } 
             .glass-panel, .navbar { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
             section { padding: 50px 12px 25px; }
-            /* تغيير vh إلى dvh */
             .hero { height: 45dvh; margin-top: 20px;}
             .hero h2 { font-size: 2.2rem; } .hero p { font-size: 1rem; }
             .section-title { font-size: 1.4rem; margin-bottom: 25px; }
@@ -426,7 +421,6 @@
             
             <div class="news-bottom-wrapper">
                 <div class="slider-controls">
-                    <!-- تم إضافة disabled كقيمة أساسية لمنع التفاعل العشوائي -->
                     <button type="button" class="nav-btn disabled" id="btnNewer" disabled>
                         <span class="nav-label num-font" data-i18n="news_newer">الأحدث</span>
                         <i class="fa-solid fa-arrow-right arrow-icon prev-icon"></i>
@@ -1206,14 +1200,23 @@
             setTimeout(updateCarouselButtons, 50);
         }
 
+        let isSliding = false; 
         function slideNews(direction) {
+            if (isSliding) return; 
+            
             const slider = document.getElementById('newsSlider');
             const cards = slider.querySelectorAll('.news-slide-card');
             if(cards.length === 0) return;
             
+            isSliding = true; 
+            
             let scrollAmount = cards[0].offsetWidth + 15; 
             const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
             slider.scrollBy({ left: scrollAmount * (isRTL ? -direction : direction), behavior: 'smooth' });
+            
+            setTimeout(() => {
+                isSliding = false;
+            }, 450); 
         }
 
         document.querySelectorAll('.nav-btn').forEach(btn => {
@@ -1524,9 +1527,7 @@
             
             setInterval(updateSheetTimers, 1000);
         });
-    </script>
-        <!-- كود الإغلاق النهائي للزوم (الجوال والبي سي) -->
-    <script>
+
         // 1. منع زوم الإصبعين (Pinch Zoom) في الجوالات
         document.addEventListener('touchstart', function(e) {
             if (e.touches.length > 1) {
@@ -1547,11 +1548,6 @@
             let now = (new Date()).getTime();
             if (now - lastTouchEnd <= 300) {
                 e.preventDefault();
-                // حتى تشتغل الأزرار والروابط إذا نقر عليها مرتين بسرعة
-                const target = e.target;
-                if(target.tagName === 'BUTTON' || target.tagName === 'A' || target.closest('a') || target.closest('button')) {
-                    target.click();
-                }
             }
             lastTouchEnd = now;
         }, { passive: false });
@@ -1569,6 +1565,5 @@
             }
         }, { passive: false });
     </script>
-
 </body>
 </html>
