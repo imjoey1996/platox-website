@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>PlatoX | مجتمع اللاعبين العرب</title>
     
-    <!-- كود الثيم لمنع ومضة اللون المزعجة عند التحديث -->
     <script>
         let savedTheme = localStorage.getItem('theme') || 'dark';
         document.documentElement.setAttribute('data-theme', savedTheme);
@@ -44,7 +43,6 @@
             --glow-bbb: #0096b4;
         }
 
-        /* حماية شاملة ضد تحديد النصوص ومنع زوم النقر المزدوج */
         * { 
             box-sizing: border-box; 
             margin: 0; 
@@ -54,7 +52,6 @@
             touch-action: manipulation; 
         }
 
-        /* تأكيد قاطع لمنع الزوم عند النقر المزدوج على الأزرار المعطلة أو الخلفية */
         button, a, input, textarea, .slider-controls, .nav-btn, .nav-label, .arrow-icon {
             touch-action: manipulation !important;
             user-select: none;
@@ -68,7 +65,6 @@
             -webkit-user-select: none;
         }
 
-        /* 🚀 إجبار المتصفح على استخدام المعالج الرسومي لمنع اختفاء المحتوى (Repaint Lag Fix) */
         .glass-panel, section, .liquid-bg, .blob {
             -webkit-transform: translateZ(0);
             transform: translateZ(0);
@@ -666,6 +662,19 @@
             document.getElementById('bug-desc').value = '';
         }
 
+        // دالة تنظيف البيانات لمنع ثغرات الـ XSS
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    "'": '&#39;',
+                    '"': '&quot;'
+                }[tag])
+            );
+        }
+
         async function submitBugReport() {
             const bugTypeElement = document.querySelector('input[name="bugType"]:checked');
             const platoId = document.getElementById('plato-id').value.trim();
@@ -689,7 +698,7 @@
             const bugType = bugTypeElement.value;
             const embedColor = bugType === 'Exploits' ? 16711680 : 16744192; 
 
-            // [تنبيه: سيتم ربط هذا بسيرفر وسيط غداً لحماية التوكن كما طلبت]
+            // تم إبقاء الـ Webhook كما هو (سيتم التعديل عليه لاحقاً)
             const webhookId = "1545703090920099854"; 
             const webhookToken = "we1jm4gx7h6c92AEtcUl5SFSZ_smAvPjWtIYYLdti1AtPCzzUEH68EclCSZb9gc48KTo";
             const webhookUrl = `https://discord.com/api/webhooks/${webhookId}/${webhookToken}`;
@@ -766,90 +775,25 @@
             { name: "abc", server: "english", img: "84fbda49d60a3ab730108bb40c635feb.png", birthday: { en: "February 23", ar: "23 فبراير" } }, 
             { name: "Rose", server: "english", img: "IMG_7437.png", birthday: { en: "June 8", ar: "8 يونيو" } }, 
             { name: "Risk", server: "english", img: "57914b7385432b7831bcc1470723baa7.png", birthday: { en: "June 4", ar: "4 يونيو" } },
-            { 
-                name: "7777777", 
-                server: "persian", 
-                img: "03cdd5503fd8725e76641fb8e06c2937.png",
-                birthday: { en: "July 26", ar: "26 يوليو" },
-                desc: { ar: "قائد مهتم يقدر المجتمع وينشئ مجموعات وفعاليات لنشر الفرح.", en: "A caring leader who values the community and creates groups and events to bring joy." }
-            }, 
+            { name: "7777777", server: "persian", img: "03cdd5503fd8725e76641fb8e06c2937.png", birthday: { en: "July 26", ar: "26 يوليو" }, desc: { ar: "قائد مهتم يقدر المجتمع وينشئ مجموعات وفعاليات لنشر الفرح.", en: "A caring leader who values the community and creates groups and events to bring joy." } }, 
             { name: "Armin", server: "persian", img: "IMG_7428.png", birthday: { en: "August 17", ar: "17 أغسطس" } }, 
             { name: "Reza", server: "persian", img: "IMG_7443.png", birthday: { en: "November 17", ar: "17 نوفمبر" } }, 
-            { 
-                name: "NarGc", 
-                server: "persian", 
-                img: "13b8f453f2ee334ab01a7e53fc4c23fb.png",
-                birthday: { en: "November 10", ar: "10 نوفمبر" },
-                desc: { ar: "قائدة نشيطة ومبدعة ومهتمة، تتميز بالتفاني والعمل الجاد.", en: "An energetic, creative, and caring leader who is dedicated and hardworking." }
-            },
-            { 
-                name: "H22", 
-                server: "french", 
-                img: "IMG_7442.png",
-                birthday: { en: "December 21", ar: "21 ديسمبر" },
-                desc: { ar: "ودود ومحفز، مستعد دائماً للمساعدة والتواصل مع الأشخاص.", en: "Friendly and encouraging, always willing to help and connect with people from all servers." }
-            },
+            { name: "NarGc", server: "persian", img: "13b8f453f2ee334ab01a7e53fc4c23fb.png", birthday: { en: "November 10", ar: "10 نوفمبر" }, desc: { ar: "قائدة نشيطة ومبدعة ومهتمة، تتميز بالتفاني والعمل الجاد.", en: "An energetic, creative, and caring leader who is dedicated and hardworking." } },
+            { name: "H22", server: "french", img: "IMG_7442.png", birthday: { en: "December 21", ar: "21 ديسمبر" }, desc: { ar: "ودود ومحفز، مستعد دائماً للمساعدة والتواصل مع الأشخاص.", en: "Friendly and encouraging, always willing to help and connect with people from all servers." } },
             { name: "love_hope", server: "french", img: "f74613af2e55aecdde0d31ff33964698.png", birthday: { en: "February 13", ar: "13 فبراير" } }, 
             { name: "Mdame", server: "french", img: "de6ac96df41f0d3378e934e467ccee32.png", birthday: { en: "March 20", ar: "20 مارس" } }, 
             { name: "Algerien", server: "french", img: "IMG_7444.png" }, 
             { name: "Nefya", server: "turkish", img: "IMG_7438.png" },
-            { 
-                name: "esthell", 
-                server: "turkish", 
-                img: "8b85aa900d60b226406c24f3fef88da0.png",
-                birthday: { en: "May 13", ar: "13 مايو" },
-                desc: { ar: "قائدة دافئة وملهمة تنشر الطاقة الإيجابية، وتدعم الآخرين، وتجعل الجميع يشعرون بالترحيب.", en: "A warm and inspiring leader who brings positive energy, supports others, and makes everyone feel welcome." }
-            }, 
-            { 
-                name: "Fyy", 
-                server: "melayu", 
-                img: "f36561c947960941324127485f6b5886.png",
-                birthday: { en: "April 29", ar: "29 أبريل" },
-                desc: { ar: "قائدة محبة للمرح تجلب الدفء والطاقة الإيجابية مع بناء روابط ذات معنى.", en: "A fun-loving leader who brings warmth and energy while fostering meaningful connections." }
-            }, 
-            { 
-                name: "Lyn", 
-                server: "melayu", 
-                img: "92202278eed703e1100a0b963a8834c6.png",
-                birthday: { en: "February 23", ar: "23 فبراير" },
-                desc: { ar: "تحافظ على العدل والتنظيم والهدوء لكي يستمتع الجميع بالمجتمع.", en: "Keeping things fair, organized, and drama-free so everyone can enjoy the community." }
-            },
-            { 
-                name: "abo", 
-                server: "melayu", 
-                img: "IMG_7448.png",
-                birthday: { en: "April 10", ar: "10 أبريل" },
-                desc: { ar: "تحافظ على إيجابية وتنظيم السيرفر وخلوه من المشاكل، مع كونها ودودة وداعمة للجميع.", en: "Keeping the server positive, organized, and drama-free while being approachable and supportive." }
-            }, 
-            { 
-                name: "morango", 
-                server: "brazil", 
-                img: "c5d766cb9eefad03e43d5c60b6663f68.png",
-                birthday: { en: "May 7", ar: "7 مايو" },
-                desc: { ar: "قائدة ودودة ومتفانية تخلق مجتمعاً ممتعاً ومرحباً وشاملاً.", en: "A friendly and dedicated leader who creates a fun, welcoming, and inclusive community." }
-            }, 
-            { 
-                name: "vsf", 
-                server: "brazil", 
-                img: "5d6814526ccd5b04a915127d03325e4b.png",
-                birthday: { en: "October 4", ar: "4 أكتوبر" },
-                desc: { ar: "قائدة متفانية تسعى لتحقيق العدالة والاحترام وتوفير مساحة آمنة ومرحبة للجميع.", en: "A dedicated leader striving for fairness, respect, and a safe, welcoming space for everyone." }
-            },
+            { name: "esthell", server: "turkish", img: "8b85aa900d60b226406c24f3fef88da0.png", birthday: { en: "May 13", ar: "13 مايو" }, desc: { ar: "قائدة دافئة وملهمة تنشر الطاقة الإيجابية، وتدعم الآخرين، وتجعل الجميع يشعرون بالترحيب.", en: "A warm and inspiring leader who brings positive energy, supports others, and makes everyone feel welcome." } }, 
+            { name: "Fyy", server: "melayu", img: "f36561c947960941324127485f6b5886.png", birthday: { en: "April 29", ar: "29 أبريل" }, desc: { ar: "قائدة محبة للمرح تجلب الدفء والطاقة الإيجابية مع بناء روابط ذات معنى.", en: "A fun-loving leader who brings warmth and energy while fostering meaningful connections." } }, 
+            { name: "Lyn", server: "melayu", img: "92202278eed703e1100a0b963a8834c6.png", birthday: { en: "February 23", ar: "23 فبراير" }, desc: { ar: "تحافظ على العدل والتنظيم والهدوء لكي يستمتع الجميع بالمجتمع.", en: "Keeping things fair, organized, and drama-free so everyone can enjoy the community." } },
+            { name: "abo", server: "melayu", img: "IMG_7448.png", birthday: { en: "April 10", ar: "10 أبريل" }, desc: { ar: "تحافظ على إيجابية وتنظيم السيرفر وخلوه من المشاكل، مع كونها ودودة وداعمة للجميع.", en: "Keeping the server positive, organized, and drama-free while being approachable and supportive." } }, 
+            { name: "morango", server: "brazil", img: "c5d766cb9eefad03e43d5c60b6663f68.png", birthday: { en: "May 7", ar: "7 مايو" }, desc: { ar: "قائدة ودودة ومتفانية تخلق مجتمعاً ممتعاً ومرحباً وشاملاً.", en: "A friendly and dedicated leader who creates a fun, welcoming, and inclusive community." } }, 
+            { name: "vsf", server: "brazil", img: "5d6814526ccd5b04a915127d03325e4b.png", birthday: { en: "October 4", ar: "4 أكتوبر" }, desc: { ar: "قائدة متفانية تسعى لتحقيق العدالة والاحترام وتوفير مساحة آمنة ومرحبة للجميع.", en: "A dedicated leader striving for fairness, respect, and a safe, welcoming space for everyone." } },
             { name: "Marito", server: "spanish", img: "IMG_7447.png" }, 
             { name: "kroxtar", server: "spanish", img: "8a2638546f3cb1961c3e198fc5817b45.png" },
-            { 
-                name: "sroti", 
-                server: "thai", 
-                img: "IMG_7441.png",
-                desc: { ar: "تستمتع بلعب بلاتو، وتتواصل مع المجتمع وتحافظ على أجواء المرح.", en: "Enjoys playing Plato, connecting with the community, and keeping things fun." }
-            }, 
-            { 
-                name: "nrasl", 
-                server: "thai", 
-                img: "IMG_7439.png",
-                birthday: { en: "May 26", ar: "26 مايو" },
-                desc: { ar: "قائدة صريحة وودودة ومحايدة، تستمع للجميع وتقدم لهم الدعم.", en: "A straightforward, approachable, and unbiased leader who listens and supports everyone." }
-            },
+            { name: "sroti", server: "thai", img: "IMG_7441.png", desc: { ar: "تستمتع بلعب بلاتو، وتتواصل مع المجتمع وتحافظ على أجواء المرح.", en: "Enjoys playing Plato, connecting with the community, and keeping things fun." } }, 
+            { name: "nrasl", server: "thai", img: "IMG_7439.png", birthday: { en: "May 26", ar: "26 مايو" }, desc: { ar: "قائدة صريحة وودودة ومحايدة، تستمع للجميع وتقدم لهم الدعم.", en: "A straightforward, approachable, and unbiased leader who listens and supports everyone." } },
             { name: "Frequency", server: "desi", img: "IMG_7440.png", birthday: { en: "May 19", ar: "19 مايو" } } 
         ];
         
@@ -922,7 +866,6 @@
                 news_newer: "الأحدث", news_older: "الأقدم",
                 discord_more: "للمزيد من الأخبار انضموا إلى الديسكورد", tag_update: "خبر هام",
                 th_player: "اللاعب", th_days: "يوم", th_group: "المجموعة", th_coins: "الإنفاق",
-                tab_english: "الإنجليزي", tab_persian: "الفارسي", tab_french: "الفرنسي", tab_melayu: "الماليزي", tab_turkish: "التركي", tab_spanish: "الإسباني", tab_thai: "التايلندي", tab_brazil: "البرازيلي", tab_desi: "الهندي",
                 guide_title: "إرشادات الدردشة في الغرف العامة",
                 guide_1: "لا تنشر محتوى فاحشًا أو جنسيًا أو إباحيّا أو غير قانوني بشكل صريح.",
                 guide_2: "لا تنشر معلومات شخصية و/أو سرية تخص مستخدمًا آخر قد تؤدي إلى إيذائه.",
@@ -942,7 +885,6 @@
                 news_newer: "NEWER", news_older: "OLDER",
                 discord_more: "For more news, join our Discord server", tag_update: "HOT NEWS",
                 th_player: "PLAYER", th_days: "DAYS", th_group: "GROUP", th_coins: "SPENDING",
-                tab_english: "English", tab_persian: "Persian", tab_french: "Français", tab_melayu: "Melayu", tab_turkish: "Turkish", tab_spanish: "Español", tab_thai: "Thai", tab_brazil: "Brasil", tab_desi: "Desi",
                 guide_title: "Public Room Chat Guidelines",
                 guide_1: "Do not post content that is explicitly obscene, sexual, pornographic, or illegal.",
                 guide_2: "Do not post personal and/or confidential information belonging to another user that could potentially harm them.",
@@ -958,6 +900,7 @@
         let newsCardsData = [];
         let baseRealTime = Date.now();
         let basePerfTime = performance.now();
+        let activeTourTimers = [];
 
         const tourSheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/export?format=csv"; 
         const newsSheetURL = "https://docs.google.com/spreadsheets/d/10YreDjSMCJc1hvGFbyfVJO4zAmzFGO0eeyoq5qKwf_E/export?format=csv";
@@ -986,17 +929,25 @@
             document.getElementById('spenders-container').innerHTML = spendSkel;
         }
 
-        async function loadNewsData() {
+        async function loadNewsData(force = false) {
             try {
                 const cached = localStorage.getItem('plato_news_cache');
-                if (cached) processNewsData(cached);
+                const cacheTime = localStorage.getItem('plato_news_cache_time');
+                const now = Date.now();
+                
+                // جلب الكاش إذا لم ينتهِ (صلاحية 30 دقيقة)
+                if (!force && cached && cacheTime && (now - parseInt(cacheTime) < 1800000)) {
+                    processNewsData(cached);
+                    return; 
+                }
 
                 const response = await fetch(newsSheetURL);
                 if (!response.ok) throw new Error("تأكد من الشيت");
                 const data = await response.text();
                 
-                if (data !== cached) {
+                if (data !== cached || force) {
                     localStorage.setItem('plato_news_cache', data);
+                    localStorage.setItem('plato_news_cache_time', now.toString());
                     processNewsData(data);
                 }
             } catch (error) { 
@@ -1015,8 +966,8 @@
             
             for(let r of rows) {
                 const c = r.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-                let tAr = c[6] ? c[6].replace(/"/g, '').trim() : "";
-                let tEn = c[7] ? c[7].replace(/"/g, '').trim() : "";
+                let tAr = c[6] ? escapeHTML(c[6].replace(/"/g, '').trim()) : "";
+                let tEn = c[7] ? escapeHTML(c[7].replace(/"/g, '').trim()) : "";
                 if(tAr) tickersAr.push(tAr);
                 if(tEn) tickersEn.push(tEn);
             }
@@ -1054,19 +1005,25 @@
             buildNewsHTML();
         }
 
-        async function loadDynamicData() {
+        async function loadDynamicData(force = false) {
             try {
                 const cached = localStorage.getItem('plato_dynamic_cache');
-                if (cached) {
+                const cacheTime = localStorage.getItem('plato_dynamic_cache_time');
+                const now = Date.now();
+                
+                // جلب الكاش إذا لم ينتهِ (صلاحية 30 دقيقة)
+                if (!force && cached && cacheTime && (now - parseInt(cacheTime) < 1800000)) {
                     cachedSheetRows = cached.split('\n').slice(1);
                     renderDynamicData();
+                    return;
                 }
 
                 const response = await fetch(tourSheetURL);
                 const data = await response.text();
                 
-                if (data !== cached) {
+                if (data !== cached || force) {
                     localStorage.setItem('plato_dynamic_cache', data);
+                    localStorage.setItem('plato_dynamic_cache_time', now.toString());
                     cachedSheetRows = data.split('\n').slice(1);
                     renderDynamicData();
                 }
@@ -1142,12 +1099,12 @@
             if(newsCardsData.length === 0) return;
 
             newsCardsData.forEach((cols, index) => {
-                const dateStr = (cols[0] || '').replace(/"/g, '').trim();
-                const tagType = (cols[1] || '').replace(/"/g, '').trim();
-                const titleAr = (cols[2] || '').replace(/"/g, '').trim();
-                const bodyAr  = (cols[3] || '').replace(/"/g, '').trim();
-                const titleEn = (cols[4] || '').replace(/"/g, '').trim();
-                const bodyEn  = (cols[5] || '').replace(/"/g, '').trim();
+                const dateStr = escapeHTML((cols[0] || '').replace(/"/g, '').trim());
+                const tagType = escapeHTML((cols[1] || '').replace(/"/g, '').trim());
+                const titleAr = escapeHTML((cols[2] || '').replace(/"/g, '').trim());
+                const bodyAr  = escapeHTML((cols[3] || '').replace(/"/g, '').trim());
+                const titleEn = escapeHTML((cols[4] || '').replace(/"/g, '').trim());
+                const bodyEn  = escapeHTML((cols[5] || '').replace(/"/g, '').trim());
 
                 const displayTitle = isAr ? titleAr : (titleEn || titleAr);
                 const displayBody = isAr ? bodyAr : (bodyEn || bodyAr);
@@ -1268,7 +1225,6 @@
             const isLtr = currentLang === 'en';
             
             const nowTime = getAccurateTime();
-            const twentyFourHoursMs = 24 * 60 * 60 * 1000;
             let groupsSpending = {}; 
             let tournamentsList = [];
 
@@ -1276,10 +1232,10 @@
                 const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/); 
                 if(cols.length < 7) return;
 
-                const nameAr = cols[1] ? cols[1].replace(/"/g, '').trim() : "";
+                const nameAr = escapeHTML(cols[1] ? cols[1].replace(/"/g, '').trim() : "");
                 if (!nameAr) return;
 
-                const rawTimeStr = cols[0] ? cols[0].replace(/"/g, '').trim() : ""; 
+                const rawTimeStr = escapeHTML(cols[0] ? cols[0].replace(/"/g, '').trim() : ""); 
                 let targetTimeMs = NaN;
 
                 if (rawTimeStr) {
@@ -1290,11 +1246,11 @@
                     targetTimeMs = new Date(safeTimeStr).getTime();
                 }
 
-                const nameEn = cols[2] ? cols[2].replace(/"/g, '').trim() : "";
-                const image = cols[3] ? cols[3].replace(/"/g, '').trim() : "";
-                const prizeStr = cols[4] ? cols[4].replace(/"/g, '').trim() : "";
-                const game = cols[5] ? cols[5].replace(/"/g, '').trim() : "";
-                const admin = cols[6] ? cols[6].replace(/"/g, '').trim() : "";
+                const nameEn = escapeHTML(cols[2] ? cols[2].replace(/"/g, '').trim() : "");
+                const image = escapeHTML(cols[3] ? cols[3].replace(/"/g, '').trim() : "");
+                const prizeStr = escapeHTML(cols[4] ? cols[4].replace(/"/g, '').trim() : "");
+                const game = escapeHTML(cols[5] ? cols[5].replace(/"/g, '').trim() : "");
+                const admin = escapeHTML(cols[6] ? cols[6].replace(/"/g, '').trim() : "");
 
                 let numValue = 0;
                 let cleanStr = prizeStr.toUpperCase().replace(/[^0-9.K]/g, '');
@@ -1304,14 +1260,16 @@
                     numValue = parseFloat(cleanStr) || 0;
                 }
 
+                // إضافة الإنفاق دائماً بغض النظر عن وقت البطولة
                 if (!groupsSpending[nameAr]) {
                     groupsSpending[nameAr] = { nameAr, nameEn, image, total: 0 };
                 }
                 groupsSpending[nameAr].total += numValue;
 
+                // البطولة تختفي بعد 30 دقيقة من وقتها 
                 if (!isNaN(targetTimeMs)) {
                     const diff = targetTimeMs - nowTime;
-                    if (diff > -twentyFourHoursMs) {
+                    if (diff > -1800000) { // 30 دقيقة = 1,800,000 ملي ثانية
                         tournamentsList.push({ targetTimeMs, nameAr, nameEn, image, prizeStr, game, admin, diff });
                     }
                 }
@@ -1386,31 +1344,39 @@
             
             tourContainer.innerHTML = tourHTML;
             spendContainer.innerHTML = spendHTML;
+            
+            // تخزين العدادات في الذاكرة لتخفيف العبء على المتصفح
+            activeTourTimers = Array.from(tourContainer.querySelectorAll('.sheet-timer')).map(el => ({
+                el: el,
+                valSpan: el.querySelector('.countdown-val'),
+                targetMs: parseInt(el.getAttribute('data-time'))
+            }));
+            
             updateSheetTimers(); 
         }
 
         function updateSheetTimers() {
             const nowTime = getAccurateTime();
-            document.querySelectorAll('.sheet-timer').forEach(el => {
-                const targetMs = parseInt(el.getAttribute('data-time'));
-                if (isNaN(targetMs)) return;
-
-                const diff = targetMs - nowTime;
-                const valSpan = el.querySelector('.countdown-val');
-                if(!valSpan) return;
+            // تحديث العدادات من الذاكرة بدل البحث بالـ DOM
+            activeTourTimers.forEach(timer => {
+                const diff = timer.targetMs - nowTime;
+                if(!timer.valSpan) return;
                 
                 if (diff <= 0) {
-                    valSpan.innerText = document.documentElement.getAttribute('lang') === 'ar' ? 'بدأت!' : 'STARTED!';
-                    el.style.color = '#10b981'; 
-                    el.style.backgroundColor = 'rgba(16, 185, 129, 0.1)';
-                    el.style.borderColor = 'rgba(16, 185, 129, 0.3)';
+                    if (!timer.el.classList.contains('started')) {
+                        timer.valSpan.innerText = document.documentElement.getAttribute('lang') === 'ar' ? 'بدأت!' : 'STARTED!';
+                        timer.el.style.color = '#10b981'; 
+                        timer.el.style.backgroundColor = 'rgba(16, 185, 129, 0.1)';
+                        timer.el.style.borderColor = 'rgba(16, 185, 129, 0.3)';
+                        timer.el.classList.add('started');
+                    }
                 } else {
                     const d = Math.floor(diff / (1000 * 60 * 60 * 24));
                     const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
                     const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
                     const s = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
                     
-                    valSpan.innerText = d > 0 ? `${d}d ${h}:${m}:${s}` : `${h}:${m}:${s}`;
+                    timer.valSpan.innerText = d > 0 ? `${d}d ${h}:${m}:${s}` : `${h}:${m}:${s}`;
                 }
             });
         }
@@ -1453,7 +1419,8 @@
             if(pull > 80 && window.scrollY <= 5 && !isHorizontal) {
                 ptrEl.classList.add('refreshing');
                 ptrEl.style.transform = 'translateY(0)';
-                Promise.all([loadNewsData(), loadDynamicData()]).then(() => {
+                // إجبار التحديث وتخطي الكاش
+                Promise.all([loadNewsData(true), loadDynamicData(true)]).then(() => {
                     setTimeout(() => {
                         ptrEl.classList.remove('refreshing');
                         ptrEl.style.transform = 'translateY(-100%)';
