@@ -85,7 +85,6 @@
             font-family: 'Cairo', sans-serif; 
             overflow-x: clip; 
             width: 100%;
-            /* تمت إزالة الـ transition للـ body لمنع اللاق عند تغيير الثيم */
             background-color: var(--bg-main); 
             position: relative;
             overscroll-behavior-y: none;
@@ -245,7 +244,6 @@
         .card:hover .birthday-badge, .global-leader:hover .birthday-badge { color: var(--text-main); border-color: rgba(255,255,255,0.2); }
 
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; width: 100%; max-width: 900px; justify-items: center; }
-        /* تغيير الـ transition لتسريع الحركة وحل اللاق */
         .card { width: 100%; padding: 35px 20px; text-align: center; transition: transform 0.4s; position: relative; overflow: hidden; border-radius: 16px;}
         .card:hover { transform: translateY(-8px); }
         .card-yyy:hover { border-color: rgba(227, 179, 65, 0.4); box-shadow: 0 15px 35px rgba(227, 179, 65, 0.15); } .card-yyy h3 { color: var(--glow-yyy); font-size: 1.4rem; margin-bottom:8px; text-shadow: 0 0 15px rgba(227, 179, 65, 0.4);}
@@ -260,7 +258,6 @@
         .server-tab:hover { color: var(--text-main); border-color: var(--text-main); }
         
         .global-leaders-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; width: 100%; max-width: 950px; justify-items: center; }
-        /* تغيير الـ transition لتسريع الحركة وحل اللاق */
         .global-leader { width: 100%; padding: 20px 15px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px; transition: transform 0.3s; }
         
         .global-leader img { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.1); transition: 0.3s; margin-bottom: 2px; }
@@ -277,7 +274,6 @@
         [data-theme="light"] .leader-desc { color: var(--text-muted); }
 
         .premium-list { width: 100%; max-width: 700px; display: flex; flex-direction: column; gap: 10px; position: relative; z-index: 2;}
-        /* تغيير الـ transition لتسريع الحركة وحل اللاق */
         .list-row { padding: 12px 15px; display: flex; align-items: center; gap: 15px; transition: transform 0.3s; }
         .list-row:hover { background: rgba(157, 78, 221, 0.08); border-color: rgba(157, 78, 221, 0.3); transform: scale(1.02); }
         .rank-num { font-size: 1.2rem; font-weight: 900; color: rgba(255,255,255,0.3); width: 30px; text-align: center; }
@@ -296,7 +292,6 @@
         .score-val { font-weight: 900; font-size: 1.05rem; }
 
         .tournaments-grid { width: 100%; max-width: 750px; display: flex; flex-direction: column; gap: 15px; }
-        /* تغيير الـ transition لتسريع الحركة وحل اللاق */
         .tour-card { padding: 20px; transition: transform 0.4s; overflow: hidden;}
         .tour-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary); box-shadow: 0 0 15px var(--primary); }
         html[dir="ltr"] .tour-card::before { left: auto; right: 0; }
@@ -314,15 +309,15 @@
         .admin-copy-btn { cursor: pointer; transition: 0.3s; } .admin-copy-btn:hover { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 0 15px var(--primary-glow);}
 
         .links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; width: 100%; max-width: 850px; }
-        .link-card { display: flex; align-items: center; gap: 15px; padding: 20px; text-decoration: none; color: var(--text-main); transition: 0.4s; border-radius: 16px; position: relative; overflow: hidden; }
+        .link-card { display: flex; align-items: center; gap: 15px; padding: 20px; text-decoration: none; color: var(--text-main); transition: transform 0.4s, border-color 0.4s, box-shadow 0.4s; border-radius: 16px; position: relative; overflow: hidden; }
         .link-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 10px 25px var(--primary-glow); }
-        .link-icon { font-size: 1.8rem; color: var(--primary); transition: 0.3s; }
+        .link-icon { font-size: 1.8rem; color: var(--primary); transition: transform 0.3s, color 0.3s; }
         .link-card:hover .link-icon { transform: scale(1.1); color: #fff; }
         .link-info { display: flex; flex-direction: column; gap: 4px; }
         .link-title { font-weight: 900; font-size: 1.1rem; }
         .link-sub { font-size: 0.8rem; color: var(--text-muted); font-weight: bold; line-height: 1.4; }
 
-        #toast { visibility: hidden; min-width: 200px; background: rgba(15, 15, 20, 0.95); backdrop-filter: blur(10px); color: #fff; text-align: center; border-radius: 10px; padding: 12px 20px; position: fixed; z-index: 9999; left: 50%; bottom: 25px; transform: translateX(-50%); font-size: 14px; transition: 0.4s; opacity: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid var(--primary); font-family: 'Cairo', sans-serif; font-weight:bold;}
+        #toast { visibility: hidden; min-width: 200px; background: rgba(15, 15, 20, 0.95); backdrop-filter: blur(10px); color: #fff; text-align: center; border-radius: 10px; padding: 12px 20px; position: fixed; z-index: 9999; left: 50%; bottom: 25px; transform: translateX(-50%); font-size: 14px; transition: opacity 0.4s, bottom 0.4s; opacity: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid var(--primary); font-family: 'Cairo', sans-serif; font-weight:bold;}
         #toast.show { visibility: visible; bottom: 85px; opacity: 1; }
         
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1500; visibility: hidden; opacity: 0; transition: opacity 0.3s ease, visibility 0.3s ease; }
@@ -987,14 +982,13 @@
             document.getElementById('spenders-container').innerHTML = spendSkel;
         }
 
-                async function loadNewsData(force = false) {
+        async function loadNewsData(force = false) {
             try {
                 const cached = localStorage.getItem('plato_news_cache');
                 const cacheTime = localStorage.getItem('plato_news_cache_time');
                 const now = Date.now();
                 
-                // جلب الكاش إذا لم ينتهِ (صلاحية 30 دقيقة)
-                if (!force && cached && cacheTime && (now - parseInt(cacheTime) < 1800000)) {
+                if (!force && cached && cacheTime && (now - parseInt(cacheTime) < 1800000) && !cached.includes('<!DOCTYPE html>')) {
                     processNewsData(cached);
                     return; 
                 }
@@ -1003,55 +997,23 @@
                 if (!response.ok) throw new Error("تأكد من الشيت");
                 const data = await response.text();
                 
-                // تحديث الكاش وعرض البيانات دائماً
+                if (data.includes('<!DOCTYPE html>')) throw new Error("جوجل أرسلت استجابة غير صالحة");
+                
                 localStorage.setItem('plato_news_cache', data);
                 localStorage.setItem('plato_news_cache_time', now.toString());
                 processNewsData(data);
                 
             } catch (error) { 
                 console.error("حدث خطأ:", error); 
-                // في حال انقطاع النت، اعرض البيانات القديمة إن وجدت
-                if(localStorage.getItem('plato_news_cache')) {
-                    processNewsData(localStorage.getItem('plato_news_cache'));
+                const fallbackCache = localStorage.getItem('plato_news_cache');
+                if(fallbackCache && !fallbackCache.includes('<!DOCTYPE html>')) {
+                    processNewsData(fallbackCache);
                 } else {
                     document.getElementById('newsSlider').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">تعذر الاتصال بالشبكة.</p>`;
                 }
             }
         }
 
-        async function loadDynamicData(force = false) {
-            try {
-                const cached = localStorage.getItem('plato_dynamic_cache');
-                const cacheTime = localStorage.getItem('plato_dynamic_cache_time');
-                const now = Date.now();
-                
-                // جلب الكاش إذا لم ينتهِ
-                if (!force && cached && cacheTime && (now - parseInt(cacheTime) < 1800000)) {
-                    cachedSheetRows = cached.split('\n').slice(1);
-                    renderDynamicData();
-                    return;
-                }
-
-                const response = await fetch(tourSheetURL);
-                const data = await response.text();
-                
-                // تحديث الكاش وعرض البيانات دائماً
-                localStorage.setItem('plato_dynamic_cache', data);
-                localStorage.setItem('plato_dynamic_cache_time', now.toString());
-                cachedSheetRows = data.split('\n').slice(1);
-                renderDynamicData();
-                
-            } catch (error) { 
-                console.error("حدث خطأ:", error); 
-                if(localStorage.getItem('plato_dynamic_cache')) {
-                    cachedSheetRows = localStorage.getItem('plato_dynamic_cache').split('\n').slice(1);
-                    renderDynamicData();
-                } else {
-                    document.getElementById('tournaments-container').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">تعذر الاتصال بالشبكة.</p>`;
-                    document.getElementById('spenders-container').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">تعذر الاتصال بالشبكة.</p>`;
-                }
-            }
-        }
         function processNewsData(data) {
             const rows = data.split('\n').slice(1).filter(row => row.trim().length > 0);
             
@@ -1105,26 +1067,32 @@
                 const cacheTime = localStorage.getItem('plato_dynamic_cache_time');
                 const now = Date.now();
                 
-                if (!force && cached && cacheTime && (now - parseInt(cacheTime) < 1800000)) {
+                if (!force && cached && cacheTime && (now - parseInt(cacheTime) < 1800000) && !cached.includes('<!DOCTYPE html>')) {
                     cachedSheetRows = cached.split('\n').slice(1);
                     renderDynamicData();
                     return;
                 }
 
                 const response = await fetch(tourSheetURL);
+                if (!response.ok) throw new Error("فشل الاتصال بالشيت");
                 const data = await response.text();
                 
-                if (data !== cached || force) {
-                    localStorage.setItem('plato_dynamic_cache', data);
-                    localStorage.setItem('plato_dynamic_cache_time', now.toString());
-                    cachedSheetRows = data.split('\n').slice(1);
-                    renderDynamicData();
-                }
+                if (data.includes('<!DOCTYPE html>')) throw new Error("جوجل أرسلت استجابة غير صالحة");
+
+                localStorage.setItem('plato_dynamic_cache', data);
+                localStorage.setItem('plato_dynamic_cache_time', now.toString());
+                cachedSheetRows = data.split('\n').slice(1);
+                renderDynamicData();
+                
             } catch (error) { 
                 console.error("حدث خطأ:", error); 
-                if(!localStorage.getItem('plato_dynamic_cache')) {
-                    document.getElementById('tournaments-container').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">تعذر الاتصال بالشبكة.</p>`;
-                    document.getElementById('spenders-container').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">تعذر الاتصال بالشبكة.</p>`;
+                const fallbackCache = localStorage.getItem('plato_dynamic_cache');
+                if(fallbackCache && !fallbackCache.includes('<!DOCTYPE html>')) {
+                    cachedSheetRows = fallbackCache.split('\n').slice(1);
+                    renderDynamicData();
+                } else {
+                    document.getElementById('tournaments-container').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">لا توجد بطولات حالياً أو تعذر الاتصال.</p>`;
+                    document.getElementById('spenders-container').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">بيانات الإنفاق غير متوفرة حالياً.</p>`;
                 }
             }
         }
@@ -1314,7 +1282,7 @@
 
             cachedSheetRows.forEach((row) => {
                 const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/); 
-                if(cols.length < 7) return;
+                if(cols.length < 2) return;
 
                 const nameAr = escapeHTML(cols[1] ? cols[1].replace(/"/g, '').trim() : "");
                 if (!nameAr) return;
@@ -1363,7 +1331,7 @@
 
             let tourHTML = ''; 
             sortedTournaments.forEach(tour => {
-                const displayName = currentLang === 'ar' ? tour.nameAr : tour.nameEn;
+                const displayName = currentLang === 'ar' ? tour.nameAr : (tour.nameEn || tour.nameAr);
                 const borderStyle = isLtr ? `border-left-color: var(--primary);` : `border-right-color: var(--primary);`;
                 
                 const imgTag = tour.image ? `<img src="${tour.image}" class="entity-img" style="border-radius:8px; width:35px; height:35px; object-fit:cover;" onerror="this.style.display='none'">` : ``;
@@ -1395,7 +1363,7 @@
 
             let spendHTML = ''; 
             sortedGroups.forEach((group, index) => {
-                const displayName = currentLang === 'ar' ? group.nameAr : group.nameEn;
+                const displayName = currentLang === 'ar' ? group.nameAr : (group.nameEn || group.nameAr);
                 const rankNum = (index + 1).toString();
                 const rank = rankNum.padStart(2, '0');
                 const percent = Math.min(100, Math.max(5, (group.total / highestTotal) * 100));
@@ -1424,6 +1392,9 @@
                 `;
             });
             
+            if (tourHTML === '') tourHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">لا توجد بطولات معتمدة في الوقت الحالي.</p>`;
+            if (spendHTML === '') spendHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">لم يتم تسجيل بيانات إنفاق حتى الآن.</p>`;
+
             tourContainer.innerHTML = tourHTML;
             spendContainer.innerHTML = spendHTML;
             
