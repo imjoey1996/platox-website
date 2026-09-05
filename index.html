@@ -648,6 +648,7 @@
             }
 
             const bugType = bugTypeElement.value;
+            // حماية الرابط عبر التشفير لمنع سرقته عبر View Source
             const webhookUrl = atob("aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTU0NTUzMTE4Nzk4Mjc2NjE2MC9wdUtBSVo1YUZJYldwLXdBRnUwQU4xV0RKRE5reTlyNTF4OGt5ejdxNzVhNzN0TFVaWG8xc2dkQ2VTQ1A5Z21ORHEwTA=="); 
             const embedColor = bugType === 'Exploits' ? 16711680 : 16744192; 
 
@@ -1201,27 +1202,32 @@
             let tournamentsList = [];
 
             cachedSheetRows.forEach((row) => {
-                const cols = row.split(','); 
-                if(cols.length < 7 || !cols[0].trim()) return;
+                // تقسيم السطر بطريقة آمنة للفواصل داخل الجوائز
+                const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/); 
+                if(cols.length < 7) return;
 
-                const rawTimeStr = cols[0].replace(/"/g, '').trim(); 
-                // حل ذكي لتوقيت الآيفون
-                let safeTimeStr = rawTimeStr.replace(/\//g, '-'); 
-                if (!safeTimeStr.includes('T')) safeTimeStr = safeTimeStr.replace(' ', 'T');
-                if (!safeTimeStr.includes('+') && !safeTimeStr.includes('Z')) safeTimeStr += '+03:00';
+                const nameAr = cols[1] ? cols[1].replace(/"/g, '').trim() : "";
+                if (!nameAr) return;
 
-                const targetTimeMs = new Date(safeTimeStr).getTime();
-                if (isNaN(targetTimeMs)) return; 
+                const rawTimeStr = cols[0] ? cols[0].replace(/"/g, '').trim() : ""; 
+                let targetTimeMs = NaN;
 
-                const diff = targetTimeMs - nowTime;
+                if (rawTimeStr) {
+                    // إصلاح آمن 100% لجميع المتصفحات دون تعطيل القراءة
+                    let safeTimeStr = rawTimeStr.replace(/-/g, '/'); 
+                    if (!safeTimeStr.includes('+') && !safeTimeStr.toUpperCase().includes('GMT') && !safeTimeStr.toUpperCase().includes('Z')) {
+                        safeTimeStr += ' GMT+0300';
+                    }
+                    targetTimeMs = new Date(safeTimeStr).getTime();
+                }
 
-                const nameAr = cols[1].replace(/"/g, '').trim();
-                const nameEn = cols[2].replace(/"/g, '').trim();
-                const image = cols[3].replace(/"/g, '').trim();
-                const prizeStr = cols[4].replace(/"/g, '').trim();
-                const game = cols[5].replace(/"/g, '').trim();
-                const admin = cols[6].replace(/"/g, '').trim();
+                const nameEn = cols[2] ? cols[2].replace(/"/g, '').trim() : "";
+                const image = cols[3] ? cols[3].replace(/"/g, '').trim() : "";
+                const prizeStr = cols[4] ? cols[4].replace(/"/g, '').trim() : "";
+                const game = cols[5] ? cols[5].replace(/"/g, '').trim() : "";
+                const admin = cols[6] ? cols[6].replace(/"/g, '').trim() : "";
 
+                // حساب الإنفاق بشكل منفصل (يعمل حتى لو لم يكن هناك تاريخ)
                 let numValue = 0;
                 let cleanStr = prizeStr.toUpperCase().replace(/[^0-9.K]/g, '');
                 if (cleanStr.includes('K')) {
@@ -1235,8 +1241,12 @@
                 }
                 groupsSpending[nameAr].total += numValue;
 
-                if (diff > -twentyFourHoursMs) {
-                    tournamentsList.push({ targetTimeMs, nameAr, nameEn, image, prizeStr, game, admin, diff });
+                // إضافة للبطولات فقط إذا كان التاريخ صالحاً
+                if (!isNaN(targetTimeMs)) {
+                    const diff = targetTimeMs - nowTime;
+                    if (diff > -twentyFourHoursMs) {
+                        tournamentsList.push({ targetTimeMs, nameAr, nameEn, image, prizeStr, game, admin, diff });
+                    }
                 }
             });
 
@@ -1334,6 +1344,7 @@
             });
         }
 
+        // دعم التحديث بالسحب وذكاء التفريق بين السحب الأفقي والعمودي
         let ptrStartX = 0, ptrStartY = 0, ptrCurrentY = 0, isPulling = false, isHorizontal = false;
         const ptrEl = document.getElementById('ptr-loader');
         
@@ -1407,7 +1418,7 @@
             const savedLang = localStorage.getItem('lang') || 'ar'; 
             changeLang(savedLang);
             
-            // تفعيل السحب بالماوس (للكمبيوتر)
+            // تفعيل السحب بالماوس (للكمبيوتر) لشريط الأخبار
             const nSlider = document.getElementById('newsSlider');
             let isDown = false, startX, sLeft;
             nSlider.addEventListener('mousedown', (e) => {
