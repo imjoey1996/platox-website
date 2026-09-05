@@ -119,21 +119,32 @@
         .section-title::before { content: ''; position: absolute; right: -15px; top: 50%; transform: translateY(-50%); width: 6px; height: 20px; background: var(--primary); border-radius: 3px; box-shadow: 0 0 15px var(--primary-glow);}
         html[dir="ltr"] .section-title::before { right: auto; left: -15px; }
 
-        /* ---------------- تنسيقات شريط الأخبار 3D الجديد ---------------- */
+        /* ---------------- تنسيقات شريط الأخبار 3D الجديد (بدون تداخل نصوص) ---------------- */
         .news-carousel-container { width: 100%; max-width: 900px; position: relative; display: flex; flex-direction: column; gap: 20px; margin-bottom: 15px; padding-bottom: 15px; }
         
-        .news-slider-3d { position: relative; display: flex; justify-content: center; align-items: center; height: 280px; width: 100%; perspective: 1000px; margin-bottom: 10px;}
-        .news-slide-card { position: absolute; width: 85%; max-width: 600px; padding: 35px; border-radius: 16px; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); opacity: 0; pointer-events: none; z-index: 0; transform: scale(0.8) translateX(0); }
+        .news-slider-3d { position: relative; display: flex; justify-content: center; align-items: center; height: 280px; width: 100%; perspective: 1200px; margin-bottom: 10px; transform-style: preserve-3d;}
         
-        html[dir="ltr"] .news-slide-card.active { opacity: 1; transform: scale(1) translateX(0); z-index: 3; pointer-events: auto; box-shadow: 0 15px 40px rgba(0,0,0,0.5); }
-        html[dir="ltr"] .news-slide-card.prev { opacity: 0.4; transform: scale(0.85) translateX(-50%); z-index: 2; pointer-events: auto; cursor: pointer; }
-        html[dir="ltr"] .news-slide-card.next { opacity: 0.4; transform: scale(0.85) translateX(50%); z-index: 2; pointer-events: auto; cursor: pointer; }
+        .news-slide-card { position: absolute; width: 85%; max-width: 600px; padding: 35px; border-radius: 16px; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s, z-index 0s; opacity: 0; pointer-events: none; z-index: 0; transform: scale(0.8) translateX(0) translateZ(0); will-change: transform, opacity; -webkit-transform-style: preserve-3d;}
+        
+        /* إخفاء محتوى الكروت الخلفية لضمان عدم التداخل مع الكارت الأمامي */
+        .news-slide-card:not(.active) .news-header-top,
+        .news-slide-card:not(.active) .news-headline,
+        .news-slide-card:not(.active) .news-body { opacity: 0; transition: opacity 0.2s ease; pointer-events: none; }
+        
+        .news-slide-card.active .news-header-top,
+        .news-slide-card.active .news-headline,
+        .news-slide-card.active .news-body { opacity: 1; transition: opacity 0.4s ease 0.2s; }
 
-        html[dir="rtl"] .news-slide-card.active { opacity: 1; transform: scale(1) translateX(0); z-index: 3; pointer-events: auto; box-shadow: 0 15px 40px rgba(0,0,0,0.5); }
-        html[dir="rtl"] .news-slide-card.prev { opacity: 0.4; transform: scale(0.85) translateX(50%); z-index: 2; pointer-events: auto; cursor: pointer; }
-        html[dir="rtl"] .news-slide-card.next { opacity: 0.4; transform: scale(0.85) translateX(-50%); z-index: 2; pointer-events: auto; cursor: pointer; }
+        /* حركات التموضع وتسريع الأداء عبر translateZ */
+        html[dir="ltr"] .news-slide-card.active { opacity: 1; transform: scale(1) translateX(0) translateZ(50px); z-index: 3; pointer-events: auto; box-shadow: 0 15px 40px rgba(0,0,0,0.5); }
+        html[dir="ltr"] .news-slide-card.prev { opacity: 0.5; transform: scale(0.85) translateX(-55%) translateZ(-50px); z-index: 2; pointer-events: auto; cursor: pointer; }
+        html[dir="ltr"] .news-slide-card.next { opacity: 0.5; transform: scale(0.85) translateX(55%) translateZ(-50px); z-index: 2; pointer-events: auto; cursor: pointer; }
 
-        .news-slide-card.hidden { opacity: 0; pointer-events: none; z-index: 0; }
+        html[dir="rtl"] .news-slide-card.active { opacity: 1; transform: scale(1) translateX(0) translateZ(50px); z-index: 3; pointer-events: auto; box-shadow: 0 15px 40px rgba(0,0,0,0.5); }
+        html[dir="rtl"] .news-slide-card.prev { opacity: 0.5; transform: scale(0.85) translateX(55%) translateZ(-50px); z-index: 2; pointer-events: auto; cursor: pointer; }
+        html[dir="rtl"] .news-slide-card.next { opacity: 0.5; transform: scale(0.85) translateX(-55%) translateZ(-50px); z-index: 2; pointer-events: auto; cursor: pointer; }
+
+        .news-slide-card.hidden { opacity: 0; pointer-events: none; z-index: 0; transform: scale(0.7) translateX(0) translateZ(-100px); }
         
         .news-header-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; }
         .news-badge { padding: 5px 12px; border-radius: 8px; font-weight: 900; font-size: 0.8rem; display: flex; align-items: center; gap: 8px; border: 1px solid transparent; }
@@ -260,15 +271,16 @@
             .hero h2 { font-size: 2.2rem; } .hero p { font-size: 1rem; }
             .section-title { font-size: 1.4rem; margin-bottom: 25px; }
             
-            /* تعديلات الموبايل لشريط الأخبار 3D */
+            /* تعديلات الموبايل لشريط الأخبار 3D وحل التداخل */
             .news-slider-3d { height: 320px; }
             .news-slide-card { width: 92%; padding: 25px 20px; }
             .news-headline { font-size: 1.2rem; } 
             .news-body { font-size: 0.85rem; -webkit-line-clamp: 4; }
-            html[dir="ltr"] .news-slide-card.prev { transform: scale(0.85) translateX(-20%); opacity: 0.3; }
-            html[dir="ltr"] .news-slide-card.next { transform: scale(0.85) translateX(20%); opacity: 0.3; }
-            html[dir="rtl"] .news-slide-card.prev { transform: scale(0.85) translateX(20%); opacity: 0.3; }
-            html[dir="rtl"] .news-slide-card.next { transform: scale(0.85) translateX(-20%); opacity: 0.3; }
+            
+            html[dir="ltr"] .news-slide-card.prev { transform: scale(0.85) translateX(-25%) translateZ(-50px); opacity: 0.3; }
+            html[dir="ltr"] .news-slide-card.next { transform: scale(0.85) translateX(25%) translateZ(-50px); opacity: 0.3; }
+            html[dir="rtl"] .news-slide-card.prev { transform: scale(0.85) translateX(25%) translateZ(-50px); opacity: 0.3; }
+            html[dir="rtl"] .news-slide-card.next { transform: scale(0.85) translateX(-25%) translateZ(-50px); opacity: 0.3; }
             
             .grid-container { display: grid !important; grid-template-columns: 1fr !important; gap: 15px; width: 100%; }
             .global-leaders-grid { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 10px; width: 100%; }
@@ -679,7 +691,7 @@
         const translations = {
             ar: {
                 menu_home: "الرئيسية", menu_leaders: "القادة", menu_news: "الأخبار", menu_bugs: "تقديم بلاغ", menu_players: "اللاعبين", menu_spending: "الإنفاق", menu_tournaments: "البطولات",
-                news_text: "احدث اخبار بلاتو: سيتم تنظيف المتجر من عناصر الكوينز كليًا",
+                news_text: "أهلاً بكم في مجتمع PlatoX العربي",
                 hero_title_sub: "المجتمع العربي", hero_desc: "يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.",
                 leaders_title: "القادة العرب", global_leaders_title: "قادة السيرفرات العالمية", news_board_title: "لوحة أخبار المجتمع", players_title: "اللاعبين الاقدم", spending_title: "ترتيب المجموعات الأكثر إنفاقًا", tournaments_title: "مركز البطولات المعتمدة",
                 bug_title: "تقديم بلاغ", bug_type_label: "نوع المشكلة:", bug_note: "هذا القسم غير مخصص للمشاكل الشخصية.", bug_opt1_title: "الثغرات (Exploits):", bug_opt2_title: "مشكلة تقنية:", bug_exp_desc: "ثغرات، أخطاء برمجية، أو نسخ معدلة.", bug_tech_desc: "أخطاء تقنية ذات تأثير عالي أو مشاكل نظام قابلة للاستغلال المتكرر.", bug_submit: "إرسال البلاغ", bug_cancel: "إلغاء",
@@ -691,7 +703,7 @@
             },
             en: {
                 menu_home: "HOME", menu_leaders: "LEADERS", menu_news: "NEWS", menu_bugs: "REPORT BUG", menu_players: "PLAYERS", menu_spending: "SPENDING", menu_tournaments: "TOURNAMENTS",
-                news_text: "LATEST PLATO NEWS: The store will be completely cleared of coin items.",
+                news_text: "Welcome to PlatoX Community",
                 hero_title_sub: "COMMUNITY", hero_desc: "Where gaming enthusiasts meet to experience thrilling moments, build true friendships, and create eternal memories.",
                 leaders_title: "ARABIC LEADERS", global_leaders_title: "GLOBAL SERVERS LEADERS", news_board_title: "COMMUNITY NEWS BOARD", players_title: "OLDEST PLAYERS", spending_title: "TOP SPENDING GROUPS", tournaments_title: "APPROVED TOURNAMENTS",
                 bug_title: "Bug Reporting", bug_type_label: "Issue Type:", bug_note: "This section is not for personal issues.", bug_opt1_title: "Exploits:", bug_opt2_title: "Serious Technical Issue:", bug_exp_desc: "Bugs, glitches, or modified clients.", bug_tech_desc: "High-impact bugs or system problems that can be repeatedly abused.", bug_submit: "Submit Report", bug_cancel: "Cancel",
@@ -713,7 +725,7 @@
         const tourSheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/export?format=csv"; 
         const newsSheetURL = "https://docs.google.com/spreadsheets/d/10YreDjSMCJc1hvGFbyfVJO4zAmzFGO0eeyoq5qKwf_E/export?format=csv";
 
-        // ================= الإلغاء الفوري للتأخير في السحب =================
+        // ================= الجلب الفوري للأخبار والبطولات (Zero Delay) =================
         async function loadNewsData() {
             try {
                 const response = await fetch(newsSheetURL);
@@ -721,21 +733,33 @@
                 const data = await response.text();
                 const rows = data.split('\n').slice(1).filter(row => row.trim().length > 0);
                 
+                let tickerAr = "", tickerEn = "";
+                for(let r of rows) {
+                    const c = r.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                    if(c[6] && c[6].replace(/"/g, '').trim() !== "") {
+                        tickerAr = c[6].replace(/"/g, '').trim();
+                        tickerEn = (c[7] || '').replace(/"/g, '').trim();
+                        break;
+                    }
+                }
+                if (tickerAr) translations.ar['news_text'] = tickerAr;
+                if (tickerEn) translations.en['news_text'] = tickerEn;
+                const currentLang = document.documentElement.getAttribute('lang') || 'ar';
+                document.getElementById('news-text').innerText = translations[currentLang]['news_text'];
+
                 let allNews = rows.map(row => {
                     const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                    if (!cols[0] || !cols[1]) return null; 
                     return cols.length >= 2 ? cols : null;
                 }).filter(Boolean);
                 
-                // --- نظام الفلترة الذكي: ترتيب الأخبار من الأحدث للأقدم حسب التاريخ ---
                 allNews.sort((a, b) => {
                     const dateA = new Date((a[0] || '').replace(/"/g, '').trim()).getTime() || 0;
                     const dateB = new Date((b[0] || '').replace(/"/g, '').trim()).getTime() || 0;
                     return dateB - dateA;
                 });
 
-                // أخذ أحدث 5 أخبار فقط بعد الترتيب
                 newsCardsData = allNews.slice(0, 5);
-                
                 buildNewsHTML();
             } catch (error) { console.error("Error loading news", error); }
         }
@@ -746,12 +770,9 @@
                 const data = await response.text();
                 cachedSheetRows = data.split('\n').slice(1);
                 renderDynamicData();
-            } catch (error) {
-                console.error("حدث خطأ أثناء جلب البيانات:", error);
-            }
+            } catch (error) { console.error("حدث خطأ أثناء جلب البيانات:", error); }
         }
         
-        // جلب البيانات فوراً لضمان السرعة القصوى (Zero Lag Display)
         loadNewsData();
         loadDynamicData();
 
@@ -769,9 +790,7 @@
                     const data2 = await res2.json();
                     baseRealTime = new Date(data2.dateTime + '+03:00').getTime();
                     basePerfTime = performance.now();
-                } catch(e) {
-                    console.log("تم حظر التوقيت، سيتم استخدام وقت الجهاز.");
-                }
+                } catch(e) { console.log("تم حظر التوقيت، سيتم استخدام وقت الجهاز."); }
             }
         }
 
@@ -803,7 +822,6 @@
             if (newsCardsData.length > 0) buildNewsHTML();
             
             localStorage.setItem('lang', lang);
-
             setTimeout(() => { sidebar.style.transition = ''; }, 50);
         }
 
@@ -827,7 +845,6 @@
                 const displayTitle = isAr ? titleAr : (titleEn || titleAr);
                 const displayBody = isAr ? bodyAr : (bodyEn || bodyAr);
 
-                // الترجمة والألوان التلقائية للتاجات
                 let tagColor = 'var(--primary)', tagBg = 'rgba(157, 78, 221, 0.15)', tagBorder = 'rgba(157, 78, 221, 0.3)', icon = 'fa-bolt';
                 let displayTag = tagType;
                 const tagLower = tagType.toLowerCase();
