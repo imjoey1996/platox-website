@@ -127,6 +127,24 @@
         .section-title::before { content: ''; position: absolute; right: -15px; top: 50%; transform: translateY(-50%); width: 6px; height: 20px; background: var(--primary); border-radius: 3px; box-shadow: 0 0 15px var(--primary-glow);}
         html[dir="ltr"] .section-title::before { right: auto; left: -15px; }
 
+        /* ---------------- Pull to Refresh (شريط السحب للتحديث) ---------------- */
+        #ptr-loader { position: fixed; top: 0; left: 0; width: 100%; height: 60px; display: flex; justify-content: center; align-items: center; gap: 10px; background: var(--primary); color: #fff; font-weight: bold; font-family: 'Cairo', sans-serif; font-size: 1.1rem; transform: translateY(-100%); z-index: 9999; transition: transform 0.2s ease-out, background 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        #ptr-loader i { transition: transform 0.3s; }
+        #ptr-loader.refreshing { transform: translateY(0) !important; background: #3b82f6; }
+        #ptr-loader.refreshing i { animation: spin 1s infinite linear; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* ---------------- Skeleton Loader (التحميل النابض) ---------------- */
+        .skeleton { position: relative; overflow: hidden; background-color: rgba(255, 255, 255, 0.05) !important; border-color: transparent !important; box-shadow: none !important; }
+        [data-theme="light"] .skeleton { background-color: rgba(0, 0, 0, 0.05) !important; }
+        .skeleton::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent); animation: shimmer 1.5s infinite; }
+        [data-theme="light"] .skeleton::after { background: linear-gradient(90deg, transparent, rgba(0,0,0,0.04), transparent); }
+        @keyframes shimmer { 100% { left: 100%; } }
+        .skel-text { height: 15px; border-radius: 4px; margin-bottom: 10px; width: 100%; background: rgba(255,255,255,0.1); }
+        [data-theme="light"] .skel-text { background: rgba(0,0,0,0.1); }
+        .skel-title { height: 25px; width: 60%; }
+        .skel-badge { height: 30px; width: 80px; border-radius: 8px; }
+
         /* ---------------- تنسيقات الأخبار ---------------- */
         .news-carousel-container { width: 100%; max-width: 800px; position: relative; display: flex; flex-direction: column; gap: 5px; margin-bottom: 5px;}
         
@@ -306,6 +324,11 @@
 </head>
 <body>
 
+    <!-- شريط السحب للتحديث Pull to Refresh -->
+    <div id="ptr-loader">
+        <i class="fa-solid fa-rotate-right"></i> <span data-i18n="pull_refresh">جاري التحديث...</span>
+    </div>
+
     <div class="liquid-bg">
         <div class="blob blob-1"></div>
         <div class="blob blob-2"></div>
@@ -316,24 +339,24 @@
     
     <div class="sidebar" id="sidebar">
         <i class="fa-solid fa-xmark close-btn" onclick="toggleMenu()"></i>
-        <a href="#hero" data-i18n="menu_home">الرئيسية</a>
-        <a href="#news" data-i18n="menu_news">الأخبار</a>
-        <a href="#bug-report" data-i18n="menu_bugs">تقديم بلاغ</a>
-        <a href="#arabic-leaders" data-i18n="menu_leaders">القادة العرب</a>
-        <a href="#tournaments" data-i18n="menu_tournaments">البطولات</a>
-        <a href="#top-spending" data-i18n="menu_spending">الإنفاق</a>
-        <a href="#accounts" data-i18n="menu_players">اللاعبين</a>
+        <a href="#hero" data-i18n="menu_home" onclick="haptic()">الرئيسية</a>
+        <a href="#news" data-i18n="menu_news" onclick="haptic()">الأخبار</a>
+        <a href="#bug-report" data-i18n="menu_bugs" onclick="haptic()">تقديم بلاغ</a>
+        <a href="#arabic-leaders" data-i18n="menu_leaders" onclick="haptic()">القادة العرب</a>
+        <a href="#tournaments" data-i18n="menu_tournaments" onclick="haptic()">البطولات</a>
+        <a href="#top-spending" data-i18n="menu_spending" onclick="haptic()">الإنفاق</a>
+        <a href="#accounts" data-i18n="menu_players" onclick="haptic()">اللاعبين</a>
     </div>
 
     <nav class="navbar">
         <h1>Plato<span>X</span></h1>
         <div class="nav-actions">
-            <i class="fa-solid fa-moon theme-toggle" id="theme-icon" onclick="toggleTheme()"></i>
+            <i class="fa-solid fa-moon theme-toggle" id="theme-icon" onclick="haptic(); toggleTheme();"></i>
             <div class="social-icons" style="display: flex; gap:12px;">
-                <a href="https://discord.gg/plato" target="_blank"><i class="fa-brands fa-discord"></i></a>
-                <a href="https://instagram.com/platoarab" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://discord.gg/plato" target="_blank" onclick="haptic()"><i class="fa-brands fa-discord"></i></a>
+                <a href="https://instagram.com/platoarab" target="_blank" onclick="haptic()"><i class="fa-brands fa-instagram"></i></a>
             </div>
-            <i class="fa-solid fa-bars menu-btn" onclick="toggleMenu()" style="margin-left: 5px;"></i>
+            <i class="fa-solid fa-bars menu-btn" onclick="haptic(); toggleMenu();" style="margin-left: 5px;"></i>
         </div>
     </nav>
 
@@ -342,8 +365,8 @@
     </div>
 
     <div class="main-lang-switch" data-aos="fade-down" dir="rtl">
-        <button class="lang-btn active" onclick="changeLang('ar')" id="btn-ar">العربية</button>
-        <button class="lang-btn" onclick="changeLang('en')" id="btn-en">English</button>
+        <button class="lang-btn active" onclick="haptic(); changeLang('ar')" id="btn-ar">العربية</button>
+        <button class="lang-btn" onclick="haptic(); changeLang('en')" id="btn-en">English</button>
     </div>
 
     <section class="hero" id="hero">
@@ -351,33 +374,31 @@
         <p data-aos="fade-up" data-aos-delay="200" data-i18n="hero_desc">يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.</p>
     </section>
 
-    <!-- ---------------- قسم الأخبار السلس والمحمي تماماً ---------------- -->
+    <!-- ---------------- قسم الأخبار ---------------- -->
     <section id="news" style="padding-top: 10px;">
         <h2 class="section-title" data-aos="fade-right" data-i18n="news_board_title">لوحة أخبار المجتمع</h2>
 
         <div class="news-carousel-container" data-aos="zoom-in">
             <div class="news-slider" id="newsSlider">
-                <!-- سيتم توليد الكروت الزجاجية هنا -->
+                <!-- Skeletons will be injected here initially -->
             </div>
             
             <div class="news-bottom-wrapper">
                 <div class="slider-controls">
-                    <button class="nav-btn disabled" id="btnNewer" onclick="slideNews(-1)">
+                    <button class="nav-btn disabled" id="btnNewer">
                         <span class="nav-label num-font" data-i18n="news_newer">الأحدث</span>
                         <i class="fa-solid fa-arrow-right arrow-icon prev-icon"></i>
                     </button>
                     
-                    <div class="slider-dots" id="newsDots">
-                        <!-- سيتم إضافة النقاط برمجياً -->
-                    </div>
+                    <div class="slider-dots" id="newsDots"></div>
 
-                    <button class="nav-btn disabled" id="btnOlder" onclick="slideNews(1)">
+                    <button class="nav-btn disabled" id="btnOlder">
                         <span class="nav-label num-font" data-i18n="news_older">الأقدم</span>
                         <i class="fa-solid fa-arrow-left arrow-icon next-icon"></i>
                     </button>
                 </div>
                 
-                <a href="https://discord.gg/plato" target="_blank" class="more-news-link">
+                <a href="https://discord.gg/plato" target="_blank" class="more-news-link" onclick="haptic()">
                     <i class="fa-brands fa-discord"></i> <span data-i18n="discord_more">للمزيد من الأخبار انضموا إلى الديسكورد</span>
                 </a>
             </div>
@@ -395,11 +416,11 @@
             <span style="display:block; margin-bottom: 15px; font-size: 0.85rem; color: var(--text-muted); font-weight: 700;" data-i18n="bug_note">هذا القسم غير مخصص للمشاكل الشخصية.</span>
             
             <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
-                <label class="bug-radio">
+                <label class="bug-radio" onclick="haptic()">
                     <input type="radio" name="bugType" value="Exploits" onchange="showBugForm()">
                     <span><strong data-i18n="bug_opt1_title">الثغرات (Exploits):</strong> <span data-i18n="bug_exp_desc" style="color: var(--text-muted); font-size: 0.9rem;">ثغرات، أخطاء برمجية، أو نسخ معدلة.</span></span>
                 </label>
-                <label class="bug-radio">
+                <label class="bug-radio" onclick="haptic()">
                     <input type="radio" name="bugType" value="Serious Technical Issue" onchange="showBugForm()">
                     <span><strong data-i18n="bug_opt2_title">مشكلة تقنية:</strong> <span data-i18n="bug_tech_desc" style="color: var(--text-muted); font-size: 0.9rem;">أخطاء تقنية ذات تأثير عالي أو مشاكل نظام قابلة للاستغلال المتكرر.</span></span>
                 </label>
@@ -410,8 +431,8 @@
                 <textarea id="bug-desc" class="bug-input" rows="4" placeholder="وصف المشكلة..." style="resize: vertical;"></textarea>
                 
                 <div style="display: flex; gap: 10px;">
-                    <button onclick="submitBugReport()" class="submit-btn" data-i18n="bug_submit">إرسال البلاغ</button>
-                    <button onclick="hideBugForm()" class="cancel-btn" data-i18n="bug_cancel">إلغاء</button>
+                    <button onclick="haptic(); submitBugReport();" class="submit-btn" data-i18n="bug_submit">إرسال البلاغ</button>
+                    <button onclick="haptic(); hideBugForm();" class="cancel-btn" data-i18n="bug_cancel">إلغاء</button>
                 </div>
             </div>
         </div>
@@ -446,19 +467,18 @@
         <h2 class="section-title" data-aos="fade-right" data-i18n="global_leaders_title">قادة السيرفرات العالمية</h2>
         
         <div class="server-tabs" data-aos="fade-up" dir="ltr">
-            <button class="server-tab active" data-target="english" onclick="filterServer('english')">English</button>
-            <button class="server-tab" data-target="persian" onclick="filterServer('persian')">Persian</button>
-            <button class="server-tab" data-target="french" onclick="filterServer('french')">French</button>
-            <button class="server-tab" data-target="turkish" onclick="filterServer('turkish')">Turkish</button>
-            <button class="server-tab" data-target="melayu" onclick="filterServer('melayu')">Melayu</button>
-            <button class="server-tab" data-target="brazil" onclick="filterServer('brazil')">Brazil</button>
-            <button class="server-tab" data-target="spanish" onclick="filterServer('spanish')">Spanish</button>
-            <button class="server-tab" data-target="thai" onclick="filterServer('thai')">Thai</button>
-            <button class="server-tab" data-target="desi" onclick="filterServer('desi')">Desi</button>
+            <button class="server-tab active" data-target="english" onclick="haptic(); filterServer('english')">English</button>
+            <button class="server-tab" data-target="persian" onclick="haptic(); filterServer('persian')">Persian</button>
+            <button class="server-tab" data-target="french" onclick="haptic(); filterServer('french')">French</button>
+            <button class="server-tab" data-target="turkish" onclick="haptic(); filterServer('turkish')">Turkish</button>
+            <button class="server-tab" data-target="melayu" onclick="haptic(); filterServer('melayu')">Melayu</button>
+            <button class="server-tab" data-target="brazil" onclick="haptic(); filterServer('brazil')">Brazil</button>
+            <button class="server-tab" data-target="spanish" onclick="haptic(); filterServer('spanish')">Spanish</button>
+            <button class="server-tab" data-target="thai" onclick="haptic(); filterServer('thai')">Thai</button>
+            <button class="server-tab" data-target="desi" onclick="haptic(); filterServer('desi')">Desi</button>
         </div>
 
-        <div class="global-leaders-grid" id="global-leaders-grid">
-        </div>
+        <div class="global-leaders-grid" id="global-leaders-grid"></div>
     </section>
 
     <div class="cyber-divider"><div class="center-node"></div></div>
@@ -537,6 +557,13 @@
             disable: 'mobile'
         });
 
+        // Haptic Feedback Engine
+        function haptic() {
+            if (navigator.vibrate) {
+                navigator.vibrate(15);
+            }
+        }
+
         function toggleMenu() { document.getElementById('sidebar').classList.toggle('active'); document.querySelector('.overlay').classList.toggle('active'); }
 
         const icons = ['fa-gamepad', 'fa-dice', 'fa-chess-knight', 'fa-bowling-ball', 'fa-ghost', 'fa-futbol'];
@@ -560,6 +587,7 @@
         }
 
         function copyAdminID(id) {
+            haptic();
             navigator.clipboard.writeText(id).then(() => {
                 const toast = document.getElementById("toast");
                 toast.innerHTML = (document.documentElement.getAttribute('lang') === 'ar') ? `<i class="fa-solid fa-check"></i> تم النسخ: ${id}` : `<i class="fa-solid fa-check"></i> Copied: ${id}`;
@@ -568,10 +596,7 @@
             });
         }
 
-        function showBugForm() {
-            document.getElementById('bug-details').style.display = 'flex';
-        }
-
+        function showBugForm() { document.getElementById('bug-details').style.display = 'flex'; }
         function hideBugForm() {
             document.getElementById('bug-details').style.display = 'none';
             document.querySelectorAll('input[name="bugType"]').forEach(r => r.checked = false);
@@ -591,7 +616,6 @@
 
             const bugType = bugTypeElement.value;
             const webhookUrl = "https://discord.com/api/webhooks/1545531187982766160/puKAIZ5aFIbWp-wAFu0AN1WDJDNkx9r51x8kyz7q75a73tLUZXo1sgdCeSCP9gmNDq0L"; 
-            
             const embedColor = bugType === 'Exploits' ? 16711680 : 16744192; 
 
             const payload = {
@@ -621,12 +645,10 @@
                 body: JSON.stringify(payload)
             }).then(response => {
                 if (!response.ok) throw new Error('Network response was not ok');
-                
                 const toast = document.getElementById("toast");
                 toast.innerHTML = (document.documentElement.lang === 'ar') ? `<i class="fa-solid fa-check"></i> تم إرسال البلاغ للإدارة بنجاح` : `<i class="fa-solid fa-check"></i> Report Submitted to Admins`;
                 toast.className = "show";
                 setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
-                
                 hideBugForm();
             }).catch(err => {
                 console.error("Error sending webhook:", err);
@@ -685,7 +707,6 @@
             document.querySelectorAll('.server-tab').forEach(tab => {
                 tab.classList.toggle('active', tab.dataset.target === serverName);
             });
-            
             document.querySelectorAll('.global-leader').forEach(card => {
                 if(card.dataset.server === serverName) {
                     card.style.display = 'block';
@@ -699,7 +720,7 @@
 
         const translations = {
             ar: {
-                menu_home: "الرئيسية", menu_leaders: "القادة", menu_news: "الأخبار", menu_bugs: "تقديم بلاغ", menu_players: "اللاعبين", menu_spending: "الإنفاق", menu_tournaments: "البطولات",
+                menu_home: "الرئيسية", menu_leaders: "القادة", menu_news: "الأخبار", menu_bugs: "تقديم بلاغ", menu_players: "اللاعبين", menu_spending: "الإنفاق", menu_tournaments: "البطولات", pull_refresh: "جاري التحديث...",
                 news_text: "أهلاً بكم في مجتمع PlatoX العربي",
                 hero_title_sub: "المجتمع العربي", hero_desc: "يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.",
                 leaders_title: "القادة العرب", global_leaders_title: "قادة السيرفرات العالمية", news_board_title: "لوحة أخبار المجتمع", players_title: "اللاعبين الاقدم", spending_title: "ترتيب المجموعات الأكثر إنفاقًا", tournaments_title: "مركز البطولات المعتمدة",
@@ -711,7 +732,7 @@
                 tab_english: "الإنجليزي", tab_persian: "الفارسي", tab_french: "الفرنسي", tab_melayu: "الماليزي", tab_turkish: "التركي", tab_spanish: "الإسباني", tab_thai: "التايلندي", tab_brazil: "البرازيلي", tab_desi: "الهندي"
             },
             en: {
-                menu_home: "HOME", menu_leaders: "LEADERS", menu_news: "NEWS", menu_bugs: "REPORT BUG", menu_players: "PLAYERS", menu_spending: "SPENDING", menu_tournaments: "TOURNAMENTS",
+                menu_home: "HOME", menu_leaders: "LEADERS", menu_news: "NEWS", menu_bugs: "REPORT BUG", menu_players: "PLAYERS", menu_spending: "SPENDING", menu_tournaments: "TOURNAMENTS", pull_refresh: "Updating...",
                 news_text: "Welcome to PlatoX Community",
                 hero_title_sub: "COMMUNITY", hero_desc: "Where gaming enthusiasts meet to experience thrilling moments, build true friendships, and create eternal memories.",
                 leaders_title: "ARABIC LEADERS", global_leaders_title: "GLOBAL SERVERS LEADERS", news_board_title: "COMMUNITY NEWS BOARD", players_title: "OLDEST PLAYERS", spending_title: "TOP SPENDING GROUPS", tournaments_title: "APPROVED TOURNAMENTS",
@@ -726,14 +747,37 @@
 
         let cachedSheetRows = null;
         let newsCardsData = [];
-        
         let baseRealTime = Date.now();
         let basePerfTime = performance.now();
 
         const tourSheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/export?format=csv"; 
         const newsSheetURL = "https://docs.google.com/spreadsheets/d/10YreDjSMCJc1hvGFbyfVJO4zAmzFGO0eeyoq5qKwf_E/export?format=csv";
 
-        // ================= الجلب الفوري للأخبار والبطولات =================
+        // عرض السكيلتون قبل تحميل البيانات
+        function showSkeletons() {
+            let newsSkel = '';
+            for(let i=0; i<3; i++) {
+                newsSkel += `<div class="news-slide-card glass-panel skeleton">
+                    <div class="news-header-top" style="border:none;"><div class="skel-badge skeleton"></div><div class="skel-text skeleton" style="width: 50px; margin:0;"></div></div>
+                    <div class="skel-title skeleton skel-text" style="margin-top:20px;"></div>
+                    <div class="skel-text skeleton" style="margin-top:15px;"></div><div class="skel-text skeleton"></div>
+                </div>`;
+            }
+            document.getElementById('newsSlider').innerHTML = newsSkel;
+
+            let tourSkel = '';
+            for(let i=0; i<2; i++) {
+                tourSkel += `<div class="tour-card glass-panel skeleton" style="height: 120px; margin-bottom:15px;"></div>`;
+            }
+            document.getElementById('tournaments-container').innerHTML = tourSkel;
+
+            let spendSkel = '';
+            for(let i=0; i<5; i++) {
+                spendSkel += `<div class="list-row glass-panel skeleton" style="height: 60px;"></div>`;
+            }
+            document.getElementById('spenders-container').innerHTML = spendSkel;
+        }
+
         async function loadNewsData() {
             try {
                 const response = await fetch(newsSheetURL);
@@ -780,10 +824,6 @@
                 renderDynamicData();
             } catch (error) { console.error("حدث خطأ أثناء جلب البيانات:", error); }
         }
-        
-        // جلب البيانات فوراً لضمان السرعة القصوى (Zero Lag Display)
-        loadNewsData();
-        loadDynamicData();
 
         async function syncRealTime() {
             try {
@@ -834,7 +874,6 @@
             setTimeout(() => { sidebar.style.transition = ''; }, 50);
         }
 
-        // ---------------- دالة بناء الأخبار والتحديثات بالشكل الزجاجي الخفيف ----------------
         function buildNewsHTML() {
             const slider = document.getElementById('newsSlider');
             const dotsContainer = document.getElementById('newsDots');
@@ -902,32 +941,40 @@
             
             setTimeout(updateCarouselButtons, 50);
         }
-
-        // ==================== الحماية المطلقة ضد زوم الآيفون المزدوج ====================
-        
-        let lastTouchTime = 0;
-        document.addEventListener('touchstart', function (e) {
-            if (e.touches.length > 1) { e.preventDefault(); }
-        }, { passive: false });
-
-        document.addEventListener('touchend', function (e) {
-            let now = Date.now();
-            if (now - lastTouchTime <= 300) { e.preventDefault(); }
-            lastTouchTime = now;
-        }, { passive: false });
-
-        // ---------------- التنقل السريع الخالي من اللاق ----------------
         
         function slideNews(direction) {
+            haptic();
             const slider = document.getElementById('newsSlider');
             const cards = slider.querySelectorAll('.news-slide-card');
             if(cards.length === 0) return;
             
             let scrollAmount = cards[0].offsetWidth + 15; 
-            
             const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
             slider.scrollBy({ left: scrollAmount * (isRTL ? -direction : direction), behavior: 'smooth' });
         }
+
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            let lastTap = 0;
+            btn.addEventListener('touchend', function(e) {
+                let currentTime = new Date().getTime();
+                let tapLength = currentTime - lastTap;
+                if (tapLength < 400 && tapLength > 0) {
+                    e.preventDefault(); 
+                    if(!btn.classList.contains('disabled')) {
+                        const dir = btn.id === 'btnNewer' ? -1 : 1;
+                        slideNews(dir);
+                    }
+                }
+                lastTap = currentTime;
+            });
+            
+            btn.addEventListener('click', function(e) {
+                if(!btn.classList.contains('disabled')) {
+                    const dir = btn.id === 'btnNewer' ? -1 : 1;
+                    slideNews(dir);
+                }
+            });
+        });
 
         function updateCarouselButtons() {
             const slider = document.getElementById('newsSlider');
@@ -954,7 +1001,6 @@
             scrollTimeout = window.requestAnimationFrame(updateCarouselButtons);
         });
 
-        // ---------------- دالة بناء البطولات ----------------
         function renderDynamicData() {
             if (!cachedSheetRows) return;
             const tourContainer = document.getElementById('tournaments-container');
@@ -1102,6 +1148,44 @@
             });
         }
 
+        // Pull to Refresh Engine
+        let ptrStartY = 0, ptrCurrentY = 0, isPulling = false;
+        const ptrEl = document.getElementById('ptr-loader');
+        
+        document.addEventListener('touchstart', e => {
+            if(window.scrollY === 0) { ptrStartY = e.touches[0].screenY; isPulling = true; }
+        }, {passive: true});
+        
+        document.addEventListener('touchmove', e => {
+            if(!isPulling) return;
+            ptrCurrentY = e.touches[0].screenY;
+            let pull = ptrCurrentY - ptrStartY;
+            if(pull > 0 && window.scrollY === 0) {
+                ptrEl.style.transform = `translateY(${Math.min(pull - 60, 0)}px)`;
+                if(pull > 80) ptrEl.querySelector('i').style.transform = 'rotate(180deg)';
+                else ptrEl.querySelector('i').style.transform = 'rotate(0deg)';
+            }
+        }, {passive: true});
+        
+        document.addEventListener('touchend', e => {
+            if(!isPulling) return;
+            isPulling = false;
+            let pull = ptrCurrentY - ptrStartY;
+            if(pull > 80 && window.scrollY === 0) {
+                haptic();
+                ptrEl.classList.add('refreshing');
+                ptrEl.style.transform = 'translateY(0)';
+                Promise.all([loadNewsData(), loadDynamicData()]).then(() => {
+                    setTimeout(() => {
+                        ptrEl.classList.remove('refreshing');
+                        ptrEl.style.transform = 'translateY(-100%)';
+                    }, 500);
+                });
+            } else {
+                ptrEl.style.transform = 'translateY(-100%)';
+            }
+        }, {passive: true});
+
         document.querySelectorAll('.sidebar a').forEach(anchor => {
             anchor.addEventListener('click', () => { toggleMenu(); });
         });
@@ -1114,7 +1198,12 @@
             const savedLang = localStorage.getItem('lang') || 'ar'; 
             changeLang(savedLang);
             
+            showSkeletons();
+            
             await syncRealTime(); 
+            
+            loadNewsData();
+            loadDynamicData();
             
             const start = new Date('2026/09/03 00:00:00 GMT+0300').getTime(); 
             const added = Math.max(0, Math.floor((getAccurateTime() - start) / (1000 * 60 * 60 * 24))); 
