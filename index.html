@@ -134,7 +134,7 @@
         #ptr-loader.refreshing i { animation: spin 1s infinite linear; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* ---------------- Skeleton Loader (التحميل النابض) ---------------- */
+        /* ---------------- التحميل النابض ---------------- */
         .skeleton { position: relative; overflow: hidden; background-color: rgba(255, 255, 255, 0.05) !important; border-color: transparent !important; box-shadow: none !important; }
         [data-theme="light"] .skeleton { background-color: rgba(0, 0, 0, 0.05) !important; }
         .skeleton::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent); animation: shimmer 1.5s infinite; }
@@ -152,11 +152,6 @@
         .news-slider::-webkit-scrollbar { display: none; }
         
         .news-slide-card { width: 100%; flex: 0 0 100%; scroll-snap-align: center; padding: 30px; border-radius: 16px; transition: transform 0.4s; position: relative; }
-        
-        .glowing-card {
-            border-color: var(--neon-color) !important;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.5), 0 0 25px var(--neon-shadow), inset 0 0 15px var(--neon-shadow) !important;
-        }
         
         .news-header-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; }
         .news-badge { padding: 5px 12px; border-radius: 8px; font-weight: 900; font-size: 0.8rem; display: flex; align-items: center; gap: 8px; border: 1px solid transparent; }
@@ -324,7 +319,6 @@
 </head>
 <body>
 
-    <!-- شريط السحب للتحديث Pull to Refresh -->
     <div id="ptr-loader">
         <i class="fa-solid fa-rotate-right"></i> <span data-i18n="pull_refresh">جاري التحديث...</span>
     </div>
@@ -374,7 +368,6 @@
         <p data-aos="fade-up" data-aos-delay="200" data-i18n="hero_desc">يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.</p>
     </section>
 
-    <!-- ---------------- قسم الأخبار ---------------- -->
     <section id="news" style="padding-top: 10px;">
         <h2 class="section-title" data-aos="fade-right" data-i18n="news_board_title">لوحة أخبار المجتمع</h2>
 
@@ -407,7 +400,6 @@
 
     <div class="cyber-divider"><div class="center-node"></div></div>
 
-    <!-- ---------------- قسم البلاغات ---------------- -->
     <section id="bug-report">
         <h2 class="section-title" data-aos="fade-right" data-i18n="bug_title">تقديم بلاغ</h2>
         <div class="glass-panel" style="width: 100%; max-width: 650px; padding: 30px; border-radius: 16px;" data-aos="fade-up">
@@ -753,7 +745,6 @@
         const tourSheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/export?format=csv"; 
         const newsSheetURL = "https://docs.google.com/spreadsheets/d/10YreDjSMCJc1hvGFbyfVJO4zAmzFGO0eeyoq5qKwf_E/export?format=csv";
 
-        // عرض السكيلتون قبل تحميل البيانات
         function showSkeletons() {
             let newsSkel = '';
             for(let i=0; i<3; i++) {
@@ -785,19 +776,34 @@
                 const data = await response.text();
                 const rows = data.split('\n').slice(1).filter(row => row.trim().length > 0);
                 
-                let tickerAr = "", tickerEn = "";
+                // --- ميزة قراءة شريط الأخبار بالكامل وبشكل مدمج ---
+                let tickersAr = [];
+                let tickersEn = [];
+                
                 for(let r of rows) {
                     const c = r.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-                    if(c[6] && c[6].replace(/"/g, '').trim() !== "") {
-                        tickerAr = c[6].replace(/"/g, '').trim();
-                        tickerEn = (c[7] || '').replace(/"/g, '').trim();
-                        break;
-                    }
+                    let tAr = c[6] ? c[6].replace(/"/g, '').trim() : "";
+                    let tEn = c[7] ? c[7].replace(/"/g, '').trim() : "";
+                    if(tAr) tickersAr.push(tAr);
+                    if(tEn) tickersEn.push(tEn);
                 }
-                if (tickerAr) translations.ar['news_text'] = tickerAr;
-                if (tickerEn) translations.en['news_text'] = tickerEn;
+                
+                const separatorHTML = `<span style="color: var(--primary); margin: 0 25px;"><i class="fa-solid fa-gamepad"></i></span>`;
+                
+                if (tickersAr.length > 0) {
+                    translations.ar['news_text'] = tickersAr.join(separatorHTML);
+                } else {
+                    translations.ar['news_text'] = "أهلاً بكم في مجتمع PlatoX العربي"; 
+                }
+                
+                if (tickersEn.length > 0) {
+                    translations.en['news_text'] = tickersEn.join(separatorHTML);
+                } else {
+                    translations.en['news_text'] = "Welcome to PlatoX Community";
+                }
+
                 const currentLang = document.documentElement.getAttribute('lang') || 'ar';
-                document.getElementById('news-text').innerText = translations[currentLang]['news_text'];
+                document.getElementById('news-text').innerHTML = translations[currentLang]['news_text'];
 
                 let allNews = rows.map(row => {
                     const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
@@ -863,7 +869,7 @@
                 }
             });
             
-            document.getElementById('news-text').innerText = translations[lang]['news_text'];
+            document.getElementById('news-text').innerHTML = translations[lang]['news_text'];
             document.getElementById('plato-id').placeholder = lang === 'ar' ? 'يوزرك في اللعبة' : 'Your Plato ID';
             document.getElementById('bug-desc').placeholder = lang === 'ar' ? 'وصف المشكلة...' : 'Issue description...';
             
@@ -941,7 +947,19 @@
             
             setTimeout(updateCarouselButtons, 50);
         }
-        
+
+        // ==================== الحماية المطلقة ضد زوم الآيفون المزدوج ====================
+        let lastTouchTime = 0;
+        document.addEventListener('touchstart', function (e) {
+            if (e.touches.length > 1) { e.preventDefault(); }
+        }, { passive: false });
+
+        document.addEventListener('touchend', function (e) {
+            let now = Date.now();
+            if (now - lastTouchTime <= 300) { e.preventDefault(); }
+            lastTouchTime = now;
+        }, { passive: false });
+
         function slideNews(direction) {
             haptic();
             const slider = document.getElementById('newsSlider');
