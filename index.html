@@ -143,6 +143,20 @@
         .nav-actions i { font-size: 22px; cursor: pointer; color: var(--text-main); transition: 0.3s; }
         .nav-actions i:hover { color: var(--primary); text-shadow: 0 0 15px var(--primary-glow); }
 
+        .lang-btn { 
+            border: 1px solid var(--glass-border); 
+            padding: 6px 15px; 
+            border-radius: 20px; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            font-family: 'Cairo', sans-serif; 
+            font-weight: 700; 
+            font-size: 14px;
+        }
+        @media (hover: hover) {
+            .lang-btn:hover:not(.active) { color: var(--primary); border-color: var(--primary); }
+        }
+
         .main-lang-switch { display: flex; justify-content: center; gap: 15px; margin: 95px auto 15px; position: relative; z-index: 10; }
         .main-lang-switch .lang-btn { 
             background: rgba(15, 15, 20, 0.4); 
@@ -193,8 +207,8 @@
 
         section { padding: 45px 15px 25px; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; }
         
-        .hero { height: 35dvh; justify-content: center; text-align: center; padding: 0 15px; margin-top: 5px;}
-        .hero h2 { font-size: 3.5rem; font-weight: 900; margin-bottom: 15px; color: #fff; text-shadow: 0 0 30px rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; flex-wrap: wrap;}
+        .hero { height: auto; min-height: 200px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px 15px;}
+        .hero h2 { font-size: 3.5rem; font-weight: 900; margin: 0; color: #fff; text-shadow: 0 0 30px rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; flex-wrap: wrap;}
         .hero h2 span.hero-x { 
             color: var(--primary); font-size: 1.6em; margin: 0 12px; transform: translateY(2px);
             animation: heroXGlow 2.5s infinite alternate ease-in-out;
@@ -204,8 +218,6 @@
             100% { text-shadow: 0 0 40px var(--primary), 0 0 80px #d8b4fe; }
         }
         [data-theme="light"] .hero h2 { color: #000; text-shadow: none; }
-        .hero p { font-size: 1.15rem; max-width: 600px; line-height: 1.7; margin: 0 auto; color: rgba(255,255,255,0.8);}
-        [data-theme="light"] .hero p { color: var(--text-muted); }
 
         .cyber-divider { display: flex; align-items: center; justify-content: center; width: 100%; max-width: 600px; margin: 15px auto; opacity: 0.4; }
         .cyber-divider::before, .cyber-divider::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--text-muted), transparent); }
@@ -257,7 +269,8 @@
         .dot.active { background: var(--primary); width: 22px; border-radius: 10px; box-shadow: 0 0 10px var(--primary-glow); }
         [data-theme="light"] .dot { background: rgba(0,0,0,0.1); }
         
-        .more-news-link { display: inline-flex; justify-content: center; align-items: center; width: 100%; gap: 8px; color: var(--text-muted); text-decoration: none; transition: 0.3s; font-weight: 700; background: var(--bg-card); padding: 12px 24px; border-radius: 12px; border: 1px solid var(--glass-border); backdrop-filter: blur(10px); font-family: inherit;}
+        /* Discord Button matched with arrows box */
+        .more-news-link { display: flex; justify-content: center; align-items: center; width: 100%; gap: 8px; color: var(--text-muted); text-decoration: none; transition: 0.3s; font-weight: 700; background: var(--bg-card); padding: 12px 24px; border-radius: 12px; border: 1px solid var(--glass-border); backdrop-filter: blur(10px); font-family: inherit; font-size: clamp(12px, 3.5vw, 14px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .more-news-link i { color: var(--discord-color); font-size: 18px; }
         .more-news-link:hover { color: var(--text-main); transform: translateY(-2px); border-color: var(--discord-color); box-shadow: 0 5px 15px rgba(88, 101, 242, 0.2);}
 
@@ -271,7 +284,7 @@
         [data-theme="light"] .bug-input:focus { background: #fff; }
         
         /* Unified Sleek Button Styling for all links/buttons (Equal sizes) */
-        .submit-btn, .cancel-btn { padding: 12px 24px; border-radius: 10px; font-weight: 700; font-size: 14.5px; cursor: pointer; transition: 0.3s; font-family: inherit; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; flex: 1; }
+        .submit-btn, .cancel-btn { padding: 12px 24px; border-radius: 10px; font-weight: 700; font-size: 14.5px; cursor: pointer; transition: 0.3s; font-family: inherit; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; flex: 1; white-space: nowrap; }
         .submit-btn { background: var(--primary); color: #fff; border: none; }
         .submit-btn:hover { box-shadow: 0 0 20px var(--primary-glow); transform: translateY(-2px); }
         .cancel-btn { background: rgba(255,255,255,0.1); color: var(--text-main); border: 1px solid var(--glass-border); }
@@ -370,16 +383,6 @@
         .video-glow-box { position: relative; width: 100%; max-width: 320px; border-radius: 16px; padding: 4px; background: linear-gradient(135deg, rgba(157, 78, 221, 0.4), rgba(255, 255, 255, 0.05)); box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin: 0 auto; transition: 0.3s;}
         .video-glow-box:hover { box-shadow: 0 15px 40px var(--primary-glow); }
         .video-glow-box video { width: 100%; display: block; border-radius: 12px; max-height: 70vh; object-fit: cover; background: #000; }
-        
-        .parsed-timestamps-box { width: 100%; max-width: 600px; text-align: left; padding: 0 10px; white-space: pre-wrap; line-height: 1.8; color: rgba(255,255,255,0.9); direction: ltr !important;}
-        [data-theme="light"] .parsed-timestamps-box { color: var(--text-muted); }
-        
-        .ts-header { color: var(--primary); font-family: 'Rajdhani', sans-serif; font-size: 1.15rem; font-weight: bold; border-bottom: 1px solid var(--glass-border); padding-bottom: 3px; display: inline-block; margin-top: 15px; margin-bottom: 5px; width: 100%; text-shadow: 0 0 8px var(--primary-glow);}
-        
-        .time-link { display: inline-block; background: rgba(157, 78, 221, 0.15); color: var(--primary); padding: 2px 8px; border-radius: 6px; cursor: pointer; transition: 0.3s; font-weight: bold; border: 1px solid rgba(157, 78, 221, 0.3); margin: 2px 0;}
-        .time-link:hover { background: var(--primary); color: #fff; box-shadow: 0 0 10px var(--primary-glow); transform: translateY(-1px);}
-        [data-theme="light"] .time-link { background: rgba(123, 44, 191, 0.1); border-color: rgba(123, 44, 191, 0.2); }
-        [data-theme="light"] .time-link:hover { background: var(--primary); color: #fff; }
 
         #toast { visibility: hidden; min-width: 200px; background: rgba(15, 15, 20, 0.95); backdrop-filter: blur(10px); color: #fff; text-align: center; border-radius: 10px; padding: 12px 20px; position: fixed; z-index: 9999; left: 50%; bottom: 25px; transform: translateX(-50%); font-size: 14px; transition: opacity 0.4s, bottom 0.4s; opacity: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid var(--primary); font-family: 'Cairo', sans-serif; font-weight:bold;}
         #toast.show { visibility: visible; bottom: 95px; opacity: 1; }
@@ -390,12 +393,12 @@
             .blob { filter: blur(40px); opacity: 0.25; } 
             .glass-panel, .navbar { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
             section { padding: 35px 15px 20px; }
-            .hero { height: 35dvh; margin-top: 15px;}
+            .hero { margin-top: 15px;}
             .hero h2 { font-size: 2.5rem; }
             .section-title { font-size: 1.4rem; margin-bottom: 25px; }
             
             .news-slider { padding: 25px 0; gap: 15px; } 
-            .news-slide-card { width: 88vw; flex: 0 0 88vw; padding: 25px 20px; } 
+            .news-slide-card { width: 88vw; flex: 0 0 88vw; padding: 30px 20px; } 
             .news-slide-card:first-child { margin-inline-start: 6vw; }
             .news-slide-card:last-child { margin-inline-end: 6vw; }
             
@@ -407,14 +410,14 @@
             .global-leaders-grid { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 12px; width: 100%; } 
             .links-grid { display: grid !important; grid-template-columns: 1fr !important; gap: 12px; width: 100%; }
             
-            .card { padding: 25px 10px; width: 100%; max-width: none; }
+            .card { padding: 35px 10px; width: 100%; max-width: none; }
             .card h3 { font-size: 1.2rem; margin-bottom: 5px; }
             
-            .global-leader { padding: 15px 10px; gap: 8px; }
+            .global-leader { padding: 20px 10px; gap: 8px; }
             .global-leader img { width: 60px; height: 60px; margin-bottom: 2px; }
             .leader-name-box h3 { font-size: 1rem; }
             
-            .list-row { padding: 10px; gap: 8px; } .rank-num { font-size: 1rem; width: 20px; } .list-img { width: 30px; height: 30px; } .list-name { font-size: 0.95rem; } .score-val { font-size: 1rem; }
+            .list-row { padding: 15px 10px; gap: 8px; } .rank-num { font-size: 1rem; width: 20px; } .list-img { width: 30px; height: 30px; } .list-name { font-size: 0.95rem; } .score-val { font-size: 1rem; }
             .tour-card { padding: 20px 15px; } .tour-title { font-size: 1.05rem; } .tour-footer { flex-direction: column; gap: 8px; } .info-badge { width: 100%; justify-content: center; padding: 6px;}
             .server-tabs { flex-wrap: wrap !important; justify-content: center !important; gap: 10px; padding-bottom: 10px; }
         }
@@ -435,7 +438,6 @@
     <div class="particles" id="particles"></div>
 
     <nav class="navbar" dir="ltr">
-        <!-- الاسم الثابت بالانجليزي -->
         <h1 class="num-font">Plato<span>X</span></h1>
         <div class="nav-actions">
             <i class="fa-solid fa-moon theme-toggle" id="theme-icon" onclick="toggleTheme();"></i>
@@ -450,13 +452,13 @@
     </div>
 
     <main id="view-home" class="tab-view active-view">
+        
+        <!-- Hero Section (Fixed Text and Size) -->
         <section class="hero" id="hero">
-            <!-- الاسم الثابت بالانجليزي في الهيرو -->
             <h2 class="num-font" dir="ltr">Plato <span class="hero-x">X</span> Community</h2>
-            <p data-i18n="hero_desc">يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.</p>
         </section>
 
-        <section id="about-site">
+        <section id="about-site" style="padding-top: 5px;">
             <h2 class="section-title" data-i18n="about_site_title">نبذة عن الموقع</h2>
             <div class="glass-panel" style="width: 100%; max-width: 700px; padding: 30px; border-radius: 16px; text-align: center; display: flex; flex-direction: column; align-items: center;">
                 <i class="fa-solid fa-globe" style="color: var(--primary); font-size: 35px; margin-bottom: 15px;"></i>
@@ -696,8 +698,8 @@
                 <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 20px; font-weight: 600;" data-i18n="feedback_desc">
                     مساحتك لمشاركة الأفكار والمقترحات حول اللعبة، وتقديم الملاحظات حول تجربتك في المجتمع، بما يسهم في تطوير المجتمع وتحسين تجربة اللاعبين.
                 </p>
-                <div style="display: flex; justify-content: flex-end; width: 100%;">
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfdTHwSEhAB_apQrXarWH9TswkuEPgkDVBt33ndhIB97sIwFg/viewform" target="_blank" class="submit-btn" style="flex: 0 1 auto;">
+                <div class="feedback-btn-wrapper" style="width: 100%; display: flex;">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfdTHwSEhAB_apQrXarWH9TswkuEPgkDVBt33ndhIB97sIwFg/viewform" target="_blank" class="submit-btn" style="flex: 0 1 auto; white-space: nowrap;">
                         <i class="fa-solid fa-paper-plane"></i> <span data-i18n="feedback_btn">تقديم الاقتراحات والملاحظات</span>
                     </a>
                 </div>
@@ -756,7 +758,7 @@
 
         <!-- Weekly Showcase Section (Moved to the very top) -->
         <section id="weekly-showcase" style="display: none;">
-            <h2 class="section-title num-font" style="letter-spacing: 2px;" data-i18n="weekly_showcase_title">عناصر الألعاب الأسبوعية</h2>
+            <h2 class="section-title" data-i18n="weekly_showcase_title">عناصر الألعاب الأسبوعية</h2>
             <div class="glass-panel" style="width: 100%; max-width: 750px; padding: 30px 20px; border-radius: 16px; display: flex; flex-direction: column; align-items: center;">
                 
                 <p class="glass-desc-text" style="font-weight: 600; text-align: center; margin-bottom: 20px;" data-i18n="weekly_showcase_desc">
@@ -771,8 +773,6 @@
                     <video id="weekly-video" src="" controls playsinline preload="metadata"></video>
                 </div>
 
-                <!-- Timestamps Box hidden completely -->
-                <div class="parsed-timestamps-box" id="timestamps-container" dir="ltr" style="display:none;"></div>
             </div>
         </section>
 
@@ -852,7 +852,7 @@
                 <p class="glass-desc-text" style="font-weight: 600; margin-bottom: 20px;" data-i18n="join_us_desc">
                     إذا كانت لديكم بطولة في مجموعتكم ترغبون بإضافتها، أو تعتقدون أن حسابكم يستحق المنافسة ضمن أقدم الحسابات، أرسلوا لنا التفاصيل عبر الديسكورد من هنا.
                 </p>
-                <a href="https://discord.com/channels/1476420629698711778/1476603091095916738" target="_blank" class="submit-btn" style="flex: 0 1 auto; background-color: var(--discord-color); display: inline-flex;">
+                <a href="https://discord.com/channels/1476420629698711778/1476603091095916738" target="_blank" class="submit-btn" style="flex: 0 1 auto; background-color: var(--discord-color); display: inline-flex; white-space: nowrap;">
                     <i class="fa-brands fa-discord"></i> <span data-i18n="join_us_btn">تواصل معنا</span>
                 </a>
             </div>
@@ -1134,7 +1134,6 @@
             ar: {
                 nav_home: "الرئيسية", nav_leaders: "حول القادة", nav_leaderboard: "استكشف",
                 pull_refresh: "جاري التحديث...", menu_guidelines: "القوانين",
-                hero_desc: "يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.",
                 about_site_title: "نبذة عن الموقع",
                 about_site_desc: "موقع تم تطويره وإدارته بواسطة القادة العرب، ليكون مرجعًا موثوقًا لآخر أخبار تطبيق بلاتو. يوضح القوانين والإرشادات، ويعرّف عن قادة المجتمع، ويسهّل تقديم البلاغات، ويوفر معلومات عن الخادم العربي.",
                 leaders_title: "القادة العرب", global_leaders_title: "قادة السيرفرات العالمية", news_board_title: "لوحة أخبار المجتمع", players_title: "اللاعبين الاقدم", spending_title: "ترتيب المجموعات الأكثر إنفاقًا", tournaments_title: "مركز البطولات",
@@ -1188,7 +1187,6 @@
             en: {
                 nav_home: "Home", nav_leaders: "About Leaders", nav_leaderboard: "Explore",
                 pull_refresh: "Updating...", menu_guidelines: "GUIDELINES",
-                hero_desc: "Where gaming enthusiasts meet to experience thrilling moments, build true friendships, and create eternal memories.",
                 about_site_title: "About the Website",
                 about_site_desc: "A website developed and managed by the Arabic Leaders, serving as a trusted source for the latest Plato news. It provides rules and guidelines, introduces the community leaders, makes reporting easier, and provides information about the Arabic server.",
                 leaders_title: "ARABIC LEADERS", global_leaders_title: "GLOBAL SERVERS LEADERS", news_board_title: "COMMUNITY NEWS BOARD", players_title: "OLDEST PLAYERS", spending_title: "TOP SPENDING GROUPS", tournaments_title: "TOURNAMENTS",
@@ -1392,6 +1390,11 @@
             
             document.getElementById('plato-id').placeholder = lang === 'ar' ? 'يوزرك في اللعبة' : 'Your Plato ID';
             document.getElementById('bug-desc').placeholder = lang === 'ar' ? 'وصف المشكلة...' : 'Issue description...';
+
+            const feedbackBtnWrapper = document.querySelector('.feedback-btn-wrapper');
+            if (feedbackBtnWrapper) {
+                feedbackBtnWrapper.style.justifyContent = lang === 'ar' ? 'flex-start' : 'flex-end';
+            }
             
             renderGlobalLeaders();
             const activeTab = document.querySelector('.server-tab.active');
