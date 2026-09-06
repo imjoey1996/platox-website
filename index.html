@@ -124,14 +124,14 @@
         .navbar h1 { font-size: 24px; font-weight: 900; letter-spacing: 1px; display: flex; align-items: baseline; margin: 0; }
         .navbar h1 span { 
             color: var(--primary); 
-            font-size: 1.4em; 
+            font-size: 1.5em; 
             transform: translateY(2px); 
             margin-left: 2px;
             animation: navXGlow 2s infinite alternate ease-in-out;
         }
         @keyframes navXGlow {
-            0% { text-shadow: 0 0 8px var(--primary), 0 0 15px var(--primary-glow); }
-            100% { text-shadow: 0 0 20px var(--primary), 0 0 40px #d8b4fe, 0 0 60px var(--primary); }
+            0% { text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary-glow); }
+            100% { text-shadow: 0 0 25px var(--primary), 0 0 45px #d8b4fe, 0 0 65px var(--primary); }
         }
         
         .nav-actions { display: flex; align-items: center; gap: 15px; }
@@ -198,12 +198,12 @@
         .hero { height: 35dvh; justify-content: center; text-align: center; padding: 0 15px; margin-top: 5px;}
         .hero h2 { font-size: 3.2rem; font-weight: 900; margin-bottom: 10px; color: #fff; text-shadow: 0 0 30px rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; flex-wrap: wrap;}
         .hero h2 span.hero-x { 
-            color: var(--primary); font-size: 1.45em; margin-inline-end: 10px; transform: translateY(2px);
+            color: var(--primary); font-size: 1.5em; margin-inline-end: 10px; transform: translateY(2px);
             animation: heroXGlow 2.5s infinite alternate ease-in-out;
         }
         @keyframes heroXGlow {
-            0% { text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary-glow); }
-            100% { text-shadow: 0 0 25px var(--primary), 0 0 50px #d8b4fe; }
+            0% { text-shadow: 0 0 15px var(--primary), 0 0 25px var(--primary-glow); }
+            100% { text-shadow: 0 0 30px var(--primary), 0 0 60px #d8b4fe; }
         }
         html[dir="rtl"] .hero h2 span.hero-x { margin-inline-start: 10px; }
         [data-theme="light"] .hero h2 { color: #000; text-shadow: none; }
@@ -259,7 +259,7 @@
         .dot { width: 8px; height: 8px; background: var(--glass-border); border-radius: 50%; transition: 0.4s; }
         .dot.active { background: var(--primary); width: 22px; border-radius: 10px; box-shadow: 0 0 10px var(--primary-glow); }
         [data-theme="light"] .dot { background: rgba(0,0,0,0.1); }
-        .more-news-link { display: inline-flex; justify-content: center; align-items: center; width: 100%; gap: 8px; color: var(--text-muted); font-size: 0.9rem; text-decoration: none; transition: 0.3s; font-weight: bold; background: var(--bg-card); padding: 12px 20px; border-radius: 20px; border: 1px solid var(--glass-border); backdrop-filter: blur(10px);}
+        .more-news-link { display: inline-flex; justify-content: center; align-items: center; width: 100%; gap: 8px; color: var(--text-muted); font-size: 0.95rem !important; text-decoration: none; transition: 0.3s; font-weight: bold; background: var(--bg-card); padding: 12px 24px; border-radius: 20px; border: 1px solid var(--glass-border); backdrop-filter: blur(10px); font-family: inherit;}
         .more-news-link i { color: var(--discord-color); font-size: 1.1rem; }
         .more-news-link:hover { color: var(--text-main); transform: translateY(-2px); border-color: var(--discord-color); box-shadow: 0 5px 15px rgba(88, 101, 242, 0.2);}
 
@@ -271,14 +271,15 @@
         .bug-input:focus { border-color: var(--primary); box-shadow: 0 0 15px var(--primary-glow); background: rgba(15, 15, 20, 0.6); }
         [data-theme="light"] .bug-input { background: rgba(255,255,255,0.6); }
         [data-theme="light"] .bug-input:focus { background: #fff; }
-        .submit-btn { background: var(--primary); color: #fff; border: none; padding: 14px; border-radius: 8px; font-weight: 900; font-size: 1rem; cursor: pointer; transition: 0.3s; font-family: inherit; flex: 1;}
+        
+        /* Unified Button Styling */
+        .submit-btn, .cancel-btn { padding: 12px 24px !important; border-radius: 8px; font-weight: 900; font-size: 0.95rem !important; cursor: pointer; transition: 0.3s; font-family: inherit; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
+        .submit-btn { background: var(--primary); color: #fff; border: none; flex: 1;}
         .submit-btn:hover { box-shadow: 0 0 20px var(--primary-glow); transform: translateY(-2px); }
-        .cancel-btn { background: rgba(255,255,255,0.1); color: var(--text-main); border: 1px solid var(--glass-border); padding: 14px; border-radius: 8px; font-weight: 900; font-size: 1rem; cursor: pointer; transition: 0.3s; font-family: inherit; flex: 1;}
+        .cancel-btn { background: rgba(255,255,255,0.1); color: var(--text-main); border: 1px solid var(--glass-border); flex: 1;}
         .cancel-btn:hover { background: rgba(220, 38, 38, 0.2); border-color: rgba(220, 38, 38, 0.5); color: #ef4444; transform: translateY(-2px); }
         [data-theme="light"] .cancel-btn { background: rgba(0,0,0,0.05); color: var(--text-muted); border-color: rgba(0,0,0,0.1); }
         [data-theme="light"] .cancel-btn:hover { background: rgba(220, 38, 38, 0.1); color: #ef4444; border-color: rgba(220, 38, 38, 0.3); }
-
-        .small-btn { padding: 8px 18px !important; font-size: 0.9rem !important; border-radius: 12px; }
 
         .guideline-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--glass-border); }
         .guideline-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
@@ -368,19 +369,9 @@
         [data-theme="light"] .glass-desc-text { color: var(--text-muted); }
 
         /* Weekly Video Showcase Styles */
-        .video-glow-box { position: relative; width: 100%; max-width: 320px; border-radius: 16px; padding: 4px; background: linear-gradient(135deg, rgba(157, 78, 221, 0.4), rgba(255, 255, 255, 0.05)); box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin: 0 auto 25px; transition: 0.3s;}
+        .video-glow-box { position: relative; width: 100%; max-width: 320px; border-radius: 16px; padding: 4px; background: linear-gradient(135deg, rgba(157, 78, 221, 0.4), rgba(255, 255, 255, 0.05)); box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin: 0 auto; transition: 0.3s;}
         .video-glow-box:hover { box-shadow: 0 15px 40px var(--primary-glow); }
         .video-glow-box video { width: 100%; display: block; border-radius: 12px; max-height: 70vh; object-fit: cover; background: #000; }
-        
-        .parsed-timestamps-box { width: 100%; max-width: 600px; text-align: left; padding: 0 10px; white-space: pre-wrap; line-height: 1.8; font-size: 0.95rem; color: rgba(255,255,255,0.9); direction: ltr !important;}
-        [data-theme="light"] .parsed-timestamps-box { color: var(--text-muted); }
-        
-        .ts-header { color: var(--primary); font-family: 'Rajdhani', sans-serif; font-size: 1.15rem; font-weight: bold; border-bottom: 1px solid var(--glass-border); padding-bottom: 3px; display: inline-block; margin-top: 15px; margin-bottom: 5px; width: 100%; text-shadow: 0 0 8px var(--primary-glow);}
-        
-        .time-link { display: inline-block; background: rgba(157, 78, 221, 0.15); color: var(--primary); padding: 2px 8px; border-radius: 6px; cursor: pointer; transition: 0.3s; font-weight: bold; border: 1px solid rgba(157, 78, 221, 0.3); margin: 2px 0;}
-        .time-link:hover { background: var(--primary); color: #fff; box-shadow: 0 0 10px var(--primary-glow); transform: translateY(-1px);}
-        [data-theme="light"] .time-link { background: rgba(123, 44, 191, 0.1); border-color: rgba(123, 44, 191, 0.2); }
-        [data-theme="light"] .time-link:hover { background: var(--primary); color: #fff; }
 
         #toast { visibility: hidden; min-width: 200px; background: rgba(15, 15, 20, 0.95); backdrop-filter: blur(10px); color: #fff; text-align: center; border-radius: 10px; padding: 12px 20px; position: fixed; z-index: 9999; left: 50%; bottom: 25px; transform: translateX(-50%); font-size: 14px; transition: opacity 0.4s, bottom 0.4s; opacity: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid var(--primary); font-family: 'Cairo', sans-serif; font-weight:bold;}
         #toast.show { visibility: visible; bottom: 95px; opacity: 1; }
@@ -421,8 +412,7 @@
             .list-row { padding: 10px; gap: 8px; } .rank-num { font-size: 1rem; width: 20px; } .list-img { width: 30px; height: 30px; } .list-name { font-size: 0.85rem; } .score-val { font-size: 0.95rem; }
             .tour-card { padding: 20px 15px; } .tour-title { font-size: 1.05rem; } .tour-desc { font-size: 0.85rem; margin-bottom: 12px;} .tour-footer { flex-direction: column; gap: 8px; } .info-badge { width: 100%; justify-content: center; font-size: 0.8rem; padding: 6px;}
             .server-tabs { flex-wrap: wrap !important; justify-content: center !important; gap: 10px; padding-bottom: 10px; }
-            
-            .parsed-timestamps-box { font-size: 0.85rem; }
+            .submit-btn, .cancel-btn { font-size: 0.95rem !important; padding: 12px !important; }
         }
     </style>
 </head>
@@ -701,7 +691,7 @@
                     مساحتك لمشاركة الأفكار والمقترحات حول اللعبة، وتقديم الملاحظات حول تجربتك في المجتمع، بما يسهم في تطوير المجتمع وتحسين تجربة اللاعبين.
                 </p>
                 <div style="text-align: right;">
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfdTHwSEhAB_apQrXarWH9TswkuEPgkDVBt33ndhIB97sIwFg/viewform" target="_blank" class="submit-btn small-btn" style="text-decoration: none;">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfdTHwSEhAB_apQrXarWH9TswkuEPgkDVBt33ndhIB97sIwFg/viewform" target="_blank" class="submit-btn" style="text-decoration: none; display: inline-flex;">
                         <i class="fa-solid fa-paper-plane"></i> <span data-i18n="feedback_btn">تقديم الاقتراحات والملاحظات</span>
                     </a>
                 </div>
@@ -758,21 +748,27 @@
 
     <main id="view-leaderboard" class="tab-view">
         
-        <!-- Join Us Section -->
-        <section id="join-us" style="padding-top: 10px;">
-            <h2 class="section-title" data-i18n="join_us_title">انضم إلينا</h2>
-            <div class="glass-panel" style="width: 100%; max-width: 750px; padding: 25px 30px; border-radius: 16px; text-align: center; display: flex; flex-direction: column; align-items: center;">
-                <i class="fa-brands fa-discord" style="color: var(--discord-color); font-size: 2.5rem; margin-bottom: 15px;"></i>
-                <p class="glass-desc-text" style="font-size: 0.95rem; line-height: 1.8; font-weight: 600; margin-bottom: 20px;" data-i18n="join_us_desc">
-                    إذا كانت لديكم بطولة في مجموعتكم ترغبون بإضافتها، أو تعتقدون أن حسابكم يستحق المنافسة ضمن أقدم الحسابات، أرسلوا لنا التفاصيل عبر الديسكورد من هنا.
+        <!-- Weekly Showcase Section -->
+        <section id="weekly-showcase" style="display: none; padding-top: 10px;">
+            <h2 class="section-title num-font" data-i18n="weekly_showcase_title">عناصر الألعاب الأسبوعية</h2>
+            <div class="glass-panel" style="width: 100%; max-width: 750px; padding: 30px 20px; border-radius: 16px; display: flex; flex-direction: column; align-items: center;">
+                
+                <p class="glass-desc-text" style="font-size: 0.95rem; line-height: 1.8; font-weight: 600; text-align: center; margin-bottom: 15px;" data-i18n="weekly_showcase_desc">
+                    استكشف احدث العناصر المتوفرة لهذا الاسبوع.
                 </p>
-                <a href="https://discord.com/channels/1476420629698711778/1476603091095916738" target="_blank" class="submit-btn small-btn" style="text-decoration: none; background-color: var(--discord-color);">
-                    <i class="fa-brands fa-discord"></i> <span data-i18n="join_us_btn">تواصل مع المشرفين</span>
-                </a>
+
+                <!-- Weekly Name (from Column I) -->
+                <h3 id="weekly-week-name" class="num-font" style="text-align: center; color: var(--primary); margin-bottom: 15px; font-size: 1.3rem; display: none; text-shadow: 0 0 10px var(--primary-glow);"></h3>
+
+                <!-- Video Player -->
+                <div class="video-glow-box" style="margin-bottom: 0;">
+                    <video id="weekly-video" src="" controls playsinline preload="metadata"></video>
+                </div>
+
             </div>
         </section>
 
-        <div class="cyber-divider"><div class="center-node"></div></div>
+        <div class="cyber-divider" id="weekly-divider" style="display: none;"><div class="center-node"></div></div>
 
         <section id="tournaments">
             <h2 class="section-title" data-i18n="tournaments_title">مركز البطولات</h2>
@@ -838,24 +834,19 @@
             </div>
         </section>
 
-        <!-- Weekly Showcase Section (Moved to the very bottom) -->
-        <div class="cyber-divider" id="weekly-divider" style="display: none;"><div class="center-node"></div></div>
-        <section id="weekly-showcase" style="display: none;">
-            <h2 class="section-title" data-i18n="weekly_showcase_title">تجربة عناصر الألعاب الأسبوعية</h2>
-            <div class="glass-panel" style="width: 100%; max-width: 750px; padding: 30px 20px; border-radius: 16px; display: flex; flex-direction: column; align-items: center;">
-                
-                <p class="glass-desc-text" style="font-size: 0.95rem; line-height: 1.8; font-weight: 600; text-align: center; margin-bottom: 25px;" data-i18n="weekly_showcase_desc">
-                    استكشف أحدث العناصر المتوفرة في اللعبة لهذا الأسبوع. اضغط على التوقيت للانتقال مباشرة إلى العنصر.
+        <div class="cyber-divider"><div class="center-node"></div></div>
+
+        <!-- Join Us Section -->
+        <section id="join-us">
+            <h2 class="section-title" data-i18n="join_us_title">انضم إلينا</h2>
+            <div class="glass-panel" style="width: 100%; max-width: 750px; padding: 25px 30px; border-radius: 16px; text-align: center; display: flex; flex-direction: column; align-items: center;">
+                <i class="fa-brands fa-discord" style="color: var(--discord-color); font-size: 2.5rem; margin-bottom: 15px;"></i>
+                <p class="glass-desc-text" style="font-size: 0.95rem; line-height: 1.8; font-weight: 600; margin-bottom: 20px;" data-i18n="join_us_desc">
+                    إذا كانت لديكم بطولة في مجموعتكم ترغبون بإضافتها، أو تعتقدون أن حسابكم يستحق المنافسة ضمن أقدم الحسابات، أرسلوا لنا التفاصيل عبر الديسكورد من هنا.
                 </p>
-
-                <!-- Video Player -->
-                <div class="video-glow-box">
-                    <video id="weekly-video" src="" controls playsinline preload="metadata"></video>
-                </div>
-
-                <!-- Timestamps Box -->
-                <div class="parsed-timestamps-box" id="timestamps-container" dir="ltr"></div>
-
+                <a href="https://discord.com/channels/1476420629698711778/1476603091095916738" target="_blank" class="submit-btn" style="text-decoration: none; background-color: var(--discord-color); display: inline-flex;">
+                    <i class="fa-brands fa-discord"></i> <span data-i18n="join_us_btn">تواصل معنا</span>
+                </a>
             </div>
         </section>
 
@@ -897,38 +888,6 @@
             }
             return arr;
         }
-
-        // --- ميزة التوقيتات التلقائية (Auto-Parser) المربوطة بالشيت ---
-        function buildTimestamps(text) {
-            if(!text) return;
-            let htmlText = escapeHTML(text);
-            
-            // تحويل أي سطر يبدأ بـ "-" إلى عنوان بنفسجي متوهج (يتجاهل الـ - الفارغ)
-            htmlText = htmlText.replace(/^-(.*)$/gm, (match, p1) => {
-                const textMatch = p1.trim();
-                if(!textMatch) return ""; 
-                return `<span class="ts-header">${textMatch}</span>`;
-            });
-            
-            // تحويل الأرقام (مثل 0:11) إلى أزرار ضغط
-            htmlText = htmlText.replace(/(\d{1,2}:\d{2})/g, (match) => {
-                const parts = match.split(':');
-                const seconds = parseInt(parts[0]) * 60 + parseInt(parts[1]);
-                return `<span class="time-link num-font" onclick="seekVideo(${seconds})">${match}</span>`;
-            });
-
-            document.getElementById('timestamps-container').innerHTML = htmlText;
-        }
-
-        function seekVideo(seconds) {
-            const vid = document.getElementById('weekly-video');
-            if(vid) {
-                vid.currentTime = seconds;
-                vid.play();
-                vid.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-        }
-        // ----------------------------------------------
 
         function switchView(viewName, itemEl) {
             document.querySelectorAll('.tab-view').forEach(view => view.classList.remove('active-view'));
@@ -1020,61 +979,45 @@
             }
 
             const bugType = bugTypeElement.value;
-            const embedColor = bugType === 'Exploits' ? 16711680 : 16744192; 
 
-            const webhookId = "1545703090920099854"; 
-            const webhookToken = "we1jm4gx7h6c92AEtcUl5SFSZ_smAvPjWtIYYLdti1AtPCzzUEH68EclCSZb9gc48KTo";
-            const webhookUrl = `https://discord.com/api/webhooks/${webhookId}/${webhookToken}`;
+            // ===== ضع رابط تطبيق جوجل سكربت هنا =====
+            const scriptURL = "رابط_تطبيق_جوجل_هنا"; 
 
-            const payload = {
-                username: "PlatoX Bug System",
-                avatar_url: "https://ui-avatars.com/api/?name=Bug+System&background=050508&color=9d4edd", 
-                embeds: [{
-                    title: "🚨 بلاغ تقني جديد | New Bug Report",
-                    color: embedColor,
-                    fields: [
-                        { name: "📁 نوع المشكلة (Issue Type)", value: `\`${bugType}\``, inline: true },
-                        { name: "👤 المُبلغ (Plato ID)", value: `**${platoId}**`, inline: true },
-                        { name: "📝 الوصف (Description)", value: `>>> ${bugDesc}`, inline: false }
-                    ],
-                    footer: { text: "PlatoX Community System" },
-                    timestamp: new Date().toISOString()
-                }]
-            };
+            const formData = new URLSearchParams();
+            formData.append('plato_id', platoId);
+            formData.append('issue_type', bugType);
+            formData.append('description', bugDesc);
 
-            const submitBtn = document.querySelector('.submit-btn');
+            const submitBtn = document.querySelector('#bug-details .submit-btn');
             const originalText = submitBtn.innerText;
             submitBtn.innerText = isAr ? 'جاري الإرسال...' : 'Sending...';
             submitBtn.disabled = true;
 
             try {
-                const response = await fetch(webhookUrl, {
+                if (scriptURL === "رابط_تطبيق_جوجل_هنا") {
+                    throw new Error("لم يتم وضع رابط جوجل سكربت في الكود بعد!");
+                }
+
+                const response = await fetch(scriptURL, {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload)
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: formData.toString()
                 });
 
                 if (!response.ok) {
-                    const errText = await response.text();
-                    throw new Error(`HTTP ${response.status}: ${errText}`);
+                    throw new Error(`HTTP Error`);
                 }
 
                 localStorage.setItem('last_bug_report_time', now);
                 const toast = document.getElementById("toast");
-                toast.innerHTML = isAr ? `<i class="fa-solid fa-check"></i> تم إرسال البلاغ للإدارة بنجاح` : `<i class="fa-solid fa-check"></i> Report Submitted to Admins`;
+                toast.innerHTML = isAr ? `<i class="fa-solid fa-check"></i> تم إرسال البلاغ بنجاح` : `<i class="fa-solid fa-check"></i> Report Submitted Successfully`;
                 toast.className = "show";
                 setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
                 hideBugForm();
 
             } catch (err) {
                 console.error("Error:", err);
-                if(err.message.includes("Failed to fetch")) {
-                    alert(isAr ? "فشل الاتصال! يرجى إيقاف مانع الإعلانات (AdBlock) أو التحقق من الشبكة." : "Fetch failed! Disable AdBlocker or check network.");
-                } else if(err.message.includes("404") || err.message.includes("401")) {
-                    alert(isAr ? "رابط الـ Webhook محذوف من ديسكورد! يرجى إنشاء رابط جديد." : "Webhook is deleted or invalid!");
-                } else {
-                    alert(isAr ? `تعذر الإرسال: ${err.message}` : `Error: ${err.message}`);
-                }
+                alert(isAr ? `تعذر الإرسال: ${err.message}` : `Error: ${err.message}`);
             } finally {
                 submitBtn.innerText = originalText;
                 submitBtn.disabled = false;
@@ -1206,9 +1149,9 @@
                 feedback_btn: "تقديم الاقتراحات والملاحظات",
                 join_us_title: "انضم إلينا",
                 join_us_desc: "إذا كانت لديكم بطولة في مجموعتكم ترغبون بإضافتها، أو تعتقدون أن حسابكم يستحق المنافسة ضمن أقدم الحسابات، أرسلوا لنا التفاصيل عبر الديسكورد من هنا.",
-                join_us_btn: "تواصل مع المشرفين",
-                weekly_showcase_title: "تجربة عناصر الألعاب الأسبوعية",
-                weekly_showcase_desc: "استكشف أحدث العناصر المتوفرة في اللعبة لهذا الأسبوع. اضغط على التوقيت للانتقال مباشرة إلى العنصر.",
+                join_us_btn: "تواصل معنا",
+                weekly_showcase_title: "عناصر الألعاب الأسبوعية",
+                weekly_showcase_desc: "استكشف احدث العناصر المتوفرة لهذا الاسبوع.",
                 desc_yyy: "صانع الأثر، يقود برؤية مستقبلية لخلق بيئة إيجابية لا تعرف المستحيل.", desc_hat: "حضور راسخ، تقود المجتمع بثقة راسخة وترسم معايير الرقي.", desc_bbb: "الحكمة في اتخاذ القرار، يوازن بين الحزم والهدوء لإدارة الأزمات باحترافية.",
                 news_newer: "الأحدث", news_older: "الأقدم",
                 discord_more: "للمزيد من الأخبار انضموا إلى الديسكورد",
@@ -1231,7 +1174,8 @@
                 link_plato_desc: "الموقع الرسمي والأساسي للعبة بلاتو، ويضم المعلومات والخدمات الرئيسية المتعلقة باللعبة.",
                 link_platopedia_desc: "موسوعة متخصصة في بلاتو، توفر معلومات شاملة حول العناصر المتاحة، إلى جانب خيارات تخصيص الملفات الشخصية ومتابعة تفاصيلها.",
                 link_werepedia_desc: "موقع متخصص في لعبة الذئب، يقدّم شرحًا مفصلًا للبطاقات والأدوار، بالإضافة إلى استراتيجيات ونصائح تساعد على تطوير أسلوب اللعب.",
-                link_monsterpedia_desc: "موسوعة متخصصة في لعبة الوحوش، تشرح محتوى اللعبة بالتفصيل."
+                link_monsterpedia_desc: "موسوعة متخصصة في لعبة الوحوش، تشرح محتوى اللعبة بالتفصيل.",
+                no_tournaments: "لا بطولات في الوقت الحالي."
             },
             en: {
                 nav_home: "Home", nav_leaders: "About Leaders", nav_leaderboard: "Explore",
@@ -1259,9 +1203,9 @@
                 feedback_btn: "Submit Feedback & Ideas",
                 join_us_title: "Join Us",
                 join_us_desc: "Have a tournament you'd like to add, or think your account belongs among the oldest? Send us the details on Discord here.",
-                join_us_btn: "Contact Supervisors",
-                weekly_showcase_title: "Weekly Game Items Showcase",
-                weekly_showcase_desc: "Explore this week's latest game items. Click on any timestamp to jump directly to the item.",
+                join_us_btn: "Contact Us",
+                weekly_showcase_title: "WEEKLY GAME ITEMS",
+                weekly_showcase_desc: "Explore the latest items available this week.",
                 desc_yyy: "The Impact Maker, leading with a futuristic vision to create a positive environment.", desc_hat: "A grounded presence, leading the community with solid confidence and setting standards.", desc_bbb: "Wisdom in decision making, balancing firmness and calmness in management.",
                 news_newer: "NEWER", news_older: "OLDER",
                 discord_more: "For more news, join our Discord server",
@@ -1284,7 +1228,8 @@
                 link_plato_desc: "The official website for Plato, featuring the game's main services and information.",
                 link_platopedia_desc: "A Plato encyclopedia covering items and profile customization.",
                 link_werepedia_desc: "A Werewolf guide covering cards, roles, and gameplay strategies.",
-                link_monsterpedia_desc: "A Monster guide covering the game's content in detail."
+                link_monsterpedia_desc: "A Monster guide covering the game's content in detail.",
+                no_tournaments: "No tournaments at the moment."
             }
         };
 
@@ -1396,7 +1341,7 @@
                     cachedSheetRows = parseCSV(fallbackCache).slice(1);
                     renderDynamicData();
                 } else {
-                    document.getElementById('tournaments-container').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">لا توجد بطولات حالياً أو تعذر الاتصال.</p>`;
+                    document.getElementById('tournaments-container').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);" data-i18n="no_tournaments">لا بطولات في الوقت الحالي.</p>`;
                     document.getElementById('spenders-container').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">بيانات الإنفاق غير متوفرة حالياً.</p>`;
                 }
             }
@@ -1575,20 +1520,26 @@
             const firstRow = cachedSheetRows[0]; // اول صف يحتوي على الداتا (Row 2 في الشيت)
             if (firstRow) {
                 const videoUrl = firstRow[7] ? firstRow[7].trim() : ""; // عمود H
-                const videoText = firstRow[8] ? firstRow[8].trim() : ""; // عمود I
+                const weekName = firstRow[8] ? firstRow[8].trim() : ""; // عمود I
                 
                 const vidEl = document.getElementById('weekly-video');
                 const showcaseSec = document.getElementById('weekly-showcase');
                 const showcaseDiv = document.getElementById('weekly-divider');
+                const weekNameEl = document.getElementById('weekly-week-name');
                 
-                if (videoUrl) { // إذا كان هناك رابط فيديو
+                if (videoUrl) { 
                     if (vidEl.getAttribute('src') !== videoUrl) {
                         vidEl.src = videoUrl;
                     }
+                    if (weekName) {
+                        weekNameEl.innerText = weekName;
+                        weekNameEl.style.display = 'block';
+                    } else {
+                        weekNameEl.style.display = 'none';
+                    }
                     showcaseSec.style.display = 'flex';
                     if(showcaseDiv) showcaseDiv.style.display = 'flex';
-                    if (videoText) buildTimestamps(videoText);
-                } else { // إذا لم يتم وضع رابط، نقوم بإخفاء القسم تماماً
+                } else { 
                     showcaseSec.style.display = 'none';
                     if(showcaseDiv) showcaseDiv.style.display = 'none';
                 }
@@ -1716,7 +1667,7 @@
                 `;
             });
             
-            if (tourHTML === '') tourHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">لا توجد بطولات معتمدة في الوقت الحالي.</p>`;
+            if (tourHTML === '') tourHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);" data-i18n="no_tournaments">${isLtr ? "No tournaments at the moment." : "لا بطولات في الوقت الحالي."}</p>`;
             if (spendHTML === '') spendHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">لم يتم تسجيل بيانات إنفاق حتى الآن.</p>`;
 
             tourContainer.innerHTML = tourHTML;
