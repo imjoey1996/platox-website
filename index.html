@@ -23,6 +23,13 @@
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --discord-color: #5865F2;
+            
+            /* English Server Variables for Dark Mode */
+            --eng-bg: #000000;
+            --eng-text: #ffffff;
+            --eng-name: #000000;
+            --eng-text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.4);
+            --eng-box-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
         }
 
         [data-theme="light"] {
@@ -32,6 +39,10 @@
             --glass-border: rgba(0, 0, 0, 0.1); 
             --text-main: #0f172a; 
             --text-muted: #475569;
+
+            /* English Server Variables for Light Mode */
+            --eng-text-shadow: none;
+            --eng-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
         }
 
         * { 
@@ -70,7 +81,6 @@
             overscroll-behavior-y: none;
         }
 
-        /* تحجيم النصوص لضمان التطابق مع بقاء حجم المربعات الزجاجية ثابت */
         html[lang="ar"] body { font-size: 14px; }
         html[lang="en"] body { font-size: 15.5px; }
 
@@ -141,6 +151,20 @@
         .nav-actions { display: flex; align-items: center; gap: 18px; }
         .nav-actions i { font-size: 22px; cursor: pointer; color: var(--text-main); transition: 0.3s; }
         .nav-actions i:hover { color: var(--primary); text-shadow: 0 0 15px var(--primary-glow); }
+
+        .lang-btn { 
+            border: 1px solid var(--glass-border); 
+            padding: 6px 15px; 
+            border-radius: 20px; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            font-family: 'Cairo', sans-serif; 
+            font-weight: 700; 
+            font-size: 14px;
+        }
+        @media (hover: hover) {
+            .lang-btn:hover:not(.active) { color: var(--primary); border-color: var(--primary); }
+        }
 
         .main-lang-switch { display: flex; justify-content: center; gap: 15px; margin: 95px auto 15px; position: relative; z-index: 10; }
         .main-lang-switch .lang-btn { 
@@ -306,9 +330,10 @@
         
         .global-leaders-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; width: 100%; max-width: 950px; justify-items: center; }
         .global-leader { width: 100%; padding: 20px 15px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px; transition: transform 0.3s; }
+        
         .global-leader img { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.1); transition: 0.3s; margin-bottom: 2px; }
         .global-leader:hover { border-color: var(--server-color); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.3);}
-        .global-leader:hover img { border-color: var(--server-color); box-shadow: 0 0 15px var(--server-color); transform: scale(1.05); }
+        .global-leader:hover img { border-color: var(--server-color); box-shadow: var(--server-glow); transform: scale(1.05); }
         
         /* Capsule Badges in Leader Name Box */
         .leader-name-box { display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 8px; cursor: pointer; transition: 0.3s; margin-bottom: 4px; width: 100%; }
@@ -316,7 +341,7 @@
         .leader-copy-icon { font-size: 12px; color: var(--text-muted); transition: 0.3s; }
         .leader-name-box:hover .leader-copy-icon { color: var(--primary); transform: scale(1.15); }
         
-        .leader-name-box .server-badge { width: auto; height: 22px; padding: 0 10px; border-radius: 20px; margin: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; }
+        .leader-name-box .server-badge { width: auto; height: 22px; padding: 0 10px; border-radius: 20px; margin: 0; display: flex; align-items: center; justify-content: center; }
         .leader-name-box .server-badge i { font-size: 12px; margin: 0; }
 
         .premium-list { width: 100%; max-width: 700px; display: flex; flex-direction: column; gap: 10px; position: relative; z-index: 2;}
@@ -369,7 +394,7 @@
         .video-glow-box:hover { box-shadow: 0 15px 40px var(--primary-glow); }
         .video-glow-box video { width: 100%; display: block; border-radius: 12px; max-height: 70vh; object-fit: cover; background: #000; }
 
-        .feedback-btn-wrapper { width: 100%; display: flex; justify-content: flex-start; } /* الديناميكية عبر JS (flex-start للمستعرب و flex-end للانجليزي) */
+        .feedback-btn-wrapper { width: 100%; display: flex; justify-content: flex-start; } 
 
         #toast { visibility: hidden; min-width: 200px; background: rgba(15, 15, 20, 0.95); backdrop-filter: blur(10px); color: #fff; text-align: center; border-radius: 10px; padding: 12px 20px; position: fixed; z-index: 9999; left: 50%; bottom: 25px; transform: translateX(-50%); font-size: 14px; transition: opacity 0.4s, bottom 0.4s; opacity: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid var(--primary); font-family: 'Cairo', sans-serif; font-weight:bold;}
         #toast.show { visibility: visible; bottom: 95px; opacity: 1; }
@@ -703,8 +728,8 @@
                     <img src="IMG_3154.png" alt="YYY">
                     <div class="leader-name-box" onclick="copyAdminID('YYY')" title="انسخ اليوزر">
                         <i class="fa-regular fa-copy leader-copy-icon"></i>
-                        <h3 class="num-font">YYY</h3>
-                        <div class="server-badge" style="background: #ffffff; color: #000000;"><i class="fa-solid fa-user-group"></i></div>
+                        <h3 class="num-font" style="color: #ffffff !important; text-shadow: 0 2px 10px rgba(0,0,0,0.9) !important; margin: 0;">YYY</h3>
+                        <div class="server-badge" style="background: #ffffff; color: #000000; box-shadow: 0 2px 5px rgba(0,0,0,0.5);"><i class="fa-solid fa-user-group"></i></div>
                     </div>
                     <p class="leader-desc" data-i18n="desc_yyy">صانع الأثر، يقود برؤية مستقبلية لخلق بيئة إيجابية لا تعرف المستحيل.</p>
                     <div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: #ffffff;"></i> <span data-i18n="bday_yyy">1 يناير</span></div>
@@ -713,8 +738,8 @@
                     <img src="f3b8c20da38a9320fa2f250f52f7f16a.png" alt="HAT">
                     <div class="leader-name-box" onclick="copyAdminID('HAT')" title="انسخ اليوزر">
                         <i class="fa-regular fa-copy leader-copy-icon"></i>
-                        <h3 class="num-font">HAT</h3>
-                        <div class="server-badge" style="background: #ffffff; color: #000000;"><i class="fa-solid fa-user-group"></i></div>
+                        <h3 class="num-font" style="color: #ffffff !important; text-shadow: 0 2px 10px rgba(0,0,0,0.9) !important; margin: 0;">HAT</h3>
+                        <div class="server-badge" style="background: #ffffff; color: #000000; box-shadow: 0 2px 5px rgba(0,0,0,0.5);"><i class="fa-solid fa-user-group"></i></div>
                     </div>
                     <p class="leader-desc" data-i18n="desc_hat">حضور راسخ، تقود المجتمع بثقة راسخة وترسم معايير الرقي.</p>
                     <div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: #ffffff;"></i> <span data-i18n="bday_hat">1 سبتمبر</span></div>
@@ -723,8 +748,8 @@
                     <img src="a_368d018a788facdb964b3f1df658ecde.gif" alt="BBB">
                     <div class="leader-name-box" onclick="copyAdminID('BBB')" title="انسخ اليوزر">
                         <i class="fa-regular fa-copy leader-copy-icon"></i>
-                        <h3 class="num-font">BBB</h3>
-                        <div class="server-badge" style="background: #ffffff; color: #000000;"><i class="fa-solid fa-user-group"></i></div>
+                        <h3 class="num-font" style="color: #ffffff !important; text-shadow: 0 2px 10px rgba(0,0,0,0.9) !important; margin: 0;">BBB</h3>
+                        <div class="server-badge" style="background: #ffffff; color: #000000; box-shadow: 0 2px 5px rgba(0,0,0,0.5);"><i class="fa-solid fa-user-group"></i></div>
                     </div>
                     <p class="leader-desc" data-i18n="desc_bbb">الحكمة في اتخاذ القرار، يوازن بين الحزم والهدوء لإدارة الأزمات باحترافية.</p>
                 </div>
@@ -754,7 +779,7 @@
 
         <!-- Weekly Showcase Section (Moved to the very top) -->
         <section id="weekly-showcase" style="display: none;">
-            <h2 class="section-title num-font" style="letter-spacing: 2px;" data-i18n="weekly_showcase_title">عناصر الألعاب الأسبوعية</h2>
+            <h2 class="section-title" data-i18n="weekly_showcase_title">عناصر الألعاب الأسبوعية</h2>
             <div class="glass-panel" style="width: 100%; max-width: 750px; padding: 30px 20px; border-radius: 16px; display: flex; flex-direction: column; align-items: center;">
                 
                 <p class="glass-desc-text" style="font-weight: 600; text-align: center; margin-bottom: 20px;" data-i18n="weekly_showcase_desc">
@@ -1031,7 +1056,7 @@
         }
 
         const serverThemes = {
-            'english': { bg: '#000000', text: '#ffffff', nameColor: '#ffffff', shadow: '0 0 8px rgba(255,255,255,0.8)', badgeGlow: '0 0 10px rgba(255,255,255,0.3)' },
+            'english': { bg: 'var(--text-main)', text: 'var(--bg-main)', nameColor: 'var(--text-main)', shadow: 'var(--eng-text-shadow)', badgeGlow: 'var(--eng-box-shadow)' },
             'persian': { bg: '#C92C23', text: '#ffffff', nameColor: '#C92C23', shadow: 'none' },
             'french':  { bg: '#CBA276', text: '#ffffff', nameColor: '#CBA276', shadow: 'none' },
             'turkish': { bg: '#1A2F66', text: '#ffffff', nameColor: '#1A2F66', shadow: 'none' },
@@ -1090,7 +1115,7 @@
                 const badgeGlowStyle = sTheme.badgeGlow ? `box-shadow: ${sTheme.badgeGlow}; border: 1px solid rgba(255,255,255,0.2);` : `box-shadow: 0 2px 5px rgba(0,0,0,0.2);`;
 
                 container.innerHTML += `
-                    <div class="global-leader glass-panel" data-server="${leader.server}" style="--server-color: ${sTheme.nameColor};">
+                    <div class="global-leader glass-panel" data-server="${leader.server}" style="--server-color: ${sTheme.nameColor}; --server-glow: ${sTheme.badgeGlow || ('0 0 15px ' + sTheme.nameColor)};">
                         <img src="${imageSource}" alt="${leader.name}">
                         <div class="leader-name-box" onclick="copyAdminID('${leader.name}')" title="انسخ اليوزر">
                             <i class="fa-regular fa-copy leader-copy-icon"></i>
@@ -1111,7 +1136,7 @@
                 if(tab.dataset.target === serverName) {
                     tab.classList.add('active');
                     tab.style.backgroundColor = theme.bg;
-                    tab.style.borderColor = theme.bg === '#000000' ? 'rgba(255,255,255,0.3)' : theme.bg;
+                    tab.style.borderColor = serverName === 'english' ? 'var(--text-main)' : theme.bg;
                     tab.style.color = theme.text;
                     if(theme.badgeGlow) tab.style.boxShadow = theme.badgeGlow;
                 } else {
