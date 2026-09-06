@@ -118,7 +118,6 @@
         [data-theme="light"] .particle { color: var(--primary); opacity: 0.08; }
         @keyframes floatUp { 0% { transform: translateY(100dvh) rotate(0deg) scale(0.8); opacity: 0; } 20% { opacity: 0.15; } 80% { opacity: 0.15; } 100% { transform: translateY(-10dvh) rotate(360deg) scale(1.5); opacity: 0; } }
 
-        /* ثبات حجم المربعات بالبيكسل */
         .glass-panel { background: var(--bg-card); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-top: 1px solid rgba(255, 255, 255, 0.12); border-left: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); border-radius: 16px; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
         html[dir="ltr"] .glass-panel { border-left: 1px solid var(--glass-border); border-right: 1px solid rgba(255, 255, 255, 0.05); }
         [data-theme="light"] .glass-panel { box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07); border-top: 1px solid rgba(255, 255, 255, 0.6); }
@@ -142,20 +141,6 @@
         .nav-actions { display: flex; align-items: center; gap: 18px; }
         .nav-actions i { font-size: 22px; cursor: pointer; color: var(--text-main); transition: 0.3s; }
         .nav-actions i:hover { color: var(--primary); text-shadow: 0 0 15px var(--primary-glow); }
-
-        .lang-btn { 
-            border: 1px solid var(--glass-border); 
-            padding: 6px 15px; 
-            border-radius: 20px; 
-            cursor: pointer; 
-            transition: 0.3s; 
-            font-family: 'Cairo', sans-serif; 
-            font-weight: 700; 
-            font-size: 14px;
-        }
-        @media (hover: hover) {
-            .lang-btn:hover:not(.active) { color: var(--primary); border-color: var(--primary); }
-        }
 
         .main-lang-switch { display: flex; justify-content: center; gap: 15px; margin: 95px auto 15px; position: relative; z-index: 10; }
         .main-lang-switch .lang-btn { 
@@ -181,8 +166,8 @@
             color: #ffffff !important; 
             background: var(--primary) !important; 
             border-color: var(--primary) !important; 
-            box-shadow: 0 0 10px rgba(157, 78, 221, 0.4) !important; /* توهج هادئ وطبيعي */
-            text-shadow: none;
+            box-shadow: 0 0 15px var(--primary-glow), 0 0 25px var(--primary) !important; 
+            text-shadow: 0 0 8px #fff;
         }
 
         .tab-view { display: none; width: 100%; animation: viewFade 0.35s ease-out forwards; }
@@ -325,13 +310,14 @@
         .global-leader:hover { border-color: var(--server-color); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.3);}
         .global-leader:hover img { border-color: var(--server-color); box-shadow: 0 0 15px var(--server-color); transform: scale(1.05); }
         
+        /* Capsule Badges in Leader Name Box */
         .leader-name-box { display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 8px; cursor: pointer; transition: 0.3s; margin-bottom: 4px; width: 100%; }
         .leader-name-box h3 { font-size: 1.15rem; font-family: 'Rajdhani', 'Cairo', sans-serif; transition: 0.3s; margin: 0; }
         .leader-copy-icon { font-size: 12px; color: var(--text-muted); transition: 0.3s; }
         .leader-name-box:hover .leader-copy-icon { color: var(--primary); transform: scale(1.15); }
         
-        .leader-name-box .server-badge { width: auto; height: 20px; padding: 0 6px; border-radius: 6px; margin: 0; font-size: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; }
-        .leader-name-box .server-badge i { font-size: 10px; margin: 0; }
+        .leader-name-box .server-badge { width: auto; height: 22px; padding: 0 10px; border-radius: 20px; margin: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; }
+        .leader-name-box .server-badge i { font-size: 12px; margin: 0; }
 
         .premium-list { width: 100%; max-width: 700px; display: flex; flex-direction: column; gap: 10px; position: relative; z-index: 2;}
         .list-row { padding: 15px; display: flex; align-items: center; gap: 15px; transition: transform 0.3s; }
@@ -383,7 +369,7 @@
         .video-glow-box:hover { box-shadow: 0 15px 40px var(--primary-glow); }
         .video-glow-box video { width: 100%; display: block; border-radius: 12px; max-height: 70vh; object-fit: cover; background: #000; }
 
-        .feedback-btn-wrapper { width: 100%; display: flex; justify-content: flex-end; } /* الديناميكية عبر CSS (flex-end في اليمين واليسار) */
+        .feedback-btn-wrapper { width: 100%; display: flex; justify-content: flex-start; } /* الديناميكية عبر JS (flex-start للمستعرب و flex-end للانجليزي) */
 
         #toast { visibility: hidden; min-width: 200px; background: rgba(15, 15, 20, 0.95); backdrop-filter: blur(10px); color: #fff; text-align: center; border-radius: 10px; padding: 12px 20px; position: fixed; z-index: 9999; left: 50%; bottom: 25px; transform: translateX(-50%); font-size: 14px; transition: opacity 0.4s, bottom 0.4s; opacity: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid var(--primary); font-family: 'Cairo', sans-serif; font-weight:bold;}
         #toast.show { visibility: visible; bottom: 95px; opacity: 1; }
@@ -718,27 +704,27 @@
                     <div class="leader-name-box" onclick="copyAdminID('YYY')" title="انسخ اليوزر">
                         <i class="fa-regular fa-copy leader-copy-icon"></i>
                         <h3 class="num-font">YYY</h3>
-                        <div class="server-badge" style="background: var(--text-main); color: var(--bg-main);"><i class="fa-solid fa-user-group"></i></div>
+                        <div class="server-badge" style="background: #ffffff; color: #000000;"><i class="fa-solid fa-user-group"></i></div>
                     </div>
                     <p class="leader-desc" data-i18n="desc_yyy">صانع الأثر، يقود برؤية مستقبلية لخلق بيئة إيجابية لا تعرف المستحيل.</p>
-                    <div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: var(--text-main);"></i> <span data-i18n="bday_yyy">1 يناير</span></div>
+                    <div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: #ffffff;"></i> <span data-i18n="bday_yyy">1 يناير</span></div>
                 </div>
                 <div class="card glass-panel card-hat">
                     <img src="f3b8c20da38a9320fa2f250f52f7f16a.png" alt="HAT">
                     <div class="leader-name-box" onclick="copyAdminID('HAT')" title="انسخ اليوزر">
                         <i class="fa-regular fa-copy leader-copy-icon"></i>
                         <h3 class="num-font">HAT</h3>
-                        <div class="server-badge" style="background: var(--text-main); color: var(--bg-main);"><i class="fa-solid fa-user-group"></i></div>
+                        <div class="server-badge" style="background: #ffffff; color: #000000;"><i class="fa-solid fa-user-group"></i></div>
                     </div>
                     <p class="leader-desc" data-i18n="desc_hat">حضور راسخ، تقود المجتمع بثقة راسخة وترسم معايير الرقي.</p>
-                    <div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: var(--text-main);"></i> <span data-i18n="bday_hat">1 سبتمبر</span></div>
+                    <div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: #ffffff;"></i> <span data-i18n="bday_hat">1 سبتمبر</span></div>
                 </div>
                 <div class="card glass-panel card-bbb">
                     <img src="a_368d018a788facdb964b3f1df658ecde.gif" alt="BBB">
                     <div class="leader-name-box" onclick="copyAdminID('BBB')" title="انسخ اليوزر">
                         <i class="fa-regular fa-copy leader-copy-icon"></i>
                         <h3 class="num-font">BBB</h3>
-                        <div class="server-badge" style="background: var(--text-main); color: var(--bg-main);"><i class="fa-solid fa-user-group"></i></div>
+                        <div class="server-badge" style="background: #ffffff; color: #000000;"><i class="fa-solid fa-user-group"></i></div>
                     </div>
                     <p class="leader-desc" data-i18n="desc_bbb">الحكمة في اتخاذ القرار، يوازن بين الحزم والهدوء لإدارة الأزمات باحترافية.</p>
                 </div>
@@ -768,7 +754,7 @@
 
         <!-- Weekly Showcase Section (Moved to the very top) -->
         <section id="weekly-showcase" style="display: none;">
-            <h2 class="section-title" data-i18n="weekly_showcase_title">عناصر الألعاب الأسبوعية</h2>
+            <h2 class="section-title num-font" style="letter-spacing: 2px;" data-i18n="weekly_showcase_title">عناصر الألعاب الأسبوعية</h2>
             <div class="glass-panel" style="width: 100%; max-width: 750px; padding: 30px 20px; border-radius: 16px; display: flex; flex-direction: column; align-items: center;">
                 
                 <p class="glass-desc-text" style="font-weight: 600; text-align: center; margin-bottom: 20px;" data-i18n="weekly_showcase_desc">
@@ -1045,7 +1031,7 @@
         }
 
         const serverThemes = {
-            'english': { bg: 'var(--text-main)', text: 'var(--bg-main)', nameColor: 'var(--text-main)', shadow: '0 0 10px rgba(150,150,150,0.4)' },
+            'english': { bg: '#000000', text: '#ffffff', nameColor: '#ffffff', shadow: '0 0 8px rgba(255,255,255,0.8)', badgeGlow: '0 0 10px rgba(255,255,255,0.3)' },
             'persian': { bg: '#C92C23', text: '#ffffff', nameColor: '#C92C23', shadow: 'none' },
             'french':  { bg: '#CBA276', text: '#ffffff', nameColor: '#CBA276', shadow: 'none' },
             'turkish': { bg: '#1A2F66', text: '#ffffff', nameColor: '#1A2F66', shadow: 'none' },
@@ -1101,13 +1087,15 @@
                 const descText = leader.desc ? (currentLang === 'ar' && leader.desc.ar ? leader.desc.ar : leader.desc.en) : "";
                 const descHTML = descText ? `<p class="leader-desc">${descText}</p>` : "";
                 
+                const badgeGlowStyle = sTheme.badgeGlow ? `box-shadow: ${sTheme.badgeGlow}; border: 1px solid rgba(255,255,255,0.2);` : `box-shadow: 0 2px 5px rgba(0,0,0,0.2);`;
+
                 container.innerHTML += `
                     <div class="global-leader glass-panel" data-server="${leader.server}" style="--server-color: ${sTheme.nameColor};">
                         <img src="${imageSource}" alt="${leader.name}">
                         <div class="leader-name-box" onclick="copyAdminID('${leader.name}')" title="انسخ اليوزر">
                             <i class="fa-regular fa-copy leader-copy-icon"></i>
                             <h3 class="num-font" style="color: ${sTheme.nameColor} !important; text-shadow: ${sTheme.shadow} !important;">${leader.name}</h3>
-                            <div class="server-badge" style="background: ${sTheme.bg}; color: ${sTheme.text};"><i class="fa-solid fa-user-group"></i></div>
+                            <div class="server-badge" style="background: ${sTheme.bg}; color: ${sTheme.text}; ${badgeGlowStyle}"><i class="fa-solid fa-user-group"></i></div>
                         </div>
                         ${descHTML}
                         ${bdayHTML}
@@ -1123,13 +1111,15 @@
                 if(tab.dataset.target === serverName) {
                     tab.classList.add('active');
                     tab.style.backgroundColor = theme.bg;
-                    tab.style.borderColor = theme.bg;
+                    tab.style.borderColor = theme.bg === '#000000' ? 'rgba(255,255,255,0.3)' : theme.bg;
                     tab.style.color = theme.text;
+                    if(theme.badgeGlow) tab.style.boxShadow = theme.badgeGlow;
                 } else {
                     tab.classList.remove('active');
                     tab.style.backgroundColor = 'transparent';
                     tab.style.borderColor = '';
                     tab.style.color = '';
+                    tab.style.boxShadow = 'none';
                 }
             });
             
@@ -1406,7 +1396,7 @@
 
             const feedbackBtnWrapper = document.querySelector('.feedback-btn-wrapper');
             if (feedbackBtnWrapper) {
-                feedbackBtnWrapper.style.justifyContent = 'flex-end'; // Right in LTR, Left in RTL
+                feedbackBtnWrapper.style.justifyContent = lang === 'ar' ? 'flex-start' : 'flex-end'; 
             }
             
             renderGlobalLeaders();
