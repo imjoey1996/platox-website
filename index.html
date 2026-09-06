@@ -23,13 +23,14 @@
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --discord-color: #5865F2;
-            
+
             /* English Server Variables for Dark Mode */
             --eng-bg: #000000;
             --eng-text: #ffffff;
             --eng-name: #000000;
-            --eng-text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.4);
-            --eng-box-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+            --eng-text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 15px rgba(255, 255, 255, 0.5);
+            --eng-badge-glow: 0 0 12px rgba(255, 255, 255, 0.4);
+            --eng-profile-glow: 0 0 15px rgba(255, 255, 255, 0.5);
         }
 
         [data-theme="light"] {
@@ -42,7 +43,8 @@
 
             /* English Server Variables for Light Mode */
             --eng-text-shadow: none;
-            --eng-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            --eng-badge-glow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            --eng-profile-glow: 0 0 15px rgba(0, 0, 0, 0.4);
         }
 
         * { 
@@ -81,6 +83,7 @@
             overscroll-behavior-y: none;
         }
 
+        /* تحجيم النصوص لضمان التطابق مع بقاء حجم المربعات الزجاجية ثابت */
         html[lang="ar"] body { font-size: 14px; }
         html[lang="en"] body { font-size: 15.5px; }
 
@@ -303,7 +306,7 @@
 
         .guideline-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--glass-border); }
         .guideline-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-        .guideline-icon { color: var(--text-main); font-size: 16px; margin-top: 3px; flex-shrink: 0; }
+        .guideline-icon { color: var(--text-main); font-size: 18px; margin-top: 3px; flex-shrink: 0; }
         .guideline-text { line-height: 1.6; color: rgba(255,255,255,0.85); font-size: 0.95rem; }
         [data-theme="light"] .guideline-text { color: var(--text-main); }
         .guideline-warning { background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.3); color: #ef4444; padding: 15px; border-radius: 8px; font-weight: 700; line-height: 1.6; margin-top: 15px; display: flex; gap: 10px; align-items: center; font-size: 0.9rem;}
@@ -335,14 +338,15 @@
         .global-leader:hover { border-color: var(--server-color); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.3);}
         .global-leader:hover img { border-color: var(--server-color); box-shadow: var(--server-glow); transform: scale(1.05); }
         
-        /* Capsule Badges in Leader Name Box */
-        .leader-name-box { display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 8px; cursor: pointer; transition: 0.3s; margin-bottom: 4px; width: 100%; }
-        .leader-name-box h3 { font-size: 1.15rem; font-family: 'Rajdhani', 'Cairo', sans-serif; transition: 0.3s; margin: 0; }
-        .leader-copy-icon { font-size: 12px; color: var(--text-muted); transition: 0.3s; }
+        /* Box containing User Name, Copy Icon, and Badge in One Line */
+        .leader-name-box { display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 8px; cursor: pointer; transition: 0.3s; margin-bottom: 4px; width: 100%; white-space: nowrap; flex-wrap: nowrap;}
+        .leader-name-box h3 { font-size: 1.15rem; font-family: 'Rajdhani', 'Cairo', sans-serif; transition: 0.3s; margin: 0; flex-shrink: 1; overflow: hidden; text-overflow: ellipsis;}
+        .leader-copy-icon { font-size: 12px; color: var(--text-muted); transition: 0.3s; flex-shrink: 0;}
         .leader-name-box:hover .leader-copy-icon { color: var(--primary); transform: scale(1.15); }
         
-        .leader-name-box .server-badge { width: auto; height: 22px; padding: 0 10px; border-radius: 20px; margin: 0; display: flex; align-items: center; justify-content: center; }
-        .leader-name-box .server-badge i { font-size: 12px; margin: 0; }
+        /* Capsule Badges */
+        .server-badge { flex-shrink: 0; width: auto; height: 22px; padding: 0 10px; border-radius: 20px; margin: 0; display: flex; align-items: center; justify-content: center; }
+        .server-badge i { font-size: 12px; margin: 0; }
 
         .premium-list { width: 100%; max-width: 700px; display: flex; flex-direction: column; gap: 10px; position: relative; z-index: 2;}
         .list-row { padding: 15px; display: flex; align-items: center; gap: 15px; transition: transform 0.3s; }
@@ -465,7 +469,6 @@
 
     <main id="view-home" class="tab-view active-view">
         
-        <!-- Hero Section -->
         <section class="hero" id="hero">
             <h2 class="num-font" dir="ltr">Plato <span class="hero-x">X</span> Community</h2>
         </section>
@@ -729,7 +732,7 @@
                     <div class="leader-name-box" onclick="copyAdminID('YYY')" title="انسخ اليوزر">
                         <i class="fa-regular fa-copy leader-copy-icon"></i>
                         <h3 class="num-font" style="color: #ffffff !important; text-shadow: 0 2px 10px rgba(0,0,0,0.9) !important; margin: 0;">YYY</h3>
-                        <div class="server-badge" style="background: #ffffff; color: #000000; box-shadow: 0 2px 5px rgba(0,0,0,0.5);"><i class="fa-solid fa-user-group"></i></div>
+                        <div class="server-badge" style="background: #ffffff; color: #000000; border: 1.5px solid #000000; box-shadow: 0 2px 5px rgba(0,0,0,0.5);"><i class="fa-solid fa-user-group"></i></div>
                     </div>
                     <p class="leader-desc" data-i18n="desc_yyy">صانع الأثر، يقود برؤية مستقبلية لخلق بيئة إيجابية لا تعرف المستحيل.</p>
                     <div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: #ffffff;"></i> <span data-i18n="bday_yyy">1 يناير</span></div>
@@ -739,7 +742,7 @@
                     <div class="leader-name-box" onclick="copyAdminID('HAT')" title="انسخ اليوزر">
                         <i class="fa-regular fa-copy leader-copy-icon"></i>
                         <h3 class="num-font" style="color: #ffffff !important; text-shadow: 0 2px 10px rgba(0,0,0,0.9) !important; margin: 0;">HAT</h3>
-                        <div class="server-badge" style="background: #ffffff; color: #000000; box-shadow: 0 2px 5px rgba(0,0,0,0.5);"><i class="fa-solid fa-user-group"></i></div>
+                        <div class="server-badge" style="background: #ffffff; color: #000000; border: 1.5px solid #000000; box-shadow: 0 2px 5px rgba(0,0,0,0.5);"><i class="fa-solid fa-user-group"></i></div>
                     </div>
                     <p class="leader-desc" data-i18n="desc_hat">حضور راسخ، تقود المجتمع بثقة راسخة وترسم معايير الرقي.</p>
                     <div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: #ffffff;"></i> <span data-i18n="bday_hat">1 سبتمبر</span></div>
@@ -749,7 +752,7 @@
                     <div class="leader-name-box" onclick="copyAdminID('BBB')" title="انسخ اليوزر">
                         <i class="fa-regular fa-copy leader-copy-icon"></i>
                         <h3 class="num-font" style="color: #ffffff !important; text-shadow: 0 2px 10px rgba(0,0,0,0.9) !important; margin: 0;">BBB</h3>
-                        <div class="server-badge" style="background: #ffffff; color: #000000; box-shadow: 0 2px 5px rgba(0,0,0,0.5);"><i class="fa-solid fa-user-group"></i></div>
+                        <div class="server-badge" style="background: #ffffff; color: #000000; border: 1.5px solid #000000; box-shadow: 0 2px 5px rgba(0,0,0,0.5);"><i class="fa-solid fa-user-group"></i></div>
                     </div>
                     <p class="leader-desc" data-i18n="desc_bbb">الحكمة في اتخاذ القرار، يوازن بين الحزم والهدوء لإدارة الأزمات باحترافية.</p>
                 </div>
@@ -777,7 +780,7 @@
 
     <main id="view-leaderboard" class="tab-view">
 
-        <!-- Weekly Showcase Section (Moved to the very top) -->
+        <!-- Weekly Showcase Section -->
         <section id="weekly-showcase" style="display: none;">
             <h2 class="section-title" data-i18n="weekly_showcase_title">عناصر الألعاب الأسبوعية</h2>
             <div class="glass-panel" style="width: 100%; max-width: 750px; padding: 30px 20px; border-radius: 16px; display: flex; flex-direction: column; align-items: center;">
@@ -1056,15 +1059,15 @@
         }
 
         const serverThemes = {
-            'english': { bg: 'var(--text-main)', text: 'var(--bg-main)', nameColor: 'var(--text-main)', shadow: 'var(--eng-text-shadow)', badgeGlow: 'var(--eng-box-shadow)' },
-            'persian': { bg: '#C92C23', text: '#ffffff', nameColor: '#C92C23', shadow: 'none' },
-            'french':  { bg: '#CBA276', text: '#ffffff', nameColor: '#CBA276', shadow: 'none' },
-            'turkish': { bg: '#1A2F66', text: '#ffffff', nameColor: '#1A2F66', shadow: 'none' },
-            'melayu':  { bg: '#F197A9', text: '#ffffff', nameColor: '#F197A9', shadow: 'none' },
-            'brazil':  { bg: '#D8B4F8', text: '#ffffff', nameColor: '#D8B4F8', shadow: 'none' },
-            'spanish': { bg: '#4A6076', text: '#ffffff', nameColor: '#4A6076', shadow: 'none' },
-            'thai':    { bg: '#8FBEF5', text: '#ffffff', nameColor: '#8FBEF5', shadow: 'none' },
-            'desi':    { bg: '#8CC84B', text: '#ffffff', nameColor: '#8CC84B', shadow: 'none' }
+            'english': { bg: 'var(--eng-bg)', text: 'var(--eng-text)', nameColor: 'var(--eng-name)', shadow: 'var(--eng-text-shadow)', badgeGlow: 'var(--eng-badge-glow)', badgeBorder: '1px solid #ffffff', profileBorder: '2px solid #000000', profileGlow: 'var(--eng-profile-glow)' },
+            'persian': { bg: '#C92C23', text: '#ffffff', nameColor: '#C92C23', shadow: 'none', badgeGlow: '0 2px 5px rgba(0,0,0,0.2)', badgeBorder: 'none', profileBorder: '2px solid rgba(255,255,255,0.1)', profileGlow: '0 0 15px #C92C23' },
+            'french':  { bg: '#CBA276', text: '#ffffff', nameColor: '#CBA276', shadow: 'none', badgeGlow: '0 2px 5px rgba(0,0,0,0.2)', badgeBorder: 'none', profileBorder: '2px solid rgba(255,255,255,0.1)', profileGlow: '0 0 15px #CBA276' },
+            'turkish': { bg: '#1A2F66', text: '#ffffff', nameColor: '#1A2F66', shadow: 'none', badgeGlow: '0 2px 5px rgba(0,0,0,0.2)', badgeBorder: 'none', profileBorder: '2px solid rgba(255,255,255,0.1)', profileGlow: '0 0 15px #1A2F66' },
+            'melayu':  { bg: '#F197A9', text: '#ffffff', nameColor: '#F197A9', shadow: 'none', badgeGlow: '0 2px 5px rgba(0,0,0,0.2)', badgeBorder: 'none', profileBorder: '2px solid rgba(255,255,255,0.1)', profileGlow: '0 0 15px #F197A9' },
+            'brazil':  { bg: '#D8B4F8', text: '#ffffff', nameColor: '#D8B4F8', shadow: 'none', badgeGlow: '0 2px 5px rgba(0,0,0,0.2)', badgeBorder: 'none', profileBorder: '2px solid rgba(255,255,255,0.1)', profileGlow: '0 0 15px #D8B4F8' },
+            'spanish': { bg: '#4A6076', text: '#ffffff', nameColor: '#4A6076', shadow: 'none', badgeGlow: '0 2px 5px rgba(0,0,0,0.2)', badgeBorder: 'none', profileBorder: '2px solid rgba(255,255,255,0.1)', profileGlow: '0 0 15px #4A6076' },
+            'thai':    { bg: '#8FBEF5', text: '#ffffff', nameColor: '#8FBEF5', shadow: 'none', badgeGlow: '0 2px 5px rgba(0,0,0,0.2)', badgeBorder: 'none', profileBorder: '2px solid rgba(255,255,255,0.1)', profileGlow: '0 0 15px #8FBEF5' },
+            'desi':    { bg: '#8CC84B', text: '#ffffff', nameColor: '#8CC84B', shadow: 'none', badgeGlow: '0 2px 5px rgba(0,0,0,0.2)', badgeBorder: 'none', profileBorder: '2px solid rgba(255,255,255,0.1)', profileGlow: '0 0 15px #8CC84B' }
         };
 
         const globalLeadersData = [
@@ -1112,15 +1115,19 @@
                 const descText = leader.desc ? (currentLang === 'ar' && leader.desc.ar ? leader.desc.ar : leader.desc.en) : "";
                 const descHTML = descText ? `<p class="leader-desc">${descText}</p>` : "";
                 
-                const badgeGlowStyle = sTheme.badgeGlow ? `box-shadow: ${sTheme.badgeGlow}; border: 1px solid rgba(255,255,255,0.2);` : `box-shadow: 0 2px 5px rgba(0,0,0,0.2);`;
+                const badgeGlowStyle = sTheme.badgeGlow ? `box-shadow: ${sTheme.badgeGlow};` : `box-shadow: 0 2px 5px rgba(0,0,0,0.2);`;
+                const badgeBorder = sTheme.badgeBorder ? `border: ${sTheme.badgeBorder};` : `border: none;`;
+                const profBorder = sTheme.profileBorder ? `border: ${sTheme.profileBorder};` : `border: 2px solid rgba(255,255,255,0.1);`;
 
                 container.innerHTML += `
-                    <div class="global-leader glass-panel" data-server="${leader.server}" style="--server-color: ${sTheme.nameColor}; --server-glow: ${sTheme.badgeGlow || ('0 0 15px ' + sTheme.nameColor)};">
-                        <img src="${imageSource}" alt="${leader.name}">
+                    <div class="global-leader glass-panel" data-server="${leader.server}" style="--server-color: ${sTheme.nameColor}; --server-glow: ${sTheme.profileGlow || `0 0 15px ${sTheme.nameColor}`};">
+                        <img src="${imageSource}" alt="${leader.name}" style="${profBorder}">
                         <div class="leader-name-box" onclick="copyAdminID('${leader.name}')" title="انسخ اليوزر">
                             <i class="fa-regular fa-copy leader-copy-icon"></i>
                             <h3 class="num-font" style="color: ${sTheme.nameColor} !important; text-shadow: ${sTheme.shadow} !important;">${leader.name}</h3>
-                            <div class="server-badge" style="background: ${sTheme.bg}; color: ${sTheme.text}; ${badgeGlowStyle}"><i class="fa-solid fa-user-group"></i></div>
+                            <div class="server-badge" style="background: ${sTheme.bg}; color: ${sTheme.text}; ${badgeGlowStyle} ${badgeBorder}">
+                                <i class="fa-solid fa-user-group"></i>
+                            </div>
                         </div>
                         ${descHTML}
                         ${bdayHTML}
@@ -1135,10 +1142,17 @@
             document.querySelectorAll('.server-tab').forEach(tab => {
                 if(tab.dataset.target === serverName) {
                     tab.classList.add('active');
-                    tab.style.backgroundColor = theme.bg;
-                    tab.style.borderColor = serverName === 'english' ? 'var(--text-main)' : theme.bg;
-                    tab.style.color = theme.text;
-                    if(theme.badgeGlow) tab.style.boxShadow = theme.badgeGlow;
+                    if (serverName === 'english') {
+                        tab.style.backgroundColor = '#000000';
+                        tab.style.borderColor = '#ffffff';
+                        tab.style.color = '#ffffff';
+                        tab.style.boxShadow = 'var(--eng-badge-glow)';
+                    } else {
+                        tab.style.backgroundColor = theme.bg;
+                        tab.style.borderColor = theme.bg;
+                        tab.style.color = theme.text;
+                        if(theme.badgeGlow) tab.style.boxShadow = theme.badgeGlow;
+                    }
                 } else {
                     tab.classList.remove('active');
                     tab.style.backgroundColor = 'transparent';
