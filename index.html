@@ -10,7 +10,6 @@
         document.documentElement.setAttribute('data-theme', savedTheme);
     </script>
 
-    <!-- تحسين تسريع تحميل الخطوط لمنع ظهور خط مختلف لثانية عند فتح الموقع -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Rajdhani:wght@600;700;900&display=block" rel="stylesheet">
@@ -31,7 +30,6 @@
             --eng-bg: #000000;
             --eng-text: #ffffff;
             --eng-name: #000000;
-            --eng-text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
             --eng-text-stroke: 1px #ffffff;
             --eng-badge-glow: 0 0 12px rgba(255, 255, 255, 0.4);
             --eng-profile-glow: 0 0 15px rgba(255, 255, 255, 0.5);
@@ -46,7 +44,6 @@
             --text-muted: #475569;
 
             /* English Server Variables for Light Mode */
-            --eng-text-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
             --eng-text-stroke: 1px #ffffff;
             --eng-badge-glow: 0 2px 5px rgba(0, 0, 0, 0.3);
             --eng-profile-glow: 0 0 15px rgba(0, 0, 0, 0.4);
@@ -1010,10 +1007,7 @@
             }
 
             const bugType = bugTypeElement.value;
-
-            // ===== ضع رابط تطبيق جوجل سكربت هنا =====
             const scriptURL = "رابط_تطبيق_جوجل_هنا"; 
-
             const formData = new URLSearchParams();
             formData.append('plato_id', platoId);
             formData.append('issue_type', bugType);
@@ -1055,9 +1049,9 @@
             }
         }
 
-        // تم إضافة textStroke لإعدادات السيرفر الانجليزي فقط وتعديل تأثير الشادو ليناسب لون الاسم الأسود
+        // تم تعيين shadow إلى none للسيرفر الإنجليزي لإزالة الظل المربع خلف الاسم
         const serverThemes = {
-            'english': { bg: 'var(--eng-bg)', text: 'var(--eng-text)', nameColor: 'var(--eng-name)', shadow: 'var(--eng-text-shadow)', textStroke: 'var(--eng-text-stroke)', badgeGlow: 'var(--eng-badge-glow)', badgeBorder: '1px solid #ffffff', profileBorder: '2px solid #000000', profileGlow: 'var(--eng-profile-glow)' },
+            'english': { bg: 'var(--eng-bg)', text: 'var(--eng-text)', nameColor: 'var(--eng-name)', shadow: 'none', textStroke: 'var(--eng-text-stroke)', badgeGlow: 'var(--eng-badge-glow)', badgeBorder: '1px solid #ffffff', profileBorder: '2px solid #000000', profileGlow: 'var(--eng-profile-glow)' },
             'persian': { bg: '#C92C23', text: '#ffffff', nameColor: '#C92C23', shadow: 'none', badgeGlow: '0 2px 5px rgba(0,0,0,0.2)', badgeBorder: 'none', profileBorder: '2px solid rgba(255,255,255,0.1)', profileGlow: '0 0 15px #C92C23' },
             'french':  { bg: '#CBA276', text: '#ffffff', nameColor: '#CBA276', shadow: 'none', badgeGlow: '0 2px 5px rgba(0,0,0,0.2)', badgeBorder: 'none', profileBorder: '2px solid rgba(255,255,255,0.1)', profileGlow: '0 0 15px #CBA276' },
             'turkish': { bg: '#1A2F66', text: '#ffffff', nameColor: '#1A2F66', shadow: 'none', badgeGlow: '0 2px 5px rgba(0,0,0,0.2)', badgeBorder: 'none', profileBorder: '2px solid rgba(255,255,255,0.1)', profileGlow: '0 0 15px #1A2F66' },
@@ -1117,7 +1111,6 @@
                 const badgeBorder = sTheme.badgeBorder ? `border: ${sTheme.badgeBorder};` : `border: none;`;
                 const profBorder = sTheme.profileBorder ? `border: ${sTheme.profileBorder};` : `border: 2px solid rgba(255,255,255,0.1);`;
 
-                // تم إضافة -webkit-text-stroke لاسم القائد هنا في حال كان مدعوماً في الـ theme
                 const strokeStyle = sTheme.textStroke ? `-webkit-text-stroke: ${sTheme.textStroke};` : '';
 
                 container.innerHTML += `
@@ -1290,7 +1283,6 @@
         const tourSheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/export?format=csv"; 
         const newsSheetURL = "https://docs.google.com/spreadsheets/d/10YreDjSMCJc1hvGFbyfVJO4zAmzFGO0eeyoq5qKwf_E/export?format=csv";
 
-        // تبسيط شاشات التحميل لمنع ظهور خطوط وهمية قد تبدو كأخطاء
         function showSkeletons() {
             let newsSkel = '';
             for(let i=0; i<3; i++) {
