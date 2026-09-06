@@ -98,12 +98,12 @@
 
         /* Server Colors Shifting Animation */
         @keyframes colorShift { 
-            0% { background: #1A2F66; } /* Turkish */
-            20% { background: #CBA276; } /* French */
-            40% { background: #8FBEF5; } /* Thai */
-            60% { background: #F197A9; } /* Melayu */
-            80% { background: #8CC84B; } /* Desi */
-            100% { background: #D8B4F8; } /* Brazil */
+            0% { background: #1A2F66; } 
+            20% { background: #CBA276; } 
+            40% { background: #8FBEF5; } 
+            60% { background: #F197A9; } 
+            80% { background: #8CC84B; } 
+            100% { background: #D8B4F8; } 
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -175,91 +175,32 @@
             box-shadow: 0 0 15px var(--primary-glow); 
         }
 
-        .tab-view {
-            display: none;
-            width: 100%;
-            animation: viewFade 0.35s ease-out forwards;
-        }
-        .tab-view.active-view {
-            display: block;
-        }
-        @keyframes viewFade {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .tab-view { display: none; width: 100%; animation: viewFade 0.35s ease-out forwards; }
+        .tab-view.active-view { display: block; }
+        @keyframes viewFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .bottom-nav-bar {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 440px;
-            height: 65px;
-            background: rgba(15, 15, 20, 0.65);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid var(--glass-border);
-            border-top: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 40px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 0 10px;
-            z-index: 1000;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-            transition: background 0.3s, border 0.3s;
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 440px;
+            height: 65px; background: rgba(15, 15, 20, 0.65); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border); border-top: 1px solid rgba(255, 255, 255, 0.15); border-radius: 40px;
+            display: flex; justify-content: space-around; align-items: center; padding: 0 10px; z-index: 1000;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5); transition: background 0.3s, border 0.3s;
         }
-        [data-theme="light"] .bottom-nav-bar {
-            background: rgba(255, 255, 255, 0.8);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            border-top: 1px solid rgba(255, 255, 255, 0.9);
-        }
-        .bottom-nav-item {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            color: var(--text-muted);
-            cursor: pointer;
-            text-decoration: none;
-            height: 100%;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        .bottom-nav-item i {
-            font-size: 1.25rem;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s;
-        }
-        .bottom-nav-item span {
-            font-size: 0.75rem;
-            font-weight: 700;
-            transition: color 0.3s;
-        }
-        .bottom-nav-item.active {
-            color: var(--primary);
-        }
-        .bottom-nav-item.active i {
-            transform: translateY(-2px) scale(1.15);
-            color: var(--primary);
-            filter: drop-shadow(0 0 8px var(--primary-glow));
-        }
-        .bottom-nav-item.active span {
-            color: var(--text-main);
-            font-weight: 900;
-        }
+        [data-theme="light"] .bottom-nav-bar { background: rgba(255, 255, 255, 0.8); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); border-top: 1px solid rgba(255, 255, 255, 0.9); }
+        
+        .bottom-nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: var(--text-muted); cursor: pointer; height: 100%; transition: all 0.3s ease; position: relative; }
+        .bottom-nav-item i { font-size: 1.25rem; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s; }
+        .bottom-nav-item span { font-size: 0.75rem; font-weight: 700; transition: color 0.3s; }
+        .bottom-nav-item.active { color: var(--primary); }
+        .bottom-nav-item.active i { transform: translateY(-2px) scale(1.15); color: var(--primary); filter: drop-shadow(0 0 8px var(--primary-glow)); }
+        .bottom-nav-item.active span { color: var(--text-main); font-weight: 900; }
 
         section { padding: 45px 15px 25px; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; }
         
         .hero { height: 35dvh; justify-content: center; text-align: center; padding: 0 15px; margin-top: 5px;}
         .hero h2 { font-size: 3.2rem; font-weight: 900; margin-bottom: 10px; color: #fff; text-shadow: 0 0 30px rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; flex-wrap: wrap;}
-        
-        /* ضبط مسافات حرف X */
         .hero h2 span.hero-x { color: var(--primary); text-shadow: 0 0 20px var(--primary-glow); font-size: 1.25em; margin-inline-end: 10px; transform: translateY(2px);}
         html[dir="rtl"] .hero h2 span.hero-x { margin-inline-start: 10px; }
-        
         [data-theme="light"] .hero h2 { color: #000; text-shadow: none; }
         .hero p { font-size: 1.1rem; max-width: 600px; line-height: 1.7; margin: 0 auto; color: rgba(255,255,255,0.8);}
         [data-theme="light"] .hero p { color: var(--text-muted); }
@@ -343,15 +284,12 @@
         [data-theme="light"] .birthday-badge { background: rgba(0, 0, 0, 0.03); }
         .card:hover .birthday-badge, .global-leader:hover .birthday-badge { color: var(--text-main); border-color: rgba(255,255,255,0.2); }
 
-        /* Server Badge Pill */
         .server-badge { display: inline-flex; justify-content: center; align-items: center; width: 50px; height: 26px; border-radius: 13px; font-size: 0.9rem; margin-bottom: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
 
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; width: 100%; max-width: 900px; justify-items: center; }
         .card { width: 100%; padding: 35px 20px; text-align: center; transition: transform 0.4s; position: relative; overflow: hidden; border-radius: 16px; display: flex; flex-direction: column; align-items: center;}
         .card:hover { transform: translateY(-8px); }
         .card img { width: 85px; height: 85px; border-radius: 50%; object-fit: cover; margin-bottom: 10px; border: 2px solid rgba(255,255,255,0.1); }
-        
-        /* White Names unaffected by Theme */
         .card h3 { font-size: 1.4rem; margin-bottom:8px; color: #ffffff !important; text-shadow: 0 2px 8px rgba(0,0,0,0.8) !important; font-family: 'Rajdhani', 'Cairo', sans-serif;}
         .card-yyy:hover { border-color: rgba(255,255,255, 0.4); box-shadow: 0 15px 35px rgba(255,255,255, 0.1); } 
         .card-hat:hover { border-color: rgba(255,255,255, 0.4); box-shadow: 0 15px 35px rgba(255,255,255, 0.1); } 
@@ -366,7 +304,6 @@
         
         .global-leaders-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; width: 100%; max-width: 950px; justify-items: center; }
         .global-leader { width: 100%; padding: 20px 15px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px; transition: transform 0.3s; }
-        
         .global-leader img { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.1); transition: 0.3s; margin-bottom: 2px; }
         .global-leader:hover { border-color: var(--server-color); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.3);}
         .global-leader:hover img { border-color: var(--server-color); box-shadow: 0 0 15px var(--server-color); transform: scale(1.05); }
@@ -375,7 +312,6 @@
         .leader-name-box h3 { font-size: 1.05rem; font-family: 'Rajdhani', 'Cairo', sans-serif; transition: 0.3s; }
         .leader-copy-icon { font-size: 0.8rem; color: var(--text-muted); transition: 0.3s; }
         .leader-name-box:hover .leader-copy-icon { color: var(--primary); transform: scale(1.15); }
-        
         .leader-desc { font-size: 0.8rem; color: rgba(255,255,255,0.7); line-height: 1.5; font-weight: 600; text-align: center; width: 100%; word-break: break-word;}
         [data-theme="light"] .leader-desc { color: var(--text-muted); }
 
@@ -385,12 +321,10 @@
         .rank-num { font-size: 1.2rem; font-weight: 900; color: rgba(255,255,255,0.3); width: 30px; text-align: center; }
         [data-theme="light"] .rank-num { color: rgba(0,0,0,0.3); }
         .rank-1 .rank-num { color: #d4af37; text-shadow: 0 0 10px rgba(227, 179, 65, 0.5);} .rank-2 .rank-num { color: #cbd5e1; } .rank-3 .rank-num { color: #cd7f32; }
-
         .list-info { display: flex; align-items: center; gap: 12px; flex: 1; overflow: hidden; }
         .list-img { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.1); }
         .group-img { border-radius: 6px; }
         .list-name { font-weight: bold; font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        
         .progress-container { flex: 1.5; display: flex; flex-direction: column; gap: 5px; justify-content: center;}
         .progress-track { width: 100%; height: 6px; background: rgba(0,0,0,0.5); border-radius: 10px; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.5); }
         [data-theme="light"] .progress-track { background: rgba(0,0,0,0.08); box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);}
@@ -426,6 +360,23 @@
         .glass-desc-text { color: rgba(255,255,255,0.85); }
         [data-theme="light"] .glass-desc-text { color: var(--text-muted); }
 
+        /* Weekly Video Showcase Styles */
+        .video-glow-box { position: relative; width: 100%; max-width: 320px; border-radius: 16px; padding: 4px; background: linear-gradient(135deg, rgba(157, 78, 221, 0.4), rgba(255, 255, 255, 0.05)); box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin: 0 auto 25px; transition: 0.3s;}
+        .video-glow-box:hover { box-shadow: 0 15px 40px var(--primary-glow); }
+        .video-glow-box video { width: 100%; display: block; border-radius: 12px; max-height: 70vh; object-fit: cover; background: #000; }
+        
+        .parsed-timestamps-box { width: 100%; max-width: 600px; text-align: left; padding: 0 10px; white-space: pre-wrap; line-height: 1.8; font-size: 0.95rem; color: rgba(255,255,255,0.9);}
+        html[dir="rtl"] .parsed-timestamps-box { text-align: right; }
+        [data-theme="light"] .parsed-timestamps-box { color: var(--text-muted); }
+        
+        .ts-header { color: var(--primary); font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; font-weight: bold; border-bottom: 1px solid var(--glass-border); padding-bottom: 3px; display: inline-block; margin-top: 15px; margin-bottom: 5px; width: 100%;}
+        
+        .time-link { display: inline-block; background: rgba(157, 78, 221, 0.15); color: var(--primary); padding: 2px 8px; border-radius: 6px; cursor: pointer; transition: 0.3s; font-weight: bold; border: 1px solid rgba(157, 78, 221, 0.3); margin: 2px 0;}
+        .time-link:hover { background: var(--primary); color: #fff; box-shadow: 0 0 10px var(--primary-glow); transform: translateY(-1px);}
+        [data-theme="light"] .time-link { background: rgba(123, 44, 191, 0.1); border-color: rgba(123, 44, 191, 0.2); }
+        [data-theme="light"] .time-link:hover { background: var(--primary); color: #fff; }
+
+
         #toast { visibility: hidden; min-width: 200px; background: rgba(15, 15, 20, 0.95); backdrop-filter: blur(10px); color: #fff; text-align: center; border-radius: 10px; padding: 12px 20px; position: fixed; z-index: 9999; left: 50%; bottom: 25px; transform: translateX(-50%); font-size: 14px; transition: opacity 0.4s, bottom 0.4s; opacity: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid var(--primary); font-family: 'Cairo', sans-serif; font-weight:bold;}
         #toast.show { visibility: visible; bottom: 95px; opacity: 1; }
 
@@ -446,7 +397,6 @@
             
             .news-headline { font-size: 1.25rem; } 
             .news-body { font-size: 0.95rem; }
-            
             .news-bottom-wrapper { max-width: 320px; gap: 15px; margin-top: 0; }
             .slider-controls { margin-top: 0px; padding: 0; } 
             
@@ -467,6 +417,8 @@
             .tour-card { padding: 20px 15px; } .tour-title { font-size: 1.05rem; } .tour-desc { font-size: 0.85rem; margin-bottom: 12px;} .tour-footer { flex-direction: column; gap: 8px; } .info-badge { width: 100%; justify-content: center; font-size: 0.8rem; padding: 6px;}
             .server-tabs { flex-wrap: wrap !important; justify-content: center !important; gap: 10px; padding-bottom: 10px; }
             .submit-btn, .cancel-btn { font-size: 0.9rem; padding: 12px; }
+            
+            .parsed-timestamps-box { font-size: 0.85rem; }
         }
     </style>
 </head>
@@ -819,6 +771,29 @@
 
         <div class="cyber-divider"><div class="center-node"></div></div>
 
+        <!-- Weekly Showcase Section -->
+        <section id="weekly-showcase">
+            <h2 class="section-title" data-i18n="weekly_showcase_title">تجربة عناصر الألعاب الأسبوعية</h2>
+            <div class="glass-panel" style="width: 100%; max-width: 750px; padding: 30px 20px; border-radius: 16px; display: flex; flex-direction: column; align-items: center;">
+                
+                <p class="glass-desc-text" style="font-size: 0.95rem; line-height: 1.8; font-weight: 600; text-align: center; margin-bottom: 25px;" data-i18n="weekly_showcase_desc">
+                    استكشف أحدث العناصر المتوفرة في اللعبة لهذا الأسبوع. اضغط على التوقيت للانتقال مباشرة إلى العنصر.
+                </p>
+
+                <!-- Video Player -->
+                <div class="video-glow-box">
+                    <!-- اسم الفيديو هنا -->
+                    <video id="weekly-video" src="6992352953375981774.mp4" controls playsinline preload="metadata"></video>
+                </div>
+
+                <!-- Timestamps Box (Will be populated by JS auto-parser) -->
+                <div class="parsed-timestamps-box" id="timestamps-container" dir="ltr"></div>
+
+            </div>
+        </section>
+
+        <div class="cyber-divider"><div class="center-node"></div></div>
+
         <section id="tournaments">
             <h2 class="section-title" data-i18n="tournaments_title">مركز البطولات المعتمدة</h2>
             <div class="tournaments-grid" id="tournaments-container"></div>
@@ -894,14 +869,59 @@
             <span data-i18n="nav_leaders">عن القادة</span>
         </div>
         <div class="bottom-nav-item" onclick="switchView('leaderboard', this)">
-            <i class="fa-solid fa-trophy"></i>
-            <span data-i18n="nav_leaderboard">لوحة الصدارة</span>
+            <i class="fa-solid fa-compass"></i> <!-- تم التغيير لأيقونة استكشف -->
+            <span data-i18n="nav_leaderboard">استكشف</span>
         </div>
     </nav>
 
     <div id="toast"></div>
 
     <script>
+        // --- ميزة التوقيتات التلقائية (Auto-Parser) ---
+        // مستقبلاً: يمكنك استبدال هذا النص بنص قادم من Google Sheet
+        const rawWeeklyText = `🎱 Pool items:
+0:00 - 0:11 Midnight Romance & Black Rose Cue.
+0:12 - 0:22 Midnight Romance & Infatuation Cue. 
+
+🎲 Dice items:
+0:22 - 0:30 Starcrossed Dice.
+
+🎳 Bowling items:
+0:31 - 0:34 Floral Lace Ball.
+
+🕹️ Carrom items:
+0:35 - 0:43 The Love Chapter & Lockheart Striker.
+
+🃏 Ocho & Deck items:
+0:44 - 0:46 Love Bites.
+0:46 - 0:50 Dreamers Deck.`;
+
+        function buildTimestamps() {
+            let htmlText = rawWeeklyText;
+            
+            // تحويل العناوين (التي تنتهي بـ items:) إلى شكل مميز
+            htmlText = htmlText.replace(/^(.*items:)$/gm, '<span class="ts-header">$1</span>');
+            
+            // تحويل الأرقام (مثل 0:11) إلى أزرار ضغط
+            htmlText = htmlText.replace(/(\d{1,2}:\d{2})/g, (match) => {
+                const parts = match.split(':');
+                const seconds = parseInt(parts[0]) * 60 + parseInt(parts[1]);
+                return `<span class="time-link num-font" onclick="seekVideo(${seconds})">${match}</span>`;
+            });
+
+            document.getElementById('timestamps-container').innerHTML = htmlText;
+        }
+
+        function seekVideo(seconds) {
+            const vid = document.getElementById('weekly-video');
+            if(vid) {
+                vid.currentTime = seconds;
+                vid.play();
+                vid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+        // ----------------------------------------------
+
         function switchView(viewName, itemEl) {
             document.querySelectorAll('.tab-view').forEach(view => view.classList.remove('active-view'));
             document.querySelectorAll('.bottom-nav-item').forEach(item => item.classList.remove('active'));
@@ -1152,7 +1172,7 @@
 
         const translations = {
             ar: {
-                nav_home: "الرئيسية", nav_leaders: "عن القادة", nav_leaderboard: "لوحة الصدارة",
+                nav_home: "الرئيسية", nav_leaders: "عن القادة", nav_leaderboard: "استكشف",
                 pull_refresh: "جاري التحديث...", menu_guidelines: "القوانين",
                 hero_title_pre: "مجتمع", hero_title_sub: "العربي", hero_desc: "يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.",
                 about_site_title: "نبذة عن الموقع",
@@ -1178,6 +1198,8 @@
                 join_us_title: "انضم إلينا",
                 join_us_desc: "إذا كانت لديكم بطولة في مجموعتكم ترغبون بإضافتها، أو تعتقدون أن حسابكم يستحق المنافسة ضمن أقدم الحسابات، أرسلوا لنا التفاصيل عبر الديسكورد من هنا.",
                 join_us_btn: "تواصل معنا عبر الديسكورد",
+                weekly_showcase_title: "تجربة عناصر الألعاب الأسبوعية",
+                weekly_showcase_desc: "استكشف أحدث العناصر المتوفرة في اللعبة لهذا الأسبوع. اضغط على التوقيت للانتقال مباشرة إلى العنصر.",
                 desc_yyy: "صانع الأثر، يقود برؤية مستقبلية لخلق بيئة إيجابية لا تعرف المستحيل.", desc_hat: "حضور راسخ، تقود المجتمع بثقة راسخة وترسم معايير الرقي.", desc_bbb: "الحكمة في اتخاذ القرار، يوازن بين الحزم والهدوء لإدارة الأزمات باحترافية.",
                 news_newer: "الأحدث", news_older: "الأقدم",
                 discord_more: "للمزيد من الأخبار انضموا إلى الديسكورد",
@@ -1203,7 +1225,7 @@
                 link_monsterpedia_desc: "موسوعة متخصصة في لعبة الوحوش، تشرح محتوى اللعبة بالتفصيل."
             },
             en: {
-                nav_home: "Home", nav_leaders: "About Leaders", nav_leaderboard: "Leaderboard",
+                nav_home: "Home", nav_leaders: "About Leaders", nav_leaderboard: "Explore",
                 pull_refresh: "Updating...", menu_guidelines: "GUIDELINES",
                 hero_title_pre: "Plato", hero_title_sub: "Community", hero_desc: "Where gaming enthusiasts meet to experience thrilling moments, build true friendships, and create eternal memories.",
                 about_site_title: "About the Website",
@@ -1229,6 +1251,8 @@
                 join_us_title: "Join Us",
                 join_us_desc: "Have a tournament you'd like to add, or think your account belongs among the oldest? Send us the details on Discord here.",
                 join_us_btn: "Contact us on Discord",
+                weekly_showcase_title: "Weekly Game Items Showcase",
+                weekly_showcase_desc: "Explore this week's latest game items. Click on any timestamp to jump directly to the item.",
                 desc_yyy: "The Impact Maker, leading with a futuristic vision to create a positive environment.", desc_hat: "A grounded presence, leading the community with solid confidence and setting standards.", desc_bbb: "Wisdom in decision making, balancing firmness and calmness in management.",
                 news_newer: "NEWER", news_older: "OLDER",
                 discord_more: "For more news, join our Discord server",
@@ -1755,6 +1779,9 @@
         }, {passive: true});
 
         document.addEventListener("DOMContentLoaded", () => {
+            // تفعيل بناء الأوقات القابلة للضغط فور تحميل الصفحة
+            buildTimestamps();
+
             const savedTheme = localStorage.getItem('theme') || 'dark'; 
             document.getElementById('theme-icon').className = savedTheme === 'light' ? 'fa-solid fa-sun theme-toggle' : 'fa-solid fa-moon theme-toggle';
             
