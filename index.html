@@ -34,10 +34,6 @@
             --text-muted: #475569;
         }
 
-        /* التحجيم الديناميكي للغات لضمان تطابق الأحجام تماماً */
-        html[lang="ar"] { font-size: 14.5px; } /* تصغير نسبي لخط كايرو ليتطابق مع الإنجليزي */
-        html[lang="en"] { font-size: 16px; }   /* الحجم الافتراضي لخط راجداني */
-
         * { 
             box-sizing: border-box; 
             margin: 0; 
@@ -73,6 +69,10 @@
             background-color: var(--bg-main);
             overscroll-behavior-y: none;
         }
+
+        /* تحجيم النصوص فقط لضمان التطابق مع بقاء حجم المربعات الزجاجية ثابت */
+        html[lang="ar"] body { font-size: 14.5px; }
+        html[lang="en"] body { font-size: 15.5px; }
 
         body { 
             color: var(--text-main); 
@@ -118,52 +118,45 @@
         [data-theme="light"] .particle { color: var(--primary); opacity: 0.08; }
         @keyframes floatUp { 0% { transform: translateY(100dvh) rotate(0deg) scale(0.8); opacity: 0; } 20% { opacity: 0.15; } 80% { opacity: 0.15; } 100% { transform: translateY(-10dvh) rotate(360deg) scale(1.5); opacity: 0; } }
 
+        /* ثبات حجم المربعات بالبيكسل */
         .glass-panel { background: var(--bg-card); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-top: 1px solid rgba(255, 255, 255, 0.12); border-left: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); border-radius: 16px; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
         html[dir="ltr"] .glass-panel { border-left: 1px solid var(--glass-border); border-right: 1px solid rgba(255, 255, 255, 0.05); }
         [data-theme="light"] .glass-panel { box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07); border-top: 1px solid rgba(255, 255, 255, 0.6); }
 
-        .navbar { position: fixed; top: 0; left: 0; width: 100%; padding: 0.8rem 1.5rem; display: flex; justify-content: space-between; align-items: center; background: rgba(5, 5, 8, 0.5); backdrop-filter: blur(25px); border-bottom: 1px solid var(--glass-border); z-index: 1000; direction: ltr; }
+        .navbar { position: fixed; top: 0; left: 0; width: 100%; padding: 12px 25px; display: flex; justify-content: space-between; align-items: center; background: rgba(5, 5, 8, 0.5); backdrop-filter: blur(25px); border-bottom: 1px solid var(--glass-border); z-index: 1000; direction: ltr; }
         [data-theme="light"] .navbar { background: rgba(255, 255, 255, 0.7); }
         
-        .navbar h1 { font-size: 1.5rem; font-weight: 900; letter-spacing: 1px; display: flex; align-items: baseline; margin: 0; }
+        .navbar h1 { font-size: 24px; font-weight: 900; letter-spacing: 1px; display: flex; align-items: baseline; margin: 0; }
         .navbar h1 span { 
             color: var(--primary); 
-            font-size: 1.5em; 
+            font-size: 1.6em; 
             transform: translateY(2px); 
-            margin-left: 2px;
+            margin-left: 3px;
             animation: navXGlow 2s infinite alternate ease-in-out;
         }
         @keyframes navXGlow {
-            0% { text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary-glow); }
-            100% { text-shadow: 0 0 25px var(--primary), 0 0 45px #d8b4fe, 0 0 65px var(--primary); }
+            0% { text-shadow: 0 0 15px var(--primary), 0 0 25px var(--primary-glow); }
+            100% { text-shadow: 0 0 30px var(--primary), 0 0 55px #d8b4fe, 0 0 75px var(--primary); }
         }
         
-        .nav-actions { display: flex; align-items: center; gap: 1rem; }
-        .nav-actions i { font-size: 1.25rem; cursor: pointer; color: var(--text-main); transition: 0.3s; }
-        .nav-actions i:hover { color: var(--primary); text-shadow: 0 0 10px var(--primary-glow); }
+        .nav-actions { display: flex; align-items: center; gap: 18px; }
+        .nav-actions i { font-size: 22px; cursor: pointer; color: var(--text-main); transition: 0.3s; }
+        .nav-actions i:hover { color: var(--primary); text-shadow: 0 0 15px var(--primary-glow); }
 
-        .lang-btn { 
-            border: 1px solid var(--glass-border); 
-            padding: 0.4rem 1rem; 
-            border-radius: 20px; 
-            cursor: pointer; 
-            transition: 0.3s; 
-            font-family: 'Cairo', sans-serif; 
-            font-weight: 700; 
-            font-size: 0.9rem;
-        }
-        @media (hover: hover) {
-            .lang-btn:hover:not(.active) { color: var(--primary); border-color: var(--primary); }
-        }
-
-        .main-lang-switch { display: flex; justify-content: center; gap: 0.8rem; margin: 6rem auto 1rem; position: relative; z-index: 10; }
+        .main-lang-switch { display: flex; justify-content: center; gap: 15px; margin: 95px auto 15px; position: relative; z-index: 10; }
         .main-lang-switch .lang-btn { 
             background: rgba(15, 15, 20, 0.4); 
             color: var(--text-muted); 
             backdrop-filter: blur(15px); 
             -webkit-backdrop-filter: blur(15px); 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
-            padding: 0.4rem 1.5rem; 
+            border: 1px solid var(--glass-border); 
+            padding: 8px 25px; 
+            border-radius: 20px; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            font-family: 'Cairo', sans-serif; 
+            font-weight: 700; 
+            font-size: 14px;
         }
         [data-theme="light"] .main-lang-switch .lang-btn { 
             background: rgba(255, 255, 255, 0.9); 
@@ -174,7 +167,8 @@
             color: #ffffff !important; 
             background: var(--primary) !important; 
             border-color: var(--primary) !important; 
-            box-shadow: 0 0 15px var(--primary-glow); 
+            box-shadow: 0 0 20px var(--primary), 0 0 40px #d8b4fe !important; 
+            text-shadow: 0 0 8px #fff;
         }
 
         .tab-view { display: none; width: 100%; animation: viewFade 0.35s ease-out forwards; }
@@ -182,43 +176,42 @@
         @keyframes viewFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .bottom-nav-bar {
-            position: fixed; bottom: 1.2rem; left: 50%; transform: translateX(-50%); width: 90%; max-width: 440px;
-            height: 4rem; background: rgba(15, 15, 20, 0.65); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 440px;
+            height: 65px; background: rgba(15, 15, 20, 0.65); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
             border: 1px solid var(--glass-border); border-top: 1px solid rgba(255, 255, 255, 0.15); border-radius: 40px;
-            display: flex; justify-content: space-around; align-items: center; padding: 0 0.6rem; z-index: 1000;
+            display: flex; justify-content: space-around; align-items: center; padding: 0 10px; z-index: 1000;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5); transition: background 0.3s, border 0.3s;
         }
         [data-theme="light"] .bottom-nav-bar { background: rgba(255, 255, 255, 0.8); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); border-top: 1px solid rgba(255, 255, 255, 0.9); }
         
         .bottom-nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: var(--text-muted); cursor: pointer; height: 100%; transition: all 0.3s ease; position: relative; }
-        .bottom-nav-item i { font-size: 1.25rem; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s; }
-        .bottom-nav-item span { font-size: 0.75rem; font-weight: 700; transition: color 0.3s; }
+        .bottom-nav-item i { font-size: 22px; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s; }
+        .bottom-nav-item span { font-size: 12px; font-weight: 700; transition: color 0.3s; }
         .bottom-nav-item.active { color: var(--primary); }
         .bottom-nav-item.active i { transform: translateY(-2px) scale(1.15); color: var(--primary); filter: drop-shadow(0 0 8px var(--primary-glow)); }
         .bottom-nav-item.active span { color: var(--text-main); font-weight: 900; }
 
-        section { padding: 3rem 1rem 1.5rem; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; }
+        section { padding: 45px 15px 25px; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; }
         
-        .hero { height: 35dvh; justify-content: center; text-align: center; padding: 0 1rem; margin-top: 0.3rem;}
-        .hero h2 { font-size: 3.2rem; font-weight: 900; margin-bottom: 0.6rem; color: #fff; text-shadow: 0 0 30px rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; flex-wrap: wrap;}
+        .hero { height: 35dvh; justify-content: center; text-align: center; padding: 0 15px; margin-top: 5px;}
+        .hero h2 { font-size: 3.5rem; font-weight: 900; margin-bottom: 15px; color: #fff; text-shadow: 0 0 30px rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; flex-wrap: wrap;}
         .hero h2 span.hero-x { 
-            color: var(--primary); font-size: 1.5em; margin-inline-end: 0.6rem; transform: translateY(2px);
+            color: var(--primary); font-size: 1.6em; margin: 0 12px; transform: translateY(2px);
             animation: heroXGlow 2.5s infinite alternate ease-in-out;
         }
         @keyframes heroXGlow {
-            0% { text-shadow: 0 0 15px var(--primary), 0 0 25px var(--primary-glow); }
-            100% { text-shadow: 0 0 30px var(--primary), 0 0 60px #d8b4fe; }
+            0% { text-shadow: 0 0 20px var(--primary), 0 0 35px var(--primary-glow); }
+            100% { text-shadow: 0 0 40px var(--primary), 0 0 80px #d8b4fe; }
         }
-        html[dir="rtl"] .hero h2 span.hero-x { margin-inline-start: 0.6rem; }
         [data-theme="light"] .hero h2 { color: #000; text-shadow: none; }
-        .hero p { font-size: 1.1rem; max-width: 600px; line-height: 1.7; margin: 0 auto; color: rgba(255,255,255,0.8);}
+        .hero p { font-size: 1.15rem; max-width: 600px; line-height: 1.7; margin: 0 auto; color: rgba(255,255,255,0.8);}
         [data-theme="light"] .hero p { color: var(--text-muted); }
 
-        .cyber-divider { display: flex; align-items: center; justify-content: center; width: 100%; max-width: 600px; margin: 0.6rem auto; opacity: 0.4; }
+        .cyber-divider { display: flex; align-items: center; justify-content: center; width: 100%; max-width: 600px; margin: 15px auto; opacity: 0.4; }
         .cyber-divider::before, .cyber-divider::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--text-muted), transparent); }
         .cyber-divider .center-node { width: 15px; height: 3px; background: var(--text-muted); margin: 0 10px; transform: skewX(-45deg); }
 
-        .section-title { font-size: 1.6rem; font-weight: 900; margin-bottom: 2rem; text-transform: uppercase; position: relative; letter-spacing: 0.5px; text-align: center;}
+        .section-title { font-size: 1.7rem; font-weight: 900; margin-bottom: 35px; text-transform: uppercase; position: relative; letter-spacing: 0.5px; text-align: center;}
         .section-title::before { content: ''; position: absolute; right: -15px; top: 50%; transform: translateY(-50%); width: 6px; height: 20px; background: var(--primary); border-radius: 3px; box-shadow: 0 0 15px var(--primary-glow);}
         html[dir="ltr"] .section-title::before { right: auto; left: -15px; }
 
@@ -239,46 +232,46 @@
         .skel-badge { height: 30px; width: 80px; border-radius: 8px; }
 
         .news-carousel-container { width: 100%; max-width: 800px; position: relative; display: flex; flex-direction: column; gap: 5px; margin-bottom: 5px;}
-        .news-slider { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; -ms-overflow-style: none; scrollbar-width: none; padding: 1.5rem 1rem; cursor: grab;}
+        .news-slider { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; -ms-overflow-style: none; scrollbar-width: none; padding: 25px 20px; cursor: grab;}
         .news-slider:active { cursor: grabbing; }
         .news-slider::-webkit-scrollbar { display: none; }
-        .news-slide-card { width: 100%; flex: 0 0 100%; scroll-snap-align: center; padding: 2rem; border-radius: 16px; transition: transform 0.4s; position: relative; }
-        .news-header-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 1rem; }
-        .news-badge { padding: 0.3rem 0.8rem; border-radius: 8px; font-weight: 900; font-size: 0.8rem; display: flex; align-items: center; gap: 8px; border: 1px solid transparent; }
-        .news-date-sub { font-family: 'Rajdhani', sans-serif; font-size: 0.85rem; color: var(--text-muted); font-weight: bold;}
-        .news-headline { font-size: 1.4rem; font-weight: 900; line-height: 1.4; color: var(--text-main); margin-top: 1rem; margin-bottom: 0.5rem;}
-        .news-body { color: rgba(255,255,255,0.85); line-height: 1.8; font-size: 1rem; white-space: pre-line; word-break: break-word; overflow-wrap: break-word; }
+        .news-slide-card { width: 100%; flex: 0 0 100%; scroll-snap-align: center; padding: 30px; border-radius: 16px; transition: transform 0.4s; position: relative; }
+        .news-header-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; }
+        .news-badge { padding: 5px 12px; border-radius: 8px; font-weight: 900; font-size: 13px; display: flex; align-items: center; gap: 8px; border: 1px solid transparent; }
+        .news-date-sub { font-family: 'Rajdhani', sans-serif; font-size: 13px; color: var(--text-muted); font-weight: bold;}
+        .news-headline { font-size: 1.4rem; font-weight: 900; line-height: 1.4; color: var(--text-main); margin-top: 15px; margin-bottom: 8px;}
+        .news-body { color: rgba(255,255,255,0.85); line-height: 1.8; white-space: pre-line; word-break: break-word; overflow-wrap: break-word; }
         [data-theme="light"] .news-body { color: var(--text-muted); }
-        .news-bottom-wrapper { display: flex; flex-direction: column; width: 100%; max-width: 360px; margin: 0 auto; gap: 1rem; }
+        .news-bottom-wrapper { display: flex; flex-direction: column; width: 100%; max-width: 360px; margin: 0 auto; gap: 15px; }
         .slider-controls { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0;}
         .nav-btn { background: transparent; border: none; color: var(--text-muted); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px; transition: 0.3s; font-family: inherit; -webkit-tap-highlight-color: transparent;}
         .nav-btn:hover:not(.disabled) { color: var(--primary); transform: scale(1.08); }
         .nav-btn.disabled, .nav-btn:disabled { opacity: 0.3; pointer-events: none; touch-action: none; }
-        .nav-label { font-size: 0.8rem; font-weight: 900; letter-spacing: 1px; opacity: 0.8;}
-        .arrow-icon { font-size: 1.1rem; background: var(--bg-card); border: 1px solid var(--glass-border); padding: 0.6rem 1.1rem; border-radius: 30px; backdrop-filter: blur(10px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: 0.3s;}
+        .nav-label { font-size: 13px; font-weight: 900; letter-spacing: 1px; opacity: 0.8;}
+        .arrow-icon { font-size: 18px; background: var(--bg-card); border: 1px solid var(--glass-border); padding: 10px 18px; border-radius: 30px; backdrop-filter: blur(10px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: 0.3s;}
         .nav-btn:hover:not(.disabled) .arrow-icon { border-color: var(--primary); box-shadow: 0 0 15px var(--primary-glow); background: rgba(157, 78, 221, 0.1); }
         [data-theme="light"] .arrow-icon { background: rgba(255, 255, 255, 0.8); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
         html[dir="ltr"] .prev-icon, html[dir="ltr"] .next-icon { transform: rotate(180deg); }
-        .slider-dots { display: flex; gap: 8px; margin-top: -1rem;}
+        .slider-dots { display: flex; gap: 8px; margin-top: -15px;}
         .dot { width: 8px; height: 8px; background: var(--glass-border); border-radius: 50%; transition: 0.4s; }
         .dot.active { background: var(--primary); width: 22px; border-radius: 10px; box-shadow: 0 0 10px var(--primary-glow); }
         [data-theme="light"] .dot { background: rgba(0,0,0,0.1); }
         
-        .more-news-link { display: inline-flex; justify-content: center; align-items: center; width: 100%; gap: 8px; color: var(--text-muted); font-size: 0.95rem; text-decoration: none; transition: 0.3s; font-weight: 700; background: var(--bg-card); padding: 0.75rem 1.5rem; border-radius: 12px; border: 1px solid var(--glass-border); backdrop-filter: blur(10px); font-family: inherit;}
-        .more-news-link i { color: var(--discord-color); font-size: 1.1rem; }
+        .more-news-link { display: inline-flex; justify-content: center; align-items: center; width: 100%; gap: 8px; color: var(--text-muted); text-decoration: none; transition: 0.3s; font-weight: 700; background: var(--bg-card); padding: 12px 24px; border-radius: 12px; border: 1px solid var(--glass-border); backdrop-filter: blur(10px); font-family: inherit;}
+        .more-news-link i { color: var(--discord-color); font-size: 18px; }
         .more-news-link:hover { color: var(--text-main); transform: translateY(-2px); border-color: var(--discord-color); box-shadow: 0 5px 15px rgba(88, 101, 242, 0.2);}
 
-        .bug-radio { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; padding: 0.8rem; border-radius: 8px; border: 1px solid var(--glass-border); transition: 0.3s; background: rgba(0,0,0,0.2); }
+        .bug-radio { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; padding: 15px; border-radius: 8px; border: 1px solid var(--glass-border); transition: 0.3s; background: rgba(0,0,0,0.2); }
         .bug-radio:hover { background: rgba(157, 78, 221, 0.08); border-color: var(--primary); }
         .bug-radio input { margin-top: 4px; accent-color: var(--primary); transform: scale(1.2); }
         [data-theme="light"] .bug-radio { background: rgba(255,255,255,0.4); }
-        .bug-input { width: 100%; padding: 0.9rem; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(15, 15, 20, 0.4); color: var(--text-main); font-family: inherit; font-size: 1rem; outline: none; transition: 0.3s; }
+        .bug-input { width: 100%; padding: 15px; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(15, 15, 20, 0.4); color: var(--text-main); font-family: inherit; font-size: 15px; outline: none; transition: 0.3s; }
         .bug-input:focus { border-color: var(--primary); box-shadow: 0 0 15px var(--primary-glow); background: rgba(15, 15, 20, 0.6); }
         [data-theme="light"] .bug-input { background: rgba(255,255,255,0.6); }
         [data-theme="light"] .bug-input:focus { background: #fff; }
         
-        /* Unified Sleek Button Styling for all links/buttons */
-        .submit-btn, .cancel-btn { padding: 0.75rem 1.5rem; border-radius: 10px; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: 0.3s; font-family: inherit; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; flex: 1; }
+        /* Unified Sleek Button Styling for all links/buttons (Equal sizes) */
+        .submit-btn, .cancel-btn { padding: 12px 24px; border-radius: 10px; font-weight: 700; font-size: 14.5px; cursor: pointer; transition: 0.3s; font-family: inherit; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; flex: 1; }
         .submit-btn { background: var(--primary); color: #fff; border: none; }
         .submit-btn:hover { box-shadow: 0 0 20px var(--primary-glow); transform: translateY(-2px); }
         .cancel-btn { background: rgba(255,255,255,0.1); color: var(--text-main); border: 1px solid var(--glass-border); }
@@ -288,116 +281,125 @@
 
         .guideline-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--glass-border); }
         .guideline-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-        .guideline-icon { color: var(--text-main); font-size: 1.1rem; margin-top: 3px; flex-shrink: 0; }
-        .guideline-text { font-size: 1rem; line-height: 1.6; color: rgba(255,255,255,0.85); }
+        .guideline-icon { color: var(--text-main); font-size: 18px; margin-top: 3px; flex-shrink: 0; }
+        .guideline-text { line-height: 1.6; color: rgba(255,255,255,0.85); }
         [data-theme="light"] .guideline-text { color: var(--text-main); }
-        .guideline-warning { background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.3); color: #ef4444; padding: 12px; border-radius: 8px; font-size: 0.9rem; font-weight: 700; line-height: 1.6; margin-top: 15px; display: flex; gap: 10px; align-items: center; }
+        .guideline-warning { background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.3); color: #ef4444; padding: 15px; border-radius: 8px; font-weight: 700; line-height: 1.6; margin-top: 15px; display: flex; gap: 10px; align-items: center; }
 
-        .birthday-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border); padding: 3px 10px; border-radius: 12px; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-top: -3px; margin-bottom: 8px; transition: 0.3s; }
+        .birthday-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border); padding: 4px 12px; border-radius: 12px; font-weight: 700; color: var(--text-muted); margin-top: -3px; margin-bottom: 8px; transition: 0.3s; }
         [data-theme="light"] .birthday-badge { background: rgba(0, 0, 0, 0.03); }
         .card:hover .birthday-badge, .global-leader:hover .birthday-badge { color: var(--text-main); border-color: rgba(255,255,255,0.2); }
 
-        .server-badge { display: inline-flex; justify-content: center; align-items: center; width: 50px; height: 26px; border-radius: 13px; font-size: 0.9rem; margin-bottom: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .server-badge { display: inline-flex; justify-content: center; align-items: center; width: 50px; height: 26px; border-radius: 13px; font-size: 14px; margin-bottom: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
 
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; width: 100%; max-width: 900px; justify-items: center; }
-        .card { width: 100%; padding: 2.2rem 1.2rem; text-align: center; transition: transform 0.4s; position: relative; overflow: hidden; border-radius: 16px; display: flex; flex-direction: column; align-items: center;}
+        .card { width: 100%; padding: 35px 20px; text-align: center; transition: transform 0.4s; position: relative; overflow: hidden; border-radius: 16px; display: flex; flex-direction: column; align-items: center;}
         .card:hover { transform: translateY(-8px); }
         .card img { width: 85px; height: 85px; border-radius: 50%; object-fit: cover; margin-bottom: 10px; border: 2px solid rgba(255,255,255,0.1); }
         .card h3 { font-size: 1.4rem; margin-bottom:8px; color: #ffffff !important; text-shadow: 0 2px 8px rgba(0,0,0,0.8) !important; font-family: 'Rajdhani', 'Cairo', sans-serif;}
         .card-yyy:hover { border-color: rgba(255,255,255, 0.4); box-shadow: 0 15px 35px rgba(255,255,255, 0.1); } 
         .card-hat:hover { border-color: rgba(255,255,255, 0.4); box-shadow: 0 15px 35px rgba(255,255,255, 0.1); } 
         .card-bbb:hover { border-color: rgba(255,255,255, 0.4); box-shadow: 0 15px 35px rgba(255,255,255, 0.1); } 
-        .card p { font-size: 0.95rem; color: rgba(255,255,255,0.7); line-height: 1.6;}
+        .card p { color: rgba(255,255,255,0.7); line-height: 1.6;}
         [data-theme="light"] .card p { color: var(--text-muted); }
 
-        .server-tabs { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; width: 100%; max-width: 450px; }
-        .server-tab { background: transparent; border: 1px solid rgba(255, 255, 255, 0.2); color: rgba(255, 255, 255, 0.7); padding: 0.6rem 1.5rem; border-radius: 30px; cursor: pointer; transition: all 0.3s ease; font-family: inherit; font-weight: 700; font-size: 0.95rem; }
+        .server-tabs { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 30px; width: 100%; max-width: 450px; }
+        .server-tab { background: transparent; border: 1px solid rgba(255, 255, 255, 0.2); color: rgba(255, 255, 255, 0.7); padding: 10px 24px; border-radius: 30px; cursor: pointer; transition: all 0.3s ease; font-family: inherit; font-weight: 700; }
         [data-theme="light"] .server-tab { border-color: rgba(0, 0, 0, 0.2); color: var(--text-muted); }
         .server-tab:hover { color: var(--text-main); border-color: var(--text-main); }
         
         .global-leaders-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; width: 100%; max-width: 950px; justify-items: center; }
-        .global-leader { width: 100%; padding: 1.25rem 1rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px; transition: transform 0.3s; }
+        .global-leader { width: 100%; padding: 20px 15px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px; transition: transform 0.3s; }
         .global-leader img { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.1); transition: 0.3s; margin-bottom: 2px; }
         .global-leader:hover { border-color: var(--server-color); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.3);}
         .global-leader:hover img { border-color: var(--server-color); box-shadow: 0 0 15px var(--server-color); transform: scale(1.05); }
         
         .leader-name-box { display: flex; justify-content: center; align-items: center; gap: 6px; cursor: pointer; transition: 0.3s; }
         .leader-name-box h3 { font-size: 1.1rem; font-family: 'Rajdhani', 'Cairo', sans-serif; transition: 0.3s; }
-        .leader-copy-icon { font-size: 0.8rem; color: var(--text-muted); transition: 0.3s; }
+        .leader-copy-icon { font-size: 13px; color: var(--text-muted); transition: 0.3s; }
         .leader-name-box:hover .leader-copy-icon { color: var(--primary); transform: scale(1.15); }
-        .leader-desc { font-size: 0.85rem; color: rgba(255,255,255,0.7); line-height: 1.5; font-weight: 600; text-align: center; width: 100%; word-break: break-word;}
+        .leader-desc { color: rgba(255,255,255,0.7); line-height: 1.5; font-weight: 600; text-align: center; width: 100%; word-break: break-word;}
         [data-theme="light"] .leader-desc { color: var(--text-muted); }
 
         .premium-list { width: 100%; max-width: 700px; display: flex; flex-direction: column; gap: 10px; position: relative; z-index: 2;}
-        .list-row { padding: 0.8rem 1rem; display: flex; align-items: center; gap: 15px; transition: transform 0.3s; }
+        .list-row { padding: 15px; display: flex; align-items: center; gap: 15px; transition: transform 0.3s; }
         .list-row:hover { background: rgba(157, 78, 221, 0.08); border-color: rgba(157, 78, 221, 0.3); transform: scale(1.02); }
-        .rank-num { font-size: 1.2rem; font-weight: 900; color: rgba(255,255,255,0.3); width: 30px; text-align: center; }
+        .rank-num { font-size: 1.3rem; font-weight: 900; color: rgba(255,255,255,0.3); width: 30px; text-align: center; }
         [data-theme="light"] .rank-num { color: rgba(0,0,0,0.3); }
         .rank-1 .rank-num { color: #d4af37; text-shadow: 0 0 10px rgba(227, 179, 65, 0.5);} .rank-2 .rank-num { color: #cbd5e1; } .rank-3 .rank-num { color: #cd7f32; }
         .list-info { display: flex; align-items: center; gap: 12px; flex: 1; overflow: hidden; }
         .list-img { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.1); }
         .group-img { border-radius: 6px; }
-        .list-name { font-weight: bold; font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .list-name { font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .progress-container { flex: 1.5; display: flex; flex-direction: column; gap: 5px; justify-content: center;}
         .progress-track { width: 100%; height: 6px; background: rgba(0,0,0,0.5); border-radius: 10px; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.5); }
         [data-theme="light"] .progress-track { background: rgba(0,0,0,0.08); box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);}
         .progress-fill { height: 100%; border-radius: 10px; transition: width 1s ease-out; box-shadow: 0 0 10px currentColor;}
-        .score-val { font-weight: 900; font-size: 1.05rem; }
+        .score-val { font-weight: 900; font-size: 1.1rem; }
 
-        .tournaments-grid { width: 100%; max-width: 750px; display: flex; flex-direction: column; gap: 1rem; }
-        .tour-card { padding: 1.25rem; transition: transform 0.4s; overflow: hidden;}
+        .tournaments-grid { width: 100%; max-width: 750px; display: flex; flex-direction: column; gap: 15px; }
+        .tour-card { padding: 20px; transition: transform 0.4s; overflow: hidden;}
         .tour-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary); box-shadow: 0 0 15px var(--primary); }
         html[dir="ltr"] .tour-card::before { left: auto; right: 0; }
         .tour-card:hover { transform: scale(1.02); border-color: rgba(157, 78, 221, 0.3); box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
-        .tour-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.8rem; flex-wrap: wrap; gap: 10px;}
+        .tour-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;}
         .tour-title-box { display: flex; align-items: center; gap: 10px; }
         .tour-title { font-size: 1.15rem; font-weight: 900; color: var(--text-main); }
-        .countdown-box { background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.3); color: #ef4444; padding: 4px 10px; border-radius: 4px; font-weight: bold; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; }
-        .tour-desc { color: rgba(255,255,255,0.7); line-height: 1.7; font-size: 0.9rem; margin-bottom: 1rem; }
+        .countdown-box { background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.3); color: #ef4444; padding: 4px 10px; border-radius: 4px; font-weight: bold; font-size: 14px; display: flex; align-items: center; gap: 6px; }
+        .tour-desc { color: rgba(255,255,255,0.7); line-height: 1.7; margin-bottom: 15px; }
         [data-theme="light"] .tour-desc { color: var(--text-muted); }
         .tour-footer { display: flex; gap: 8px; flex-wrap: wrap; }
-        .info-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 5px 12px; border-radius: 4px; color: var(--text-main); font-weight: bold; font-size: 0.8rem; backdrop-filter: blur(5px);}
+        .info-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 5px 12px; border-radius: 4px; color: var(--text-main); font-weight: bold; font-size: 13px; backdrop-filter: blur(5px);}
         [data-theme="light"] .info-badge { background: rgba(0,0,0,0.03); }
         .prize-badge { border-color: rgba(227, 179, 65, 0.3); background: rgba(227, 179, 65, 0.1); color: #d4af37; }
         .admin-copy-btn { cursor: pointer; transition: 0.3s; } .admin-copy-btn:hover { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 0 15px var(--primary-glow);}
 
-        .links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; width: 100%; max-width: 850px; }
-        .link-card { display: flex; align-items: center; gap: 15px; padding: 1.25rem; text-decoration: none; color: var(--text-main); transition: transform 0.4s, border-color 0.4s, box-shadow 0.4s; border-radius: 16px; position: relative; overflow: hidden; }
+        .links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; width: 100%; max-width: 850px; }
+        .link-card { display: flex; align-items: center; gap: 15px; padding: 20px; text-decoration: none; color: var(--text-main); transition: transform 0.4s, border-color 0.4s, box-shadow 0.4s; border-radius: 16px; position: relative; overflow: hidden; }
         .link-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 10px 25px var(--primary-glow); }
         .link-icon { font-size: 1.8rem; color: var(--primary); transition: transform 0.3s, color 0.3s; }
         .link-card:hover .link-icon { transform: scale(1.1); color: #fff; }
         .link-info { display: flex; flex-direction: column; gap: 4px; }
         .link-title { font-weight: 900; font-size: 1.1rem; }
-        .link-sub { font-size: 0.85rem; color: var(--text-muted); font-weight: bold; line-height: 1.4; }
+        .link-sub { color: var(--text-muted); font-weight: bold; line-height: 1.4; }
 
-        .glass-desc-text { color: rgba(255,255,255,0.85); font-size: 1rem; }
+        .glass-desc-text { color: rgba(255,255,255,0.85); }
         [data-theme="light"] .glass-desc-text { color: var(--text-muted); }
 
         /* Weekly Video Showcase Styles */
         .video-glow-box { position: relative; width: 100%; max-width: 320px; border-radius: 16px; padding: 4px; background: linear-gradient(135deg, rgba(157, 78, 221, 0.4), rgba(255, 255, 255, 0.05)); box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin: 0 auto; transition: 0.3s;}
         .video-glow-box:hover { box-shadow: 0 15px 40px var(--primary-glow); }
         .video-glow-box video { width: 100%; display: block; border-radius: 12px; max-height: 70vh; object-fit: cover; background: #000; }
+        
+        .parsed-timestamps-box { width: 100%; max-width: 600px; text-align: left; padding: 0 10px; white-space: pre-wrap; line-height: 1.8; color: rgba(255,255,255,0.9); direction: ltr !important;}
+        [data-theme="light"] .parsed-timestamps-box { color: var(--text-muted); }
+        
+        .ts-header { color: var(--primary); font-family: 'Rajdhani', sans-serif; font-size: 1.15rem; font-weight: bold; border-bottom: 1px solid var(--glass-border); padding-bottom: 3px; display: inline-block; margin-top: 15px; margin-bottom: 5px; width: 100%; text-shadow: 0 0 8px var(--primary-glow);}
+        
+        .time-link { display: inline-block; background: rgba(157, 78, 221, 0.15); color: var(--primary); padding: 2px 8px; border-radius: 6px; cursor: pointer; transition: 0.3s; font-weight: bold; border: 1px solid rgba(157, 78, 221, 0.3); margin: 2px 0;}
+        .time-link:hover { background: var(--primary); color: #fff; box-shadow: 0 0 10px var(--primary-glow); transform: translateY(-1px);}
+        [data-theme="light"] .time-link { background: rgba(123, 44, 191, 0.1); border-color: rgba(123, 44, 191, 0.2); }
+        [data-theme="light"] .time-link:hover { background: var(--primary); color: #fff; }
 
-        #toast { visibility: hidden; min-width: 200px; background: rgba(15, 15, 20, 0.95); backdrop-filter: blur(10px); color: #fff; text-align: center; border-radius: 10px; padding: 12px 20px; position: fixed; z-index: 9999; left: 50%; bottom: 25px; transform: translateX(-50%); font-size: 0.9rem; transition: opacity 0.4s, bottom 0.4s; opacity: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid var(--primary); font-family: 'Cairo', sans-serif; font-weight:bold;}
+        #toast { visibility: hidden; min-width: 200px; background: rgba(15, 15, 20, 0.95); backdrop-filter: blur(10px); color: #fff; text-align: center; border-radius: 10px; padding: 12px 20px; position: fixed; z-index: 9999; left: 50%; bottom: 25px; transform: translateX(-50%); font-size: 14px; transition: opacity 0.4s, bottom 0.4s; opacity: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid var(--primary); font-family: 'Cairo', sans-serif; font-weight:bold;}
         #toast.show { visibility: visible; bottom: 95px; opacity: 1; }
 
         @media (max-width: 600px) {
-            .main-lang-switch { margin-top: 5.5rem; margin-bottom: 0.5rem; } 
-            .main-lang-switch .lang-btn { padding: 0.3rem 1rem; font-size: 0.85rem; }
+            .main-lang-switch { margin-top: 85px; margin-bottom: 10px; } 
+            .main-lang-switch .lang-btn { padding: 6px 15px; }
             .blob { filter: blur(40px); opacity: 0.25; } 
             .glass-panel, .navbar { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-            section { padding: 2rem 0.8rem 1.25rem; }
-            .hero { height: 35dvh; margin-top: 1rem;}
-            .hero h2 { font-size: 2.2rem; } .hero p { font-size: 1rem; }
-            .section-title { font-size: 1.4rem; margin-bottom: 1.5rem; }
+            section { padding: 35px 15px 20px; }
+            .hero { height: 35dvh; margin-top: 15px;}
+            .hero h2 { font-size: 2.5rem; }
+            .section-title { font-size: 1.4rem; margin-bottom: 25px; }
             
-            .news-slider { padding: 1.5rem 0; gap: 15px; } 
-            .news-slide-card { width: 88vw; flex: 0 0 88vw; padding: 1.5rem 1.25rem; } 
+            .news-slider { padding: 25px 0; gap: 15px; } 
+            .news-slide-card { width: 88vw; flex: 0 0 88vw; padding: 25px 20px; } 
             .news-slide-card:first-child { margin-inline-start: 6vw; }
             .news-slide-card:last-child { margin-inline-end: 6vw; }
             
             .news-headline { font-size: 1.25rem; } 
-            .news-body { font-size: 0.95rem; }
             .news-bottom-wrapper { max-width: 320px; gap: 15px; margin-top: 0; }
             .slider-controls { margin-top: 0px; padding: 0; } 
             
@@ -405,19 +407,16 @@
             .global-leaders-grid { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 12px; width: 100%; } 
             .links-grid { display: grid !important; grid-template-columns: 1fr !important; gap: 12px; width: 100%; }
             
-            .card { padding: 1.5rem 0.6rem; width: 100%; max-width: none; }
+            .card { padding: 25px 10px; width: 100%; max-width: none; }
             .card h3 { font-size: 1.2rem; margin-bottom: 5px; }
-            .card p { font-size: 0.9rem; line-height: 1.5; }
             
-            .global-leader { padding: 1rem 0.6rem; gap: 8px; }
+            .global-leader { padding: 15px 10px; gap: 8px; }
             .global-leader img { width: 60px; height: 60px; margin-bottom: 2px; }
             .leader-name-box h3 { font-size: 1rem; }
-            .leader-desc { font-size: 0.8rem; }
             
-            .list-row { padding: 0.6rem; gap: 8px; } .rank-num { font-size: 1rem; width: 20px; } .list-img { width: 30px; height: 30px; } .list-name { font-size: 0.9rem; } .score-val { font-size: 0.95rem; }
-            .tour-card { padding: 1.25rem 1rem; } .tour-title { font-size: 1.05rem; } .tour-desc { font-size: 0.85rem; margin-bottom: 12px;} .tour-footer { flex-direction: column; gap: 8px; } .info-badge { width: 100%; justify-content: center; font-size: 0.8rem; padding: 6px;}
+            .list-row { padding: 10px; gap: 8px; } .rank-num { font-size: 1rem; width: 20px; } .list-img { width: 30px; height: 30px; } .list-name { font-size: 0.95rem; } .score-val { font-size: 1rem; }
+            .tour-card { padding: 20px 15px; } .tour-title { font-size: 1.05rem; } .tour-footer { flex-direction: column; gap: 8px; } .info-badge { width: 100%; justify-content: center; padding: 6px;}
             .server-tabs { flex-wrap: wrap !important; justify-content: center !important; gap: 10px; padding-bottom: 10px; }
-            .submit-btn, .cancel-btn { padding: 0.65rem 1.25rem; font-size: 0.9rem; }
         }
     </style>
 </head>
@@ -436,7 +435,8 @@
     <div class="particles" id="particles"></div>
 
     <nav class="navbar" dir="ltr">
-        <h1>Plato<span>X</span></h1>
+        <!-- الاسم الثابت بالانجليزي -->
+        <h1 class="num-font">Plato<span>X</span></h1>
         <div class="nav-actions">
             <i class="fa-solid fa-moon theme-toggle" id="theme-icon" onclick="toggleTheme();"></i>
             <a href="https://discord.gg/plato" target="_blank"><i class="fa-brands fa-discord"></i></a>
@@ -451,14 +451,15 @@
 
     <main id="view-home" class="tab-view active-view">
         <section class="hero" id="hero">
-            <h2><span data-i18n="hero_title_pre">مجتمع</span><span class="hero-x">X</span> <span data-i18n="hero_title_sub">العربي</span></h2>
+            <!-- الاسم الثابت بالانجليزي في الهيرو -->
+            <h2 class="num-font" dir="ltr">Plato <span class="hero-x">X</span> Community</h2>
             <p data-i18n="hero_desc">يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.</p>
         </section>
 
         <section id="about-site">
             <h2 class="section-title" data-i18n="about_site_title">نبذة عن الموقع</h2>
-            <div class="glass-panel" style="width: 100%; max-width: 700px; padding: 1.8rem 2rem; border-radius: 16px; text-align: center; display: flex; flex-direction: column; align-items: center;">
-                <i class="fa-solid fa-globe" style="color: var(--primary); font-size: 2.2rem; margin-bottom: 1rem;"></i>
+            <div class="glass-panel" style="width: 100%; max-width: 700px; padding: 30px; border-radius: 16px; text-align: center; display: flex; flex-direction: column; align-items: center;">
+                <i class="fa-solid fa-globe" style="color: var(--primary); font-size: 35px; margin-bottom: 15px;"></i>
                 <p class="glass-desc-text" style="font-weight: 600; margin: 0;" data-i18n="about_site_desc">
                     موقع تم تطويره وإدارته بواسطة القادة العرب، ليكون مرجعًا موثوقًا لآخر أخبار تطبيق بلاتو. يوضح القوانين والإرشادات، ويعرّف عن قادة المجتمع، ويسهّل تقديم البلاغات، ويوفر معلومات عن الخادم العربي.
                 </p>
@@ -494,18 +495,18 @@
 
         <section id="bug-report">
             <h2 class="section-title" data-i18n="bug_title">تقديم بلاغ</h2>
-            <div class="glass-panel" style="width: 100%; max-width: 650px; padding: 1.8rem 2rem; border-radius: 16px;">
-                <label style="display:block; margin-bottom: 0.4rem; font-weight: bold; font-size: 1.1rem;" data-i18n="bug_type_label">نوع المشكلة:</label>
-                <span style="display:block; margin-bottom: 1rem; font-size: 0.9rem; color: var(--text-muted); font-weight: 700;" data-i18n="bug_note">هذا القسم غير مخصص للمشاكل الشخصية.</span>
+            <div class="glass-panel" style="width: 100%; max-width: 650px; padding: 30px; border-radius: 16px;">
+                <label style="display:block; margin-bottom: 8px; font-weight: bold; font-size: 18px;" data-i18n="bug_type_label">نوع المشكلة:</label>
+                <span style="display:block; margin-bottom: 20px; color: var(--text-muted); font-weight: 700;" data-i18n="bug_note">هذا القسم غير مخصص للمشاكل الشخصية.</span>
                 
-                <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.25rem;">
+                <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
                     <label class="bug-radio">
                         <input type="radio" name="bugType" value="Exploits" onchange="showBugForm()">
-                        <span><strong data-i18n="bug_opt1_title">الثغرات:</strong> <span data-i18n="bug_exp_desc" style="color: var(--text-muted); font-size: 0.95rem;">ثغرات، أخطاء برمجية، أو نسخ معدلة.</span></span>
+                        <span><strong data-i18n="bug_opt1_title">الثغرات:</strong> <span data-i18n="bug_exp_desc" style="color: var(--text-muted);">ثغرات، أخطاء برمجية، أو نسخ معدلة.</span></span>
                     </label>
                     <label class="bug-radio">
                         <input type="radio" name="bugType" value="Serious Technical Issue" onchange="showBugForm()">
-                        <span><strong data-i18n="bug_opt2_title">مشاكل تقنية:</strong> <span data-i18n="bug_tech_desc" style="color: var(--text-muted); font-size: 0.95rem;">أخطاء تقنية ذات تأثير عالي أو مشاكل نظام قابلة للاستغلال المتكرر.</span></span>
+                        <span><strong data-i18n="bug_opt2_title">مشاكل تقنية:</strong> <span data-i18n="bug_tech_desc" style="color: var(--text-muted);">أخطاء تقنية ذات تأثير عالي أو مشاكل نظام قابلة للاستغلال المتكرر.</span></span>
                     </label>
                 </div>
 
@@ -526,64 +527,64 @@
         <section id="guidelines">
             <h2 class="section-title" data-i18n="menu_guidelines">القوانين</h2>
             
-            <div class="glass-panel" style="width: 100%; max-width: 650px; padding: 1.8rem 2rem; border-radius: 16px; margin-bottom: 1.5rem;">
-                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--glass-border);">
-                    <i class="fa-solid fa-users" style="color: var(--primary); font-size: 1.5rem;"></i>
-                    <h3 style="font-size: 1.2rem; margin: 0;" data-i18n="community_guide_title">إرشادات المجتمع</h3>
+            <div class="glass-panel" style="width: 100%; max-width: 650px; padding: 30px; border-radius: 16px; margin-bottom: 25px;">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--glass-border);">
+                    <i class="fa-solid fa-users" style="color: var(--primary); font-size: 24px;"></i>
+                    <h3 style="font-size: 20px; margin: 0;" data-i18n="community_guide_title">إرشادات المجتمع</h3>
                 </div>
-                <p style="margin-bottom: 1rem; font-weight: bold; font-size: 1rem;" data-i18n="community_guide_sub">لا يمكنك القيام بما يلي على بلاتو:</p>
+                <p style="margin-bottom: 15px; font-weight: bold;" data-i18n="community_guide_sub">لا يمكنك القيام بما يلي على بلاتو:</p>
                 <div>
                     <div class="guideline-item">
                         <i class="fa-solid fa-bug guideline-icon"></i>
-                        <div class="guideline-text" data-i18n="comm_guide_1">كسر بلاتو أو القيام بشيء يؤدي إلى تعطيله لشخص آخر.</div>
+                        <div class="guideline-text" data-i18n="comm_guide_1">استغلال أو التدخل في تجربة بلاتو أو تجربة مستخدم آخر.</div>
                     </div>
                     <div class="guideline-item">
                         <i class="fa-solid fa-ranking-star guideline-icon"></i>
-                        <div class="guideline-text" data-i18n="comm_guide_2">الانخراط في تبادل الفوز أو التلاعب بنظام التصنيف.</div>
+                        <div class="guideline-text" data-i18n="comm_guide_2">تبادل الفوز أو التلاعب بنظام التصنيف.</div>
                     </div>
                     <div class="guideline-item">
                         <i class="fa-solid fa-robot guideline-icon"></i>
-                        <div class="guideline-text" data-i18n="comm_guide_3">استخدام برنامج طرف ثالث لزيادة مهارتك أو معرفتك بشكل مصطنع.</div>
+                        <div class="guideline-text" data-i18n="comm_guide_3">استخدام برامج طرف ثالث للحصول على ميزة غير عادلة.</div>
                     </div>
                     <div class="guideline-item">
                         <i class="fa-solid fa-money-bill-transfer guideline-icon"></i>
-                        <div class="guideline-text" data-i18n="comm_guide_4">شراء أو بيع الحسابات مقابل المال الحقيقي.</div>
+                        <div class="guideline-text" data-i18n="comm_guide_4">بيع أو شراء الحسابات مقابل مال حقيقي.</div>
                     </div>
                 </div>
             </div>
 
-            <div class="glass-panel" style="width: 100%; max-width: 650px; padding: 1.8rem 2rem; border-radius: 16px;">
-                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1.25rem; padding-bottom: 1rem; border-bottom: 1px solid var(--glass-border);">
-                    <i class="fa-solid fa-shield-halved" style="color: var(--primary); font-size: 1.5rem;"></i>
-                    <h3 style="font-size: 1.2rem; margin: 0;" data-i18n="guide_title">إرشادات الدردشة في الغرف العامة</h3>
+            <div class="glass-panel" style="width: 100%; max-width: 650px; padding: 30px; border-radius: 16px;">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--glass-border);">
+                    <i class="fa-solid fa-shield-halved" style="color: var(--primary); font-size: 24px;"></i>
+                    <h3 style="font-size: 20px; margin: 0;" data-i18n="guide_title">إرشادات الدردشة في الغرف العامة</h3>
                 </div>
 
                 <div>
                     <div class="guideline-item">
                         <i class="fa-solid fa-ban guideline-icon"></i>
-                        <div class="guideline-text" data-i18n="guide_1">لا تنشر محتوى فاحشًا أو جنسيًا أو إباحيّا أو غير قانوني بشكل صريح.</div>
+                        <div class="guideline-text" data-i18n="guide_1">يُمنع نشر محتوى فاحش، جنسي، إباحي، أو غير قانوني.</div>
                     </div>
                     <div class="guideline-item">
                         <i class="fa-solid fa-user-shield guideline-icon"></i>
-                        <div class="guideline-text" data-i18n="guide_2">لا تنشر معلومات شخصية و/أو سرية تخص مستخدمًا آخر قد تؤدي إلى إيذائه.</div>
+                        <div class="guideline-text" data-i18n="guide_2">يُمنع مشاركة معلومات شخصية أو سرية تخص مستخدمًا آخر.</div>
                     </div>
                     <div class="guideline-item">
                         <i class="fa-solid fa-comment-slash guideline-icon"></i>
-                        <div class="guideline-text" data-i18n="guide_3">لا تقم بإرسال رسائل غير مرغوب فيها (نشر الشيء نفسه أكثر من مرة) أو نشر نصوص تعطل تدفق الدردشة.</div>
+                        <div class="guideline-text" data-i18n="guide_3">يُمنع إرسال رسائل مزعجة (سبام) أو تعطيل سير الدردشة.</div>
                     </div>
                     <div class="guideline-item">
                         <i class="fa-solid fa-hand-fist guideline-icon"></i>
-                        <div class="guideline-text" data-i18n="guide_4">لا تنشر محتوى يشجع على العنف في الحياة الواقعية، أو يشجع على إيذاء النفس أو الانتحار، أو يشجع على العنف تجاه مجموعة معينة من الأشخاص.</div>
+                        <div class="guideline-text" data-i18n="guide_4">يُمنع التشجيع على العنف، إيذاء النفس، الانتحار، أو الكراهية ضد أي مجموعة.</div>
                     </div>
                     <div class="guideline-item">
                         <i class="fa-solid fa-globe guideline-icon"></i>
-                        <div class="guideline-text" data-i18n="guide_5">الدردشة فقط بلغة الخادم الذي تختاره.</div>
+                        <div class="guideline-text" data-i18n="guide_5">استخدم فقط لغة الخادم الذي تم اختياره.</div>
                     </div>
                 </div>
 
                 <div class="guideline-warning">
-                    <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.5rem; flex-shrink: 0;"></i>
-                    <span data-i18n="guide_warning">يقوم قادة الخادم بتطبيق الإرشادات المذكورة أعلاه. سيؤدي انتهاك هذه الإرشادات إلى فقدان القدرة على الدردشة لمدة 4 ساعات وقد يؤدي إلى حظر دائم لحسابك إذا تكرر.</span>
+                    <i class="fa-solid fa-triangle-exclamation" style="font-size: 24px; flex-shrink: 0;"></i>
+                    <span data-i18n="guide_warning">قد يؤدي انتهاك هذه الإرشادات إلى تقييد الدردشة لمدة 4 ساعات أو اتخاذ إجراءات إشرافية إضافية (حظر دائم).</span>
                 </div>
             </div>
         </section>
@@ -628,39 +629,39 @@
     <main id="view-leaders" class="tab-view">
         
         <section id="leaders-intro">
-            <div class="glass-panel" style="width: 100%; max-width: 850px; padding: 1.8rem 2rem; border-radius: 16px; margin-bottom: 5px;">
-                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 0.8rem;">
-                    <i class="fa-solid fa-circle-question" style="color: var(--primary); font-size: 1.5rem;"></i>
-                    <h3 style="font-size: 1.3rem; margin: 0; color: var(--text-main);" data-i18n="who_are_leaders">من هم القادة؟</h3>
+            <div class="glass-panel" style="width: 100%; max-width: 850px; padding: 30px; border-radius: 16px; margin-bottom: 5px;">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                    <i class="fa-solid fa-circle-question" style="color: var(--primary); font-size: 24px;"></i>
+                    <h3 style="font-size: 20px; margin: 0; color: var(--text-main);" data-i18n="who_are_leaders">من هم القادة؟</h3>
                 </div>
-                <p style="color: var(--text-muted); font-size: 1rem; line-height: 1.8; margin-bottom: 1.5rem; font-weight: 700;" data-i18n="who_are_leaders_desc">
-                    القادة هم الممثلون الرسميون للمجتمع داخل اللعبة، وقد تم اختيارهم ليكونوا حلقة وصل بين اللاعبين وفريق تطوير اللعبة. ويتمثل دورهم في المساهمة في بناء بيئة لعب ممتعة، آمنة، وعادلة لجميع أفراد المجتمع.
+                <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 25px; font-weight: 700;" data-i18n="who_are_leaders_desc">
+                    القادة هم الممثلون الرسميون للمجتمع ويعملون كحلقة وصل بين اللاعبين وفريق التطوير، للمساعدة في بناء بيئة ممتعة، آمنة، وعادلة للجميع.
                 </p>
 
-                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--glass-border);">
-                    <i class="fa-solid fa-list-check" style="color: var(--primary); font-size: 1.5rem;"></i>
-                    <h3 style="font-size: 1.3rem; margin: 0; color: var(--text-main);" data-i18n="leaders_tasks">ما مهام القادة؟</h3>
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px; margin-top: 25px; padding-top: 25px; border-top: 1px solid var(--glass-border);">
+                    <i class="fa-solid fa-list-check" style="color: var(--primary); font-size: 24px;"></i>
+                    <h3 style="font-size: 20px; margin: 0; color: var(--text-main);" data-i18n="leaders_tasks">ما مهام القادة؟</h3>
                 </div>
                 <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px; margin:0;">
                     <li class="guideline-item">
                         <i class="fa-solid fa-bug guideline-icon"></i> 
-                        <span class="guideline-text" data-i18n="task_1" style="font-weight: 600;">الإبلاغ عن الأخطاء والمشكلات التقنية، والمساعدة في تحديد أسبابها وخطوات إعادة إنتاجها.</span>
+                        <span class="guideline-text" data-i18n="task_1" style="font-weight: 600;">الإبلاغ عن الأخطاء والمشاكل التقنية لفريق التطوير.</span>
                     </li>
                     <li class="guideline-item">
                         <i class="fa-solid fa-comment-dots guideline-icon"></i> 
-                        <span class="guideline-text" data-i18n="task_2" style="font-weight: 600;">نقل ملاحظات اللاعبين ومشكلاتهم واقتراحاتهم إلى فريق التطوير.</span>
+                        <span class="guideline-text" data-i18n="task_2" style="font-weight: 600;">مشاركة ملاحظات، مخاوف، واقتراحات اللاعبين.</span>
                     </li>
                     <li class="guideline-item">
                         <i class="fa-solid fa-lightbulb guideline-icon"></i> 
-                        <span class="guideline-text" data-i18n="task_3" style="font-weight: 600;">تقديم الأفكار والمقترحات الجديدة التي قد تسهم في تحسين تجربة اللاعبين.</span>
+                        <span class="guideline-text" data-i18n="task_3" style="font-weight: 600;">اقتراح أفكار لتحسين تجربة اللاعبين.</span>
                     </li>
                     <li class="guideline-item">
                         <i class="fa-solid fa-image-portrait guideline-icon"></i> 
-                        <span class="guideline-text" data-i18n="task_4" style="font-weight: 600;">مراجعة وإزالة الصور الشخصية أو السير الذاتية المخالفة وفقًا للقواعد المعتمدة.</span>
+                        <span class="guideline-text" data-i18n="task_4" style="font-weight: 600;">مراجعة وإزالة الملفات الشخصية أو السير الذاتية غير اللائقة.</span>
                     </li>
                     <li class="guideline-item">
                         <i class="fa-solid fa-user-lock guideline-icon"></i> 
-                        <span class="guideline-text" data-i18n="task_5" style="font-weight: 600;">رفع طلبات حظر حسابات المستخدمين الذين يكررون المخالفات، وفقًا للإجراءات المتبعة.</span>
+                        <span class="guideline-text" data-i18n="task_5" style="font-weight: 600;">رفع طلبات الحظر للانتهاكات المتكررة للقوانين.</span>
                     </li>
                     <li class="guideline-item" style="border: none; padding-bottom: 0; margin-bottom: 0;">
                         <i class="fa-solid fa-eye guideline-icon"></i> 
@@ -668,35 +669,35 @@
                     </li>
                 </ul>
 
-                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 0.8rem; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--glass-border);">
-                    <i class="fa-solid fa-user-plus" style="color: var(--primary); font-size: 1.5rem;"></i>
-                    <h3 style="font-size: 1.3rem; margin: 0; color: var(--text-main);" data-i18n="how_to_be_leader">كيف تصبح قائدًا؟</h3>
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px; margin-top: 30px; padding-top: 25px; border-top: 1px solid var(--glass-border);">
+                    <i class="fa-solid fa-user-plus" style="color: var(--primary); font-size: 24px;"></i>
+                    <h3 style="font-size: 20px; margin: 0; color: var(--text-main);" data-i18n="how_to_be_leader">كيف تصبح قائدًا؟</h3>
                 </div>
                 <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px; margin:0;">
                     <li class="guideline-item" style="border: none; padding-bottom: 0; margin-bottom: 0;">
                         <i class="fa-solid fa-check-circle guideline-icon"></i> 
-                        <span class="guideline-text" data-i18n="be_leader_1" style="font-weight: 600;">يتم اختيار القادة بناءً على مدى تفاعلهم الإيجابي في المجتمع.</span>
+                        <span class="guideline-text" data-i18n="be_leader_1" style="font-weight: 600;">يتم اختيار القادة بناءً على تفاعلهم الإيجابي ومشاركتهم الفعالة في المجتمع.</span>
                     </li>
                     <li class="guideline-item" style="border: none; padding-bottom: 0; margin-bottom: 0;">
                         <i class="fa-solid fa-check-circle guideline-icon"></i> 
-                        <span class="guideline-text" data-i18n="be_leader_2" style="font-weight: 600;">يتم ترشيح واختيار القائد من قِبل القادة الحاليين، ثم يخضع الترشيح لموافقة مطوّر اللعبة قبل اعتماده رسميًا.</span>
+                        <span class="guideline-text" data-i18n="be_leader_2" style="font-weight: 600;">يتم ترشيح المرشحين من قِبل القادة الحاليين ويجب الموافقة عليهم من قِبل مطور اللعبة.</span>
                     </li>
                 </ul>
-                <div class="guideline-warning" style="background: rgba(157, 78, 221, 0.1); border-color: rgba(157, 78, 221, 0.3); color: var(--text-main); margin-top: 1rem;">
-                    <i class="fa-solid fa-circle-info" style="color: var(--primary); font-size: 1.5rem; flex-shrink: 0;"></i>
-                    <span data-i18n="be_leader_note" style="font-weight: 600;">ملاحظة: قد يتم تعيين قائد جديد عندما يرى القادة الحاليون وجود حاجة إلى قائد إضافي. ويُسمح بوجود 4 قادة كحد أقصى في كل سيرفر.</span>
+                <div class="guideline-warning" style="background: rgba(157, 78, 221, 0.1); border-color: rgba(157, 78, 221, 0.3); color: var(--text-main); margin-top: 20px;">
+                    <i class="fa-solid fa-circle-info" style="color: var(--primary); font-size: 24px; flex-shrink: 0;"></i>
+                    <span data-i18n="be_leader_note" style="font-weight: 600;">يتم تعيين قادة جدد عند الحاجة، بحد أقصى 4 قادة لكل خادم.</span>
                 </div>
                 
                 <!-- Community Feedback Section -->
-                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 0.8rem; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--glass-border);">
-                    <i class="fa-solid fa-comments" style="color: var(--primary); font-size: 1.5rem;"></i>
-                    <h3 style="font-size: 1.3rem; margin: 0; color: var(--text-main);" data-i18n="feedback_title">آراء المجتمع</h3>
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px; margin-top: 30px; padding-top: 25px; border-top: 1px solid var(--glass-border);">
+                    <i class="fa-solid fa-comments" style="color: var(--primary); font-size: 24px;"></i>
+                    <h3 style="font-size: 20px; margin: 0; color: var(--text-main);" data-i18n="feedback_title">آراء المجتمع</h3>
                 </div>
-                <p style="color: var(--text-muted); font-size: 1rem; line-height: 1.8; margin-bottom: 1.25rem; font-weight: 600;" data-i18n="feedback_desc">
+                <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 20px; font-weight: 600;" data-i18n="feedback_desc">
                     مساحتك لمشاركة الأفكار والمقترحات حول اللعبة، وتقديم الملاحظات حول تجربتك في المجتمع، بما يسهم في تطوير المجتمع وتحسين تجربة اللاعبين.
                 </p>
-                <div style="text-align: right;">
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfdTHwSEhAB_apQrXarWH9TswkuEPgkDVBt33ndhIB97sIwFg/viewform" target="_blank" class="submit-btn" style="flex: 0 1 auto; display: inline-flex;">
+                <div style="display: flex; justify-content: flex-end; width: 100%;">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfdTHwSEhAB_apQrXarWH9TswkuEPgkDVBt33ndhIB97sIwFg/viewform" target="_blank" class="submit-btn" style="flex: 0 1 auto;">
                         <i class="fa-solid fa-paper-plane"></i> <span data-i18n="feedback_btn">تقديم الاقتراحات والملاحظات</span>
                     </a>
                 </div>
@@ -755,21 +756,23 @@
 
         <!-- Weekly Showcase Section (Moved to the very top) -->
         <section id="weekly-showcase" style="display: none;">
-            <h2 class="section-title num-font" style="letter-spacing: 2px;" data-i18n="weekly_showcase_title">WEEKLY GAME ITEMS</h2>
-            <div class="glass-panel" style="width: 100%; max-width: 750px; padding: 1.8rem 1.2rem; border-radius: 16px; display: flex; flex-direction: column; align-items: center;">
+            <h2 class="section-title num-font" style="letter-spacing: 2px;" data-i18n="weekly_showcase_title">عناصر الألعاب الأسبوعية</h2>
+            <div class="glass-panel" style="width: 100%; max-width: 750px; padding: 30px 20px; border-radius: 16px; display: flex; flex-direction: column; align-items: center;">
                 
-                <p class="glass-desc-text" style="font-weight: 600; text-align: center; margin-bottom: 1rem;" data-i18n="weekly_showcase_desc">
+                <p class="glass-desc-text" style="font-weight: 600; text-align: center; margin-bottom: 20px;" data-i18n="weekly_showcase_desc">
                     استكشف احدث العناصر المتوفرة لهذا الاسبوع.
                 </p>
 
                 <!-- Weekly Name (from Column I) -->
-                <h3 id="weekly-week-name" class="num-font" style="text-align: center; color: var(--primary); margin-bottom: 1rem; font-size: 1.3rem; display: none; text-shadow: 0 0 10px var(--primary-glow);"></h3>
+                <h3 id="weekly-week-name" class="num-font" style="text-align: center; color: var(--primary); margin-bottom: 15px; font-size: 22px; display: none; text-shadow: 0 0 10px var(--primary-glow);"></h3>
 
                 <!-- Video Player -->
                 <div class="video-glow-box" style="margin-bottom: 0;">
                     <video id="weekly-video" src="" controls playsinline preload="metadata"></video>
                 </div>
 
+                <!-- Timestamps Box hidden completely -->
+                <div class="parsed-timestamps-box" id="timestamps-container" dir="ltr" style="display:none;"></div>
             </div>
         </section>
 
@@ -844,9 +847,9 @@
         <!-- Join Us Section -->
         <section id="join-us">
             <h2 class="section-title" data-i18n="join_us_title">انضم إلينا</h2>
-            <div class="glass-panel" style="width: 100%; max-width: 750px; padding: 1.8rem 2rem; border-radius: 16px; text-align: center; display: flex; flex-direction: column; align-items: center;">
-                <i class="fa-brands fa-discord" style="color: var(--discord-color); font-size: 2.5rem; margin-bottom: 1rem;"></i>
-                <p class="glass-desc-text" style="font-weight: 600; margin-bottom: 1.25rem;" data-i18n="join_us_desc">
+            <div class="glass-panel" style="width: 100%; max-width: 750px; padding: 30px; border-radius: 16px; text-align: center; display: flex; flex-direction: column; align-items: center;">
+                <i class="fa-brands fa-discord" style="color: var(--discord-color); font-size: 40px; margin-bottom: 15px;"></i>
+                <p class="glass-desc-text" style="font-weight: 600; margin-bottom: 20px;" data-i18n="join_us_desc">
                     إذا كانت لديكم بطولة في مجموعتكم ترغبون بإضافتها، أو تعتقدون أن حسابكم يستحق المنافسة ضمن أقدم الحسابات، أرسلوا لنا التفاصيل عبر الديسكورد من هنا.
                 </p>
                 <a href="https://discord.com/channels/1476420629698711778/1476603091095916738" target="_blank" class="submit-btn" style="flex: 0 1 auto; background-color: var(--discord-color); display: inline-flex;">
@@ -1131,31 +1134,31 @@
             ar: {
                 nav_home: "الرئيسية", nav_leaders: "حول القادة", nav_leaderboard: "استكشف",
                 pull_refresh: "جاري التحديث...", menu_guidelines: "القوانين",
-                hero_title_pre: "مجتمع", hero_title_sub: "العربي", hero_desc: "يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.",
+                hero_desc: "يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.",
                 about_site_title: "نبذة عن الموقع",
                 about_site_desc: "موقع تم تطويره وإدارته بواسطة القادة العرب، ليكون مرجعًا موثوقًا لآخر أخبار تطبيق بلاتو. يوضح القوانين والإرشادات، ويعرّف عن قادة المجتمع، ويسهّل تقديم البلاغات، ويوفر معلومات عن الخادم العربي.",
                 leaders_title: "القادة العرب", global_leaders_title: "قادة السيرفرات العالمية", news_board_title: "لوحة أخبار المجتمع", players_title: "اللاعبين الاقدم", spending_title: "ترتيب المجموعات الأكثر إنفاقًا", tournaments_title: "مركز البطولات",
                 bug_title: "تقديم بلاغ", bug_type_label: "نوع المشكلة:", bug_note: "هذا القسم غير مخصص للمشاكل الشخصية.", bug_opt1_title: "الثغرات:", bug_opt2_title: "مشاكل تقنية:", bug_exp_desc: "ثغرات، أخطاء برمجية، أو نسخ معدلة.", bug_tech_desc: "أخطاء تقنية ذات تأثير عالي أو مشاكل نظام قابلة للاستغلال المتكرر.", bug_submit: "إرسال البلاغ", bug_cancel: "إلغاء",
                 who_are_leaders: "من هم القادة؟",
-                who_are_leaders_desc: "القادة هم الممثلون الرسميون للمجتمع داخل اللعبة، وقد تم اختيارهم ليكونوا حلقة وصل بين اللاعبين وفريق تطوير اللعبة. ويتمثل دورهم في المساهمة في بناء بيئة لعب ممتعة، آمنة، وعادلة لجميع أفراد المجتمع.",
+                who_are_leaders_desc: "القادة هم الممثلون الرسميون للمجتمع ويعملون كحلقة وصل بين اللاعبين وفريق التطوير، للمساعدة في بناء بيئة ممتعة، آمنة، وعادلة للجميع.",
                 leaders_tasks: "ما مهام القادة؟",
-                task_1: "الإبلاغ عن الأخطاء والمشكلات التقنية، والمساعدة في تحديد أسبابها وخطوات إعادة إنتاجها.",
-                task_2: "نقل ملاحظات اللاعبين ومشكلاتهم واقتراحاتهم إلى فريق التطوير.",
-                task_3: "تقديم الأفكار والمقترحات الجديدة التي قد تسهم في تحسين تجربة اللاعبين.",
-                task_4: "مراجعة وإزالة الصور الشخصية أو السير الذاتية المخالفة وفقًا للقواعد المعتمدة.",
-                task_5: "رفع طلبات حظر حسابات المستخدمين الذين يكررون المخالفات، وفقًا للإجراءات المتبعة.",
+                task_1: "الإبلاغ عن الأخطاء والمشاكل التقنية لفريق التطوير.",
+                task_2: "مشاركة ملاحظات، مخاوف، واقتراحات اللاعبين.",
+                task_3: "اقتراح أفكار لتحسين تجربة اللاعبين.",
+                task_4: "مراجعة وإزالة الملفات الشخصية أو السير الذاتية غير اللائقة.",
+                task_5: "رفع طلبات الحظر للانتهاكات المتكررة للقوانين.",
                 task_6: "الإشراف على الغرف واتخاذ الإجراءات المناسبة.",
                 how_to_be_leader: "كيف تصبح قائدًا؟",
-                be_leader_1: "يتم اختيار القادة بناءً على مدى تفاعلهم الإيجابي في المجتمع.",
-                be_leader_2: "يتم ترشيح واختيار القائد من قِبل القادة الحاليين، ثم يخضع الترشيح لموافقة مطوّر اللعبة قبل اعتماده رسميًا.",
-                be_leader_note: "ملاحظة: قد يتم تعيين قائد جديد عندما يرى القادة الحاليون وجود حاجة إلى قائد إضافي. ويُسمح بوجود 4 قادة كحد أقصى في كل سيرفر.",
+                be_leader_1: "يتم اختيار القادة بناءً على تفاعلهم الإيجابي ومشاركتهم الفعالة في المجتمع.",
+                be_leader_2: "يتم ترشيح المرشحين من قِبل القادة الحاليين ويجب الموافقة عليهم من قِبل مطور اللعبة.",
+                be_leader_note: "يتم تعيين قادة جدد عند الحاجة، بحد أقصى 4 قادة لكل خادم.",
                 feedback_title: "آراء المجتمع",
                 feedback_desc: "مساحتك لمشاركة الأفكار والمقترحات حول اللعبة، وتقديم الملاحظات حول تجربتك في المجتمع، بما يسهم في تطوير المجتمع وتحسين تجربة اللاعبين.",
                 feedback_btn: "تقديم الاقتراحات والملاحظات",
                 join_us_title: "انضم إلينا",
                 join_us_desc: "إذا كانت لديكم بطولة في مجموعتكم ترغبون بإضافتها، أو تعتقدون أن حسابكم يستحق المنافسة ضمن أقدم الحسابات، أرسلوا لنا التفاصيل عبر الديسكورد من هنا.",
                 join_us_btn: "تواصل معنا",
-                weekly_showcase_title: "WEEKLY GAME ITEMS",
+                weekly_showcase_title: "عناصر الألعاب الأسبوعية",
                 weekly_showcase_desc: "استكشف احدث العناصر المتوفرة لهذا الاسبوع.",
                 desc_yyy: "صانع الأثر، يقود برؤية مستقبلية لخلق بيئة إيجابية لا تعرف المستحيل.", desc_hat: "حضور راسخ، تقود المجتمع بثقة راسخة وترسم معايير الرقي.", desc_bbb: "الحكمة في اتخاذ القرار، يوازن بين الحزم والهدوء لإدارة الأزمات باحترافية.",
                 news_newer: "الأحدث", news_older: "الأقدم",
@@ -1163,17 +1166,17 @@
                 th_player: "اللاعب", th_days: "يوم",
                 community_guide_title: "إرشادات المجتمع",
                 community_guide_sub: "لا يمكنك القيام بما يلي على بلاتو:",
-                comm_guide_1: "كسر بلاتو أو القيام بشيء يؤدي إلى تعطيله لشخص آخر.",
-                comm_guide_2: "الانخراط في تبادل الفوز أو التلاعب بنظام التصنيف.",
-                comm_guide_3: "استخدام برنامج طرف ثالث لزيادة مهارتك أو معرفتك بشكل مصطنع.",
-                comm_guide_4: "شراء أو بيع الحسابات مقابل المال الحقيقي.",
+                comm_guide_1: "استغلال أو التدخل في تجربة بلاتو أو تجربة مستخدم آخر.",
+                comm_guide_2: "تبادل الفوز أو التلاعب بنظام التصنيف.",
+                comm_guide_3: "استخدام برامج طرف ثالث للحصول على ميزة غير عادلة.",
+                comm_guide_4: "بيع أو شراء الحسابات مقابل مال حقيقي.",
                 guide_title: "إرشادات الدردشة في الغرف العامة",
-                guide_1: "لا تنشر محتوى فاحشًا أو جنسيًا أو إباحيّا أو غير قانوني بشكل صريح.",
-                guide_2: "لا تنشر معلومات شخصية و/أو سرية تخص مستخدمًا آخر قد تؤدي إلى إيذائه.",
-                guide_3: "لا تقم بإرسال رسائل غير مرغوب فيها (نشر الشيء نفسه أكثر من مرة) أو نشر نصوص تعطل تدفق الدردشة.",
-                guide_4: "لا تنشر محتوى يشجع على العنف في الحياة الواقعية، أو يشجع على إيذاء النفس أو الانتحار، أو يشجع على العنف تجاه مجموعة معينة من الأشخاص.",
-                guide_5: "الدردشة فقط بلغة الخادم الذي تختاره.",
-                guide_warning: "يقوم قادة الخادم بتطبيق الإرشادات المذكورة أعلاه. سيؤدي انتهاك هذه الإرشادات إلى فقدان القدرة على الدردشة لمدة 4 ساعات وقد يؤدي إلى حظر دائم لحسابك إذا تكرر.",
+                guide_1: "يُمنع نشر محتوى فاحش، جنسي، إباحي، أو غير قانوني.",
+                guide_2: "يُمنع مشاركة معلومات شخصية أو سرية تخص مستخدمًا آخر.",
+                guide_3: "يُمنع إرسال رسائل مزعجة (سبام) أو تعطيل سير الدردشة.",
+                guide_4: "يُمنع التشجيع على العنف، إيذاء النفس، الانتحار، أو الكراهية ضد أي مجموعة.",
+                guide_5: "استخدم فقط لغة الخادم الذي تم اختياره.",
+                guide_warning: "قد يؤدي انتهاك هذه الإرشادات إلى تقييد الدردشة لمدة 4 ساعات أو اتخاذ إجراءات إشرافية إضافية (حظر دائم).",
                 bday_yyy: "1 يناير", bday_hat: "1 سبتمبر",
                 links_title: "مواقع ذات صلة", link_platopedia: "Platopedia", link_werepedia: "Werepedia", link_monsterpedia: "Monsterpedia",
                 link_plato_desc: "الموقع الرسمي والأساسي للعبة بلاتو، ويضم المعلومات والخدمات الرئيسية المتعلقة باللعبة.",
@@ -1185,24 +1188,24 @@
             en: {
                 nav_home: "Home", nav_leaders: "About Leaders", nav_leaderboard: "Explore",
                 pull_refresh: "Updating...", menu_guidelines: "GUIDELINES",
-                hero_title_pre: "Plato", hero_title_sub: "Community", hero_desc: "Where gaming enthusiasts meet to experience thrilling moments, build true friendships, and create eternal memories.",
+                hero_desc: "Where gaming enthusiasts meet to experience thrilling moments, build true friendships, and create eternal memories.",
                 about_site_title: "About the Website",
                 about_site_desc: "A website developed and managed by the Arabic Leaders, serving as a trusted source for the latest Plato news. It provides rules and guidelines, introduces the community leaders, makes reporting easier, and provides information about the Arabic server.",
                 leaders_title: "ARABIC LEADERS", global_leaders_title: "GLOBAL SERVERS LEADERS", news_board_title: "COMMUNITY NEWS BOARD", players_title: "OLDEST PLAYERS", spending_title: "TOP SPENDING GROUPS", tournaments_title: "TOURNAMENTS",
                 bug_title: "Bug Reporting", bug_type_label: "Issue Type:", bug_note: "This section is not for personal issues.", bug_opt1_title: "Exploits:", bug_opt2_title: "Serious Technical Issue:", bug_exp_desc: "Bugs, glitches, or modified clients.", bug_tech_desc: "High-impact bugs or system problems that can be repeatedly abused.", bug_submit: "Submit Report", bug_cancel: "Cancel",
                 who_are_leaders: "Who are the Leaders?",
-                who_are_leaders_desc: "Leaders are the official representatives of the community in-game, chosen to be a bridge between the players and the development team. Their role is to contribute to building a fun, safe, and fair gaming environment for all community members.",
+                who_are_leaders_desc: "Leaders are official community representatives who act as a bridge between players and the development team, helping build a fun, safe, and fair environment for everyone.",
                 leaders_tasks: "What are the Leaders' tasks?",
-                task_1: "Reporting bugs and technical issues, assisting in identifying their causes and reproduction steps.",
-                task_2: "Conveying player feedback, problems, and suggestions to the development team.",
-                task_3: "Providing new ideas and proposals that may contribute to improving the players' experience.",
-                task_4: "Reviewing and removing inappropriate profile pictures or bios according to approved rules.",
-                task_5: "Submitting ban requests for users who repeatedly violate rules, according to established procedures.",
-                task_6: "Moderating rooms and taking appropriate actions.",
-                how_to_be_leader: "How to Become a Leader?",
-                be_leader_1: "Leaders are selected based on their positive engagement and active involvement within the community.",
-                be_leader_2: "Candidates are nominated and selected by the current Leaders, after which the nomination must be approved by the game developer before the candidate is officially appointed.",
-                be_leader_note: "Note: A new Leader may be appointed when the current Leaders feel one is needed. Each server can have up to 4 Leaders.",
+                task_1: "Reporting bugs and technical issues to the development team.",
+                task_2: "Sharing player feedback, concerns, and suggestions.",
+                task_3: "Proposing ideas to improve the player experience.",
+                task_4: "Reviewing and removing inappropriate profiles or bios.",
+                task_5: "Submitting ban requests for repeated rule violations.",
+                task_6: "Moderating rooms and taking appropriate action.",
+                how_to_be_leader: "How to become a leader?",
+                be_leader_1: "Leaders are chosen based on their positive engagement and active involvement in the community.",
+                be_leader_2: "Candidates are nominated by current Leaders and must be approved by the game developer.",
+                be_leader_note: "New Leaders are appointed when needed, with a maximum of 4 Leaders per server.",
                 feedback_title: "Community Feedback",
                 feedback_desc: "A place to share your ideas and suggestions about the game, give feedback on your experience in the community, and help make the community a better place for everyone.",
                 feedback_btn: "Submit Feedback & Ideas",
@@ -1217,17 +1220,17 @@
                 th_player: "PLAYER", th_days: "DAYS",
                 community_guide_title: "Community Guidelines",
                 community_guide_sub: "You can't do the following on Plato:",
-                comm_guide_1: "Breaking Plato or doing something that breaks Plato for another person.",
-                comm_guide_2: "Engaging in win-trading or otherwise manipulating the ranking system.",
-                comm_guide_3: "Using a third-party program to artificially increase your skill or knowledge.",
-                comm_guide_4: "Buying or selling accounts for real money.",
+                comm_guide_1: "Exploit or interfere with Plato or another user's experience.",
+                comm_guide_2: "Win-trade or manipulate the ranking system.",
+                comm_guide_3: "Use third-party programs to gain an unfair advantage.",
+                comm_guide_4: "Buy or sell accounts for real money.",
                 guide_title: "Public Room Chat Guidelines",
-                guide_1: "Do not post content that is explicitly obscene, sexual, pornographic, or illegal.",
-                guide_2: "Do not post personal and/or confidential information belonging to another user that could potentially harm them.",
-                guide_3: "Do not spam (posting the same thing more than once) or otherwise post text disrupts the flow of chat.",
-                guide_4: "Do not post content that encourages violence in real life, or encourages self-harm or suicide, or encourages violence towards a specific group of people.",
-                guide_5: "Chat only in the language of the server you select.",
-                guide_warning: "Server Leaders enforce the guidelines listed above. Breaking these Public Room Chat Guidelines will result in losing the ability to chat for 4 hours and may result in a permanent ban of your account if frequent.",
+                guide_1: "No obscene, sexual, pornographic, or illegal content.",
+                guide_2: "Do not share another user's personal or confidential information.",
+                guide_3: "Do not spam or disrupt the flow of chat.",
+                guide_4: "Do not encourage violence, self-harm, suicide, or hate against any group.",
+                guide_5: "Use only the language of the selected server.",
+                guide_warning: "Breaking these guidelines may result in a 4 hour chat restriction or further moderation action (permanent ban).",
                 bday_yyy: "January 1", bday_hat: "September 1",
                 links_title: "RELATED SITES", link_platopedia: "Platopedia", link_werepedia: "Werepedia", link_monsterpedia: "Monsterpedia",
                 link_plato_desc: "The official website for Plato, featuring the game's main services and information.",
