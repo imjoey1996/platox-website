@@ -96,7 +96,6 @@
             100% { transform: translate(-5%, -5%) scale(0.9) rotate(360deg); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
         }
 
-        /* Server Colors Shifting Animation */
         @keyframes colorShift { 
             0% { background: #1A2F66; } 
             20% { background: #CBA276; } 
@@ -125,15 +124,14 @@
         .navbar h1 { font-size: 24px; font-weight: 900; letter-spacing: 1px; display: flex; align-items: baseline; margin: 0; }
         .navbar h1 span { 
             color: var(--primary); 
-            font-size: 1.3em; 
+            font-size: 1.4em; 
             transform: translateY(2px); 
             margin-left: 2px;
-            text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary-glow);
-            animation: navXGlow 2.5s infinite alternate ease-in-out;
+            animation: navXGlow 2s infinite alternate ease-in-out;
         }
         @keyframes navXGlow {
-            0% { text-shadow: 0 0 5px var(--primary), 0 0 10px var(--primary-glow); }
-            100% { text-shadow: 0 0 15px var(--primary), 0 0 30px #d8b4fe; }
+            0% { text-shadow: 0 0 8px var(--primary), 0 0 15px var(--primary-glow); }
+            100% { text-shadow: 0 0 20px var(--primary), 0 0 40px #d8b4fe, 0 0 60px var(--primary); }
         }
         
         .nav-actions { display: flex; align-items: center; gap: 15px; }
@@ -199,7 +197,14 @@
         
         .hero { height: 35dvh; justify-content: center; text-align: center; padding: 0 15px; margin-top: 5px;}
         .hero h2 { font-size: 3.2rem; font-weight: 900; margin-bottom: 10px; color: #fff; text-shadow: 0 0 30px rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; flex-wrap: wrap;}
-        .hero h2 span.hero-x { color: var(--primary); text-shadow: 0 0 20px var(--primary-glow); font-size: 1.25em; margin-inline-end: 10px; transform: translateY(2px);}
+        .hero h2 span.hero-x { 
+            color: var(--primary); font-size: 1.45em; margin-inline-end: 10px; transform: translateY(2px);
+            animation: heroXGlow 2.5s infinite alternate ease-in-out;
+        }
+        @keyframes heroXGlow {
+            0% { text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary-glow); }
+            100% { text-shadow: 0 0 25px var(--primary), 0 0 50px #d8b4fe; }
+        }
         html[dir="rtl"] .hero h2 span.hero-x { margin-inline-start: 10px; }
         [data-theme="light"] .hero h2 { color: #000; text-shadow: none; }
         .hero p { font-size: 1.1rem; max-width: 600px; line-height: 1.7; margin: 0 auto; color: rgba(255,255,255,0.8);}
@@ -272,6 +277,8 @@
         .cancel-btn:hover { background: rgba(220, 38, 38, 0.2); border-color: rgba(220, 38, 38, 0.5); color: #ef4444; transform: translateY(-2px); }
         [data-theme="light"] .cancel-btn { background: rgba(0,0,0,0.05); color: var(--text-muted); border-color: rgba(0,0,0,0.1); }
         [data-theme="light"] .cancel-btn:hover { background: rgba(220, 38, 38, 0.1); color: #ef4444; border-color: rgba(220, 38, 38, 0.3); }
+
+        .small-btn { padding: 8px 18px !important; font-size: 0.9rem !important; border-radius: 12px; }
 
         .guideline-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--glass-border); }
         .guideline-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
@@ -365,17 +372,15 @@
         .video-glow-box:hover { box-shadow: 0 15px 40px var(--primary-glow); }
         .video-glow-box video { width: 100%; display: block; border-radius: 12px; max-height: 70vh; object-fit: cover; background: #000; }
         
-        .parsed-timestamps-box { width: 100%; max-width: 600px; text-align: left; padding: 0 10px; white-space: pre-wrap; line-height: 1.8; font-size: 0.95rem; color: rgba(255,255,255,0.9);}
-        html[dir="rtl"] .parsed-timestamps-box { text-align: right; }
+        .parsed-timestamps-box { width: 100%; max-width: 600px; text-align: left; padding: 0 10px; white-space: pre-wrap; line-height: 1.8; font-size: 0.95rem; color: rgba(255,255,255,0.9); direction: ltr !important;}
         [data-theme="light"] .parsed-timestamps-box { color: var(--text-muted); }
         
-        .ts-header { color: var(--primary); font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; font-weight: bold; border-bottom: 1px solid var(--glass-border); padding-bottom: 3px; display: inline-block; margin-top: 15px; margin-bottom: 5px; width: 100%;}
+        .ts-header { color: var(--primary); font-family: 'Rajdhani', sans-serif; font-size: 1.15rem; font-weight: bold; border-bottom: 1px solid var(--glass-border); padding-bottom: 3px; display: inline-block; margin-top: 15px; margin-bottom: 5px; width: 100%; text-shadow: 0 0 8px var(--primary-glow);}
         
         .time-link { display: inline-block; background: rgba(157, 78, 221, 0.15); color: var(--primary); padding: 2px 8px; border-radius: 6px; cursor: pointer; transition: 0.3s; font-weight: bold; border: 1px solid rgba(157, 78, 221, 0.3); margin: 2px 0;}
         .time-link:hover { background: var(--primary); color: #fff; box-shadow: 0 0 10px var(--primary-glow); transform: translateY(-1px);}
         [data-theme="light"] .time-link { background: rgba(123, 44, 191, 0.1); border-color: rgba(123, 44, 191, 0.2); }
         [data-theme="light"] .time-link:hover { background: var(--primary); color: #fff; }
-
 
         #toast { visibility: hidden; min-width: 200px; background: rgba(15, 15, 20, 0.95); backdrop-filter: blur(10px); color: #fff; text-align: center; border-radius: 10px; padding: 12px 20px; position: fixed; z-index: 9999; left: 50%; bottom: 25px; transform: translateX(-50%); font-size: 14px; transition: opacity 0.4s, bottom 0.4s; opacity: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid var(--primary); font-family: 'Cairo', sans-serif; font-weight:bold;}
         #toast.show { visibility: visible; bottom: 95px; opacity: 1; }
@@ -416,7 +421,6 @@
             .list-row { padding: 10px; gap: 8px; } .rank-num { font-size: 1rem; width: 20px; } .list-img { width: 30px; height: 30px; } .list-name { font-size: 0.85rem; } .score-val { font-size: 0.95rem; }
             .tour-card { padding: 20px 15px; } .tour-title { font-size: 1.05rem; } .tour-desc { font-size: 0.85rem; margin-bottom: 12px;} .tour-footer { flex-direction: column; gap: 8px; } .info-badge { width: 100%; justify-content: center; font-size: 0.8rem; padding: 6px;}
             .server-tabs { flex-wrap: wrap !important; justify-content: center !important; gap: 10px; padding-bottom: 10px; }
-            .submit-btn, .cancel-btn { font-size: 0.9rem; padding: 12px; }
             
             .parsed-timestamps-box { font-size: 0.85rem; }
         }
@@ -456,13 +460,12 @@
             <p data-i18n="hero_desc">يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.</p>
         </section>
 
-        <!-- About Site Section -->
         <section id="about-site" style="padding-top: 10px;">
             <h2 class="section-title" data-i18n="about_site_title">نبذة عن الموقع</h2>
             <div class="glass-panel" style="width: 100%; max-width: 700px; padding: 25px 30px; border-radius: 16px; text-align: center; display: flex; flex-direction: column; align-items: center;">
                 <i class="fa-solid fa-globe" style="color: var(--primary); font-size: 2.2rem; margin-bottom: 15px;"></i>
                 <p class="glass-desc-text" style="font-size: 0.95rem; line-height: 1.8; font-weight: 600; margin: 0;" data-i18n="about_site_desc">
-                    موقع تم تطويره وإدارته بواسطة القادة العرب، ليكون مرجعًا موثوقًا لآخر أخبار تطبيق بلاتو. يوضح القوانين والإرشادات، ويعرّف بقادة المجتمع، ويسهّل تقديم البلاغات، ويوفر معلومات عن أحدث البطولات في الخادم العربي.
+                    موقع تم تطويره وإدارته بواسطة القادة العرب، ليكون مرجعًا موثوقًا لآخر أخبار تطبيق بلاتو. يوضح القوانين والإرشادات، ويعرّف عن قادة المجتمع، ويسهّل تقديم البلاغات، ويوفر معلومات عن الخادم العربي.
                 </p>
             </div>
         </section>
@@ -698,7 +701,7 @@
                     مساحتك لمشاركة الأفكار والمقترحات حول اللعبة، وتقديم الملاحظات حول تجربتك في المجتمع، بما يسهم في تطوير المجتمع وتحسين تجربة اللاعبين.
                 </p>
                 <div style="text-align: right;">
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfdTHwSEhAB_apQrXarWH9TswkuEPgkDVBt33ndhIB97sIwFg/viewform" target="_blank" class="submit-btn" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px; justify-content: center; padding: 12px 24px;">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfdTHwSEhAB_apQrXarWH9TswkuEPgkDVBt33ndhIB97sIwFg/viewform" target="_blank" class="submit-btn small-btn" style="text-decoration: none;">
                         <i class="fa-solid fa-paper-plane"></i> <span data-i18n="feedback_btn">تقديم الاقتراحات والملاحظات</span>
                     </a>
                 </div>
@@ -763,39 +766,16 @@
                 <p class="glass-desc-text" style="font-size: 0.95rem; line-height: 1.8; font-weight: 600; margin-bottom: 20px;" data-i18n="join_us_desc">
                     إذا كانت لديكم بطولة في مجموعتكم ترغبون بإضافتها، أو تعتقدون أن حسابكم يستحق المنافسة ضمن أقدم الحسابات، أرسلوا لنا التفاصيل عبر الديسكورد من هنا.
                 </p>
-                <a href="https://discord.com/channels/1476420629698711778/1476603091095916738" target="_blank" class="submit-btn" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px; justify-content: center; padding: 12px 24px; background-color: var(--discord-color);">
-                    <i class="fa-brands fa-discord"></i> <span data-i18n="join_us_btn">تواصل معنا عبر الديسكورد</span>
+                <a href="https://discord.com/channels/1476420629698711778/1476603091095916738" target="_blank" class="submit-btn small-btn" style="text-decoration: none; background-color: var(--discord-color);">
+                    <i class="fa-brands fa-discord"></i> <span data-i18n="join_us_btn">تواصل مع المشرفين</span>
                 </a>
             </div>
         </section>
 
         <div class="cyber-divider"><div class="center-node"></div></div>
 
-        <!-- Weekly Showcase Section -->
-        <section id="weekly-showcase">
-            <h2 class="section-title" data-i18n="weekly_showcase_title">تجربة عناصر الألعاب الأسبوعية</h2>
-            <div class="glass-panel" style="width: 100%; max-width: 750px; padding: 30px 20px; border-radius: 16px; display: flex; flex-direction: column; align-items: center;">
-                
-                <p class="glass-desc-text" style="font-size: 0.95rem; line-height: 1.8; font-weight: 600; text-align: center; margin-bottom: 25px;" data-i18n="weekly_showcase_desc">
-                    استكشف أحدث العناصر المتوفرة في اللعبة لهذا الأسبوع. اضغط على التوقيت للانتقال مباشرة إلى العنصر.
-                </p>
-
-                <!-- Video Player -->
-                <div class="video-glow-box">
-                    <!-- اسم الفيديو هنا -->
-                    <video id="weekly-video" src="6992352953375981774.mp4" controls playsinline preload="metadata"></video>
-                </div>
-
-                <!-- Timestamps Box (Will be populated by JS auto-parser) -->
-                <div class="parsed-timestamps-box" id="timestamps-container" dir="ltr"></div>
-
-            </div>
-        </section>
-
-        <div class="cyber-divider"><div class="center-node"></div></div>
-
         <section id="tournaments">
-            <h2 class="section-title" data-i18n="tournaments_title">مركز البطولات المعتمدة</h2>
+            <h2 class="section-title" data-i18n="tournaments_title">مركز البطولات</h2>
             <div class="tournaments-grid" id="tournaments-container"></div>
         </section>
 
@@ -857,6 +837,28 @@
                 </div>
             </div>
         </section>
+
+        <!-- Weekly Showcase Section (Moved to the very bottom) -->
+        <div class="cyber-divider" id="weekly-divider" style="display: none;"><div class="center-node"></div></div>
+        <section id="weekly-showcase" style="display: none;">
+            <h2 class="section-title" data-i18n="weekly_showcase_title">تجربة عناصر الألعاب الأسبوعية</h2>
+            <div class="glass-panel" style="width: 100%; max-width: 750px; padding: 30px 20px; border-radius: 16px; display: flex; flex-direction: column; align-items: center;">
+                
+                <p class="glass-desc-text" style="font-size: 0.95rem; line-height: 1.8; font-weight: 600; text-align: center; margin-bottom: 25px;" data-i18n="weekly_showcase_desc">
+                    استكشف أحدث العناصر المتوفرة في اللعبة لهذا الأسبوع. اضغط على التوقيت للانتقال مباشرة إلى العنصر.
+                </p>
+
+                <!-- Video Player -->
+                <div class="video-glow-box">
+                    <video id="weekly-video" src="" controls playsinline preload="metadata"></video>
+                </div>
+
+                <!-- Timestamps Box -->
+                <div class="parsed-timestamps-box" id="timestamps-container" dir="ltr"></div>
+
+            </div>
+        </section>
+
     </main>
 
     <nav class="bottom-nav-bar" dir="ltr">
@@ -866,10 +868,10 @@
         </div>
         <div class="bottom-nav-item" onclick="switchView('leaders', this)">
             <i class="fa-solid fa-users"></i>
-            <span data-i18n="nav_leaders">عن القادة</span>
+            <span data-i18n="nav_leaders">حول القادة</span>
         </div>
         <div class="bottom-nav-item" onclick="switchView('leaderboard', this)">
-            <i class="fa-solid fa-compass"></i> <!-- تم التغيير لأيقونة استكشف -->
+            <i class="fa-solid fa-compass"></i>
             <span data-i18n="nav_leaderboard">استكشف</span>
         </div>
     </nav>
@@ -877,30 +879,36 @@
     <div id="toast"></div>
 
     <script>
-        // --- ميزة التوقيتات التلقائية (Auto-Parser) ---
-        // مستقبلاً: يمكنك استبدال هذا النص بنص قادم من Google Sheet
-        const rawWeeklyText = `🎱 Pool items:
-0:00 - 0:11 Midnight Romance & Black Rose Cue.
-0:12 - 0:22 Midnight Romance & Infatuation Cue. 
+        function parseCSV(str) {
+            var arr = [];
+            var quote = false;
+            var col = 0, row = 0;
+            for (var c = 0; c < str.length; c++) {
+                var cc = str[c], nc = str[c+1];
+                arr[row] = arr[row] || [];
+                arr[row][col] = arr[row][col] || '';
+                if (cc == '"' && quote && nc == '"') { arr[row][col] += cc; ++c; continue; }
+                if (cc == '"') { quote = !quote; continue; }
+                if (cc == ',' && !quote) { ++col; continue; }
+                if (cc == '\r' && nc == '\n' && !quote) { ++row; col = 0; ++c; continue; }
+                if (cc == '\n' && !quote) { ++row; col = 0; continue; }
+                if (cc == '\r' && !quote) { ++row; col = 0; continue; }
+                arr[row][col] += cc;
+            }
+            return arr;
+        }
 
-🎲 Dice items:
-0:22 - 0:30 Starcrossed Dice.
-
-🎳 Bowling items:
-0:31 - 0:34 Floral Lace Ball.
-
-🕹️ Carrom items:
-0:35 - 0:43 The Love Chapter & Lockheart Striker.
-
-🃏 Ocho & Deck items:
-0:44 - 0:46 Love Bites.
-0:46 - 0:50 Dreamers Deck.`;
-
-        function buildTimestamps() {
-            let htmlText = rawWeeklyText;
+        // --- ميزة التوقيتات التلقائية (Auto-Parser) المربوطة بالشيت ---
+        function buildTimestamps(text) {
+            if(!text) return;
+            let htmlText = escapeHTML(text);
             
-            // تحويل العناوين (التي تنتهي بـ items:) إلى شكل مميز
-            htmlText = htmlText.replace(/^(.*items:)$/gm, '<span class="ts-header">$1</span>');
+            // تحويل أي سطر يبدأ بـ "-" إلى عنوان بنفسجي متوهج (يتجاهل الـ - الفارغ)
+            htmlText = htmlText.replace(/^-(.*)$/gm, (match, p1) => {
+                const textMatch = p1.trim();
+                if(!textMatch) return ""; 
+                return `<span class="ts-header">${textMatch}</span>`;
+            });
             
             // تحويل الأرقام (مثل 0:11) إلى أزرار ضغط
             htmlText = htmlText.replace(/(\d{1,2}:\d{2})/g, (match) => {
@@ -979,6 +987,7 @@
         }
 
         function escapeHTML(str) {
+            if (!str) return "";
             return str.replace(/[&<>'"]/g, 
                 tag => ({
                     '&': '&amp;',
@@ -1172,12 +1181,12 @@
 
         const translations = {
             ar: {
-                nav_home: "الرئيسية", nav_leaders: "عن القادة", nav_leaderboard: "استكشف",
+                nav_home: "الرئيسية", nav_leaders: "حول القادة", nav_leaderboard: "استكشف",
                 pull_refresh: "جاري التحديث...", menu_guidelines: "القوانين",
                 hero_title_pre: "مجتمع", hero_title_sub: "العربي", hero_desc: "يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.",
                 about_site_title: "نبذة عن الموقع",
-                about_site_desc: "موقع تم تطويره وإدارته بواسطة القادة العرب، ليكون مرجعًا موثوقًا لآخر أخبار تطبيق بلاتو. يوضح القوانين والإرشادات، ويعرّف بقادة المجتمع، ويسهّل تقديم البلاغات، ويوفر معلومات عن أحدث البطولات في الخادم العربي.",
-                leaders_title: "القادة العرب", global_leaders_title: "قادة السيرفرات العالمية", news_board_title: "لوحة أخبار المجتمع", players_title: "اللاعبين الاقدم", spending_title: "ترتيب المجموعات الأكثر إنفاقًا", tournaments_title: "مركز البطولات المعتمدة",
+                about_site_desc: "موقع تم تطويره وإدارته بواسطة القادة العرب، ليكون مرجعًا موثوقًا لآخر أخبار تطبيق بلاتو. يوضح القوانين والإرشادات، ويعرّف عن قادة المجتمع، ويسهّل تقديم البلاغات، ويوفر معلومات عن الخادم العربي.",
+                leaders_title: "القادة العرب", global_leaders_title: "قادة السيرفرات العالمية", news_board_title: "لوحة أخبار المجتمع", players_title: "اللاعبين الاقدم", spending_title: "ترتيب المجموعات الأكثر إنفاقًا", tournaments_title: "مركز البطولات",
                 bug_title: "تقديم بلاغ", bug_type_label: "نوع المشكلة:", bug_note: "هذا القسم غير مخصص للمشاكل الشخصية.", bug_opt1_title: "الثغرات:", bug_opt2_title: "مشاكل تقنية:", bug_exp_desc: "ثغرات، أخطاء برمجية، أو نسخ معدلة.", bug_tech_desc: "أخطاء تقنية ذات تأثير عالي أو مشاكل نظام قابلة للاستغلال المتكرر.", bug_submit: "إرسال البلاغ", bug_cancel: "إلغاء",
                 who_are_leaders: "من هم القادة؟",
                 who_are_leaders_desc: "القادة هم الممثلون الرسميون للمجتمع داخل اللعبة، وقد تم اختيارهم ليكونوا حلقة وصل بين اللاعبين وفريق تطوير اللعبة. ويتمثل دورهم في المساهمة في بناء بيئة لعب ممتعة، آمنة، وعادلة لجميع أفراد المجتمع.",
@@ -1197,7 +1206,7 @@
                 feedback_btn: "تقديم الاقتراحات والملاحظات",
                 join_us_title: "انضم إلينا",
                 join_us_desc: "إذا كانت لديكم بطولة في مجموعتكم ترغبون بإضافتها، أو تعتقدون أن حسابكم يستحق المنافسة ضمن أقدم الحسابات، أرسلوا لنا التفاصيل عبر الديسكورد من هنا.",
-                join_us_btn: "تواصل معنا عبر الديسكورد",
+                join_us_btn: "تواصل مع المشرفين",
                 weekly_showcase_title: "تجربة عناصر الألعاب الأسبوعية",
                 weekly_showcase_desc: "استكشف أحدث العناصر المتوفرة في اللعبة لهذا الأسبوع. اضغط على التوقيت للانتقال مباشرة إلى العنصر.",
                 desc_yyy: "صانع الأثر، يقود برؤية مستقبلية لخلق بيئة إيجابية لا تعرف المستحيل.", desc_hat: "حضور راسخ، تقود المجتمع بثقة راسخة وترسم معايير الرقي.", desc_bbb: "الحكمة في اتخاذ القرار، يوازن بين الحزم والهدوء لإدارة الأزمات باحترافية.",
@@ -1229,8 +1238,8 @@
                 pull_refresh: "Updating...", menu_guidelines: "GUIDELINES",
                 hero_title_pre: "Plato", hero_title_sub: "Community", hero_desc: "Where gaming enthusiasts meet to experience thrilling moments, build true friendships, and create eternal memories.",
                 about_site_title: "About the Website",
-                about_site_desc: "A website developed and managed by the Arabic Leaders, serving as a trusted source for the latest Plato news. It provides rules and guidelines, introduces the community leaders, makes reporting easier, and provides information about the latest tournaments in the Arabic server.",
-                leaders_title: "ARABIC LEADERS", global_leaders_title: "GLOBAL SERVERS LEADERS", news_board_title: "COMMUNITY NEWS BOARD", players_title: "OLDEST PLAYERS", spending_title: "TOP SPENDING GROUPS", tournaments_title: "APPROVED TOURNAMENTS",
+                about_site_desc: "A website developed and managed by the Arabic Leaders, serving as a trusted source for the latest Plato news. It provides rules and guidelines, introduces the community leaders, makes reporting easier, and provides information about the Arabic server.",
+                leaders_title: "ARABIC LEADERS", global_leaders_title: "GLOBAL SERVERS LEADERS", news_board_title: "COMMUNITY NEWS BOARD", players_title: "OLDEST PLAYERS", spending_title: "TOP SPENDING GROUPS", tournaments_title: "TOURNAMENTS",
                 bug_title: "Bug Reporting", bug_type_label: "Issue Type:", bug_note: "This section is not for personal issues.", bug_opt1_title: "Exploits:", bug_opt2_title: "Serious Technical Issue:", bug_exp_desc: "Bugs, glitches, or modified clients.", bug_tech_desc: "High-impact bugs or system problems that can be repeatedly abused.", bug_submit: "Submit Report", bug_cancel: "Cancel",
                 who_are_leaders: "Who are the Leaders?",
                 who_are_leaders_desc: "Leaders are the official representatives of the community in-game, chosen to be a bridge between the players and the development team. Their role is to contribute to building a fun, safe, and fair gaming environment for all community members.",
@@ -1250,7 +1259,7 @@
                 feedback_btn: "Submit Feedback & Ideas",
                 join_us_title: "Join Us",
                 join_us_desc: "Have a tournament you'd like to add, or think your account belongs among the oldest? Send us the details on Discord here.",
-                join_us_btn: "Contact us on Discord",
+                join_us_btn: "Contact Supervisors",
                 weekly_showcase_title: "Weekly Game Items Showcase",
                 weekly_showcase_desc: "Explore this week's latest game items. Click on any timestamp to jump directly to the item.",
                 desc_yyy: "The Impact Maker, leading with a futuristic vision to create a positive environment.", desc_hat: "A grounded presence, leading the community with solid confidence and setting standards.", desc_bbb: "Wisdom in decision making, balancing firmness and calmness in management.",
@@ -1345,17 +1354,11 @@
         }
 
         function processNewsData(data) {
-            const rows = data.split('\n').slice(1).filter(row => row.trim().length > 0);
-            
-            let allNews = rows.map(row => {
-                const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-                if (!cols[0] || !cols[1]) return null; 
-                return cols.length >= 2 ? cols : null;
-            }).filter(Boolean);
+            let allNews = parseCSV(data).slice(1).filter(cols => cols.length >= 2 && cols[0] && cols[1]);
             
             allNews.sort((a, b) => {
-                const dateA = new Date((a[0] || '').replace(/"/g, '').trim()).getTime() || 0;
-                const dateB = new Date((b[0] || '').replace(/"/g, '').trim()).getTime() || 0;
+                const dateA = new Date((a[0] || '').trim()).getTime() || 0;
+                const dateB = new Date((b[0] || '').trim()).getTime() || 0;
                 return dateB - dateA;
             });
 
@@ -1370,7 +1373,7 @@
                 const now = Date.now();
                 
                 if (!force && cached && cacheTime && (now - parseInt(cacheTime) < 1800000) && !cached.includes('<!DOCTYPE html>')) {
-                    cachedSheetRows = cached.split('\n').slice(1);
+                    cachedSheetRows = parseCSV(cached).slice(1);
                     renderDynamicData();
                     return;
                 }
@@ -1383,14 +1386,14 @@
 
                 localStorage.setItem('plato_dynamic_cache', data);
                 localStorage.setItem('plato_dynamic_cache_time', now.toString());
-                cachedSheetRows = data.split('\n').slice(1);
+                cachedSheetRows = parseCSV(data).slice(1);
                 renderDynamicData();
                 
             } catch (error) { 
                 console.error("حدث خطأ:", error); 
                 const fallbackCache = localStorage.getItem('plato_dynamic_cache');
                 if(fallbackCache && !fallbackCache.includes('<!DOCTYPE html>')) {
-                    cachedSheetRows = fallbackCache.split('\n').slice(1);
+                    cachedSheetRows = parseCSV(fallbackCache).slice(1);
                     renderDynamicData();
                 } else {
                     document.getElementById('tournaments-container').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">لا توجد بطولات حالياً أو تعذر الاتصال.</p>`;
@@ -1457,12 +1460,12 @@
             if(newsCardsData.length === 0) return;
 
             newsCardsData.forEach((cols, index) => {
-                const dateStr = escapeHTML((cols[0] || '').replace(/"/g, '').trim());
-                const tagType = escapeHTML((cols[1] || '').replace(/"/g, '').trim());
-                const titleAr = escapeHTML((cols[2] || '').replace(/"/g, '').trim());
-                const bodyAr  = escapeHTML((cols[3] || '').replace(/"/g, '').trim());
-                const titleEn = escapeHTML((cols[4] || '').replace(/"/g, '').trim());
-                const bodyEn  = escapeHTML((cols[5] || '').replace(/"/g, '').trim());
+                const dateStr = escapeHTML((cols[0] || '').trim());
+                const tagType = escapeHTML((cols[1] || '').trim());
+                const titleAr = escapeHTML((cols[2] || '').trim());
+                const bodyAr  = escapeHTML((cols[3] || '').trim());
+                const titleEn = escapeHTML((cols[4] || '').trim());
+                const bodyEn  = escapeHTML((cols[5] || '').trim());
 
                 const displayTitle = isAr ? titleAr : (titleEn || titleAr);
                 const displayBody = isAr ? bodyAr : (bodyEn || bodyAr);
@@ -1566,7 +1569,32 @@
         });
 
         function renderDynamicData() {
-            if (!cachedSheetRows) return;
+            if (!cachedSheetRows || cachedSheetRows.length === 0) return;
+            
+            // --- دمج وتحديث قسم الفيديو من الشيت ---
+            const firstRow = cachedSheetRows[0]; // اول صف يحتوي على الداتا (Row 2 في الشيت)
+            if (firstRow) {
+                const videoUrl = firstRow[7] ? firstRow[7].trim() : ""; // عمود H
+                const videoText = firstRow[8] ? firstRow[8].trim() : ""; // عمود I
+                
+                const vidEl = document.getElementById('weekly-video');
+                const showcaseSec = document.getElementById('weekly-showcase');
+                const showcaseDiv = document.getElementById('weekly-divider');
+                
+                if (videoUrl) { // إذا كان هناك رابط فيديو
+                    if (vidEl.getAttribute('src') !== videoUrl) {
+                        vidEl.src = videoUrl;
+                    }
+                    showcaseSec.style.display = 'flex';
+                    if(showcaseDiv) showcaseDiv.style.display = 'flex';
+                    if (videoText) buildTimestamps(videoText);
+                } else { // إذا لم يتم وضع رابط، نقوم بإخفاء القسم تماماً
+                    showcaseSec.style.display = 'none';
+                    if(showcaseDiv) showcaseDiv.style.display = 'none';
+                }
+            }
+
+            // --- إكمال رندرة البطولات ---
             const tourContainer = document.getElementById('tournaments-container');
             const spendContainer = document.getElementById('spenders-container');
             
@@ -1577,14 +1605,13 @@
             let groupsSpending = {}; 
             let tournamentsList = [];
 
-            cachedSheetRows.forEach((row) => {
-                const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/); 
+            cachedSheetRows.forEach((cols) => {
                 if(cols.length < 2) return;
 
-                const nameAr = escapeHTML(cols[1] ? cols[1].replace(/"/g, '').trim() : "");
+                const nameAr = escapeHTML(cols[1] ? cols[1].trim() : "");
                 if (!nameAr) return;
 
-                const rawTimeStr = escapeHTML(cols[0] ? cols[0].replace(/"/g, '').trim() : ""); 
+                const rawTimeStr = escapeHTML(cols[0] ? cols[0].trim() : ""); 
                 let targetTimeMs = NaN;
 
                 if (rawTimeStr) {
@@ -1595,11 +1622,11 @@
                     targetTimeMs = new Date(safeTimeStr).getTime();
                 }
 
-                const nameEn = escapeHTML(cols[2] ? cols[2].replace(/"/g, '').trim() : "");
-                const image = escapeHTML(cols[3] ? cols[3].replace(/"/g, '').trim() : "");
-                const prizeStr = escapeHTML(cols[4] ? cols[4].replace(/"/g, '').trim() : "");
-                const game = escapeHTML(cols[5] ? cols[5].replace(/"/g, '').trim() : "");
-                const admin = escapeHTML(cols[6] ? cols[6].replace(/"/g, '').trim() : "");
+                const nameEn = escapeHTML(cols[2] ? cols[2].trim() : "");
+                const image = escapeHTML(cols[3] ? cols[3].trim() : "");
+                const prizeStr = escapeHTML(cols[4] ? cols[4].trim() : "");
+                const game = escapeHTML(cols[5] ? cols[5].trim() : "");
+                const admin = escapeHTML(cols[6] ? cols[6].trim() : "");
 
                 let numValue = 0;
                 let cleanStr = prizeStr.toUpperCase().replace(/[^0-9.K]/g, '');
@@ -1779,9 +1806,6 @@
         }, {passive: true});
 
         document.addEventListener("DOMContentLoaded", () => {
-            // تفعيل بناء الأوقات القابلة للضغط فور تحميل الصفحة
-            buildTimestamps();
-
             const savedTheme = localStorage.getItem('theme') || 'dark'; 
             document.getElementById('theme-icon').className = savedTheme === 'light' ? 'fa-solid fa-sun theme-toggle' : 'fa-solid fa-moon theme-toggle';
             
