@@ -423,6 +423,9 @@
         .link-title { font-weight: 900; font-size: 1.1rem; }
         .link-sub { font-size: 0.8rem; color: var(--text-muted); font-weight: bold; line-height: 1.4; }
 
+        .glass-desc-text { color: rgba(255,255,255,0.85); }
+        [data-theme="light"] .glass-desc-text { color: var(--text-muted); }
+
         #toast { visibility: hidden; min-width: 200px; background: rgba(15, 15, 20, 0.95); backdrop-filter: blur(10px); color: #fff; text-align: center; border-radius: 10px; padding: 12px 20px; position: fixed; z-index: 9999; left: 50%; bottom: 25px; transform: translateX(-50%); font-size: 14px; transition: opacity 0.4s, bottom 0.4s; opacity: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid var(--primary); font-family: 'Cairo', sans-serif; font-weight:bold;}
         #toast.show { visibility: visible; bottom: 95px; opacity: 1; }
 
@@ -500,6 +503,19 @@
             <h2><span data-i18n="hero_title_pre">مجتمع</span><span class="hero-x">X</span> <span data-i18n="hero_title_sub">العربي</span></h2>
             <p data-i18n="hero_desc">يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.</p>
         </section>
+
+        <!-- About Site Section -->
+        <section id="about-site" style="padding-top: 10px;">
+            <h2 class="section-title" data-i18n="about_site_title">نبذة عن الموقع</h2>
+            <div class="glass-panel" style="width: 100%; max-width: 700px; padding: 25px 30px; border-radius: 16px; text-align: center; display: flex; flex-direction: column; align-items: center;">
+                <i class="fa-solid fa-globe" style="color: var(--primary); font-size: 2.2rem; margin-bottom: 15px;"></i>
+                <p class="glass-desc-text" style="font-size: 0.95rem; line-height: 1.8; font-weight: 600; margin: 0;" data-i18n="about_site_desc">
+                    موقع تم تطويره وإدارته بواسطة القادة العرب، ليكون مرجعًا موثوقًا لآخر أخبار تطبيق بلاتو. يوضح القوانين والإرشادات، ويعرّف بقادة المجتمع، ويسهّل تقديم البلاغات، ويوفر معلومات عن أحدث البطولات في الخادم العربي.
+                </p>
+            </div>
+        </section>
+
+        <div class="cyber-divider"><div class="center-node"></div></div>
 
         <section id="news" style="padding-top: 10px;">
             <h2 class="section-title" data-i18n="news_board_title">لوحة أخبار المجتمع</h2>
@@ -720,6 +736,20 @@
                     <i class="fa-solid fa-circle-info" style="color: var(--primary); font-size: 1.5rem; flex-shrink: 0;"></i>
                     <span data-i18n="be_leader_note" style="font-weight: 600;">ملاحظة: قد يتم تعيين قائد جديد عندما يرى القادة الحاليون وجود حاجة إلى قائد إضافي. ويُسمح بوجود 4 قادة كحد أقصى في كل سيرفر.</span>
                 </div>
+                
+                <!-- Community Feedback Section -->
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px; margin-top: 30px; padding-top: 25px; border-top: 1px solid var(--glass-border);">
+                    <i class="fa-solid fa-comments" style="color: var(--primary); font-size: 1.5rem;"></i>
+                    <h3 style="font-size: 1.3rem; margin: 0; color: var(--text-main);" data-i18n="feedback_title">آراء المجتمع</h3>
+                </div>
+                <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.8; margin-bottom: 20px; font-weight: 600;" data-i18n="feedback_desc">
+                    مساحتك لمشاركة الأفكار والمقترحات حول اللعبة، وتقديم الملاحظات حول تجربتك في المجتمع، بما يسهم في تطوير المجتمع وتحسين تجربة اللاعبين.
+                </p>
+                <div style="text-align: right;">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfdTHwSEhAB_apQrXarWH9TswkuEPgkDVBt33ndhIB97sIwFg/viewform" target="_blank" class="submit-btn" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px; justify-content: center; padding: 12px 24px;">
+                        <i class="fa-solid fa-paper-plane"></i> <span data-i18n="feedback_btn">تقديم الاقتراحات والملاحظات</span>
+                    </a>
+                </div>
 
             </div>
         </section>
@@ -772,6 +802,23 @@
     </main>
 
     <main id="view-leaderboard" class="tab-view">
+        
+        <!-- Join Us Section -->
+        <section id="join-us" style="padding-top: 10px;">
+            <h2 class="section-title" data-i18n="join_us_title">انضم إلينا</h2>
+            <div class="glass-panel" style="width: 100%; max-width: 750px; padding: 25px 30px; border-radius: 16px; text-align: center; display: flex; flex-direction: column; align-items: center;">
+                <i class="fa-brands fa-discord" style="color: var(--discord-color); font-size: 2.5rem; margin-bottom: 15px;"></i>
+                <p class="glass-desc-text" style="font-size: 0.95rem; line-height: 1.8; font-weight: 600; margin-bottom: 20px;" data-i18n="join_us_desc">
+                    إذا كانت لديكم بطولة في مجموعتكم ترغبون بإضافتها، أو تعتقدون أن حسابكم يستحق المنافسة ضمن أقدم الحسابات، أرسلوا لنا التفاصيل عبر الديسكورد من هنا.
+                </p>
+                <a href="https://discord.com/channels/1476420629698711778/1476603091095916738" target="_blank" class="submit-btn" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px; justify-content: center; padding: 12px 24px; background-color: var(--discord-color);">
+                    <i class="fa-brands fa-discord"></i> <span data-i18n="join_us_btn">تواصل معنا عبر الديسكورد</span>
+                </a>
+            </div>
+        </section>
+
+        <div class="cyber-divider"><div class="center-node"></div></div>
+
         <section id="tournaments">
             <h2 class="section-title" data-i18n="tournaments_title">مركز البطولات المعتمدة</h2>
             <div class="tournaments-grid" id="tournaments-container"></div>
@@ -1023,7 +1070,7 @@
             { name: "Rose", server: "english", img: "IMG_7437.png", birthday: { en: "June 8", ar: "8 يونيو" } }, 
             { name: "Risk", server: "english", img: "57914b7385432b7831bcc1470723baa7.png", birthday: { en: "June 4", ar: "4 يونيو" } },
             { name: "7777777", server: "persian", img: "03cdd5503fd8725e76641fb8e06c2937.png", birthday: { en: "July 26", ar: "26 يوليو" }, desc: { ar: "قائد مهتم يقدر المجتمع وينشئ مجموعات وفعاليات لنشر الفرح.", en: "A caring leader who values the community and creates groups and events to bring joy." } }, 
-            { name: "Armin", server: "persian", img: "IMG_7428.png", birthday: { en: "August 17", ar: "17 أغسطس" } }, 
+            { name: "Armin", server: "persian", img: "IMG_7428.png", birthday: { en: "August 17", ar: "17 أغسطس" }, desc: { ar: "أستمتع بمجتمع بلاتو، وألتقي بأشخاص رائعين، وأشارك الأفكار، وأساهم في نمو المجتمع.", en: "Enjoying the Plato community, meeting great people, sharing ideas, and helping it grow." } }, 
             { name: "Reza", server: "persian", img: "IMG_7443.png", birthday: { en: "November 17", ar: "17 نوفمبر" }, desc: { ar: "قائد محترم وودود، دائماً متعاون وهادئ، ومكرس لخدمة مجتمع صحي.", en: "A respected and approachable leader, always helpful, calm, and dedicated to a healthy community." } }, 
             { name: "NarGc", server: "persian", img: "13b8f453f2ee334ab01a7e53fc4c23fb.png", birthday: { en: "November 10", ar: "10 نوفمبر" }, desc: { ar: "قائدة نشيطة ومبدعة ومهتمة، تتميز بالتفاني والعمل الجاد.", en: "An energetic, creative, and caring leader who is dedicated and hardworking." } },
             { name: "H22", server: "french", img: "IMG_7442.png", birthday: { en: "December 21", ar: "21 ديسمبر" }, desc: { ar: "ودود ومحفز، مستعد دائماً للمساعدة والتواصل مع الأشخاص.", en: "Friendly and encouraging, always willing to help and connect with people from all servers." } },
@@ -1108,6 +1155,8 @@
                 nav_home: "الرئيسية", nav_leaders: "عن القادة", nav_leaderboard: "لوحة الصدارة",
                 pull_refresh: "جاري التحديث...", menu_guidelines: "القوانين",
                 hero_title_pre: "مجتمع", hero_title_sub: "العربي", hero_desc: "يلتقي فيه عشاق الالعاب ليعيشوا لحظات ممتعة، يبنون صداقات حقيقية ويصنعون ذكريات تبقى للابد.",
+                about_site_title: "نبذة عن الموقع",
+                about_site_desc: "موقع تم تطويره وإدارته بواسطة القادة العرب، ليكون مرجعًا موثوقًا لآخر أخبار تطبيق بلاتو. يوضح القوانين والإرشادات، ويعرّف بقادة المجتمع، ويسهّل تقديم البلاغات، ويوفر معلومات عن أحدث البطولات في الخادم العربي.",
                 leaders_title: "القادة العرب", global_leaders_title: "قادة السيرفرات العالمية", news_board_title: "لوحة أخبار المجتمع", players_title: "اللاعبين الاقدم", spending_title: "ترتيب المجموعات الأكثر إنفاقًا", tournaments_title: "مركز البطولات المعتمدة",
                 bug_title: "تقديم بلاغ", bug_type_label: "نوع المشكلة:", bug_note: "هذا القسم غير مخصص للمشاكل الشخصية.", bug_opt1_title: "الثغرات:", bug_opt2_title: "مشاكل تقنية:", bug_exp_desc: "ثغرات، أخطاء برمجية، أو نسخ معدلة.", bug_tech_desc: "أخطاء تقنية ذات تأثير عالي أو مشاكل نظام قابلة للاستغلال المتكرر.", bug_submit: "إرسال البلاغ", bug_cancel: "إلغاء",
                 who_are_leaders: "من هم القادة؟",
@@ -1123,6 +1172,12 @@
                 be_leader_1: "يتم اختيار القادة بناءً على مدى تفاعلهم الإيجابي في المجتمع.",
                 be_leader_2: "يتم ترشيح واختيار القائد من قِبل القادة الحاليين، ثم يخضع الترشيح لموافقة مطوّر اللعبة قبل اعتماده رسميًا.",
                 be_leader_note: "ملاحظة: قد يتم تعيين قائد جديد عندما يرى القادة الحاليون وجود حاجة إلى قائد إضافي. ويُسمح بوجود 4 قادة كحد أقصى في كل سيرفر.",
+                feedback_title: "آراء المجتمع",
+                feedback_desc: "مساحتك لمشاركة الأفكار والمقترحات حول اللعبة، وتقديم الملاحظات حول تجربتك في المجتمع، بما يسهم في تطوير المجتمع وتحسين تجربة اللاعبين.",
+                feedback_btn: "تقديم الاقتراحات والملاحظات",
+                join_us_title: "انضم إلينا",
+                join_us_desc: "إذا كانت لديكم بطولة في مجموعتكم ترغبون بإضافتها، أو تعتقدون أن حسابكم يستحق المنافسة ضمن أقدم الحسابات، أرسلوا لنا التفاصيل عبر الديسكورد من هنا.",
+                join_us_btn: "تواصل معنا عبر الديسكورد",
                 desc_yyy: "صانع الأثر، يقود برؤية مستقبلية لخلق بيئة إيجابية لا تعرف المستحيل.", desc_hat: "حضور راسخ، تقود المجتمع بثقة راسخة وترسم معايير الرقي.", desc_bbb: "الحكمة في اتخاذ القرار، يوازن بين الحزم والهدوء لإدارة الأزمات باحترافية.",
                 news_newer: "الأحدث", news_older: "الأقدم",
                 discord_more: "للمزيد من الأخبار انضموا إلى الديسكورد",
@@ -1151,6 +1206,8 @@
                 nav_home: "Home", nav_leaders: "About Leaders", nav_leaderboard: "Leaderboard",
                 pull_refresh: "Updating...", menu_guidelines: "GUIDELINES",
                 hero_title_pre: "Plato", hero_title_sub: "Community", hero_desc: "Where gaming enthusiasts meet to experience thrilling moments, build true friendships, and create eternal memories.",
+                about_site_title: "About the Website",
+                about_site_desc: "A website developed and managed by the Arabic Leaders, serving as a trusted source for the latest Plato news. It provides rules and guidelines, introduces the community leaders, makes reporting easier, and provides information about the latest tournaments in the Arabic server.",
                 leaders_title: "ARABIC LEADERS", global_leaders_title: "GLOBAL SERVERS LEADERS", news_board_title: "COMMUNITY NEWS BOARD", players_title: "OLDEST PLAYERS", spending_title: "TOP SPENDING GROUPS", tournaments_title: "APPROVED TOURNAMENTS",
                 bug_title: "Bug Reporting", bug_type_label: "Issue Type:", bug_note: "This section is not for personal issues.", bug_opt1_title: "Exploits:", bug_opt2_title: "Serious Technical Issue:", bug_exp_desc: "Bugs, glitches, or modified clients.", bug_tech_desc: "High-impact bugs or system problems that can be repeatedly abused.", bug_submit: "Submit Report", bug_cancel: "Cancel",
                 who_are_leaders: "Who are the Leaders?",
@@ -1166,6 +1223,12 @@
                 be_leader_1: "Leaders are selected based on their positive engagement and active involvement within the community.",
                 be_leader_2: "Candidates are nominated and selected by the current Leaders, after which the nomination must be approved by the game developer before the candidate is officially appointed.",
                 be_leader_note: "Note: A new Leader may be appointed when the current Leaders feel one is needed. Each server can have up to 4 Leaders.",
+                feedback_title: "Community Feedback",
+                feedback_desc: "A place to share your ideas and suggestions about the game, give feedback on your experience in the community, and help make the community a better place for everyone.",
+                feedback_btn: "Submit Feedback & Ideas",
+                join_us_title: "Join Us",
+                join_us_desc: "Have a tournament you'd like to add, or think your account belongs among the oldest? Send us the details on Discord here.",
+                join_us_btn: "Contact us on Discord",
                 desc_yyy: "The Impact Maker, leading with a futuristic vision to create a positive environment.", desc_hat: "A grounded presence, leading the community with solid confidence and setting standards.", desc_bbb: "Wisdom in decision making, balancing firmness and calmness in management.",
                 news_newer: "NEWER", news_older: "OLDER",
                 discord_more: "For more news, join our Discord server",
