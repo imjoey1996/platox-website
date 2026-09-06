@@ -10,7 +10,10 @@
         document.documentElement.setAttribute('data-theme', savedTheme);
     </script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Rajdhani:wght@600;700;900&display=swap" rel="stylesheet">
+    <!-- تحسين تسريع تحميل الخطوط لمنع ظهور خط مختلف لثانية عند فتح الموقع -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Rajdhani:wght@600;700;900&display=block" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -28,7 +31,8 @@
             --eng-bg: #000000;
             --eng-text: #ffffff;
             --eng-name: #000000;
-            --eng-text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 15px rgba(255, 255, 255, 0.5);
+            --eng-text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+            --eng-text-stroke: 1px #ffffff;
             --eng-badge-glow: 0 0 12px rgba(255, 255, 255, 0.4);
             --eng-profile-glow: 0 0 15px rgba(255, 255, 255, 0.5);
         }
@@ -42,7 +46,8 @@
             --text-muted: #475569;
 
             /* English Server Variables for Light Mode */
-            --eng-text-shadow: none;
+            --eng-text-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+            --eng-text-stroke: 1px #ffffff;
             --eng-badge-glow: 0 2px 5px rgba(0, 0, 0, 0.3);
             --eng-profile-glow: 0 0 15px rgba(0, 0, 0, 0.4);
         }
@@ -83,7 +88,6 @@
             overscroll-behavior-y: none;
         }
 
-        /* تحجيم النصوص لضمان التطابق مع بقاء حجم المربعات الزجاجية ثابت */
         html[lang="ar"] body { font-size: 14px; }
         html[lang="en"] body { font-size: 15.5px; }
 
@@ -250,10 +254,6 @@
         .skeleton::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent); animation: shimmer 1.5s infinite; }
         [data-theme="light"] .skeleton::after { background: linear-gradient(90deg, transparent, rgba(0,0,0,0.04), transparent); }
         @keyframes shimmer { 100% { left: 100%; } }
-        .skel-text { height: 15px; border-radius: 4px; margin-bottom: 10px; width: 100%; background: rgba(255,255,255,0.1); }
-        [data-theme="light"] .skel-text { background: rgba(0,0,0,0.1); }
-        .skel-title { height: 25px; width: 60%; }
-        .skel-badge { height: 30px; width: 80px; border-radius: 8px; }
 
         .news-carousel-container { width: 100%; max-width: 800px; position: relative; display: flex; flex-direction: column; gap: 5px; margin-bottom: 5px;}
         .news-slider { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; -ms-overflow-style: none; scrollbar-width: none; padding: 25px 20px; cursor: grab;}
@@ -338,13 +338,11 @@
         .global-leader:hover { border-color: var(--server-color); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.3);}
         .global-leader:hover img { border-color: var(--server-color); box-shadow: var(--server-glow); transform: scale(1.05); }
         
-        /* Box containing User Name, Copy Icon, and Badge in One Line */
         .leader-name-box { display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 8px; cursor: pointer; transition: 0.3s; margin-bottom: 4px; width: 100%; white-space: nowrap; flex-wrap: nowrap;}
         .leader-name-box h3 { font-size: 1.15rem; font-family: 'Rajdhani', 'Cairo', sans-serif; transition: 0.3s; margin: 0; flex-shrink: 1; overflow: hidden; text-overflow: ellipsis;}
         .leader-copy-icon { font-size: 12px; color: var(--text-muted); transition: 0.3s; flex-shrink: 0;}
         .leader-name-box:hover .leader-copy-icon { color: var(--primary); transform: scale(1.15); }
         
-        /* Capsule Badges */
         .server-badge { flex-shrink: 0; width: auto; height: 22px; padding: 0 10px; border-radius: 20px; margin: 0; display: flex; align-items: center; justify-content: center; }
         .server-badge i { font-size: 12px; margin: 0; }
 
@@ -393,7 +391,6 @@
         .glass-desc-text { color: rgba(255,255,255,0.85); font-size: 0.95rem; }
         [data-theme="light"] .glass-desc-text { color: var(--text-muted); }
 
-        /* Weekly Video Showcase Styles */
         .video-glow-box { position: relative; width: 100%; max-width: 320px; border-radius: 16px; padding: 4px; background: linear-gradient(135deg, rgba(157, 78, 221, 0.4), rgba(255, 255, 255, 0.05)); box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin: 0 auto; transition: 0.3s;}
         .video-glow-box:hover { box-shadow: 0 15px 40px var(--primary-glow); }
         .video-glow-box video { width: 100%; display: block; border-radius: 12px; max-height: 70vh; object-fit: cover; background: #000; }
@@ -1058,8 +1055,9 @@
             }
         }
 
+        // تم إضافة textStroke لإعدادات السيرفر الانجليزي فقط وتعديل تأثير الشادو ليناسب لون الاسم الأسود
         const serverThemes = {
-            'english': { bg: 'var(--eng-bg)', text: 'var(--eng-text)', nameColor: 'var(--eng-name)', shadow: 'var(--eng-text-shadow)', badgeGlow: 'var(--eng-badge-glow)', badgeBorder: '1px solid #ffffff', profileBorder: '2px solid #000000', profileGlow: 'var(--eng-profile-glow)' },
+            'english': { bg: 'var(--eng-bg)', text: 'var(--eng-text)', nameColor: 'var(--eng-name)', shadow: 'var(--eng-text-shadow)', textStroke: 'var(--eng-text-stroke)', badgeGlow: 'var(--eng-badge-glow)', badgeBorder: '1px solid #ffffff', profileBorder: '2px solid #000000', profileGlow: 'var(--eng-profile-glow)' },
             'persian': { bg: '#C92C23', text: '#ffffff', nameColor: '#C92C23', shadow: 'none', badgeGlow: '0 2px 5px rgba(0,0,0,0.2)', badgeBorder: 'none', profileBorder: '2px solid rgba(255,255,255,0.1)', profileGlow: '0 0 15px #C92C23' },
             'french':  { bg: '#CBA276', text: '#ffffff', nameColor: '#CBA276', shadow: 'none', badgeGlow: '0 2px 5px rgba(0,0,0,0.2)', badgeBorder: 'none', profileBorder: '2px solid rgba(255,255,255,0.1)', profileGlow: '0 0 15px #CBA276' },
             'turkish': { bg: '#1A2F66', text: '#ffffff', nameColor: '#1A2F66', shadow: 'none', badgeGlow: '0 2px 5px rgba(0,0,0,0.2)', badgeBorder: 'none', profileBorder: '2px solid rgba(255,255,255,0.1)', profileGlow: '0 0 15px #1A2F66' },
@@ -1119,12 +1117,15 @@
                 const badgeBorder = sTheme.badgeBorder ? `border: ${sTheme.badgeBorder};` : `border: none;`;
                 const profBorder = sTheme.profileBorder ? `border: ${sTheme.profileBorder};` : `border: 2px solid rgba(255,255,255,0.1);`;
 
+                // تم إضافة -webkit-text-stroke لاسم القائد هنا في حال كان مدعوماً في الـ theme
+                const strokeStyle = sTheme.textStroke ? `-webkit-text-stroke: ${sTheme.textStroke};` : '';
+
                 container.innerHTML += `
                     <div class="global-leader glass-panel" data-server="${leader.server}" style="--server-color: ${sTheme.nameColor}; --server-glow: ${sTheme.profileGlow || `0 0 15px ${sTheme.nameColor}`};">
                         <img src="${imageSource}" alt="${leader.name}" style="${profBorder}">
                         <div class="leader-name-box" onclick="copyAdminID('${leader.name}')" title="انسخ اليوزر">
                             <i class="fa-regular fa-copy leader-copy-icon"></i>
-                            <h3 class="num-font" style="color: ${sTheme.nameColor} !important; text-shadow: ${sTheme.shadow} !important;">${leader.name}</h3>
+                            <h3 class="num-font" style="color: ${sTheme.nameColor} !important; text-shadow: ${sTheme.shadow} !important; ${strokeStyle}">${leader.name}</h3>
                             <div class="server-badge" style="background: ${sTheme.bg}; color: ${sTheme.text}; ${badgeGlowStyle} ${badgeBorder}">
                                 <i class="fa-solid fa-user-group"></i>
                             </div>
@@ -1289,14 +1290,11 @@
         const tourSheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/export?format=csv"; 
         const newsSheetURL = "https://docs.google.com/spreadsheets/d/10YreDjSMCJc1hvGFbyfVJO4zAmzFGO0eeyoq5qKwf_E/export?format=csv";
 
+        // تبسيط شاشات التحميل لمنع ظهور خطوط وهمية قد تبدو كأخطاء
         function showSkeletons() {
             let newsSkel = '';
             for(let i=0; i<3; i++) {
-                newsSkel += `<div class="news-slide-card glass-panel skeleton">
-                    <div class="news-header-top" style="border:none;"><div class="skel-badge skeleton"></div><div class="skel-text skeleton" style="width: 50px; margin:0;"></div></div>
-                    <div class="skel-title skeleton skel-text" style="margin-top:20px;"></div>
-                    <div class="skel-text skeleton" style="margin-top:15px;"></div><div class="skel-text skeleton"></div>
-                </div>`;
+                newsSkel += `<div class="news-slide-card glass-panel skeleton" style="height: 200px;"></div>`;
             }
             document.getElementById('newsSlider').innerHTML = newsSkel;
 
@@ -1569,7 +1567,6 @@
         function renderDynamicData() {
             if (!cachedSheetRows || cachedSheetRows.length === 0) return;
             
-            // --- دمج وتحديث قسم الفيديو من الشيت ---
             const firstRow = cachedSheetRows[0]; 
             if (firstRow) {
                 const videoUrl = firstRow[7] ? firstRow[7].trim() : ""; 
@@ -1598,7 +1595,6 @@
                 }
             }
 
-            // --- إكمال رندرة البطولات ---
             const tourContainer = document.getElementById('tournaments-container');
             const spendContainer = document.getElementById('spenders-container');
             
