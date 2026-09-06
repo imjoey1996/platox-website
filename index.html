@@ -987,67 +987,66 @@
         }
 
         async function submitBugReport() {
-            const bugTypeElement = document.querySelector('input[name="bugType"]:checked');
-            const platoId = document.getElementById('plato-id').value.trim();
-            const bugDesc = document.getElementById('bug-desc').value.trim();
-            const isAr = document.documentElement.lang === 'ar';
+    const bugTypeElement = document.querySelector('input[name="bugType"]:checked');
+    const platoId = document.getElementById('plato-id').value.trim();
+    const bugDesc = document.getElementById('bug-desc').value.trim();
+    const isAr = document.documentElement.lang === 'ar';
 
-            if(!bugTypeElement || !platoId || !bugDesc) {
-                alert(isAr ? "يرجى تعبئة جميع الحقول أولاً!" : "Please fill all fields first!");
-                return;
-            }
+    if(!bugTypeElement || !platoId || !bugDesc) {
+        alert(isAr ? "يرجى تعبئة جميع الحقول أولاً!" : "Please fill all fields first!");
+        return;
+    }
 
-            const lastReport = localStorage.getItem('last_bug_report_time');
-            const now = getAccurateTime();
-            
-            if (lastReport && now - parseInt(lastReport) < 3600000) { 
-                const waitMins = Math.ceil((3600000 - (now - parseInt(lastReport))) / 60000);
-                alert(isAr ? `يرجى الانتظار ${waitMins} دقيقة قبل إرسال بلاغ جديد لتجنب الضغط على الإدارة.` : `Please wait ${waitMins} minutes before sending a new report.`);
-                return;
-            }
+    const lastReport = localStorage.getItem('last_bug_report_time');
+    const now = getAccurateTime();
+    
+    if (lastReport && now - parseInt(lastReport) < 3600000) { 
+        const waitMins = Math.ceil((3600000 - (now - parseInt(lastReport))) / 60000);
+        alert(isAr ? `يرجى الانتظار ${waitMins} دقيقة قبل إرسال بلاغ جديد لتجنب الضغط على الإدارة.` : `Please wait ${waitMins} minutes before sending a new report.`);
+        return;
+    }
 
-            const bugType = bugTypeElement.value;
-            const scriptURL = "رابط_تطبيق_جوجل_هنا"; 
-            const formData = new URLSearchParams();
-            formData.append('plato_id', platoId);
-            formData.append('issue_type', bugType);
-            formData.append('description', bugDesc);
+    const bugType = bugTypeElement.value;
 
-            const submitBtn = document.querySelector('#bug-details .submit-btn');
-            const originalText = submitBtn.innerText;
-            submitBtn.innerText = isAr ? 'جاري الإرسال...' : 'Sending...';
-            submitBtn.disabled = true;
+    // تم ربط الشيت الخاص بك هنا بنجاح
+    const scriptURL = "https://script.google.com/macros/s/AKfycbz24P1RDGQbXI7psG7FOPhVNszKWzzf7X7yRQ4hFOjvC4k3zPuU0qsrSS2Ct0IZTGirHQ/exec"; 
 
-            try {
-                if (scriptURL === "رابط_تطبيق_جوجل_هنا") {
-                    throw new Error("لم يتم وضع رابط جوجل سكربت في الكود بعد!");
-                }
+    const formData = new URLSearchParams();
+    formData.append('plato_id', platoId);
+    formData.append('issue_type', bugType);
+    formData.append('description', bugDesc);
 
-                const response = await fetch(scriptURL, {
-                    method: "POST",
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: formData.toString()
-                });
+    const submitBtn = document.querySelector('#bug-details .submit-btn');
+    const originalText = submitBtn.innerText;
+    submitBtn.innerText = isAr ? 'جاري الإرسال...' : 'Sending...';
+    submitBtn.disabled = true;
 
-                if (!response.ok) {
-                    throw new Error(`HTTP Error`);
-                }
+    try {
+        const response = await fetch(scriptURL, {
+            method: "POST",
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: formData.toString()
+        });
 
-                localStorage.setItem('last_bug_report_time', now);
-                const toast = document.getElementById("toast");
-                toast.innerHTML = isAr ? `<i class="fa-solid fa-check"></i> تم إرسال البلاغ بنجاح` : `<i class="fa-solid fa-check"></i> Report Submitted Successfully`;
-                toast.className = "show";
-                setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
-                hideBugForm();
-
-            } catch (err) {
-                console.error("Error:", err);
-                alert(isAr ? `تعذر الإرسال: ${err.message}` : `Error: ${err.message}`);
-            } finally {
-                submitBtn.innerText = originalText;
-                submitBtn.disabled = false;
-            }
+        if (!response.ok) {
+            throw new Error(`HTTP Error`);
         }
+
+        localStorage.setItem('last_bug_report_time', now);
+        const toast = document.getElementById("toast");
+        toast.innerHTML = isAr ? `<i class="fa-solid fa-check"></i> تم إرسال البلاغ بنجاح` : `<i class="fa-solid fa-check"></i> Report Submitted Successfully`;
+        toast.className = "show";
+        setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+        hideBugForm();
+
+    } catch (err) {
+        console.error("Error:", err);
+        alert(isAr ? `تعذر الإرسال: ${err.message}` : `Error: ${err.message}`);
+    } finally {
+        submitBtn.innerText = originalText;
+        submitBtn.disabled = false;
+    }
+}
 
         // تم تعيين shadow إلى none للسيرفر الإنجليزي لإزالة الظل المربع خلف الاسم
         const serverThemes = {
