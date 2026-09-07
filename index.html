@@ -23,7 +23,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Rajdhani:wght@600;700;900&display=block" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
     
     <style>
         :root {
@@ -98,8 +98,6 @@
         [data-theme="light"] .glass-panel { box-shadow: 0 8px 30px 0 rgba(31, 38, 135, 0.07); border-top: 1px solid rgba(0,0,0, 0.1); }
 
         .pro-title-glow, .pro-icon-glow { color: var(--primary); font-weight: 900; text-shadow: 0 0 15px var(--btn-active-glow), 0 0 30px var(--btn-active-glow); }
-        
-        /* التوهج المخصص للتحذير (اللون المرجاني) */
         .custom-warning-glow { color: #EE6B6E !important; text-shadow: 0 0 15px #EE6B6E, 0 0 30px #EE6B6E !important; }
 
         .navbar { position: fixed; top: 0; left: 0; width: 100%; padding: calc(12px + env(safe-area-inset-top)) 25px 12px; display: flex; justify-content: space-between; align-items: center; background: rgba(5, 5, 8, 0.65); backdrop-filter: blur(25px); border-bottom: 1px solid var(--glass-border); z-index: 1000; direction: ltr; }
@@ -112,9 +110,17 @@
         .nav-actions i { font-size: 22px; cursor: pointer; color: var(--text-main); transition: 0.2s; }
         .nav-actions i:hover { color: var(--primary); text-shadow: 0 0 15px var(--btn-active-glow); }
 
-        /* نظام الإشعارات والتنسيقات الجديدة */
+        /* حركة وميض الإشعار */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.85); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.8); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+            100% { transform: scale(0.85); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
         .notif-wrapper { position: relative; display: flex; align-items: center; }
         .notif-dot { position: absolute; top: -2px; right: -2px; width: 10px; height: 10px; background: #ef4444; border-radius: 50%; display: none; box-shadow: 0 0 8px #ef4444; border: 2px solid var(--bg-card); }
+        .notif-dot.active-dot { display: block !important; animation: pulse-ring 1.5s infinite; }
+        
         .notif-dropdown { position: absolute; top: 45px; right: -10px; width: 230px; background: var(--bg-card); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 12px; padding: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s ease; display: flex; flex-direction: column; gap: 8px; z-index: 1001; }
         [data-theme="light"] .notif-dropdown { background: rgba(255,255,255,0.95); }
         html[dir="rtl"] .notif-dropdown { right: auto; left: -10px; }
@@ -130,14 +136,14 @@
 
         .lang-btn { border: 1px solid var(--glass-border); padding: 6px 15px; border-radius: 20px; cursor: pointer; transition: 0.2s; font-family: 'Cairo', sans-serif; font-weight: 700; font-size: 14px; }
         .main-lang-switch { display: flex; justify-content: center; gap: 15px; margin: calc(95px + env(safe-area-inset-top)) auto 15px; position: relative; z-index: 10; }
-        .main-lang-switch .lang-btn { background: rgba(15, 15, 20, 0.5); color: var(--text-muted); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid var(--glass-border); padding: 8px 25px; border-radius: 20px; font-family: 'Cairo', sans-serif; font-weight: 700; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .main-lang-switch .lang-btn { background: rgba(15, 15, 20, 0.5); color: var(--text-muted); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); padding: 8px 25px; border-radius: 20px; font-family: 'Cairo', sans-serif; font-weight: 700; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         [data-theme="light"] .main-lang-switch .lang-btn { background: rgba(255, 255, 255, 0.9); color: #475569; }
         .main-lang-switch .lang-btn.active { color: var(--bg-main) !important; background: var(--primary) !important; border-color: var(--primary) !important; box-shadow: 0 0 20px var(--btn-active-glow) !important; text-shadow: none; font-weight: 900; transform: scale(1.05); }
 
         .tab-view { display: none; width: 100%; }
         .tab-view.active-view { display: block; }
 
-        .bottom-nav-bar { position: fixed; bottom: calc(20px + env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); width: 90%; max-width: 440px; height: 65px; background: rgba(15, 15, 20, 0.75); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border: 1px solid var(--glass-border); border-top: 1px solid rgba(255, 255, 255, 0.15); border-radius: 40px; display: flex; justify-content: space-around; align-items: center; padding: 0 10px; z-index: 1000; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5); }
+        .bottom-nav-bar { position: fixed; bottom: calc(20px + env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); width: 90%; max-width: 440px; height: 65px; background: rgba(15, 15, 20, 0.75); backdrop-filter: blur(25px); border: 1px solid var(--glass-border); border-top: 1px solid rgba(255, 255, 255, 0.15); border-radius: 40px; display: flex; justify-content: space-around; align-items: center; padding: 0 10px; z-index: 1000; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5); }
         [data-theme="light"] .bottom-nav-bar { background: rgba(255, 255, 255, 0.85); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); border-top: 1px solid rgba(0,0,0, 0.1); }
         
         .bottom-nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: var(--text-muted); cursor: pointer; height: 100%; transition: color 0.2s; position: relative; }
@@ -160,9 +166,6 @@
         .section-title { font-size: 1.7rem; font-weight: 900; margin-bottom: 35px; text-transform: uppercase; position: relative; letter-spacing: 0.5px; text-align: center; }
         .section-title::before { content: ''; position: absolute; right: -15px; top: 50%; transform: translateY(-50%); width: 6px; height: 20px; background: var(--primary); border-radius: 3px; box-shadow: 0 0 15px var(--btn-active-glow);}
         html[dir="ltr"] .section-title::before { right: auto; left: -15px; }
-
-        .skeleton { position: relative; overflow: hidden; background-color: rgba(255, 255, 255, 0.05) !important; border-color: transparent !important; box-shadow: none !important; }
-        [data-theme="light"] .skeleton { background-color: rgba(0, 0, 0, 0.05) !important; }
 
         .news-carousel-container { width: 100%; max-width: 800px; position: relative; display: flex; flex-direction: column; gap: 5px; margin-bottom: 5px;}
         .news-slider { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; -ms-overflow-style: none; scrollbar-width: none; padding: 25px 20px; cursor: grab;}
@@ -349,13 +352,11 @@
         <h1 class="num-font">Plato<span>X</span></h1>
         
         <div class="nav-actions">
-            <!-- نظام الإشعارات الديناميكي -->
             <div class="notif-wrapper">
                 <i class="fa-solid fa-bell" onclick="toggleNotif()" id="notif-bell"></i>
                 <div class="notif-dot" id="nav-dot-bell"></div>
                 <div class="notif-dropdown" id="notif-dropdown" dir="rtl">
                     <div id="notif-content">
-                        <!-- تظهر الإشعارات هنا برمجياً من الشيت -->
                     </div>
                 </div>
             </div>
@@ -467,7 +468,6 @@
                 <div>
                     <div class="guideline-item">
                         <i class="fa-solid fa-bug guideline-icon"></i>
-                        <!-- تم التعديل هنا حسب الطلب الجديد -->
                         <div class="guideline-text" data-i18n="comm_guide_1">استغلال تطبيق بلاتو أو التشويش على تجربة مستخدم آخر.</div>
                     </div>
                     <div class="guideline-item">
@@ -563,8 +563,8 @@
         <section id="leaders-intro">
             <div class="glass-panel" style="width: 100%; max-width: 850px; padding: 30px; border-radius: 16px; margin-bottom: 5px;">
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
-                    <!-- تم التعديل هنا: تحويل لون التوهج إلى الأحمر المخصص -->
-                    <i class="fa-solid fa-circle-info custom-warning-glow" style="font-size: 26px;"></i>
+                    <!-- تم تعديل الأيقونة إلى علامة استفهام مع كلاس التوهج المتكيف -->
+                    <i class="fa-solid fa-circle-question pro-icon-glow" style="font-size: 26px;"></i>
                     <h3 class="pro-title-glow" style="font-size: 22px; margin: 0;" data-i18n="who_are_leaders">من هم القادة؟</h3>
                 </div>
                 <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 25px; font-weight: 700;" data-i18n="who_are_leaders_desc">
@@ -617,7 +617,8 @@
                     </li>
                 </ul>
                 <div class="guideline-warning" style="background: rgba(128, 128, 128, 0.15); border-color: rgba(128, 128, 128, 0.3); color: var(--text-main); margin-top: 20px;">
-                    <i class="fa-solid fa-circle-info pro-icon-glow" style="font-size: 24px; flex-shrink: 0;"></i>
+                    <!-- تم تعديل كلاس التوهج هنا ليطابق الصفحة الأولى -->
+                    <i class="fa-solid fa-circle-info custom-warning-glow" style="font-size: 24px; flex-shrink: 0;"></i>
                     <span data-i18n="be_leader_note" style="font-weight: 600;">يتم تعيين قادة جدد عند الحاجة، بحد أقصى 4 قادة لكل خادم.</span>
                 </div>
                 
@@ -831,7 +832,6 @@
     <div id="toast"></div>
 
     <script>
-        // المتغيرات العامة
         let cachedSheetRows = null;
         let newsCardsData = [];
         let tournamentsList = [];
@@ -870,12 +870,13 @@
             if (viewName === 'home') setTimeout(updateCarouselButtons, 80);
         }
 
-        // --- نظام الإشعارات والتنقل ---
         function toggleNotif() {
             const dropdown = document.getElementById('notif-dropdown');
             dropdown.classList.toggle('show');
-            document.getElementById('nav-dot-bell').style.display = 'none'; 
-            safeSetStorage('last_visit', Date.now().toString()); // تسجيل رؤية الإشعارات
+            const dot = document.getElementById('nav-dot-bell');
+            dot.style.display = 'none'; 
+            dot.classList.remove('active-dot');
+            safeSetStorage('last_visit', Date.now().toString()); 
         }
 
         function goToSection(view, sectionId) {
@@ -905,12 +906,11 @@
                 let lastVisit = parseInt(safeGetStorage('last_visit') || '0');
                 let now = Date.now();
                 if (now - lastVisit > 86400000) { 
-                    document.getElementById('nav-dot-bell').style.display = 'block';
+                    document.getElementById('nav-dot-bell').classList.add('active-dot');
                 }
             } catch(e) {}
         }
 
-        // --- تحديث قائمة الإشعارات بناءً على ما جلبناه من الشيت ---
         function updateNotificationsDropdown() {
             const notifContent = document.getElementById('notif-content');
             const isAr = document.documentElement.lang === 'ar';
@@ -918,7 +918,7 @@
 
             let latestNews = [];
             if (newsCardsData && newsCardsData.length > 0) {
-                latestNews = newsCardsData.slice(0, 2); // سحب أحدث خبرين
+                latestNews = newsCardsData.slice(0, 2);
             }
 
             let latestTour = null;
@@ -1016,7 +1016,6 @@
             return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag]) );
         }
 
-        // --- نظام إرسال البلاغات المحدث (مع تجاوز الخطأ الوهمي للـ CORS عبر مهلة محددة) ---
         async function submitBugReport() {
             const isAr = document.documentElement.lang === 'ar';
             
@@ -1078,7 +1077,6 @@
             try {
                 const finalURL = scriptURL + "?plato_id=" + encodeURIComponent(platoId) + "&issue_type=" + encodeURIComponent(bugType) + "&description=" + encodeURIComponent(bugDesc) + "&ip=" + encodeURIComponent(userIP);
                 
-                // استخدام مهلة 8 ثواني للتأكد من عدم وجود انقطاع حقيقي بالانترنت بدلاً من حظر الـ CORS
                 const fetchPromise = fetch(finalURL, { mode: "no-cors", cache: "no-store" });
                 const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 8000));
                 
@@ -1350,11 +1348,13 @@
             safeSetStorage('lang', lang);
         }
 
-        // --- تحميل البيانات مباشرة لإظهار التعديلات فوراً وتخطي التأخير ---
         async function loadDynamicData(force = false) {
             try {
-                // جلب مباشر دائماً بدون الاعتماد على Cache لضمان تحديث فوري
-                const response = await fetch(tourSheetURL + "&t=" + new Date().getTime(), { cache: "no-store" });
+                // كود منع التخزين المؤقت (Cache Buster) لمنع جوجل من إرسال بيانات قديمة
+                const cacheBuster = new Date().getTime() + "_" + Math.random().toString(36).substring(2);
+                const fetchUrl = tourSheetURL + "&gid=0&cb=" + cacheBuster;
+
+                const response = await fetch(fetchUrl, { cache: "no-store" });
                 if (!response.ok) throw new Error("فشل الاتصال بالشيت");
                 const data = await response.text();
                 
@@ -1362,6 +1362,14 @@
 
                 const parsedData = parseCSV(data);
                 if(parsedData && parsedData.length > 1) {
+                    const oldData = safeGetStorage('plato_data_v3');
+                    
+                    // إذا كان هناك تحديث فعلي (بيانات جديدة) تختلف عن المخزنة مسبقاً، نشغل الوميض
+                    if (oldData && oldData !== data) {
+                        document.getElementById('nav-dot-bell').classList.add('active-dot');
+                        safeSetStorage('last_visit', '0');
+                    }
+
                     safeSetStorage('plato_data_v3', data);
                     cachedSheetRows = parsedData.slice(1);
                     renderDynamicData(); renderNewsData(); updateNotificationsDropdown();
@@ -1712,9 +1720,6 @@
             nSlider.addEventListener('mousedown', (e) => { isDown = true; startX = e.pageX - nSlider.offsetLeft; sLeft = nSlider.scrollLeft; });
             nSlider.addEventListener('mouseleave', () => isDown = false); nSlider.addEventListener('mouseup', () => isDown = false);
             nSlider.addEventListener('mousemove', (e) => { if (!isDown) return; e.preventDefault(); const x = e.pageX - nSlider.offsetLeft; const walk = (x - startX) * 2; nSlider.scrollLeft = sLeft - walk; });
-            
-            const cachedDyn = safeGetStorage('plato_data_v3');
-            if (!cachedDyn) showSkeletons();
             
             loadDynamicData();
             
