@@ -850,6 +850,11 @@
         let basePerfTime = performance.now();
         let activeTourTimers = [];
 
+        // متغيرات التتبع للإشعارات
+        let currentLatestNews = null;
+        let currentLatestTour = null;
+        let currentLatestWeekly = null;
+
         const tourSheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/gviz/tq?tqx=out:csv"; 
 
         function parseCSV(str) {
@@ -877,8 +882,6 @@
             
             if (itemEl) {
                 itemEl.classList.add('active');
-                const dot = itemEl.querySelector('.nav-dot');
-                if (dot) dot.classList.remove('active-dot'); 
             }
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -888,10 +891,6 @@
         function toggleNotif() {
             const dropdown = document.getElementById('notif-dropdown');
             dropdown.classList.toggle('show');
-            const dot = document.getElementById('nav-dot-bell');
-            dot.style.display = 'none'; 
-            dot.classList.remove('active-dot');
-            safeSetStorage('last_visit', Date.now().toString()); 
         }
 
         function goToSection(view, sectionId) {
@@ -915,64 +914,49 @@
             }
         });
 
-        function checkNewContent() {
-            try {
-                let lastVisit = parseInt(safeGetStorage('last_visit') || '0');
-                let now = Date.now();
-                if (now - lastVisit > 86400000) { 
-                    document.getElementById('nav-dot-bell').classList.add('active-dot');
-                    document.getElementById('dot-home')?.classList.add('active-dot');
-                    document.getElementById('dot-explore')?.classList.add('active-dot');
-                }
-            } catch(e) {}
+        // دالة تحديد الإشعار كمقروء والانتقال إليه
+        function markSeenAndGo(type, id, view, sectionId) {
+            safeSetStorage('seen_' + type, id);
+            updateNotificationsDropdown();
+            goToSection(view, sectionId);
         }
 
-        // نظام التنبيهات المطور الذي يستخرج الأخبار والبطولات مباشرة (بدون نصائح)
+        // تحديث قائمة الإشعارات والنقاط الحمراء
         function updateNotificationsDropdown() {
             const notifContent = document.getElementById('notif-content');
-            const dropdownContainer = document.getElementById('notif-dropdown');
             const isAr = document.documentElement.lang === 'ar';
-            dropdownContainer.setAttribute('dir', isAr ? 'rtl' : 'ltr');
-            
+            document.getElementById('notif-dropdown').setAttribute('dir', isAr ? 'rtl' : 'ltr');
             let html = '';
 
-            // 1. آخر خبرين تم إضافتهما
-            let latestNews = [];
-            if (newsCardsData && newsCardsData.length > 0) {
-                latestNews = newsCardsData.slice(0, 2);
-            }
+            const seenNews = safeGetStorage('seen_news');
+            const seenTour = safeGetStorage('seen_tour');
+            const seenWeekly = safeGetStorage('seen_weekly');
 
-            latestNews.forEach(news => {
-                const titleAr = news[2] || '';
-                const titleEn = news[4] || '';
-                const displayTitle = isAr ? titleAr : (titleEn || titleAr);
+            let hasNewHome = false;
+            let hasNewExplore = false;
+
+            // 1. فحص الأخبار
+            if (currentLatestNews && currentLatestNews.id !== seenNews) {
+                hasNewHome = true;
+                const displayTitle = isAr ? currentLatestNews.titleAr : (currentLatestNews.titleEn || currentLatestNews.titleAr);
                 const safeTitle = escapeHTML(displayTitle);
-                
                 html += `
-                <div class="notif-item" onclick="goToSection('home', 'news')">
+                <div class="notif-item" onclick="markSeenAndGo('news', '${currentLatestNews.id}', 'home', 'news')">
                     <i class="fa-solid fa-newspaper"></i> 
                     <div class="notif-text-box">
                         <span class="notif-sub" style="color:var(--primary);">${isAr ? 'خبر جديد' : 'New Update'}</span>
                         <span class="notif-title">${safeTitle}</span>
                     </div>
                 </div>`;
-            });
-
-            // 2. أقرب بطولة قادمة
-            let latestTour = null;
-            if (tournamentsList && tournamentsList.length > 0) {
-                const upcoming = tournamentsList.filter(t => t.diff > 0).sort((a, b) => a.targetTimeMs - b.targetTimeMs);
-                if (upcoming.length > 0) latestTour = upcoming[0];
             }
 
-            if (latestTour) {
-                const titleAr = latestTour.nameAr || '';
-                const titleEn = latestTour.nameEn || '';
-                const displayTitle = isAr ? titleAr : (titleEn || titleAr);
+            // 2. فحص البطولات
+            if (currentLatestTour && currentLatestTour.id !== seenTour) {
+                hasNewExplore = true;
+                const displayTitle = isAr ? currentLatestTour.titleAr : (currentLatestTour.titleEn || currentLatestTour.titleAr);
                 const safeTitle = escapeHTML(displayTitle);
-
                 html += `
-                <div class="notif-item" onclick="goToSection('leaderboard', 'tournaments')">
+                <div class="notif-item" onclick="markSeenAndGo('tour', '${currentLatestTour.id}', 'leaderboard', 'tournaments')">
                     <i class="fa-solid fa-trophy"></i> 
                     <div class="notif-text-box">
                         <span class="notif-sub" style="color:#eab308;">${isAr ? 'بطولة قادمة' : 'Upcoming Tournament'}</span>
@@ -981,11 +965,39 @@
                 </div>`;
             }
 
+            // 3. فحص العناصر الأسبوعية
+            if (currentLatestWeekly && currentLatestWeekly.id !== seenWeekly) {
+                hasNewExplore = true;
+                const safeTitle = escapeHTML(decodeURIComponent(currentLatestWeekly.id));
+                html += `
+                <div class="notif-item" onclick="markSeenAndGo('weekly', '${currentLatestWeekly.id}', 'leaderboard', 'weekly-showcase')">
+                    <i class="fa-solid fa-gift" style="color:#a855f7;"></i> 
+                    <div class="notif-text-box">
+                        <span class="notif-sub" style="color:#a855f7;">${isAr ? 'عناصر أسبوعية جديدة' : 'New Weekly Items'}</span>
+                        <span class="notif-title">${safeTitle}</span>
+                    </div>
+                </div>`;
+            }
+
             if (html === '') {
-                html = `<div style="text-align:center; padding:10px; color:var(--text-muted); font-size:12px; font-weight:bold;">${isAr ? 'لا توجد إشعارات حالياً' : 'No recent updates'}</div>`;
+                html = `<div style="text-align:center; padding:10px; color:var(--text-muted); font-size:12px; font-weight:bold;">${isAr ? 'لا يوجد تحديثات حاليًا' : 'No recent updates'}</div>`;
             }
 
             notifContent.innerHTML = html;
+
+            // تحديث النقاط الحمراء
+            const bellDot = document.getElementById('nav-dot-bell');
+            const homeDot = document.getElementById('dot-home');
+            const exploreDot = document.getElementById('dot-explore');
+
+            if (hasNewHome || hasNewExplore) bellDot.classList.add('active-dot'); 
+            else bellDot.classList.remove('active-dot');
+
+            if (hasNewHome) homeDot?.classList.add('active-dot'); 
+            else homeDot?.classList.remove('active-dot');
+            
+            if (hasNewExplore) exploreDot?.classList.add('active-dot'); 
+            else exploreDot?.classList.remove('active-dot');
         }
 
         function toggleTheme() {
@@ -1382,19 +1394,9 @@
 
                 const parsedData = parseCSV(data);
                 if(parsedData && parsedData.length > 1) {
-                    const oldData = safeGetStorage('plato_data_v3');
-                    
-                    if (oldData && oldData !== data) {
-                        document.getElementById('nav-dot-bell').classList.add('active-dot');
-                        document.getElementById('dot-home')?.classList.add('active-dot');
-                        document.getElementById('dot-explore')?.classList.add('active-dot');
-                        safeSetStorage('last_visit', '0');
-                    }
-
                     safeSetStorage('plato_data_v3', data);
                     cachedSheetRows = parsedData.slice(1);
                     
-                    // إعداد النصائح العشوائية من الأعمدة R و S (الفهرس 17 و 18)
                     validTips = [];
                     cachedSheetRows.forEach(row => {
                         const arTip = row[17] ? row[17].trim() : "";
@@ -1407,10 +1409,10 @@
                         randomTipIndex = Math.floor(Math.random() * validTips.length);
                     }
 
+                    renderNewsData();
                     renderDynamicData(); 
-                    renderNewsData(); 
-                    updateNotificationsDropdown(); 
                     renderDailyTip();
+                    updateNotificationsDropdown(); 
                 } else { throw new Error("بيانات غير مكتملة"); }
                 
             } catch (error) { 
@@ -1431,7 +1433,10 @@
                         randomTipIndex = Math.floor(Math.random() * validTips.length);
                     }
 
-                    renderDynamicData(); renderNewsData(); updateNotificationsDropdown(); renderDailyTip();
+                    renderNewsData();
+                    renderDynamicData(); 
+                    renderDailyTip();
+                    updateNotificationsDropdown(); 
                 } else {
                     const isLtr = document.documentElement.getAttribute('lang') === 'en';
                     document.getElementById('tournaments-container').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);" data-i18n="no_tournaments">${isLtr ? "No tournaments at the moment." : "لا بطولات في الوقت الحالي."}</p>`;
@@ -1442,7 +1447,6 @@
             }
         }
 
-        // دالة لعرض النصيحة المستخرجة (بناءً على اللغة ودون تغييرها عند تبديل اللغة)
         function renderDailyTip() {
             const tipEl = document.getElementById('tip-content');
             const currentLang = document.documentElement.getAttribute('lang') || 'en';
@@ -1461,6 +1465,18 @@
             let allNews = cachedSheetRows.filter(cols => cols.length >= 10 && (cols[8] || '').trim() && (cols[9] || '').trim());
             allNews.sort((a, b) => (new Date((b[8] || '').trim()).getTime() || 0) - (new Date((a[8] || '').trim()).getTime() || 0));
             newsCardsData = allNews.slice(0, 5).map(cols => [ cols[8], cols[9], cols[10], cols[11], cols[12], cols[13] ]);
+            
+            if (newsCardsData.length > 0) {
+                const top = newsCardsData[0];
+                currentLatestNews = {
+                    id: encodeURIComponent((top[0] || '') + (top[2] || top[4] || '')), 
+                    titleAr: top[2] || '',
+                    titleEn: top[4] || ''
+                };
+            } else {
+                currentLatestNews = null;
+            }
+
             buildNewsHTML();
         }
         
@@ -1595,13 +1611,23 @@
             const firstRow = cachedSheetRows[0]; 
             if (firstRow) {
                 const videoUrl = firstRow[6] ? escapeHTML(firstRow[6].trim()) : ""; 
-                const weekName = escapeHTML(firstRow[7] ? firstRow[7] : ""); 
+                const weekName = escapeHTML(firstRow[7] ? firstRow[7].trim() : ""); 
                 const vidEl = document.getElementById('weekly-video'); const showcaseSec = document.getElementById('weekly-showcase'); const showcaseDiv = document.getElementById('weekly-divider'); const weekNameEl = document.getElementById('weekly-week-name');
                 if (videoUrl) { 
                     if (vidEl.getAttribute('src') !== videoUrl) vidEl.src = videoUrl;
-                    if (weekName) { weekNameEl.innerText = weekName; weekNameEl.style.display = 'block'; } else { weekNameEl.style.display = 'none'; }
+                    if (weekName) { 
+                        weekNameEl.innerText = weekName; 
+                        weekNameEl.style.display = 'block'; 
+                        currentLatestWeekly = { id: encodeURIComponent(weekName) };
+                    } else { 
+                        weekNameEl.style.display = 'none'; 
+                        currentLatestWeekly = null;
+                    }
                     showcaseSec.style.display = 'flex'; if(showcaseDiv) showcaseDiv.style.display = 'flex';
-                } else { showcaseSec.style.display = 'none'; if(showcaseDiv) showcaseDiv.style.display = 'none'; }
+                } else { 
+                    showcaseSec.style.display = 'none'; if(showcaseDiv) showcaseDiv.style.display = 'none'; 
+                    currentLatestWeekly = null;
+                }
             }
 
             const tourContainer = document.getElementById('tournaments-container');
@@ -1644,6 +1670,17 @@
             });
 
             let upcomingTours = tournamentsList.filter(t => t.diff > 0).sort((a, b) => a.targetTimeMs - b.targetTimeMs);
+            if (upcomingTours.length > 0) {
+                const topTour = upcomingTours[0];
+                currentLatestTour = {
+                    id: encodeURIComponent(topTour.nameAr + topTour.targetTimeMs),
+                    titleAr: topTour.nameAr,
+                    titleEn: topTour.nameEn
+                };
+            } else {
+                currentLatestTour = null;
+            }
+
             let startedTours = tournamentsList.filter(t => t.diff <= 0).sort((a, b) => b.targetTimeMs - a.targetTimeMs);
             let sortedTournaments = [...upcomingTours, ...startedTours];
 
@@ -1756,7 +1793,7 @@
 
         document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('theme-icon').className = savedTheme === 'light' ? 'fa-solid fa-sun theme-toggle' : 'fa-solid fa-moon theme-toggle';
-            changeLang(savedLang); checkNewContent();
+            changeLang(savedLang);
             
             const nSlider = document.getElementById('newsSlider');
             let isDown = false, startX, sLeft;
