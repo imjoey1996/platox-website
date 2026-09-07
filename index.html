@@ -503,8 +503,13 @@
                     </div>
                     
                     <div style="position: relative; width: 100%;">
-                        <textarea id="bug-desc" class="bug-input" rows="4" placeholder="وصف المشكلة..." style="resize: vertical;" oninput="clearInputError('bug-desc')"></textarea>
-                        <div id="bug-desc-error" class="input-error-msg"></div>
+                        <textarea id="bug-desc" class="bug-input" rows="4" placeholder="وصف المشكلة..." maxlength="1499" style="resize: vertical;" oninput="clearInputError('bug-desc'); updateCharCount(this);"></textarea>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-top: 6px;">
+                            <div id="bug-desc-error" class="input-error-msg" style="margin-top: 0;"></div>
+                            <div class="num-font" style="font-size: 13.5px; color: var(--text-muted); font-weight: bold; direction: ltr; margin-right: auto; padding-left: 5px;">
+                                <span id="char-counter">1499</span> / 1499
+                            </div>
+                        </div>
                     </div>
                     
                     <div style="display: flex; gap: 10px;">
@@ -955,6 +960,10 @@
             document.getElementById(inputId + '-error').style.display = 'none';
         }
 
+        function updateCharCount(element) {
+            document.getElementById('char-counter').innerText = 1499 - element.value.length;
+        }
+
         function showBugForm() { document.getElementById('bug-details').style.display = 'flex'; }
         
         function hideBugForm() {
@@ -969,6 +978,7 @@
             
             clearInputError('plato-id');
             clearInputError('bug-desc');
+            document.getElementById('char-counter').innerText = '1499';
         }
 
         function escapeHTML(str) {
@@ -1132,8 +1142,15 @@
                     </svg>
                 `;
 
+                let cardGlowStyle = '';
+                if (leader.server === 'english') {
+                    cardGlowStyle = 'border-top: 2px solid rgba(255,255,255,0.4); border-bottom: 2px solid rgba(255,255,255,0.4); box-shadow: 0 -5px 15px rgba(255,255,255,0.08), 0 5px 15px rgba(255,255,255,0.08);';
+                } else {
+                    cardGlowStyle = `border-top: 2px solid ${sTheme.nameColor}99; border-bottom: 2px solid ${sTheme.nameColor}99; box-shadow: 0 -6px 18px ${sTheme.nameColor}30, 0 6px 18px ${sTheme.nameColor}30;`;
+                }
+
                 htmlStr += `
-                    <div class="global-leader glass-panel" data-server="${leader.server}">
+                    <div class="global-leader glass-panel" data-server="${leader.server}" style="${cardGlowStyle}">
                         <img src="${imageSource}" alt="${leader.name}" style="${profBorder}">
                         <div class="leader-name-box" onclick="copyAdminID('${leader.name}')" title="انسخ اليوزر">
                             <i class="fa-regular fa-copy leader-copy-icon"></i>
