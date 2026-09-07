@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://worldtimeapi.org https://timeapi.io https://docs.google.com https://script.google.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline'; img-src 'self' data: https: http:; media-src https: http: 'self';">
+    <!-- تم إضافة خوادم جوجل الخاصة بالسكربت لتخطي الحظر والسماح بإرسال البلاغات -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://worldtimeapi.org https://timeapi.io https://docs.google.com https://script.google.com https://script.googleusercontent.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline'; img-src 'self' data: https: http:; media-src https: http: 'self';">
     
     <title>PlatoX | مجتمع اللاعبين العرب</title>
     
@@ -892,11 +893,12 @@
         <section id="join-us">
             <h2 class="section-title" data-i18n="join_us_title">انضم إلينا</h2>
             <div class="glass-panel" style="width: 100%; max-width: 750px; padding: 30px; border-radius: 16px; text-align: center; display: flex; flex-direction: column; align-items: center;">
-                <i class="fa-brands fa-discord pro-icon-glow" style="font-size: 40px; margin-bottom: 15px;"></i>
+                <!-- إزالة كلاس التوهج وتوحيد اللون للديسكورد الطبيعي -->
+                <i class="fa-brands fa-discord" style="font-size: 40px; margin-bottom: 15px; color: var(--discord-color);"></i>
                 <p class="glass-desc-text" style="font-weight: 600; margin-bottom: 20px;" data-i18n="join_us_desc">
                     إذا كانت لديكم بطولة في مجموعتكم ترغبون بإضافتها، أو تعتقدون أن حسابكم يستحق المنافسة ضمن أقدم الحسابات، أرسلوا لنا التفاصيل عبر الديسكورد من هنا.
                 </p>
-                <a href="https://discord.com/channels/1476420629698711778/1476603091095916738" target="_blank" rel="noopener noreferrer" class="fit-btn">
+                <a href="https://discord.com/channels/1476420629698711778/1476603091095916738" target="_blank" rel="noopener noreferrer" class="fit-btn" style="background-color: var(--discord-color); color: #fff;">
                     <i class="fa-brands fa-discord"></i> <span data-i18n="join_us_btn">تواصل معنا</span>
                 </a>
             </div>
@@ -1030,10 +1032,6 @@
             );
         }
 
-        function sanitizeCSV(str) {
-            return str.replace(/^[=+\-@\t\r\n]/, ' $&');
-        }
-
         async function submitBugReport() {
             const isAr = document.documentElement.lang === 'ar';
             
@@ -1103,12 +1101,9 @@
             submitBtn.innerText = isAr ? 'جاري الإرسال...' : 'Sending...';
             submitBtn.disabled = true;
 
-            const safePlatoId = sanitizeCSV(platoId);
-            const safeBugDesc = sanitizeCSV(bugDesc);
-
             try {
-                // استعادة GET لحل المشكلة مع السكربت الخاص بك
-                const finalURL = scriptURL + "?plato_id=" + encodeURIComponent(safePlatoId) + "&issue_type=" + encodeURIComponent(bugType) + "&description=" + encodeURIComponent(safeBugDesc);
+                // الكود الأصلي والمضمون للإرسال بدون فلاتر تكسر الإتصال مع Google Script
+                const finalURL = scriptURL + "?plato_id=" + encodeURIComponent(platoId) + "&issue_type=" + encodeURIComponent(bugType) + "&description=" + encodeURIComponent(bugDesc);
                 await fetch(finalURL, { mode: "no-cors" });
                 
                 localStorage.setItem('last_bug_report', Date.now().toString());
@@ -1658,7 +1653,6 @@
             
             const firstRow = cachedSheetRows[0]; 
             if (firstRow) {
-                // Restoration of relative video URL
                 const videoUrl = firstRow[7] ? escapeHTML(firstRow[7].trim()) : ""; 
                 const weekName = escapeHTML(firstRow[8] ? firstRow[8] : ""); 
                 
@@ -1713,7 +1707,6 @@
                 }
 
                 const nameEn = escapeHTML(cols[2] ? cols[2].trim() : "");
-                // Restoration of relative image URL
                 const image = cols[3] ? escapeHTML(cols[3].trim()) : "";
                 const prizeStr = escapeHTML(cols[4] ? cols[4].trim() : "");
                 const game = escapeHTML(cols[5] ? cols[5].trim() : "");
@@ -1946,7 +1939,6 @@
             setInterval(updateSheetTimers, 1000);
         });
 
-        // استعادة كود قفل التقريب (Zoom Lock) بالكامل
         document.addEventListener('touchstart', function(e) {
             if (e.touches.length > 1) {
                 e.preventDefault();
