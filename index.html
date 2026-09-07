@@ -1,25 +1,4 @@
-تم تنفيذ جميع طلباتك بدقة. إليك ملخص التعديلات:function doGet(e) {
-  var action = e.parameter.action; // 'like' أو 'dislike'
-  var newsId = e.parameter.news_id; // عنوان الخبر كمعرف
-  var userIp = e.parameter.ip || "Unknown";
-  
-  // يمكنك هنا إضافة الكود الخاص بحفظ البيانات في شيت جوجل
-  // (تسجيل رقم الخبر، نوع التفاعل، والـ IP)
-  
-  var result = {
-    status: "success",
-    news_id: newsId,
-    action_recorded: action,
-    ip: userIp
-  };
-  
-  return ContentService.createTextOutput(JSON.stringify(result))
-    .setMimeType(ContentService.MimeType.JSON)
-    .setHeader("Access-Control-Allow-Origin", "*");
-}
 
-ثانياً: كود الموقع الكامل (index.html)
-قم بنسخ هذا الكود بالكامل واستبداله بملفك:
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
