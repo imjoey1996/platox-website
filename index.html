@@ -19,8 +19,10 @@
         :root {
             --bg-main: #06060a; 
             --bg-card: rgba(15, 15, 22, 0.65); 
-            --primary: #ffffff; /* أبيض */
-            --primary-glow: rgba(255, 255, 255, 0.25); /* توهج أبيض */
+            --primary: #ffffff; 
+            --primary-glow: rgba(255, 255, 255, 0.25); 
+            --text-glow-x: rgba(255, 255, 255, 0.8);
+            --btn-active-glow: rgba(255, 255, 255, 0.5);
             --glass-border: rgba(255, 255, 255, 0.08);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
@@ -38,8 +40,10 @@
         [data-theme="light"] {
             --bg-main: #f4f5f8; 
             --bg-card: rgba(255, 255, 255, 0.75); 
-            --primary: #000000; /* أسود */
-            --primary-glow: rgba(0, 0, 0, 0.25); /* توهج أسود */
+            --primary: #000000; 
+            --primary-glow: rgba(0, 0, 0, 0.25); 
+            --text-glow-x: rgba(0, 0, 0, 0.7);
+            --btn-active-glow: rgba(0, 0, 0, 0.5);
             --glass-border: rgba(0, 0, 0, 0.1); 
             --text-main: #0f172a; 
             --text-muted: #475569;
@@ -75,7 +79,6 @@
             scroll-behavior: smooth; 
             scroll-padding-top: calc(85px + env(safe-area-inset-top)); 
             background-color: var(--bg-main);
-            overscroll-behavior-y: none;
         }
 
         html[lang="ar"] body { font-size: 14px; }
@@ -88,7 +91,6 @@
             width: 100%;
             background-color: transparent; 
             position: relative;
-            overscroll-behavior-y: none;
             padding-bottom: calc(115px + env(safe-area-inset-bottom)); 
             padding-top: env(safe-area-inset-top);
             -webkit-font-smoothing: antialiased;
@@ -143,23 +145,12 @@
             font-size: 1.6em; 
             transform: translateY(2px); 
             margin-left: 3px;
-            text-shadow: 0 0 20px var(--primary-glow);
+            text-shadow: 0 0 25px var(--text-glow-x), 0 0 10px var(--text-glow-x);
         }
         
         .nav-actions { display: flex; align-items: center; gap: 18px; }
         .nav-actions i { font-size: 22px; cursor: pointer; color: var(--text-main); transition: 0.2s; }
-        .nav-actions i:hover { color: var(--primary); }
-
-        .lang-btn { 
-            border: 1px solid var(--glass-border); 
-            padding: 6px 15px; 
-            border-radius: 20px; 
-            cursor: pointer; 
-            transition: 0.2s; 
-            font-family: 'Cairo', sans-serif; 
-            font-weight: 700; 
-            font-size: 14px;
-        }
+        .nav-actions i:hover { color: var(--primary); text-shadow: 0 0 15px var(--primary-glow); }
 
         .main-lang-switch { display: flex; justify-content: center; gap: 15px; margin: calc(95px + env(safe-area-inset-top)) auto 15px; position: relative; z-index: 10; }
         .main-lang-switch .lang-btn { 
@@ -184,7 +175,7 @@
             color: var(--bg-main) !important; 
             background: var(--primary) !important; 
             border-color: var(--primary) !important; 
-            box-shadow: 0 0 15px var(--primary-glow) !important; 
+            box-shadow: 0 0 25px var(--btn-active-glow) !important; 
             text-shadow: none;
         }
 
@@ -204,16 +195,16 @@
         .bottom-nav-item i { font-size: 22px; transition: transform 0.2s, color 0.2s; }
         .bottom-nav-item span { font-size: 12px; font-weight: 700; }
         .bottom-nav-item.active { color: var(--primary); }
-        .bottom-nav-item.active i { transform: translateY(-2px) scale(1.1); color: var(--primary); }
+        .bottom-nav-item.active i { transform: translateY(-2px) scale(1.1); color: var(--primary); text-shadow: 0 0 15px var(--primary-glow); }
         .bottom-nav-item.active span { color: var(--text-main); font-weight: 900; }
 
         section { padding: 45px 15px 25px; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; }
         
         .hero { height: auto; min-height: 180px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px 15px;}
-        .hero h2 { font-size: 3.2rem; font-weight: 900; margin: 0; color: #fff; text-shadow: 0 0 25px rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; flex-wrap: wrap;}
+        .hero h2 { font-size: 3.2rem; font-weight: 900; margin: 0; color: var(--text-main); text-shadow: 0 0 25px rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; flex-wrap: wrap;}
         .hero h2 span.hero-x { 
             color: var(--primary); font-size: 1.5em; margin: 0 10px; transform: translateY(2px);
-            text-shadow: 0 0 25px var(--primary-glow);
+            text-shadow: 0 0 25px var(--text-glow-x), 0 0 10px var(--text-glow-x);
         }
         [data-theme="light"] .hero h2 { color: #000; text-shadow: none; }
 
@@ -224,6 +215,27 @@
         .section-title { font-size: 1.7rem; font-weight: 900; margin-bottom: 35px; text-transform: uppercase; position: relative; letter-spacing: 0.5px; text-align: center;}
         .section-title::before { content: ''; position: absolute; right: -15px; top: 50%; transform: translateY(-50%); width: 6px; height: 20px; background: var(--primary); border-radius: 3px; box-shadow: 0 0 15px var(--primary-glow);}
         html[dir="ltr"] .section-title::before { right: auto; left: -15px; }
+
+        /* ستايل العناوين الفرعية المتوهجة */
+        .question-title-glow {
+            position: relative;
+            display: inline-block;
+            z-index: 1;
+        }
+        .question-title-glow::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 140%;
+            height: 160%;
+            background: radial-gradient(ellipse at center, var(--primary-glow) 0%, transparent 60%);
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            border-radius: 50%;
+            filter: blur(10px);
+            pointer-events: none;
+        }
 
         .skeleton { position: relative; overflow: hidden; background-color: rgba(255, 255, 255, 0.05) !important; border-color: transparent !important; box-shadow: none !important; }
         [data-theme="light"] .skeleton { background-color: rgba(0, 0, 0, 0.05) !important; }
@@ -242,14 +254,14 @@
         .news-bottom-wrapper { display: flex; flex-direction: column; width: 100%; max-width: 360px; margin: 0 auto; gap: 15px; }
         .slider-controls { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0;}
         .nav-btn { background: transparent; border: none; color: var(--text-muted); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px; transition: 0.2s; font-family: inherit;}
-        .nav-btn:hover:not(.disabled) { color: var(--primary); }
+        .nav-btn:hover:not(.disabled) { color: var(--primary); text-shadow: 0 0 10px var(--primary-glow); }
         .nav-btn.disabled, .nav-btn:disabled { opacity: 0.3; pointer-events: none; }
         .nav-label { font-size: 13px; font-weight: 900; letter-spacing: 1px; opacity: 0.8;}
         .arrow-icon { font-size: 18px; background: var(--bg-card); border: 1px solid var(--glass-border); padding: 10px 18px; border-radius: 30px; backdrop-filter: blur(10px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: 0.2s;}
         html[dir="ltr"] .prev-icon, html[dir="ltr"] .next-icon { transform: rotate(180deg); }
         .slider-dots { display: flex; gap: 8px; margin-top: -15px;}
         .dot { width: 8px; height: 8px; background: var(--glass-border); border-radius: 50%; transition: 0.2s; }
-        .dot.active { background: var(--primary); width: 22px; border-radius: 10px; }
+        .dot.active { background: var(--primary); width: 22px; border-radius: 10px; box-shadow: 0 0 10px var(--primary-glow);}
         [data-theme="light"] .dot { background: rgba(0,0,0,0.1); }
         
         .more-news-link { display: flex; justify-content: center; align-items: center; width: 100%; gap: 8px; color: var(--text-muted); text-decoration: none; transition: 0.2s; font-weight: 700; background: var(--bg-card); padding: 10px 24px; border-radius: 12px; border: 1px solid var(--glass-border); backdrop-filter: blur(10px); font-family: inherit; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; height: 42px;}
@@ -259,7 +271,7 @@
         .bug-radio input { margin-top: 4px; accent-color: var(--primary); transform: scale(1.2); }
         [data-theme="light"] .bug-radio { background: rgba(255,255,255,0.4); }
         .bug-input { width: 100%; padding: 15px; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(15, 15, 20, 0.4); color: var(--text-main); font-family: inherit; font-size: 15px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
-        .bug-input:focus { border-color: var(--primary); background: rgba(15, 15, 20, 0.6); }
+        .bug-input:focus { border-color: var(--primary); background: rgba(15, 15, 20, 0.6); box-shadow: 0 0 10px var(--primary-glow); }
         [data-theme="light"] .bug-input { background: rgba(255,255,255,0.6); }
         [data-theme="light"] .bug-input:focus { background: #fff; }
         
@@ -277,7 +289,6 @@
         }
         html[dir="ltr"] .input-error-msg { text-align: left; }
 
-        /* Counter Styles */
         .char-counter-badge {
             position: absolute;
             bottom: 12px;
@@ -294,7 +305,7 @@
         .fit-btn { padding: 8px 18px; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; transition: 0.2s; font-family: inherit; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; width: fit-content; flex: none; white-space: nowrap; height: 38px;}
         .submit-btn, .cancel-btn { border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; transition: 0.2s; font-family: inherit; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; flex: 1; padding: 10px; white-space: nowrap; height: 42px;}
         
-        .submit-btn, .fit-btn { background: var(--primary); color: var(--bg-main); border: none; font-weight: 900;}
+        .submit-btn, .fit-btn { background: var(--primary); color: var(--bg-main); border: none; font-weight: 900; box-shadow: 0 0 10px var(--primary-glow);}
         .cancel-btn { background: rgba(255,255,255,0.1); color: var(--text-main); border: 1px solid var(--glass-border); }
         [data-theme="light"] .cancel-btn { background: rgba(0,0,0,0.05); color: var(--text-muted); border-color: rgba(0,0,0,0.1); }
 
@@ -361,7 +372,7 @@
 
         .tournaments-grid { width: 100%; max-width: 750px; display: flex; flex-direction: column; gap: 15px; }
         .tour-card { padding: 20px; overflow: hidden; position: relative;}
-        .tour-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary); }
+        .tour-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary); box-shadow: 0 0 10px var(--primary-glow); }
         html[dir="ltr"] .tour-card::before { left: auto; right: 0; }
         .tour-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;}
         .tour-title-box { display: flex; align-items: center; gap: 10px; }
@@ -426,6 +437,12 @@
 </head>
 <body>
 
+    <div id="ptr-loader" style="position: fixed; top: 0; left: 0; width: 100%; text-align: center; padding: 20px; z-index: 9999; transform: translateY(-100%); transition: transform 0.2s; pointer-events: none;">
+        <div style="background: var(--bg-card); display: inline-block; padding: 10px; border-radius: 50%; box-shadow: 0 5px 15px rgba(0,0,0,0.3); border: 1px solid var(--glass-border); backdrop-filter: blur(10px);">
+            <i class="fa-solid fa-rotate-right" style="font-size: 20px; color: var(--primary); transition: transform 0.3s; text-shadow: 0 0 10px var(--primary-glow);"></i>
+        </div>
+    </div>
+
     <div class="static-gaming-bg"></div>
 
     <nav class="navbar" dir="ltr">
@@ -451,7 +468,7 @@
         <section id="about-site" style="padding-top: 5px;">
             <h2 class="section-title" data-i18n="about_site_title">نبذة عن الموقع</h2>
             <div class="glass-panel" style="width: 100%; max-width: 700px; padding: 30px; border-radius: 16px; text-align: center; display: flex; flex-direction: column; align-items: center;">
-                <i class="fa-solid fa-globe" style="color: var(--primary); font-size: 35px; margin-bottom: 15px;"></i>
+                <i class="fa-solid fa-globe" style="color: var(--primary); font-size: 35px; margin-bottom: 15px; text-shadow: 0 0 15px var(--primary-glow);"></i>
                 <p class="glass-desc-text" style="font-weight: 600; margin: 0;" data-i18n="about_site_desc">
                     موقع مجتمعي تم تطويره وإدارته بواسطة القادة العرب، ليكون مرجعًا موثوقًا لأخبار بلاتو، الإرشادات، تقديم البلاغات، موارد المجتمع، ومعلومات الخادم العربي.
                 </p>
@@ -531,8 +548,8 @@
             
             <div class="glass-panel" style="width: 100%; max-width: 650px; padding: 30px; border-radius: 16px; margin-bottom: 25px;">
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--glass-border);">
-                    <i class="fa-solid fa-users" style="color: var(--primary); font-size: 24px;"></i>
-                    <h3 style="font-size: 20px; margin: 0;" data-i18n="community_guide_title">إرشادات المجتمع</h3>
+                    <i class="fa-solid fa-users" style="color: var(--primary); font-size: 24px; text-shadow: 0 0 10px var(--primary-glow);"></i>
+                    <h3 class="question-title-glow" style="font-size: 20px; margin: 0; color: var(--text-main);" data-i18n="community_guide_title">إرشادات المجتمع</h3>
                 </div>
                 <p style="margin-bottom: 15px; font-weight: bold;" data-i18n="community_guide_sub">لا يمكنك القيام بما يلي على بلاتو:</p>
                 <div>
@@ -557,8 +574,8 @@
 
             <div class="glass-panel" style="width: 100%; max-width: 650px; padding: 30px; border-radius: 16px;">
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--glass-border);">
-                    <i class="fa-solid fa-shield-halved" style="color: var(--primary); font-size: 24px;"></i>
-                    <h3 style="font-size: 20px; margin: 0;" data-i18n="guide_title">إرشادات الدردشة في الغرف العامة</h3>
+                    <i class="fa-solid fa-shield-halved" style="color: var(--primary); font-size: 24px; text-shadow: 0 0 10px var(--primary-glow);"></i>
+                    <h3 class="question-title-glow" style="font-size: 20px; margin: 0; color: var(--text-main);" data-i18n="guide_title">إرشادات الدردشة في الغرف العامة</h3>
                 </div>
 
                 <div>
@@ -633,16 +650,16 @@
         <section id="leaders-intro">
             <div class="glass-panel" style="width: 100%; max-width: 850px; padding: 30px; border-radius: 16px; margin-bottom: 5px;">
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
-                    <i class="fa-solid fa-circle-question" style="color: var(--primary); font-size: 24px;"></i>
-                    <h3 style="font-size: 20px; margin: 0; color: var(--text-main);" data-i18n="who_are_leaders">من هم القادة؟</h3>
+                    <i class="fa-solid fa-circle-question" style="color: var(--primary); font-size: 24px; text-shadow: 0 0 10px var(--primary-glow);"></i>
+                    <h3 class="question-title-glow" style="font-size: 20px; margin: 0; color: var(--text-main);" data-i18n="who_are_leaders">من هم القادة؟</h3>
                 </div>
                 <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 25px; font-weight: 700;" data-i18n="who_are_leaders_desc">
                     القادة هم الممثلون الرسميون للمجتمع ويعملون كحلقة وصل بين اللاعبين وفريق التطوير، للمساعدة في بناء بيئة ممتعة، آمنة، وعادلة للجميع.
                 </p>
 
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px; margin-top: 25px; padding-top: 25px; border-top: 1px solid var(--glass-border);">
-                    <i class="fa-solid fa-list-check" style="color: var(--primary); font-size: 24px;"></i>
-                    <h3 style="font-size: 20px; margin: 0; color: var(--text-main);" data-i18n="leaders_tasks">ما مهام القادة؟</h3>
+                    <i class="fa-solid fa-list-check" style="color: var(--primary); font-size: 24px; text-shadow: 0 0 10px var(--primary-glow);"></i>
+                    <h3 class="question-title-glow" style="font-size: 20px; margin: 0; color: var(--text-main);" data-i18n="leaders_tasks">ما مهام القادة؟</h3>
                 </div>
                 <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px; margin:0;">
                     <li class="guideline-item">
@@ -672,8 +689,8 @@
                 </ul>
 
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px; margin-top: 30px; padding-top: 25px; border-top: 1px solid var(--glass-border);">
-                    <i class="fa-solid fa-user-plus" style="color: var(--primary); font-size: 24px;"></i>
-                    <h3 style="font-size: 20px; margin: 0; color: var(--text-main);" data-i18n="how_to_be_leader">كيف تصبح قائدًا؟</h3>
+                    <i class="fa-solid fa-user-plus" style="color: var(--primary); font-size: 24px; text-shadow: 0 0 10px var(--primary-glow);"></i>
+                    <h3 class="question-title-glow" style="font-size: 20px; margin: 0; color: var(--text-main);" data-i18n="how_to_be_leader">كيف تصبح قائدًا؟</h3>
                 </div>
                 <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px; margin:0;">
                     <li class="guideline-item" style="border: none; padding-bottom: 0; margin-bottom: 0;">
@@ -686,13 +703,13 @@
                     </li>
                 </ul>
                 <div class="guideline-warning" style="background: rgba(128, 128, 128, 0.15); border-color: rgba(128, 128, 128, 0.3); color: var(--text-main); margin-top: 20px;">
-                    <i class="fa-solid fa-circle-info" style="color: var(--primary); font-size: 24px; flex-shrink: 0;"></i>
+                    <i class="fa-solid fa-circle-info" style="color: var(--primary); font-size: 24px; flex-shrink: 0; text-shadow: 0 0 10px var(--primary-glow);"></i>
                     <span data-i18n="be_leader_note" style="font-weight: 600;">يتم تعيين قادة جدد عند الحاجة، بحد أقصى 4 قادة لكل خادم.</span>
                 </div>
                 
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px; margin-top: 30px; padding-top: 25px; border-top: 1px solid var(--glass-border);">
-                    <i class="fa-solid fa-comments" style="color: var(--primary); font-size: 24px;"></i>
-                    <h3 style="font-size: 20px; margin: 0; color: var(--text-main);" data-i18n="feedback_title">آراء المجتمع</h3>
+                    <i class="fa-solid fa-comments" style="color: var(--primary); font-size: 24px; text-shadow: 0 0 10px var(--primary-glow);"></i>
+                    <h3 class="question-title-glow" style="font-size: 20px; margin: 0; color: var(--text-main);" data-i18n="feedback_title">آراء المجتمع</h3>
                 </div>
                 <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 20px; font-weight: 600;" data-i18n="feedback_desc">
                     مساحتك لمشاركة الأفكار والمقترحات حول اللعبة، وتقديم الملاحظات حول تجربتك في المجتمع، بما يسهم في تطوير المجتمع وتحسين تجربة اللاعبين.
