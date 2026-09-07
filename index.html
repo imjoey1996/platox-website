@@ -20,9 +20,8 @@
             --bg-main: #06060a; 
             --bg-card: rgba(15, 15, 22, 0.65); 
             --primary: #ffffff; 
-            --primary-glow: rgba(255, 255, 255, 0.25); 
-            --text-glow-x: rgba(255, 255, 255, 0.8);
-            --btn-active-glow: rgba(255, 255, 255, 0.5);
+            --text-glow-x: rgba(255, 255, 255, 0.9);
+            --btn-active-glow: rgba(255, 255, 255, 0.7);
             --glass-border: rgba(255, 255, 255, 0.08);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
@@ -41,9 +40,8 @@
             --bg-main: #f4f5f8; 
             --bg-card: rgba(255, 255, 255, 0.75); 
             --primary: #000000; 
-            --primary-glow: rgba(0, 0, 0, 0.25); 
-            --text-glow-x: rgba(0, 0, 0, 0.7);
-            --btn-active-glow: rgba(0, 0, 0, 0.5);
+            --text-glow-x: rgba(0, 0, 0, 0.8);
+            --btn-active-glow: rgba(0, 0, 0, 0.6);
             --glass-border: rgba(0, 0, 0, 0.1); 
             --text-main: #0f172a; 
             --text-muted: #475569;
@@ -136,6 +134,21 @@
         html[dir="ltr"] .glass-panel { border-left: 1px solid var(--glass-border); border-right: 1px solid rgba(255, 255, 255, 0.05); }
         [data-theme="light"] .glass-panel { box-shadow: 0 8px 30px 0 rgba(31, 38, 135, 0.07); border-top: 1px solid rgba(255, 255, 255, 0.6); }
 
+        /* تأثير المعدن (Chrome/Silver) للعناوين والأيقونات الاحترافية */
+        .chrome-text, .chrome-icon {
+            background: linear-gradient(180deg, #ffffff 0%, #a3a3a3 45%, #000000 50%, #333333 55%, #e0e0e0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.8));
+        }
+        [data-theme="light"] .chrome-text, [data-theme="light"] .chrome-icon {
+            background: linear-gradient(180deg, #4d4d4d 0%, #1a1a1a 45%, #000000 50%, #333333 55%, #808080 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
         .navbar { position: fixed; top: 0; left: 0; width: 100%; padding: calc(12px + env(safe-area-inset-top)) 25px 12px; display: flex; justify-content: space-between; align-items: center; background: rgba(5, 5, 8, 0.65); backdrop-filter: blur(25px); border-bottom: 1px solid var(--glass-border); z-index: 1000; direction: ltr; }
         [data-theme="light"] .navbar { background: rgba(255, 255, 255, 0.8); }
         
@@ -150,7 +163,18 @@
         
         .nav-actions { display: flex; align-items: center; gap: 18px; }
         .nav-actions i { font-size: 22px; cursor: pointer; color: var(--text-main); transition: 0.2s; }
-        .nav-actions i:hover { color: var(--primary); text-shadow: 0 0 15px var(--primary-glow); }
+        .nav-actions i:hover { color: var(--primary); }
+
+        .lang-btn { 
+            border: 1px solid var(--glass-border); 
+            padding: 6px 15px; 
+            border-radius: 20px; 
+            cursor: pointer; 
+            transition: 0.2s; 
+            font-family: 'Cairo', sans-serif; 
+            font-weight: 700; 
+            font-size: 14px;
+        }
 
         .main-lang-switch { display: flex; justify-content: center; gap: 15px; margin: calc(95px + env(safe-area-inset-top)) auto 15px; position: relative; z-index: 10; }
         .main-lang-switch .lang-btn { 
@@ -165,18 +189,22 @@
             font-family: 'Cairo', sans-serif; 
             font-weight: 700; 
             font-size: 14px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         [data-theme="light"] .main-lang-switch .lang-btn { 
             background: rgba(255, 255, 255, 0.9); 
             color: #475569; 
         }
+        /* توهج احترافي قوي لزر اللغة */
         .main-lang-switch .lang-btn.active, 
         [data-theme="light"] .main-lang-switch .lang-btn.active { 
             color: var(--bg-main) !important; 
             background: var(--primary) !important; 
             border-color: var(--primary) !important; 
-            box-shadow: 0 0 25px var(--btn-active-glow) !important; 
+            box-shadow: 0 0 20px var(--btn-active-glow), 0 0 40px var(--btn-active-glow) !important; 
             text-shadow: none;
+            font-weight: 900;
+            transform: scale(1.05);
         }
 
         .tab-view { display: none; width: 100%; }
@@ -195,47 +223,25 @@
         .bottom-nav-item i { font-size: 22px; transition: transform 0.2s, color 0.2s; }
         .bottom-nav-item span { font-size: 12px; font-weight: 700; }
         .bottom-nav-item.active { color: var(--primary); }
-        .bottom-nav-item.active i { transform: translateY(-2px) scale(1.1); color: var(--primary); text-shadow: 0 0 15px var(--primary-glow); }
+        .bottom-nav-item.active i { transform: translateY(-2px) scale(1.1); color: var(--primary); }
         .bottom-nav-item.active span { color: var(--text-main); font-weight: 900; }
 
         section { padding: 45px 15px 25px; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; }
         
         .hero { height: auto; min-height: 180px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px 15px;}
-        .hero h2 { font-size: 3.2rem; font-weight: 900; margin: 0; color: var(--text-main); text-shadow: 0 0 25px rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; flex-wrap: wrap;}
+        .hero h2 { font-size: 3.2rem; font-weight: 900; margin: 0; color: var(--text-main); display: flex; align-items: center; justify-content: center; flex-wrap: wrap;}
         .hero h2 span.hero-x { 
             color: var(--primary); font-size: 1.5em; margin: 0 10px; transform: translateY(2px);
             text-shadow: 0 0 25px var(--text-glow-x), 0 0 10px var(--text-glow-x);
         }
-        [data-theme="light"] .hero h2 { color: #000; text-shadow: none; }
 
         .cyber-divider { display: flex; align-items: center; justify-content: center; width: 100%; max-width: 600px; margin: 15px auto; opacity: 0.4; }
         .cyber-divider::before, .cyber-divider::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--text-muted), transparent); }
         .cyber-divider .center-node { width: 15px; height: 3px; background: var(--text-muted); margin: 0 10px; transform: skewX(-45deg); }
 
         .section-title { font-size: 1.7rem; font-weight: 900; margin-bottom: 35px; text-transform: uppercase; position: relative; letter-spacing: 0.5px; text-align: center;}
-        .section-title::before { content: ''; position: absolute; right: -15px; top: 50%; transform: translateY(-50%); width: 6px; height: 20px; background: var(--primary); border-radius: 3px; box-shadow: 0 0 15px var(--primary-glow);}
+        .section-title::before { content: ''; position: absolute; right: -15px; top: 50%; transform: translateY(-50%); width: 6px; height: 20px; background: var(--primary); border-radius: 3px; }
         html[dir="ltr"] .section-title::before { right: auto; left: -15px; }
-
-        /* ستايل العناوين الفرعية المتوهجة */
-        .question-title-glow {
-            position: relative;
-            display: inline-block;
-            z-index: 1;
-        }
-        .question-title-glow::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 140%;
-            height: 160%;
-            background: radial-gradient(ellipse at center, var(--primary-glow) 0%, transparent 60%);
-            transform: translate(-50%, -50%);
-            z-index: -1;
-            border-radius: 50%;
-            filter: blur(10px);
-            pointer-events: none;
-        }
 
         .skeleton { position: relative; overflow: hidden; background-color: rgba(255, 255, 255, 0.05) !important; border-color: transparent !important; box-shadow: none !important; }
         [data-theme="light"] .skeleton { background-color: rgba(0, 0, 0, 0.05) !important; }
@@ -254,14 +260,14 @@
         .news-bottom-wrapper { display: flex; flex-direction: column; width: 100%; max-width: 360px; margin: 0 auto; gap: 15px; }
         .slider-controls { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0;}
         .nav-btn { background: transparent; border: none; color: var(--text-muted); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px; transition: 0.2s; font-family: inherit;}
-        .nav-btn:hover:not(.disabled) { color: var(--primary); text-shadow: 0 0 10px var(--primary-glow); }
+        .nav-btn:hover:not(.disabled) { color: var(--primary); }
         .nav-btn.disabled, .nav-btn:disabled { opacity: 0.3; pointer-events: none; }
         .nav-label { font-size: 13px; font-weight: 900; letter-spacing: 1px; opacity: 0.8;}
         .arrow-icon { font-size: 18px; background: var(--bg-card); border: 1px solid var(--glass-border); padding: 10px 18px; border-radius: 30px; backdrop-filter: blur(10px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: 0.2s;}
         html[dir="ltr"] .prev-icon, html[dir="ltr"] .next-icon { transform: rotate(180deg); }
         .slider-dots { display: flex; gap: 8px; margin-top: -15px;}
         .dot { width: 8px; height: 8px; background: var(--glass-border); border-radius: 50%; transition: 0.2s; }
-        .dot.active { background: var(--primary); width: 22px; border-radius: 10px; box-shadow: 0 0 10px var(--primary-glow);}
+        .dot.active { background: var(--primary); width: 22px; border-radius: 10px; }
         [data-theme="light"] .dot { background: rgba(0,0,0,0.1); }
         
         .more-news-link { display: flex; justify-content: center; align-items: center; width: 100%; gap: 8px; color: var(--text-muted); text-decoration: none; transition: 0.2s; font-weight: 700; background: var(--bg-card); padding: 10px 24px; border-radius: 12px; border: 1px solid var(--glass-border); backdrop-filter: blur(10px); font-family: inherit; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; height: 42px;}
@@ -271,7 +277,7 @@
         .bug-radio input { margin-top: 4px; accent-color: var(--primary); transform: scale(1.2); }
         [data-theme="light"] .bug-radio { background: rgba(255,255,255,0.4); }
         .bug-input { width: 100%; padding: 15px; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(15, 15, 20, 0.4); color: var(--text-main); font-family: inherit; font-size: 15px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
-        .bug-input:focus { border-color: var(--primary); background: rgba(15, 15, 20, 0.6); box-shadow: 0 0 10px var(--primary-glow); }
+        .bug-input:focus { border-color: var(--primary); background: rgba(15, 15, 20, 0.6); }
         [data-theme="light"] .bug-input { background: rgba(255,255,255,0.6); }
         [data-theme="light"] .bug-input:focus { background: #fff; }
         
@@ -305,7 +311,7 @@
         .fit-btn { padding: 8px 18px; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; transition: 0.2s; font-family: inherit; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; width: fit-content; flex: none; white-space: nowrap; height: 38px;}
         .submit-btn, .cancel-btn { border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; transition: 0.2s; font-family: inherit; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; flex: 1; padding: 10px; white-space: nowrap; height: 42px;}
         
-        .submit-btn, .fit-btn { background: var(--primary); color: var(--bg-main); border: none; font-weight: 900; box-shadow: 0 0 10px var(--primary-glow);}
+        .submit-btn, .fit-btn { background: var(--primary); color: var(--bg-main); border: none; font-weight: 900; }
         .cancel-btn { background: rgba(255,255,255,0.1); color: var(--text-main); border: 1px solid var(--glass-border); }
         [data-theme="light"] .cancel-btn { background: rgba(0,0,0,0.05); color: var(--text-muted); border-color: rgba(0,0,0,0.1); }
 
@@ -372,7 +378,7 @@
 
         .tournaments-grid { width: 100%; max-width: 750px; display: flex; flex-direction: column; gap: 15px; }
         .tour-card { padding: 20px; overflow: hidden; position: relative;}
-        .tour-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary); box-shadow: 0 0 10px var(--primary-glow); }
+        .tour-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary); }
         html[dir="ltr"] .tour-card::before { left: auto; right: 0; }
         .tour-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;}
         .tour-title-box { display: flex; align-items: center; gap: 10px; }
@@ -396,7 +402,8 @@
         .glass-desc-text { color: rgba(255,255,255,0.85); font-size: 0.95rem; }
         [data-theme="light"] .glass-desc-text { color: var(--text-muted); }
 
-        .video-glow-box { position: relative; width: 100%; max-width: 320px; border-radius: 16px; padding: 4px; background: var(--primary-glow); box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin: 0 auto;}
+        .video-glow-box { position: relative; width: 100%; max-width: 320px; border-radius: 16px; padding: 4px; background: rgba(255,255,255,0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin: 0 auto;}
+        [data-theme="light"] .video-glow-box { background: rgba(0,0,0,0.1); }
         .video-glow-box video { width: 100%; display: block; border-radius: 12px; max-height: 70vh; object-fit: cover; background: #000; }
 
         .feedback-btn-wrapper { width: 100%; display: flex; justify-content: flex-start; } 
@@ -439,7 +446,7 @@
 
     <div id="ptr-loader" style="position: fixed; top: 0; left: 0; width: 100%; text-align: center; padding: 20px; z-index: 9999; transform: translateY(-100%); transition: transform 0.2s; pointer-events: none;">
         <div style="background: var(--bg-card); display: inline-block; padding: 10px; border-radius: 50%; box-shadow: 0 5px 15px rgba(0,0,0,0.3); border: 1px solid var(--glass-border); backdrop-filter: blur(10px);">
-            <i class="fa-solid fa-rotate-right" style="font-size: 20px; color: var(--primary); transition: transform 0.3s; text-shadow: 0 0 10px var(--primary-glow);"></i>
+            <i class="fa-solid fa-rotate-right" style="font-size: 20px; color: var(--primary); transition: transform 0.3s;"></i>
         </div>
     </div>
 
@@ -468,7 +475,7 @@
         <section id="about-site" style="padding-top: 5px;">
             <h2 class="section-title" data-i18n="about_site_title">نبذة عن الموقع</h2>
             <div class="glass-panel" style="width: 100%; max-width: 700px; padding: 30px; border-radius: 16px; text-align: center; display: flex; flex-direction: column; align-items: center;">
-                <i class="fa-solid fa-globe" style="color: var(--primary); font-size: 35px; margin-bottom: 15px; text-shadow: 0 0 15px var(--primary-glow);"></i>
+                <i class="fa-solid fa-globe chrome-icon" style="font-size: 35px; margin-bottom: 15px;"></i>
                 <p class="glass-desc-text" style="font-weight: 600; margin: 0;" data-i18n="about_site_desc">
                     موقع مجتمعي تم تطويره وإدارته بواسطة القادة العرب، ليكون مرجعًا موثوقًا لأخبار بلاتو، الإرشادات، تقديم البلاغات، موارد المجتمع، ومعلومات الخادم العربي.
                 </p>
@@ -548,8 +555,8 @@
             
             <div class="glass-panel" style="width: 100%; max-width: 650px; padding: 30px; border-radius: 16px; margin-bottom: 25px;">
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--glass-border);">
-                    <i class="fa-solid fa-users" style="color: var(--primary); font-size: 24px; text-shadow: 0 0 10px var(--primary-glow);"></i>
-                    <h3 class="question-title-glow" style="font-size: 20px; margin: 0; color: var(--text-main);" data-i18n="community_guide_title">إرشادات المجتمع</h3>
+                    <i class="fa-solid fa-users chrome-icon" style="font-size: 26px;"></i>
+                    <h3 class="chrome-text" style="font-size: 22px; margin: 0; font-weight: 900;" data-i18n="community_guide_title">إرشادات المجتمع</h3>
                 </div>
                 <p style="margin-bottom: 15px; font-weight: bold;" data-i18n="community_guide_sub">لا يمكنك القيام بما يلي على بلاتو:</p>
                 <div>
@@ -574,8 +581,8 @@
 
             <div class="glass-panel" style="width: 100%; max-width: 650px; padding: 30px; border-radius: 16px;">
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--glass-border);">
-                    <i class="fa-solid fa-shield-halved" style="color: var(--primary); font-size: 24px; text-shadow: 0 0 10px var(--primary-glow);"></i>
-                    <h3 class="question-title-glow" style="font-size: 20px; margin: 0; color: var(--text-main);" data-i18n="guide_title">إرشادات الدردشة في الغرف العامة</h3>
+                    <i class="fa-solid fa-shield-halved chrome-icon" style="font-size: 26px;"></i>
+                    <h3 class="chrome-text" style="font-size: 22px; margin: 0; font-weight: 900;" data-i18n="guide_title">إرشادات الدردشة في الغرف العامة</h3>
                 </div>
 
                 <div>
@@ -602,7 +609,7 @@
                 </div>
 
                 <div class="guideline-warning" style="background: rgba(128, 128, 128, 0.15); border-color: rgba(128, 128, 128, 0.3); color: var(--text-main); margin-top: 20px;">
-                    <i class="fa-solid fa-triangle-exclamation" style="font-size: 24px; flex-shrink: 0;"></i>
+                    <i class="fa-solid fa-triangle-exclamation chrome-icon" style="font-size: 24px; flex-shrink: 0;"></i>
                     <span data-i18n="guide_warning">قد يؤدي انتهاك هذه الإرشادات إلى تقييد الدردشة لمدة 4 ساعات أو اتخاذ إجراءات إشرافية إضافية (حظر دائم).</span>
                 </div>
             </div>
@@ -650,16 +657,16 @@
         <section id="leaders-intro">
             <div class="glass-panel" style="width: 100%; max-width: 850px; padding: 30px; border-radius: 16px; margin-bottom: 5px;">
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
-                    <i class="fa-solid fa-circle-question" style="color: var(--primary); font-size: 24px; text-shadow: 0 0 10px var(--primary-glow);"></i>
-                    <h3 class="question-title-glow" style="font-size: 20px; margin: 0; color: var(--text-main);" data-i18n="who_are_leaders">من هم القادة؟</h3>
+                    <i class="fa-solid fa-circle-question chrome-icon" style="font-size: 26px;"></i>
+                    <h3 class="chrome-text" style="font-size: 22px; margin: 0; font-weight: 900;" data-i18n="who_are_leaders">من هم القادة؟</h3>
                 </div>
                 <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 25px; font-weight: 700;" data-i18n="who_are_leaders_desc">
                     القادة هم الممثلون الرسميون للمجتمع ويعملون كحلقة وصل بين اللاعبين وفريق التطوير، للمساعدة في بناء بيئة ممتعة، آمنة، وعادلة للجميع.
                 </p>
 
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px; margin-top: 25px; padding-top: 25px; border-top: 1px solid var(--glass-border);">
-                    <i class="fa-solid fa-list-check" style="color: var(--primary); font-size: 24px; text-shadow: 0 0 10px var(--primary-glow);"></i>
-                    <h3 class="question-title-glow" style="font-size: 20px; margin: 0; color: var(--text-main);" data-i18n="leaders_tasks">ما مهام القادة؟</h3>
+                    <i class="fa-solid fa-list-check chrome-icon" style="font-size: 26px;"></i>
+                    <h3 class="chrome-text" style="font-size: 22px; margin: 0; font-weight: 900;" data-i18n="leaders_tasks">ما مهام القادة؟</h3>
                 </div>
                 <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px; margin:0;">
                     <li class="guideline-item">
@@ -689,8 +696,8 @@
                 </ul>
 
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px; margin-top: 30px; padding-top: 25px; border-top: 1px solid var(--glass-border);">
-                    <i class="fa-solid fa-user-plus" style="color: var(--primary); font-size: 24px; text-shadow: 0 0 10px var(--primary-glow);"></i>
-                    <h3 class="question-title-glow" style="font-size: 20px; margin: 0; color: var(--text-main);" data-i18n="how_to_be_leader">كيف تصبح قائدًا؟</h3>
+                    <i class="fa-solid fa-user-plus chrome-icon" style="font-size: 26px;"></i>
+                    <h3 class="chrome-text" style="font-size: 22px; margin: 0; font-weight: 900;" data-i18n="how_to_be_leader">كيف تصبح قائدًا؟</h3>
                 </div>
                 <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px; margin:0;">
                     <li class="guideline-item" style="border: none; padding-bottom: 0; margin-bottom: 0;">
@@ -703,13 +710,13 @@
                     </li>
                 </ul>
                 <div class="guideline-warning" style="background: rgba(128, 128, 128, 0.15); border-color: rgba(128, 128, 128, 0.3); color: var(--text-main); margin-top: 20px;">
-                    <i class="fa-solid fa-circle-info" style="color: var(--primary); font-size: 24px; flex-shrink: 0; text-shadow: 0 0 10px var(--primary-glow);"></i>
+                    <i class="fa-solid fa-circle-info chrome-icon" style="font-size: 24px; flex-shrink: 0;"></i>
                     <span data-i18n="be_leader_note" style="font-weight: 600;">يتم تعيين قادة جدد عند الحاجة، بحد أقصى 4 قادة لكل خادم.</span>
                 </div>
                 
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px; margin-top: 30px; padding-top: 25px; border-top: 1px solid var(--glass-border);">
-                    <i class="fa-solid fa-comments" style="color: var(--primary); font-size: 24px; text-shadow: 0 0 10px var(--primary-glow);"></i>
-                    <h3 class="question-title-glow" style="font-size: 20px; margin: 0; color: var(--text-main);" data-i18n="feedback_title">آراء المجتمع</h3>
+                    <i class="fa-solid fa-comments chrome-icon" style="font-size: 26px;"></i>
+                    <h3 class="chrome-text" style="font-size: 22px; margin: 0; font-weight: 900;" data-i18n="feedback_title">آراء المجتمع</h3>
                 </div>
                 <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 20px; font-weight: 600;" data-i18n="feedback_desc">
                     مساحتك لمشاركة الأفكار والمقترحات حول اللعبة، وتقديم الملاحظات حول تجربتك في المجتمع، بما يسهم في تطوير المجتمع وتحسين تجربة اللاعبين.
@@ -810,7 +817,7 @@
                     استكشف احدث العناصر المتوفرة لهذا الاسبوع.
                 </p>
 
-                <h3 id="weekly-week-name" class="num-font" style="text-align: center; color: var(--primary); margin-bottom: 15px; font-size: 22px; display: none; text-shadow: 0 0 10px var(--primary-glow);"></h3>
+                <h3 id="weekly-week-name" class="num-font chrome-text" style="text-align: center; margin-bottom: 15px; font-size: 22px; display: none;"></h3>
 
                 <div class="video-glow-box" style="margin-bottom: 0;">
                     <video id="weekly-video" src="" controls playsinline preload="metadata"></video>
@@ -891,11 +898,11 @@
         <section id="join-us">
             <h2 class="section-title" data-i18n="join_us_title">انضم إلينا</h2>
             <div class="glass-panel" style="width: 100%; max-width: 750px; padding: 30px; border-radius: 16px; text-align: center; display: flex; flex-direction: column; align-items: center;">
-                <i class="fa-brands fa-discord" style="color: var(--discord-color); font-size: 40px; margin-bottom: 15px;"></i>
+                <i class="fa-brands fa-discord chrome-icon" style="font-size: 40px; margin-bottom: 15px;"></i>
                 <p class="glass-desc-text" style="font-weight: 600; margin-bottom: 20px;" data-i18n="join_us_desc">
                     إذا كانت لديكم بطولة في مجموعتكم ترغبون بإضافتها، أو تعتقدون أن حسابكم يستحق المنافسة ضمن أقدم الحسابات، أرسلوا لنا التفاصيل عبر الديسكورد من هنا.
                 </p>
-                <a href="https://discord.com/channels/1476420629698711778/1476603091095916738" target="_blank" class="fit-btn" style="background-color: var(--discord-color);">
+                <a href="https://discord.com/channels/1476420629698711778/1476603091095916738" target="_blank" class="fit-btn" style="background-color: var(--discord-color); color: #fff;">
                     <i class="fa-brands fa-discord"></i> <span data-i18n="join_us_btn">تواصل معنا</span>
                 </a>
             </div>
@@ -1513,7 +1520,7 @@
                 const displayTitle = isAr ? titleAr : (titleEn || titleAr);
                 const displayBody = isAr ? bodyAr : (bodyEn || bodyAr);
 
-                let tagColor = 'var(--primary)', tagBg = 'var(--primary-glow)', icon = 'fa-bolt';
+                let tagColor = 'var(--primary)', tagBg = 'var(--btn-active-glow)', icon = 'fa-bolt';
                 let displayTag = tagType;
                 const tagLower = tagType.toLowerCase();
 
@@ -1523,7 +1530,7 @@
                     } else if (tagLower.includes('إشعار') || tagLower.includes('notice')) {
                         displayTag = 'Notice'; tagColor = '#eab308'; tagBg = 'rgba(234, 179, 8, 0.15)'; icon = 'fa-bell';
                     } else if (tagLower.includes('تذكير') || tagLower.includes('reminder')) {
-                        displayTag = 'Reminder'; tagColor = 'var(--primary)'; tagBg = 'var(--primary-glow)'; icon = 'fa-clock';
+                        displayTag = 'Reminder'; tagColor = 'var(--primary)'; tagBg = 'var(--glass-border)'; icon = 'fa-clock';
                     } else if (tagLower.includes('تحديث') || tagLower.includes('update')) {
                         displayTag = 'Update'; tagColor = '#10b981'; tagBg = 'rgba(16, 185, 129, 0.15)'; icon = 'fa-wrench';
                     } else if (tagLower.includes('مهم') || tagLower.includes('important')) {
@@ -1535,7 +1542,7 @@
                     } else if (tagLower.includes('إشعار') || tagLower.includes('notice')) {
                         displayTag = 'إشعار'; tagColor = '#eab308'; tagBg = 'rgba(234, 179, 8, 0.15)'; icon = 'fa-bell';
                     } else if (tagLower.includes('تذكير') || tagLower.includes('reminder')) {
-                        displayTag = 'تذكير'; tagColor = 'var(--primary)'; tagBg = 'var(--primary-glow)'; icon = 'fa-clock';
+                        displayTag = 'تذكير'; tagColor = 'var(--primary)'; tagBg = 'var(--glass-border)'; icon = 'fa-clock';
                     } else if (tagLower.includes('تحديث') || tagLower.includes('update')) {
                         displayTag = 'تحديث'; tagColor = '#10b981'; tagBg = 'rgba(16, 185, 129, 0.15)'; icon = 'fa-wrench';
                     } else if (tagLower.includes('مهم') || tagLower.includes('important')) {
