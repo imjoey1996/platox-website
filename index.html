@@ -335,8 +335,9 @@
         .global-leader:hover { border-color: var(--server-color); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.3);}
         .global-leader:hover img { border-color: var(--server-color); box-shadow: var(--server-glow); transform: scale(1.05); }
         
+        /* تم إضافة font-weight: 900 !important وتثبيت نوع الخط لتطابق القادة العرب تماماً */
         .leader-name-box { display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 8px; cursor: pointer; transition: 0.3s; margin-bottom: 4px; width: 100%; white-space: nowrap; flex-wrap: nowrap;}
-        .leader-name-box h3 { font-size: 1.15rem; font-family: 'Rajdhani', 'Cairo', sans-serif; transition: 0.3s; margin: 0; flex-shrink: 1; overflow: hidden; text-overflow: ellipsis;}
+        .leader-name-box h3 { font-size: 1.15rem; font-family: 'Rajdhani', 'Cairo', sans-serif !important; font-weight: 900 !important; transition: 0.3s; margin: 0; flex-shrink: 1; overflow: hidden; text-overflow: ellipsis;}
         .leader-copy-icon { font-size: 12px; color: var(--text-muted); transition: 0.3s; flex-shrink: 0;}
         .leader-name-box:hover .leader-copy-icon { color: var(--primary); transform: scale(1.15); }
         
@@ -1255,7 +1256,6 @@
         let basePerfTime = performance.now();
         let activeTourTimers = [];
 
-        // الان يوجد رابط شيت واحد يجمع البطولات والاخبار معاً
         const tourSheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/export?format=csv"; 
 
         function showSkeletons() {
@@ -1280,25 +1280,27 @@
 
         async function loadDynamicData(force = false) {
             try {
-                const cached = localStorage.getItem('plato_dynamic_cache');
-                const cacheTime = localStorage.getItem('plato_dynamic_cache_time');
+                // تم تغيير المفتاح وتقليل وقت الكاش لتحديث البيانات بسرعة أكبر
+                const cached = localStorage.getItem('plato_data_v3');
+                const cacheTime = localStorage.getItem('plato_data_v3_time');
                 const now = Date.now();
                 
-                if (!force && cached && cacheTime && (now - parseInt(cacheTime) < 1800000) && !cached.includes('<!DOCTYPE html>')) {
+                if (!force && cached && cacheTime && (now - parseInt(cacheTime) < 120000) && !cached.includes('<!DOCTYPE html>')) {
                     cachedSheetRows = parseCSV(cached).slice(1);
                     renderDynamicData();
                     renderNewsData();
                     return;
                 }
 
-                const response = await fetch(tourSheetURL);
+                // تم إضافة طابع زمني حتى يقرأ دائماً آخر التغييرات من جوجل
+                const response = await fetch(tourSheetURL + "&t=" + new Date().getTime(), { cache: "no-store" });
                 if (!response.ok) throw new Error("فشل الاتصال بالشيت");
                 const data = await response.text();
                 
                 if (data.includes('<!DOCTYPE html>')) throw new Error("جوجل أرسلت استجابة غير صالحة");
 
-                localStorage.setItem('plato_dynamic_cache', data);
-                localStorage.setItem('plato_dynamic_cache_time', now.toString());
+                localStorage.setItem('plato_data_v3', data);
+                localStorage.setItem('plato_data_v3_time', now.toString());
                 cachedSheetRows = parseCSV(data).slice(1);
                 
                 renderDynamicData();
@@ -1306,7 +1308,7 @@
                 
             } catch (error) { 
                 console.error("حدث خطأ:", error); 
-                const fallbackCache = localStorage.getItem('plato_dynamic_cache');
+                const fallbackCache = localStorage.getItem('plato_data_v3');
                 if(fallbackCache && !fallbackCache.includes('<!DOCTYPE html>')) {
                     cachedSheetRows = parseCSV(fallbackCache).slice(1);
                     renderDynamicData();
@@ -1323,8 +1325,7 @@
         function renderNewsData() {
             if (!cachedSheetRows || cachedSheetRows.length === 0) return;
             
-            // سحب الاخبار من الاعمدة 9 لحد 14 (اللي تمثل J لحد O)
-            let allNews = cachedSheetRows.filter(cols => cols.length >= 11 && (cols[9] || '').trim() && (cols[10] || '').trim());
+            let allNews = cachedSheetRows.filter(cols => cols.length >= 10 && (cols[9] || '').trim() && (cols[10] || '').trim());
             
             allNews.sort((a, b) => {
                 const dateA = new Date((a[9] || '').trim()).getTime() || 0;
@@ -1334,12 +1335,12 @@
 
             newsCardsData = allNews.slice(0, 5).map(cols => {
                 return [
-                    cols[9],  // التاريخ (J)
-                    cols[10], // نوع الخبر (K)
-                    cols[11], // العنوان عربي (L)
-                    cols[12], // التفاصيل عربي (M)
-                    cols[13], // العنوان انكليزي (N)
-                    cols[14]  // التفاصيل انكليزي (O)
+                    cols[9],  
+                    cols[10], 
+                    cols[11], 
+                    cols[12], 
+                    cols[13], 
+                    cols[14]  
                 ];
             });
             buildNewsHTML();
@@ -1751,6 +1752,11 @@
             if(pull > 80 && window.scrollY <= 5 && !isHorizontal) {
                 ptrEl.classList.add('refreshing');
                 ptrEl.style.transform = 'translateY(0)';
+                
+                // مسح الكاش يدوياً عند السحب للتحديث حتى ينزل آخر شي فورا
+                localStorage.removeItem('plato_data_v3');
+                localStorage.removeItem('plato_data_v3_time');
+                
                 setTimeout(() => {
                     location.reload();
                 }, 600);
@@ -1783,7 +1789,7 @@
                 nSlider.scrollLeft = sLeft - walk;
             });
             
-            const cachedDyn = localStorage.getItem('plato_dynamic_cache');
+            const cachedDyn = localStorage.getItem('plato_data_v3');
             if (!cachedDyn) {
                 showSkeletons();
             }
