@@ -2,10 +2,9 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
-    <!-- Content Security Policy (CSP) Mitigation -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://worldtimeapi.org https://timeapi.io https://docs.google.com https://script.google.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline'; img-src 'self' data: https: http:; media-src https: http:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://worldtimeapi.org https://timeapi.io https://docs.google.com https://script.google.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline'; img-src 'self' data: https: http:; media-src https: http: 'self';">
     
     <title>PlatoX | مجتمع اللاعبين العرب</title>
     
@@ -17,8 +16,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Rajdhani:wght@600;700;900&display=block" rel="stylesheet">
-    
-    <!-- Subresource Integrity (SRI) applied to FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
     
     <style>
@@ -62,11 +59,19 @@
             margin: 0; 
             padding: 0; 
             -webkit-tap-highlight-color: transparent; 
+            -webkit-touch-callout: none; 
+            touch-action: manipulation; 
         }
 
-        /* Improved Accessibility: Removed aggressive user-select and zoom blocking from global scope */
-        button, a, .slider-controls, .nav-btn, .nav-label, .bottom-nav-item, .lang-btn, .fit-btn, .submit-btn, .cancel-btn {
+        button, a, input, textarea, .slider-controls, .nav-btn, .nav-label, .arrow-icon, .bottom-nav-item, .lang-btn, .fit-btn, .submit-btn, .cancel-btn {
             touch-action: manipulation !important;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        
+        img {
+            -webkit-user-drag: none;
+            pointer-events: none; 
             user-select: none;
             -webkit-user-select: none;
         }
@@ -75,6 +80,7 @@
             scroll-behavior: smooth; 
             scroll-padding-top: calc(85px + env(safe-area-inset-top)); 
             background-color: var(--bg-main);
+            overscroll-behavior-y: none;
         }
 
         html[lang="ar"] body { font-size: 14px; }
@@ -94,7 +100,6 @@
         
         html[dir="ltr"] body, .num-font, .navbar h1 { font-family: 'Rajdhani', sans-serif; }
 
-        /* Game Theme Background */
         .static-gaming-bg {
             position: fixed;
             top: 0;
@@ -133,7 +138,6 @@
         html[dir="ltr"] .glass-panel { border-left: 1px solid var(--glass-border); border-right: 1px solid rgba(255, 255, 255, 0.05); }
         [data-theme="light"] .glass-panel { box-shadow: 0 8px 30px 0 rgba(31, 38, 135, 0.07); border-top: 1px solid rgba(255, 255, 255, 0.6); }
 
-        /* Professional Glow Styles */
         .pro-title-glow, .pro-icon-glow {
             color: var(--primary);
             font-weight: 900;
@@ -888,11 +892,11 @@
         <section id="join-us">
             <h2 class="section-title" data-i18n="join_us_title">انضم إلينا</h2>
             <div class="glass-panel" style="width: 100%; max-width: 750px; padding: 30px; border-radius: 16px; text-align: center; display: flex; flex-direction: column; align-items: center;">
-                <i class="fa-brands fa-discord" style="font-size: 40px; margin-bottom: 15px; color: var(--discord-color);"></i>
+                <i class="fa-brands fa-discord pro-icon-glow" style="font-size: 40px; margin-bottom: 15px;"></i>
                 <p class="glass-desc-text" style="font-weight: 600; margin-bottom: 20px;" data-i18n="join_us_desc">
                     إذا كانت لديكم بطولة في مجموعتكم ترغبون بإضافتها، أو تعتقدون أن حسابكم يستحق المنافسة ضمن أقدم الحسابات، أرسلوا لنا التفاصيل عبر الديسكورد من هنا.
                 </p>
-                <a href="https://discord.com/channels/1476420629698711778/1476603091095916738" target="_blank" rel="noopener noreferrer" class="fit-btn" style="background-color: var(--discord-color); color: #fff;">
+                <a href="https://discord.com/channels/1476420629698711778/1476603091095916738" target="_blank" rel="noopener noreferrer" class="fit-btn">
                     <i class="fa-brands fa-discord"></i> <span data-i18n="join_us_btn">تواصل معنا</span>
                 </a>
             </div>
@@ -973,7 +977,6 @@
             });
         }
 
-        // Global event listener to prevent inline onclick XSS
         document.addEventListener('click', (e) => {
             const copyBtn = e.target.closest('.copy-admin-btn, .admin-copy-btn');
             if (copyBtn) {
@@ -1027,17 +1030,6 @@
             );
         }
 
-        // URL Sanitization Helper
-        function safeURL(url) {
-            if (!url) return '';
-            const t = url.trim();
-            if (t.startsWith('http://') || t.startsWith('https://') || t.startsWith('data:image')) {
-                return escapeHTML(t);
-            }
-            return '';
-        }
-
-        // Safe CSV string prep
         function sanitizeCSV(str) {
             return str.replace(/^[=+\-@\t\r\n]/, ' $&');
         }
@@ -1045,7 +1037,6 @@
         async function submitBugReport() {
             const isAr = document.documentElement.lang === 'ar';
             
-            // Cooldown System - 30 minutes
             const lastReportTime = localStorage.getItem('last_bug_report');
             if (lastReportTime) {
                 const elapsed = Date.now() - parseInt(lastReportTime);
@@ -1115,14 +1106,10 @@
             const safePlatoId = sanitizeCSV(platoId);
             const safeBugDesc = sanitizeCSV(bugDesc);
 
-            const formData = new FormData();
-            formData.append("plato_id", safePlatoId);
-            formData.append("issue_type", bugType);
-            formData.append("description", safeBugDesc);
-
             try {
-                // Changed from GET to POST
-                await fetch(scriptURL, { method: "POST", mode: "no-cors", body: formData });
+                // استعادة GET لحل المشكلة مع السكربت الخاص بك
+                const finalURL = scriptURL + "?plato_id=" + encodeURIComponent(safePlatoId) + "&issue_type=" + encodeURIComponent(bugType) + "&description=" + encodeURIComponent(safeBugDesc);
+                await fetch(finalURL, { mode: "no-cors" });
                 
                 localStorage.setItem('last_bug_report', Date.now().toString());
 
@@ -1190,7 +1177,7 @@
             
             globalLeadersData.forEach(leader => {
                 const sTheme = serverThemes[leader.server];
-                const cleanImg = safeURL(leader.img);
+                const cleanImg = leader.img ? escapeHTML(leader.img) : '';
                 const imageSource = cleanImg ? cleanImg : `https://ui-avatars.com/api/?name=${escapeHTML(leader.name)}&background=${sTheme.nameColor.replace('#', '')}&color=fff&bold=true`;
                 
                 let bdayText = "";
@@ -1224,7 +1211,6 @@
                     cardGlowStyle = `border-top: 2px solid ${sTheme.nameColor}99; border-bottom: 2px solid ${sTheme.nameColor}99; box-shadow: 0 -6px 18px ${sTheme.nameColor}30, 0 6px 18px ${sTheme.nameColor}30;`;
                 }
 
-                // Inline onclick changed to event delegation via copy-admin-btn class
                 htmlStr += `
                     <div class="global-leader glass-panel" data-server="${escapeHTML(leader.server)}" style="${cardGlowStyle}">
                         <img src="${imageSource}" alt="${escapeHTML(leader.name)}" style="${profBorder}">
@@ -1672,8 +1658,9 @@
             
             const firstRow = cachedSheetRows[0]; 
             if (firstRow) {
-                const videoUrl = safeURL(firstRow[7]); 
-                const weekName = escapeHTML(firstRow[8]); 
+                // Restoration of relative video URL
+                const videoUrl = firstRow[7] ? escapeHTML(firstRow[7].trim()) : ""; 
+                const weekName = escapeHTML(firstRow[8] ? firstRow[8] : ""); 
                 
                 const vidEl = document.getElementById('weekly-video');
                 const showcaseSec = document.getElementById('weekly-showcase');
@@ -1726,7 +1713,8 @@
                 }
 
                 const nameEn = escapeHTML(cols[2] ? cols[2].trim() : "");
-                const image = safeURL(cols[3]);
+                // Restoration of relative image URL
+                const image = cols[3] ? escapeHTML(cols[3].trim()) : "";
                 const prizeStr = escapeHTML(cols[4] ? cols[4].trim() : "");
                 const game = escapeHTML(cols[5] ? cols[5].trim() : "");
                 const admin = escapeHTML(cols[6] ? cols[6].trim() : "");
@@ -1958,6 +1946,39 @@
             setInterval(updateSheetTimers, 1000);
         });
 
+        // استعادة كود قفل التقريب (Zoom Lock) بالكامل
+        document.addEventListener('touchstart', function(e) {
+            if (e.touches.length > 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        document.addEventListener('touchmove', function(e) {
+            if (e.scale !== 1 && e.scale !== undefined) { 
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(e) {
+            let now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                e.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, { passive: false });
+
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && (e.key === '+' || e.key === '-' || e.key === '=')) {
+                e.preventDefault();
+            }
+        });
+
+        document.addEventListener('wheel', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                e.preventDefault();
+            }
+        }, { passive: false });
     </script>
 </body>
 </html>
