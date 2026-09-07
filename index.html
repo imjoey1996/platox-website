@@ -19,8 +19,8 @@
         :root {
             --bg-main: #06060a; 
             --bg-card: rgba(15, 15, 22, 0.65); 
-            --primary: #9d4edd;
-            --primary-glow: rgba(157, 78, 221, 0.35);
+            --primary: #ffffff; /* أبيض */
+            --primary-glow: rgba(255, 255, 255, 0.25); /* توهج أبيض */
             --glass-border: rgba(255, 255, 255, 0.08);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
@@ -38,7 +38,8 @@
         [data-theme="light"] {
             --bg-main: #f4f5f8; 
             --bg-card: rgba(255, 255, 255, 0.75); 
-            --primary: #7b2cbf;
+            --primary: #000000; /* أسود */
+            --primary-glow: rgba(0, 0, 0, 0.25); /* توهج أسود */
             --glass-border: rgba(0, 0, 0, 0.1); 
             --text-main: #0f172a; 
             --text-muted: #475569;
@@ -105,17 +106,17 @@
             pointer-events: none;
             background-color: var(--bg-main);
             background-image: 
-                radial-gradient(circle at 15% 15%, rgba(157, 78, 221, 0.18), transparent 45%),
-                radial-gradient(circle at 85% 85%, rgba(26, 47, 102, 0.22), transparent 45%),
-                radial-gradient(circle at 50% 50%, rgba(216, 180, 248, 0.05), transparent 60%),
+                radial-gradient(circle at 15% 15%, rgba(255, 255, 255, 0.06), transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(26, 47, 102, 0.15), transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.02), transparent 60%),
                 url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.025'%3E%3Cpath d='M20 20h8v8h-8zm60 0h8v8h-8zM40 40h8v8h-8zm40 40h8v8h-8zm-60 20h8v8h-8zm60 0h8v8h-8z'/%3E%3Ccircle cx='95' cy='35' r='4'/%3E%3Ccircle cx='25' cy='85' r='4'/%3E%3Cpath d='M85 80l5-8h-10zm-60-45l5-8h-10z'/%3E%3C/g%3E%3C/svg%3E");
             background-repeat: repeat;
         }
 
         [data-theme="light"] .static-gaming-bg {
             background-image: 
-                radial-gradient(circle at 15% 15%, rgba(123, 44, 191, 0.08), transparent 45%),
-                radial-gradient(circle at 85% 85%, rgba(59, 130, 246, 0.08), transparent 45%),
+                radial-gradient(circle at 15% 15%, rgba(0, 0, 0, 0.06), transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(59, 130, 246, 0.06), transparent 45%),
                 url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000000' fill-opacity='0.025'%3E%3Cpath d='M20 20h8v8h-8zm60 0h8v8h-8zM40 40h8v8h-8zm40 40h8v8h-8zm-60 20h8v8h-8zm60 0h8v8h-8z'/%3E%3Ccircle cx='95' cy='35' r='4'/%3E%3Ccircle cx='25' cy='85' r='4'/%3E%3Cpath d='M85 80l5-8h-10zm-60-45l5-8h-10z'/%3E%3C/g%3E%3C/svg%3E");
         }
 
@@ -180,11 +181,11 @@
         }
         .main-lang-switch .lang-btn.active, 
         [data-theme="light"] .main-lang-switch .lang-btn.active { 
-            color: #ffffff !important; 
+            color: var(--bg-main) !important; 
             background: var(--primary) !important; 
             border-color: var(--primary) !important; 
             box-shadow: 0 0 15px var(--primary-glow) !important; 
-            text-shadow: 0 0 8px #fff;
+            text-shadow: none;
         }
 
         .tab-view { display: none; width: 100%; }
@@ -293,7 +294,7 @@
         .fit-btn { padding: 8px 18px; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; transition: 0.2s; font-family: inherit; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; width: fit-content; flex: none; white-space: nowrap; height: 38px;}
         .submit-btn, .cancel-btn { border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; transition: 0.2s; font-family: inherit; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; flex: 1; padding: 10px; white-space: nowrap; height: 42px;}
         
-        .submit-btn, .fit-btn { background: var(--primary); color: #fff; border: none; }
+        .submit-btn, .fit-btn { background: var(--primary); color: var(--bg-main); border: none; font-weight: 900;}
         .cancel-btn { background: rgba(255,255,255,0.1); color: var(--text-main); border: 1px solid var(--glass-border); }
         [data-theme="light"] .cancel-btn { background: rgba(0,0,0,0.05); color: var(--text-muted); border-color: rgba(0,0,0,0.1); }
 
@@ -384,7 +385,7 @@
         .glass-desc-text { color: rgba(255,255,255,0.85); font-size: 0.95rem; }
         [data-theme="light"] .glass-desc-text { color: var(--text-muted); }
 
-        .video-glow-box { position: relative; width: 100%; max-width: 320px; border-radius: 16px; padding: 4px; background: rgba(157, 78, 221, 0.2); box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin: 0 auto;}
+        .video-glow-box { position: relative; width: 100%; max-width: 320px; border-radius: 16px; padding: 4px; background: var(--primary-glow); box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin: 0 auto;}
         .video-glow-box video { width: 100%; display: block; border-radius: 12px; max-height: 70vh; object-fit: cover; background: #000; }
 
         .feedback-btn-wrapper { width: 100%; display: flex; justify-content: flex-start; } 
@@ -583,7 +584,7 @@
                     </div>
                 </div>
 
-                <div class="guideline-warning">
+                <div class="guideline-warning" style="background: rgba(128, 128, 128, 0.15); border-color: rgba(128, 128, 128, 0.3); color: var(--text-main); margin-top: 20px;">
                     <i class="fa-solid fa-triangle-exclamation" style="font-size: 24px; flex-shrink: 0;"></i>
                     <span data-i18n="guide_warning">قد يؤدي انتهاك هذه الإرشادات إلى تقييد الدردشة لمدة 4 ساعات أو اتخاذ إجراءات إشرافية إضافية (حظر دائم).</span>
                 </div>
@@ -684,7 +685,7 @@
                         <span class="guideline-text" data-i18n="be_leader_2" style="font-weight: 600;">يتم ترشيح المرشحين من قِبل القادة الحاليين ويجب الموافقة عليهم من قِبل مطور اللعبة.</span>
                     </li>
                 </ul>
-                <div class="guideline-warning" style="background: rgba(157, 78, 221, 0.1); border-color: rgba(157, 78, 221, 0.3); color: var(--text-main); margin-top: 20px;">
+                <div class="guideline-warning" style="background: rgba(128, 128, 128, 0.15); border-color: rgba(128, 128, 128, 0.3); color: var(--text-main); margin-top: 20px;">
                     <i class="fa-solid fa-circle-info" style="color: var(--primary); font-size: 24px; flex-shrink: 0;"></i>
                     <span data-i18n="be_leader_note" style="font-weight: 600;">يتم تعيين قادة جدد عند الحاجة، بحد أقصى 4 قادة لكل خادم.</span>
                 </div>
@@ -1495,7 +1496,7 @@
                 const displayTitle = isAr ? titleAr : (titleEn || titleAr);
                 const displayBody = isAr ? bodyAr : (bodyEn || bodyAr);
 
-                let tagColor = 'var(--primary)', tagBg = 'rgba(157, 78, 221, 0.15)', icon = 'fa-bolt';
+                let tagColor = 'var(--primary)', tagBg = 'var(--primary-glow)', icon = 'fa-bolt';
                 let displayTag = tagType;
                 const tagLower = tagType.toLowerCase();
 
@@ -1505,7 +1506,7 @@
                     } else if (tagLower.includes('إشعار') || tagLower.includes('notice')) {
                         displayTag = 'Notice'; tagColor = '#eab308'; tagBg = 'rgba(234, 179, 8, 0.15)'; icon = 'fa-bell';
                     } else if (tagLower.includes('تذكير') || tagLower.includes('reminder')) {
-                        displayTag = 'Reminder'; tagColor = '#9d4edd'; tagBg = 'rgba(157, 78, 221, 0.15)'; icon = 'fa-clock';
+                        displayTag = 'Reminder'; tagColor = 'var(--primary)'; tagBg = 'var(--primary-glow)'; icon = 'fa-clock';
                     } else if (tagLower.includes('تحديث') || tagLower.includes('update')) {
                         displayTag = 'Update'; tagColor = '#10b981'; tagBg = 'rgba(16, 185, 129, 0.15)'; icon = 'fa-wrench';
                     } else if (tagLower.includes('مهم') || tagLower.includes('important')) {
@@ -1517,7 +1518,7 @@
                     } else if (tagLower.includes('إشعار') || tagLower.includes('notice')) {
                         displayTag = 'إشعار'; tagColor = '#eab308'; tagBg = 'rgba(234, 179, 8, 0.15)'; icon = 'fa-bell';
                     } else if (tagLower.includes('تذكير') || tagLower.includes('reminder')) {
-                        displayTag = 'تذكير'; tagColor = '#9d4edd'; tagBg = 'rgba(157, 78, 221, 0.15)'; icon = 'fa-clock';
+                        displayTag = 'تذكير'; tagColor = 'var(--primary)'; tagBg = 'var(--primary-glow)'; icon = 'fa-clock';
                     } else if (tagLower.includes('تحديث') || tagLower.includes('update')) {
                         displayTag = 'تحديث'; tagColor = '#10b981'; tagBg = 'rgba(16, 185, 129, 0.15)'; icon = 'fa-wrench';
                     } else if (tagLower.includes('مهم') || tagLower.includes('important')) {
