@@ -1007,13 +1007,7 @@
     }
 
     const bugType = bugTypeElement.value;
-
     const scriptURL = "https://script.google.com/macros/s/AKfycbz24P1RDGQbXI7psG7FOPhVNszKWzzf7X7yRQ4hFOjvC4k3zPuU0qsrSS2Ct0IZTGirHQ/exec"; 
-
-    const formData = new URLSearchParams();
-    formData.append('plato_id', platoId);
-    formData.append('issue_type', bugType);
-    formData.append('description', bugDesc);
 
     const submitBtn = document.querySelector('#bug-details .submit-btn');
     const originalText = submitBtn.innerText;
@@ -1021,15 +1015,11 @@
     submitBtn.disabled = true;
 
     try {
-        // تم إضافة mode: 'no-cors' لتخطي حظر المتصفح
-        await fetch(scriptURL, {
-            method: "POST",
-            mode: "no-cors",
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: formData.toString()
-        });
+        // استخدام طريقة GET المضمونة لتخطي حظر المتصفحات
+        const finalURL = scriptURL + "?plato_id=" + encodeURIComponent(platoId) + "&issue_type=" + encodeURIComponent(bugType) + "&description=" + encodeURIComponent(bugDesc);
+        
+        await fetch(finalURL, { mode: "no-cors" });
 
-        // إذا نجح الإرسال وما طلع خطأ بالاتصال
         localStorage.setItem('last_bug_report_time', now);
         const toast = document.getElementById("toast");
         toast.innerHTML = isAr ? `<i class="fa-solid fa-check"></i> تم إرسال البلاغ بنجاح` : `<i class="fa-solid fa-check"></i> Report Submitted Successfully`;
