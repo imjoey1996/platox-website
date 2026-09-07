@@ -946,32 +946,28 @@
             let hasNewHome = false;
             let hasNewExplore = false;
 
-            // 1. فحص الأخبار (تعديل أو إضافة)
+            // 1. فحص الأخبار (تعديل أو إضافة في أي خبر)
             if (currentLatestNews && currentLatestNews.id !== seenNews) {
                 hasNewHome = true;
-                const displayTitle = isAr ? currentLatestNews.titleAr : (currentLatestNews.titleEn || currentLatestNews.titleAr);
-                const safeTitle = escapeHTML(displayTitle);
                 html += `
                 <div class="notif-item" onclick="markSeenAndGo('news', '${currentLatestNews.id}', 'home', 'news')">
                     <i class="fa-solid fa-newspaper"></i> 
                     <div class="notif-text-box">
-                        <span class="notif-sub" style="color:var(--primary);">${isAr ? 'خبر جديد' : 'New Update'}</span>
-                        <span class="notif-title">${safeTitle}</span>
+                        <span class="notif-sub" style="color:var(--primary);">${isAr ? 'تحديث جديد' : 'New Update'}</span>
+                        <span class="notif-title">${isAr ? 'تم تحديث لوحة الأخبار' : 'News board updated'}</span>
                     </div>
                 </div>`;
             }
 
-            // 2. فحص البطولات (إضافة بطولة جديدة أو تعديل)
+            // 2. فحص البطولات (إضافة أو تعديل أي بطولة)
             if (currentLatestTour && currentLatestTour.id !== seenTour) {
                 hasNewExplore = true;
-                const displayTitle = isAr ? currentLatestTour.titleAr : (currentLatestTour.titleEn || currentLatestTour.titleAr);
-                const safeTitle = escapeHTML(displayTitle);
                 html += `
                 <div class="notif-item" onclick="markSeenAndGo('tour', '${currentLatestTour.id}', 'leaderboard', 'tournaments')">
                     <i class="fa-solid fa-trophy"></i> 
                     <div class="notif-text-box">
-                        <span class="notif-sub" style="color:#eab308;">${isAr ? 'بطولة قادمة' : 'Upcoming Tournament'}</span>
-                        <span class="notif-title">${safeTitle}</span>
+                        <span class="notif-sub" style="color:#eab308;">${isAr ? 'تحديث البطولات' : 'Tournaments Update'}</span>
+                        <span class="notif-title">${isAr ? 'تم تعديل أو إضافة بطولات جديدة' : 'Tournaments list updated'}</span>
                     </div>
                 </div>`;
             }
@@ -1478,12 +1474,10 @@
             newsCardsData = allNews.slice(0, 5).map(cols => [ cols[8], cols[9], cols[10], cols[11], cols[12], cols[13] ]);
             
             if (newsCardsData.length > 0) {
-                const top = newsCardsData[0];
-                const newsContentHash = (top[0] || '') + (top[2] || '') + (top[3] || '') + (top[4] || '') + (top[5] || '');
+                // البصمة تشمل كل الأخبار المعروضة، أي تعديل بأي خبر يغير البصمة
+                const newsContentHash = newsCardsData.map(row => row.join('|')).join('||');
                 currentLatestNews = {
-                    id: 'news_' + hashCode(newsContentHash), 
-                    titleAr: top[2] || '',
-                    titleEn: top[4] || ''
+                    id: 'news_' + hashCode(newsContentHash)
                 };
             } else {
                 currentLatestNews = null;
@@ -1684,13 +1678,11 @@
             });
 
             let upcomingTours = tournamentsList.filter(t => t.diff > 0).sort((a, b) => a.targetTimeMs - b.targetTimeMs);
-            if (upcomingTours.length > 0) {
-                const topTour = upcomingTours[0];
-                const allToursHash = upcomingTours.map(t => t.nameAr + t.targetTimeMs + t.prizeStr).join('|');
+            if (tournamentsList.length > 0) {
+                // البصمة تشمل كل البطولات المعروضة مع تفاصيلها، أي إضافة لبطولة أو تعديل لبطولة حالية سيغير البصمة
+                const allToursHash = tournamentsList.map(t => t.nameAr + t.targetTimeMs + t.prizeStr + t.game + t.admin).join('|');
                 currentLatestTour = {
-                    id: 'tour_' + hashCode(allToursHash),
-                    titleAr: topTour.nameAr,
-                    titleEn: topTour.nameEn
+                    id: 'tour_' + hashCode(allToursHash)
                 };
             } else {
                 currentLatestTour = null;
