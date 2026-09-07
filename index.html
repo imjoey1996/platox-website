@@ -98,6 +98,9 @@
         [data-theme="light"] .glass-panel { box-shadow: 0 8px 30px 0 rgba(31, 38, 135, 0.07); border-top: 1px solid rgba(0,0,0, 0.1); }
 
         .pro-title-glow, .pro-icon-glow { color: var(--primary); font-weight: 900; text-shadow: 0 0 15px var(--btn-active-glow), 0 0 30px var(--btn-active-glow); }
+        
+        /* التوهج المخصص للتحذير (اللون المرجاني) */
+        .custom-warning-glow { color: #EE6B6E !important; text-shadow: 0 0 15px #EE6B6E, 0 0 30px #EE6B6E !important; }
 
         .navbar { position: fixed; top: 0; left: 0; width: 100%; padding: calc(12px + env(safe-area-inset-top)) 25px 12px; display: flex; justify-content: space-between; align-items: center; background: rgba(5, 5, 8, 0.65); backdrop-filter: blur(25px); border-bottom: 1px solid var(--glass-border); z-index: 1000; direction: ltr; }
         [data-theme="light"] .navbar { background: rgba(255, 255, 255, 0.8); }
@@ -109,18 +112,21 @@
         .nav-actions i { font-size: 22px; cursor: pointer; color: var(--text-main); transition: 0.2s; }
         .nav-actions i:hover { color: var(--primary); text-shadow: 0 0 15px var(--btn-active-glow); }
 
-        /* نظام الإشعارات */
+        /* نظام الإشعارات والتنسيقات الجديدة */
         .notif-wrapper { position: relative; display: flex; align-items: center; }
         .notif-dot { position: absolute; top: -2px; right: -2px; width: 10px; height: 10px; background: #ef4444; border-radius: 50%; display: none; box-shadow: 0 0 8px #ef4444; border: 2px solid var(--bg-card); }
-        .notif-dropdown { position: absolute; top: 45px; right: -10px; width: 220px; background: var(--bg-card); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 12px; padding: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s ease; display: flex; flex-direction: column; gap: 8px; z-index: 1001; }
+        .notif-dropdown { position: absolute; top: 45px; right: -10px; width: 230px; background: var(--bg-card); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 12px; padding: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s ease; display: flex; flex-direction: column; gap: 8px; z-index: 1001; }
         [data-theme="light"] .notif-dropdown { background: rgba(255,255,255,0.95); }
         html[dir="rtl"] .notif-dropdown { right: auto; left: -10px; }
         .notif-dropdown.show { opacity: 1; visibility: visible; transform: translateY(0); }
-        .notif-item { display: flex; align-items: center; gap: 10px; padding: 10px; color: var(--text-main); text-decoration: none; font-size: 13.5px; font-weight: bold; border-radius: 8px; transition: 0.2s; cursor: pointer; background: rgba(255,255,255,0.03); }
+        .notif-item { display: flex; align-items: center; gap: 12px; padding: 10px; color: var(--text-main); text-decoration: none; border-radius: 8px; transition: 0.2s; cursor: pointer; background: rgba(255,255,255,0.03); }
         [data-theme="light"] .notif-item { background: rgba(0,0,0,0.03); }
-        .notif-item:hover { background: rgba(255,255,255,0.1); color: var(--primary); }
+        .notif-item:hover { background: rgba(255,255,255,0.1); }
         [data-theme="light"] .notif-item:hover { background: rgba(0,0,0,0.08); }
-        .notif-item i { font-size: 16px; color: var(--primary); }
+        .notif-item i { font-size: 18px; color: var(--primary); flex-shrink: 0; }
+        .notif-text-box { display: flex; flex-direction: column; gap: 2px; overflow: hidden; width: 100%; }
+        .notif-sub { font-size: 10px; font-weight: 900; letter-spacing: 0.5px; opacity: 0.9; }
+        .notif-title { font-size: 13px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
 
         .lang-btn { border: 1px solid var(--glass-border); padding: 6px 15px; border-radius: 20px; cursor: pointer; transition: 0.2s; font-family: 'Cairo', sans-serif; font-weight: 700; font-size: 14px; }
         .main-lang-switch { display: flex; justify-content: center; gap: 15px; margin: calc(95px + env(safe-area-inset-top)) auto 15px; position: relative; z-index: 10; }
@@ -170,7 +176,6 @@
         .news-body { color: rgba(255,255,255,0.85); line-height: 1.8; white-space: pre-line; word-break: break-word; overflow-wrap: break-word; }
         [data-theme="light"] .news-body { color: var(--text-muted); }
         
-        /* التفاعلات في أسفل الكرت */
         .news-interactions { margin-top: auto; padding-top: 15px; border-top: 1px solid var(--glass-border); display: flex; gap: 15px; align-items: center; flex-wrap: wrap;}
         .interact-box { display: flex; align-items: center; gap: 6px; }
         .news-interact-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: var(--text-main); padding: 6px 12px; border-radius: 8px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; font-weight: bold; font-family: inherit;}
@@ -223,9 +228,6 @@
         .guideline-text { line-height: 1.6; color: rgba(255,255,255,0.85); font-size: 0.95rem; }
         [data-theme="light"] .guideline-text { color: var(--text-main); }
         .guideline-warning { background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.3); color: #ef4444; padding: 15px; border-radius: 8px; font-weight: 700; line-height: 1.6; margin-top: 15px; display: flex; gap: 10px; align-items: center; font-size: 0.9rem;}
-        
-        /* التوهج المخصص للتحذير الخاص بالقوانين */
-        .custom-warning-glow { color: #EE6B6E !important; text-shadow: 0 0 15px #EE6B6E, 0 0 30px #EE6B6E !important; }
 
         .birthday-badge { display: inline-flex; align-items: center; justify-content: center; gap: 6px; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border); padding: 4px 10px; border-radius: 8px; font-weight: 700; color: var(--text-muted); margin-top: 10px; font-size: 12px; }
         [data-theme="light"] .birthday-badge { background: rgba(0, 0, 0, 0.03); }
@@ -335,7 +337,6 @@
 </head>
 <body>
 
-    <!-- التحديث بالسحب للأسفل -->
     <div id="ptr-loader" style="position: fixed; top: 0; left: 0; width: 100%; text-align: center; padding: 20px; z-index: 9999; transform: translateY(-100%); transition: transform 0.2s; pointer-events: none;">
         <div style="background: var(--bg-card); display: inline-block; padding: 10px; border-radius: 50%; box-shadow: 0 5px 15px rgba(0,0,0,0.3); border: 1px solid var(--glass-border); backdrop-filter: blur(10px);">
             <i class="fa-solid fa-rotate-right" style="font-size: 20px; color: var(--primary); transition: transform 0.3s; text-shadow: 0 0 10px var(--btn-active-glow);"></i>
@@ -348,14 +349,13 @@
         <h1 class="num-font">Plato<span>X</span></h1>
         
         <div class="nav-actions">
-            <!-- جرس الإشعارات -->
+            <!-- نظام الإشعارات الديناميكي -->
             <div class="notif-wrapper">
                 <i class="fa-solid fa-bell" onclick="toggleNotif()" id="notif-bell"></i>
                 <div class="notif-dot" id="nav-dot-bell"></div>
-                <!-- قائمة الإشعارات المنسدلة -->
                 <div class="notif-dropdown" id="notif-dropdown" dir="rtl">
                     <div id="notif-content">
-                        <!-- تُضاف الإشعارات هنا برمجياً -->
+                        <!-- تظهر الإشعارات هنا برمجياً من الشيت -->
                     </div>
                 </div>
             </div>
@@ -467,6 +467,7 @@
                 <div>
                     <div class="guideline-item">
                         <i class="fa-solid fa-bug guideline-icon"></i>
+                        <!-- تم التعديل هنا حسب الطلب الجديد -->
                         <div class="guideline-text" data-i18n="comm_guide_1">استغلال تطبيق بلاتو أو التشويش على تجربة مستخدم آخر.</div>
                     </div>
                     <div class="guideline-item">
@@ -562,7 +563,8 @@
         <section id="leaders-intro">
             <div class="glass-panel" style="width: 100%; max-width: 850px; padding: 30px; border-radius: 16px; margin-bottom: 5px;">
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
-                    <i class="fa-solid fa-circle-question pro-icon-glow" style="font-size: 26px;"></i>
+                    <!-- تم التعديل هنا: تحويل لون التوهج إلى الأحمر المخصص -->
+                    <i class="fa-solid fa-circle-info custom-warning-glow" style="font-size: 26px;"></i>
                     <h3 class="pro-title-glow" style="font-size: 22px; margin: 0;" data-i18n="who_are_leaders">من هم القادة؟</h3>
                 </div>
                 <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 25px; font-weight: 700;" data-i18n="who_are_leaders_desc">
@@ -829,6 +831,16 @@
     <div id="toast"></div>
 
     <script>
+        // المتغيرات العامة
+        let cachedSheetRows = null;
+        let newsCardsData = [];
+        let tournamentsList = [];
+        let baseRealTime = Date.now();
+        let basePerfTime = performance.now();
+        let activeTourTimers = [];
+
+        const tourSheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/export?format=csv"; 
+
         function parseCSV(str) {
             var arr = []; var quote = false; var col = 0, row = 0;
             for (var c = 0; c < str.length; c++) {
@@ -858,11 +870,12 @@
             if (viewName === 'home') setTimeout(updateCarouselButtons, 80);
         }
 
-        // --- نظام الإشعارات (الجرس) ---
+        // --- نظام الإشعارات والتنقل ---
         function toggleNotif() {
             const dropdown = document.getElementById('notif-dropdown');
             dropdown.classList.toggle('show');
-            document.getElementById('nav-dot-bell').style.display = 'none'; // إخفاء النقطة عند فتح الجرس
+            document.getElementById('nav-dot-bell').style.display = 'none'; 
+            safeSetStorage('last_visit', Date.now().toString()); // تسجيل رؤية الإشعارات
         }
 
         function goToSection(view, sectionId) {
@@ -880,7 +893,6 @@
             }, 100);
         }
 
-        // إخفاء قائمة الإشعارات عند النقر خارجها
         document.addEventListener('click', function(e) {
             const wrapper = document.querySelector('.notif-wrapper');
             if (wrapper && !wrapper.contains(e.target)) {
@@ -894,22 +906,66 @@
                 let now = Date.now();
                 if (now - lastVisit > 86400000) { 
                     document.getElementById('nav-dot-bell').style.display = 'block';
-                    
-                    const isAr = document.documentElement.lang === 'ar';
-                    const notifContent = document.getElementById('notif-content');
-                    notifContent.innerHTML = `
-                        <div class="notif-item" onclick="goToSection('home', 'news')">
-                            <i class="fa-solid fa-newspaper"></i> <span>${isAr ? 'أخبار مجتمعية جديدة مضافة' : 'New community news added'}</span>
-                        </div>
-                        <div class="notif-item" onclick="goToSection('leaderboard', 'tournaments')">
-                            <i class="fa-solid fa-trophy"></i> <span>${isAr ? 'بطولات جديدة متاحة الآن' : 'New tournaments available now'}</span>
-                        </div>
-                    `;
                 }
-                safeSetStorage('last_visit', now.toString());
             } catch(e) {}
         }
 
+        // --- تحديث قائمة الإشعارات بناءً على ما جلبناه من الشيت ---
+        function updateNotificationsDropdown() {
+            const notifContent = document.getElementById('notif-content');
+            const isAr = document.documentElement.lang === 'ar';
+            let html = '';
+
+            let latestNews = [];
+            if (newsCardsData && newsCardsData.length > 0) {
+                latestNews = newsCardsData.slice(0, 2); // سحب أحدث خبرين
+            }
+
+            let latestTour = null;
+            if (tournamentsList && tournamentsList.length > 0) {
+                const upcoming = tournamentsList.filter(t => t.diff > 0).sort((a, b) => a.targetTimeMs - b.targetTimeMs);
+                if (upcoming.length > 0) latestTour = upcoming[0];
+                else latestTour = tournamentsList[0]; 
+            }
+
+            latestNews.forEach(news => {
+                const titleAr = news[2] || '';
+                const titleEn = news[4] || '';
+                const displayTitle = isAr ? titleAr : (titleEn || titleAr);
+                const safeTitle = escapeHTML(displayTitle);
+                
+                html += `
+                <div class="notif-item" onclick="goToSection('home', 'news')">
+                    <i class="fa-solid fa-newspaper"></i> 
+                    <div class="notif-text-box">
+                        <span class="notif-sub" style="color:var(--primary);">${isAr ? 'خبر جديد' : 'New News'}</span>
+                        <span class="notif-title">${safeTitle}</span>
+                    </div>
+                </div>`;
+            });
+
+            if (latestTour) {
+                const titleAr = latestTour.nameAr || '';
+                const titleEn = latestTour.nameEn || '';
+                const displayTitle = isAr ? titleAr : (titleEn || titleAr);
+                const safeTitle = escapeHTML(displayTitle);
+
+                html += `
+                <div class="notif-item" onclick="goToSection('leaderboard', 'tournaments')">
+                    <i class="fa-solid fa-trophy"></i> 
+                    <div class="notif-text-box">
+                        <span class="notif-sub" style="color:#eab308;">${isAr ? 'أقرب بطولة' : 'Upcoming Tournament'}</span>
+                        <span class="notif-title">${safeTitle}</span>
+                    </div>
+                </div>`;
+            }
+
+            if (html === '') {
+                html = `<div style="text-align:center; padding:10px; color:var(--text-muted); font-size:12px; font-weight:bold;">${isAr ? 'لا توجد إشعارات' : 'No notifications'}</div>`;
+            }
+
+            notifContent.innerHTML = html;
+        }
 
         function toggleTheme() {
             const currentTheme = document.documentElement.getAttribute('data-theme');
@@ -942,9 +998,7 @@
         }
 
         function updateCharCount(element) { document.getElementById('char-counter').innerText = 1499 - element.value.length; }
-
         function autoResizeTextarea(element) { element.style.height = 'auto'; element.style.height = element.scrollHeight + 'px'; }
-
         function showBugForm() { document.getElementById('bug-details').style.display = 'flex'; }
         
         function hideBugForm() {
@@ -962,7 +1016,7 @@
             return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag]) );
         }
 
-        // --- نظام البلاغات ---
+        // --- نظام إرسال البلاغات المحدث (مع تجاوز الخطأ الوهمي للـ CORS عبر مهلة محددة) ---
         async function submitBugReport() {
             const isAr = document.documentElement.lang === 'ar';
             
@@ -1023,7 +1077,13 @@
 
             try {
                 const finalURL = scriptURL + "?plato_id=" + encodeURIComponent(platoId) + "&issue_type=" + encodeURIComponent(bugType) + "&description=" + encodeURIComponent(bugDesc) + "&ip=" + encodeURIComponent(userIP);
-                await fetch(finalURL, { mode: "cors" });
+                
+                // استخدام مهلة 8 ثواني للتأكد من عدم وجود انقطاع حقيقي بالانترنت بدلاً من حظر الـ CORS
+                const fetchPromise = fetch(finalURL, { mode: "no-cors", cache: "no-store" });
+                const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 8000));
+                
+                await Promise.race([fetchPromise, timeoutPromise]);
+                
                 safeSetStorage('last_bug_report', Date.now().toString());
 
                 const toast = document.getElementById("toast");
@@ -1031,7 +1091,7 @@
                 toast.className = "show"; setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000); hideBugForm();
             } catch (err) {
                 const toast = document.getElementById("toast");
-                toast.innerHTML = isAr ? `<i class="fa-solid fa-xmark"></i> تعذر الإرسال: تأكد من اتصالك` : `<i class="fa-solid fa-xmark"></i> Network Error`;
+                toast.innerHTML = isAr ? `<i class="fa-solid fa-xmark"></i> تعذر الإرسال: تأكد من اتصالك بالانترنت` : `<i class="fa-solid fa-xmark"></i> Network Error`;
                 toast.className = "show"; setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
             } finally { submitBtn.innerText = originalText; submitBtn.disabled = false; }
         }
@@ -1285,41 +1345,15 @@
             if (cachedSheetRows) {
                 renderDynamicData();
                 if (newsCardsData.length > 0) buildNewsHTML();
+                updateNotificationsDropdown();
             }
             safeSetStorage('lang', lang);
         }
 
-        let cachedSheetRows = null;
-        let newsCardsData = [];
-        let baseRealTime = Date.now();
-        let basePerfTime = performance.now();
-        let activeTourTimers = [];
-
-        const tourSheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/export?format=csv"; 
-
-        function showSkeletons() {
-            let newsSkel = ''; for(let i=0; i<3; i++) newsSkel += `<div class="news-slide-card glass-panel skeleton" style="height: 200px;"></div>`;
-            document.getElementById('newsSlider').innerHTML = newsSkel;
-            let tourSkel = ''; for(let i=0; i<2; i++) tourSkel += `<div class="tour-card glass-panel skeleton" style="height: 120px; margin-bottom:15px;"></div>`;
-            document.getElementById('tournaments-container').innerHTML = tourSkel;
-            let spendSkel = ''; for(let i=0; i<3; i++) spendSkel += `<div class="list-row glass-panel skeleton" style="height: 60px;"></div>`;
-            document.getElementById('spenders-container').innerHTML = spendSkel;
-        }
-
+        // --- تحميل البيانات مباشرة لإظهار التعديلات فوراً وتخطي التأخير ---
         async function loadDynamicData(force = false) {
             try {
-                const cached = safeGetStorage('plato_data_v3');
-                const cacheTime = safeGetStorage('plato_data_v3_time');
-                const now = Date.now();
-                
-                if (!force && cached && cacheTime && (now - parseInt(cacheTime) < 120000) && !cached.includes('<!DOCTYPE html>')) {
-                    const parsed = parseCSV(cached);
-                    if (parsed && parsed.length > 1) {
-                        cachedSheetRows = parsed.slice(1);
-                        renderDynamicData(); renderNewsData(); return;
-                    }
-                }
-
+                // جلب مباشر دائماً بدون الاعتماد على Cache لضمان تحديث فوري
                 const response = await fetch(tourSheetURL + "&t=" + new Date().getTime(), { cache: "no-store" });
                 if (!response.ok) throw new Error("فشل الاتصال بالشيت");
                 const data = await response.text();
@@ -1329,16 +1363,16 @@
                 const parsedData = parseCSV(data);
                 if(parsedData && parsedData.length > 1) {
                     safeSetStorage('plato_data_v3', data);
-                    safeSetStorage('plato_data_v3_time', now.toString());
                     cachedSheetRows = parsedData.slice(1);
-                    renderDynamicData(); renderNewsData();
+                    renderDynamicData(); renderNewsData(); updateNotificationsDropdown();
                 } else { throw new Error("بيانات غير مكتملة"); }
                 
             } catch (error) { 
+                console.log("استخدام البيانات المخزنة كبديل بسبب:", error);
                 const fallbackCache = safeGetStorage('plato_data_v3');
                 if(fallbackCache && !fallbackCache.includes('<!DOCTYPE html>')) {
                     cachedSheetRows = parseCSV(fallbackCache).slice(1);
-                    renderDynamicData(); renderNewsData();
+                    renderDynamicData(); renderNewsData(); updateNotificationsDropdown();
                 } else {
                     const isLtr = document.documentElement.getAttribute('lang') === 'en';
                     document.getElementById('tournaments-container').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);" data-i18n="no_tournaments">${isLtr ? "No tournaments at the moment." : "لا بطولات في الوقت الحالي."}</p>`;
@@ -1356,16 +1390,11 @@
             buildNewsHTML();
         }
 
-        // --- نظام التفاعل المتطور (زيادة ونقصان بناءً على الـ IP محلياً وفي السيرفر) ---
-        // في هذا الإصدار، نقوم بمحاكاة رقم أساسي لكل خبر بناءً على طول عنوانه
-        // ونضيف/نطرح منه محلياً لحين ربط رابط الـ API الفعلي
-        
         async function interactNews(index, type, newsTitle) {
             const isAr = document.documentElement.lang === 'ar';
             let storedInteractions = JSON.parse(safeGetStorage('news_interactions') || '{}');
-            let currentStatus = storedInteractions[index]; // 'like' أو 'dislike' أو undefined
+            let currentStatus = storedInteractions[index];
             
-            // منع المستخدم من التصويت بنفس الخيار مرتين
             if(currentStatus === type) {
                 const toast = document.getElementById("toast");
                 toast.innerHTML = isAr ? `<i class="fa-solid fa-circle-exclamation"></i> لقد قمت بإضافة هذا التفاعل مسبقاً` : `<i class="fa-solid fa-circle-exclamation"></i> You already submitted this reaction`;
@@ -1373,23 +1402,18 @@
                 return;
             }
             
-            // حفظ التفاعل الجديد (يلغي القديم إن وجد)
             storedInteractions[index] = type;
             safeSetStorage('news_interactions', JSON.stringify(storedInteractions));
-            buildNewsHTML(); // تحديث الواجهة فوراً
+            buildNewsHTML(); 
 
-            // إرسال التفاعل للباك-إند (Google Apps Script)
-            // ⚠️ استبدل هذا الرابط بالرابط اللي راح تنسخه من سكربت الإعجابات
-            const likesScriptURL = "ضع_رابط_سكربت_الاعجابات_هنا"; 
-            
-            if (likesScriptURL !== "ضع_رابط_سكربت_الاعجابات_هنا") {
+            const likesScriptURL = "https://script.google.com/macros/s/AKfycbw_cq3j8agW2Z7LLk0spKBe6dfOEh0GZ2eEufJF3mYTK1Rs27FBDYlfdxet_Rh8gUGpvg/exec"; 
+            if (likesScriptURL) {
                 try {
                     let userIP = "Unknown";
                     try { const ipRes = await fetch("https://api.ipify.org?format=json"); const ipData = await ipRes.json(); userIP = ipData.ip; } catch(e) {}
-                    
                     const finalURL = `${likesScriptURL}?action=${type}&news_id=${encodeURIComponent(newsTitle)}&ip=${encodeURIComponent(userIP)}`;
-                    fetch(finalURL, { mode: "no-cors" }); // إرسال صامت للباك-إند
-                } catch(e) { console.log("Failed to send reaction to server"); }
+                    fetch(finalURL, { mode: "no-cors" }); 
+                } catch(e) {}
             }
         }
         
@@ -1447,8 +1471,7 @@
                     else if (tagLower.includes('مهم') || tagLower.includes('important')) { displayTag = 'مهم'; tagColor = '#ef4444'; tagBg = 'rgba(239, 68, 68, 0.15)'; icon = 'fa-circle-exclamation'; }
                 }
                 
-                // حساب رقم وهمي أساسي (Base) لعدد الإعجابات حتى يبدو طبيعياً، ثم تعديله حسب تفاعل المستخدم
-                let baseLikes = titleAr.length * 3 + 15; // رقم عشوائي ثابت للخبر
+                let baseLikes = titleAr.length * 3 + 15; 
                 let baseDislikes = Math.floor(titleAr.length / 2);
                 
                 const userChoice = storedInteractions[index];
@@ -1541,7 +1564,7 @@
             const currentLang = document.documentElement.getAttribute('lang') || 'en';
             const isLtr = currentLang === 'en';
             const nowTime = getAccurateTime();
-            let groupsSpending = {}; let tournamentsList = [];
+            let groupsSpending = {}; tournamentsList = [];
 
             cachedSheetRows.forEach((cols) => {
                 if(cols.length < 2) return;
@@ -1712,4 +1735,3 @@
     </script>
 </body>
 </html>
-
