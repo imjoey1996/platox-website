@@ -987,45 +987,44 @@
         }
 
         async function submitBugReport() {
-    const bugTypeElement = document.querySelector('input[name="bugType"]:checked');
-    const platoId = document.getElementById('plato-id').value.trim();
-    const bugDesc = document.getElementById('bug-desc').value.trim();
-    const isAr = document.documentElement.lang === 'ar';
+            const bugTypeElement = document.querySelector('input[name="bugType"]:checked');
+            const platoId = document.getElementById('plato-id').value.trim();
+            const bugDesc = document.getElementById('bug-desc').value.trim();
+            const isAr = document.documentElement.lang === 'ar';
 
-    if(!bugTypeElement || !platoId || !bugDesc) {
-        alert(isAr ? "يرجى تعبئة جميع الحقول أولاً!" : "Please fill all fields first!");
-        return;
-    }
+            if(!bugTypeElement || !platoId || !bugDesc) {
+                alert(isAr ? "يرجى تعبئة جميع الحقول أولاً!" : "Please fill all fields first!");
+                return;
+            }
 
-    const bugType = bugTypeElement.value;
-    const scriptURL = "https://script.google.com/macros/s/AKfycbz24P1RDGQbXI7psG7FOPhVNszKWzzf7X7yRQ4hFOjvC4k3zPuU0qsrSS2Ct0IZTGirHQ/exec"; 
+            const bugType = bugTypeElement.value;
+            const scriptURL = "https://script.google.com/macros/s/AKfycbz24P1RDGQbXI7psG7FOPhVNszKWzzf7X7yRQ4hFOjvC4k3zPuU0qsrSS2Ct0IZTGirHQ/exec"; 
 
-    const submitBtn = document.querySelector('#bug-details .submit-btn');
-    const originalText = submitBtn.innerText;
-    submitBtn.innerText = isAr ? 'جاري الإرسال...' : 'Sending...';
-    submitBtn.disabled = true;
+            const submitBtn = document.querySelector('#bug-details .submit-btn');
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = isAr ? 'جاري الإرسال...' : 'Sending...';
+            submitBtn.disabled = true;
 
-    try {
-        const finalURL = scriptURL + "?plato_id=" + encodeURIComponent(platoId) + "&issue_type=" + encodeURIComponent(bugType) + "&description=" + encodeURIComponent(bugDesc);
-        
-        await fetch(finalURL, { mode: "no-cors" });
+            try {
+                const finalURL = scriptURL + "?plato_id=" + encodeURIComponent(platoId) + "&issue_type=" + encodeURIComponent(bugType) + "&description=" + encodeURIComponent(bugDesc);
+                
+                await fetch(finalURL, { mode: "no-cors" });
 
-        const toast = document.getElementById("toast");
-        toast.innerHTML = isAr ? `<i class="fa-solid fa-check"></i> تم إرسال البلاغ بنجاح` : `<i class="fa-solid fa-check"></i> Report Submitted Successfully`;
-        toast.className = "show";
-        setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
-        hideBugForm();
+                const toast = document.getElementById("toast");
+                toast.innerHTML = isAr ? `<i class="fa-solid fa-check"></i> تم إرسال البلاغ بنجاح` : `<i class="fa-solid fa-check"></i> Report Submitted Successfully`;
+                toast.className = "show";
+                setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+                hideBugForm();
 
-    } catch (err) {
-        console.error("Error:", err);
-        alert(isAr ? `تعذر الإرسال: تأكد من اتصالك بالإنترنت.` : `Error: Network connection failed.`);
-    } finally {
-        submitBtn.innerText = originalText;
-        submitBtn.disabled = false;
-    }
-}
+            } catch (err) {
+                console.error("Error:", err);
+                alert(isAr ? `تعذر الإرسال: تأكد من اتصالك بالإنترنت.` : `Error: Network connection failed.`);
+            } finally {
+                submitBtn.innerText = originalText;
+                submitBtn.disabled = false;
+            }
+        }
 
-        // تم تعيين shadow إلى none للسيرفر الإنجليزي لإزالة الظل المربع خلف الاسم
         const serverThemes = {
             'english': { bg: 'var(--eng-bg)', text: 'var(--eng-text)', nameColor: 'var(--eng-name)', shadow: 'none', textStroke: 'var(--eng-text-stroke)', badgeGlow: 'var(--eng-badge-glow)', badgeBorder: '1px solid #ffffff', profileBorder: '2px solid #000000', profileGlow: 'var(--eng-profile-glow)' },
             'persian': { bg: '#C92C23', text: '#ffffff', nameColor: '#C92C23', shadow: 'none', badgeGlow: '0 2px 5px rgba(0,0,0,0.2)', badgeBorder: 'none', profileBorder: '2px solid rgba(255,255,255,0.1)', profileGlow: '0 0 15px #C92C23' },
@@ -1256,8 +1255,8 @@
         let basePerfTime = performance.now();
         let activeTourTimers = [];
 
+        // الان يوجد رابط شيت واحد يجمع البطولات والاخبار معاً
         const tourSheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/export?format=csv"; 
-        const newsSheetURL = "https://docs.google.com/spreadsheets/d/10YreDjSMCJc1hvGFbyfVJO4zAmzFGO0eeyoq5qKwf_E/export?format=csv";
 
         function showSkeletons() {
             let newsSkel = '';
@@ -1279,51 +1278,6 @@
             document.getElementById('spenders-container').innerHTML = spendSkel;
         }
 
-        async function loadNewsData(force = false) {
-            try {
-                const cached = localStorage.getItem('plato_news_cache');
-                const cacheTime = localStorage.getItem('plato_news_cache_time');
-                const now = Date.now();
-                
-                if (!force && cached && cacheTime && (now - parseInt(cacheTime) < 1800000) && !cached.includes('<!DOCTYPE html>')) {
-                    processNewsData(cached);
-                    return; 
-                }
-
-                const response = await fetch(newsSheetURL);
-                if (!response.ok) throw new Error("تأكد من الشيت");
-                const data = await response.text();
-                
-                if (data.includes('<!DOCTYPE html>')) throw new Error("جوجل أرسلت استجابة غير صالحة");
-                
-                localStorage.setItem('plato_news_cache', data);
-                localStorage.setItem('plato_news_cache_time', now.toString());
-                processNewsData(data);
-                
-            } catch (error) { 
-                console.error("حدث خطأ:", error); 
-                const fallbackCache = localStorage.getItem('plato_news_cache');
-                if(fallbackCache && !fallbackCache.includes('<!DOCTYPE html>')) {
-                    processNewsData(fallbackCache);
-                } else {
-                    document.getElementById('newsSlider').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">تعذر الاتصال بالشبكة.</p>`;
-                }
-            }
-        }
-
-        function processNewsData(data) {
-            let allNews = parseCSV(data).slice(1).filter(cols => cols.length >= 2 && cols[0] && cols[1]);
-            
-            allNews.sort((a, b) => {
-                const dateA = new Date((a[0] || '').trim()).getTime() || 0;
-                const dateB = new Date((b[0] || '').trim()).getTime() || 0;
-                return dateB - dateA;
-            });
-
-            newsCardsData = allNews.slice(0, 5);
-            buildNewsHTML();
-        }
-
         async function loadDynamicData(force = false) {
             try {
                 const cached = localStorage.getItem('plato_dynamic_cache');
@@ -1333,6 +1287,7 @@
                 if (!force && cached && cacheTime && (now - parseInt(cacheTime) < 1800000) && !cached.includes('<!DOCTYPE html>')) {
                     cachedSheetRows = parseCSV(cached).slice(1);
                     renderDynamicData();
+                    renderNewsData();
                     return;
                 }
 
@@ -1345,7 +1300,9 @@
                 localStorage.setItem('plato_dynamic_cache', data);
                 localStorage.setItem('plato_dynamic_cache_time', now.toString());
                 cachedSheetRows = parseCSV(data).slice(1);
+                
                 renderDynamicData();
+                renderNewsData();
                 
             } catch (error) { 
                 console.error("حدث خطأ:", error); 
@@ -1353,12 +1310,39 @@
                 if(fallbackCache && !fallbackCache.includes('<!DOCTYPE html>')) {
                     cachedSheetRows = parseCSV(fallbackCache).slice(1);
                     renderDynamicData();
+                    renderNewsData();
                 } else {
                     const isLtr = document.documentElement.getAttribute('lang') === 'en';
                     document.getElementById('tournaments-container').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);" data-i18n="no_tournaments">${isLtr ? "No tournaments at the moment." : "لا بطولات في الوقت الحالي."}</p>`;
                     document.getElementById('spenders-container').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">بيانات الإنفاق غير متوفرة حالياً.</p>`;
+                    document.getElementById('newsSlider').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">تعذر الاتصال بالشبكة.</p>`;
                 }
             }
+        }
+
+        function renderNewsData() {
+            if (!cachedSheetRows || cachedSheetRows.length === 0) return;
+            
+            // سحب الاخبار من الاعمدة 9 لحد 14 (اللي تمثل J لحد O)
+            let allNews = cachedSheetRows.filter(cols => cols.length >= 11 && (cols[9] || '').trim() && (cols[10] || '').trim());
+            
+            allNews.sort((a, b) => {
+                const dateA = new Date((a[9] || '').trim()).getTime() || 0;
+                const dateB = new Date((b[9] || '').trim()).getTime() || 0;
+                return dateB - dateA;
+            });
+
+            newsCardsData = allNews.slice(0, 5).map(cols => {
+                return [
+                    cols[9],  // التاريخ (J)
+                    cols[10], // نوع الخبر (K)
+                    cols[11], // العنوان عربي (L)
+                    cols[12], // التفاصيل عربي (M)
+                    cols[13], // العنوان انكليزي (N)
+                    cols[14]  // التفاصيل انكليزي (O)
+                ];
+            });
+            buildNewsHTML();
         }
 
         async function syncRealTime() {
@@ -1408,8 +1392,10 @@
             const activeTab = document.querySelector('.server-tab.active');
             if(activeTab) filterServer(activeTab.dataset.target);
             
-            if (cachedSheetRows) renderDynamicData();
-            if (newsCardsData.length > 0) buildNewsHTML();
+            if (cachedSheetRows) {
+                renderDynamicData();
+                if (newsCardsData.length > 0) buildNewsHTML();
+            }
             
             localStorage.setItem('lang', lang);
         }
@@ -1421,7 +1407,10 @@
             let sliderHTML = '';
             let dotsHTML = '';
 
-            if(newsCardsData.length === 0) return;
+            if(newsCardsData.length === 0) {
+                slider.innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">لا توجد أخبار حالياً.</p>`;
+                return;
+            }
 
             newsCardsData.forEach((cols, index) => {
                 const dateStr = escapeHTML((cols[0] || '').trim());
@@ -1794,13 +1783,11 @@
                 nSlider.scrollLeft = sLeft - walk;
             });
             
-            const cachedNews = localStorage.getItem('plato_news_cache');
             const cachedDyn = localStorage.getItem('plato_dynamic_cache');
-            if (!cachedNews || !cachedDyn) {
+            if (!cachedDyn) {
                 showSkeletons();
             }
             
-            loadNewsData();
             loadDynamicData();
             
             const start = new Date('2026/09/03 00:00:00 GMT+0300').getTime(); 
