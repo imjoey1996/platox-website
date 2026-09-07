@@ -120,16 +120,17 @@
         .notif-dot { position: absolute; top: -2px; right: -2px; width: 10px; height: 10px; background: #ef4444; border-radius: 50%; display: none; box-shadow: 0 0 8px #ef4444; border: 2px solid var(--bg-card); }
         .notif-dot.active-dot { display: block !important; animation: pulse-ring 1.5s infinite; }
         
-        .notif-dropdown { position: absolute; top: 45px; right: -10px; width: 230px; background: var(--bg-card); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 12px; padding: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s ease; display: flex; flex-direction: column; gap: 8px; z-index: 1001; }
+        .notif-dropdown { position: absolute; top: 45px; right: -10px; width: 250px; background: var(--bg-card); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 12px; padding: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s ease; display: flex; flex-direction: column; gap: 8px; z-index: 1001; }
         [data-theme="light"] .notif-dropdown { background: rgba(255,255,255,0.95); }
         .notif-dropdown.show { opacity: 1; visibility: visible; transform: translateY(0); }
-        .notif-item { display: flex; align-items: center; gap: 12px; padding: 10px; color: var(--text-main); text-decoration: none; border-radius: 8px; transition: 0.2s; background: rgba(255,255,255,0.03); }
+        .notif-item { display: flex; align-items: center; gap: 12px; padding: 12px; color: var(--text-main); text-decoration: none; border-radius: 8px; transition: 0.2s; background: rgba(255,255,255,0.03); cursor: pointer; }
         [data-theme="light"] .notif-item { background: rgba(0,0,0,0.03); }
-        .notif-item:hover { background: rgba(255,255,255,0.1); }
+        .notif-item:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
         [data-theme="light"] .notif-item:hover { background: rgba(0,0,0,0.08); }
-        .notif-item i { font-size: 18px; color: var(--primary); flex-shrink: 0; }
-        .notif-text-box { display: flex; flex-direction: column; gap: 2px; overflow: hidden; width: 100%; }
-        .notif-title { font-size: 13px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+        .notif-item i { font-size: 20px; color: var(--primary); flex-shrink: 0; }
+        .notif-text-box { display: flex; flex-direction: column; gap: 4px; overflow: hidden; width: 100%; }
+        .notif-sub { font-size: 11px; font-weight: 900; letter-spacing: 0.5px; opacity: 0.9; }
+        .notif-title { font-size: 13.5px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
 
         .lang-btn { border: 1px solid var(--glass-border); padding: 6px 15px; border-radius: 20px; cursor: pointer; transition: 0.2s; font-family: 'Cairo', sans-serif; font-weight: 700; font-size: 14px; }
         .main-lang-switch { display: flex; justify-content: center; gap: 15px; margin: calc(95px + env(safe-area-inset-top)) auto 15px; position: relative; z-index: 10; }
@@ -792,12 +793,12 @@
 
         <div class="cyber-divider"><div class="center-node"></div></div>
 
-        <!-- قسم الحِكم الجديد -->
+        <!-- قسم النصائح الجديد -->
         <section id="daily-tips">
-            <h2 class="section-title" data-i18n="tips_title">حكمة اليوم</h2>
+            <h2 class="section-title" data-i18n="tips_title">نصائح</h2>
             <div class="glass-panel" style="width: 100%; max-width: 750px; padding: 30px; border-radius: 16px; text-align: center; position: relative;">
                 <i class="fa-solid fa-quote-right" style="position: absolute; top: 15px; right: 20px; font-size: 25px; color: var(--glass-border);"></i>
-                <p id="tip-content" class="glass-desc-text" style="font-weight: 700; font-size: 1.1rem; line-height: 1.8; margin-top: 10px;" data-i18n="tips_loading">جاري تحميل الحكمة...</p>
+                <p id="tip-content" class="glass-desc-text" style="font-weight: 700; font-size: 1.1rem; line-height: 1.8; margin-top: 10px;" data-i18n="tips_loading">جاري تحميل النصيحة...</p>
             </div>
         </section>
 
@@ -842,14 +843,14 @@
         let cachedSheetRows = null;
         let newsCardsData = [];
         let tournamentsList = [];
+        let validTips = [];
+        let randomTipIndex = -1;
+        
         let baseRealTime = Date.now();
         let basePerfTime = performance.now();
         let activeTourTimers = [];
 
         const tourSheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/gviz/tq?tqx=out:csv"; 
-        
-        // --- ضع رابط الشيت الخاص بالحِكم هنا ---
-        const tipsSheetURL = "https://docs.google.com/spreadsheets/d/YOUR_TIPS_SHEET_ID/gviz/tq?tqx=out:csv"; 
 
         function parseCSV(str) {
             var arr = []; var quote = false; var col = 0, row = 0;
@@ -926,6 +927,7 @@
             } catch(e) {}
         }
 
+        // نظام التنبيهات المطور الذي يستخرج الأخبار والبطولات مباشرة (بدون نصائح)
         function updateNotificationsDropdown() {
             const notifContent = document.getElementById('notif-content');
             const dropdownContainer = document.getElementById('notif-dropdown');
@@ -933,25 +935,53 @@
             dropdownContainer.setAttribute('dir', isAr ? 'rtl' : 'ltr');
             
             let html = '';
-            let hasNotifs = false;
 
-            if (cachedSheetRows && cachedSheetRows.length > 0) {
-                for (let i = 0; i < 5; i++) {
-                    if (cachedSheetRows[i] && cachedSheetRows[i][15] && cachedSheetRows[i][15].trim() !== '') {
-                        const notifText = escapeHTML(cachedSheetRows[i][15]);
-                        html += `
-                        <div class="notif-item">
-                            <i class="fa-solid fa-bell"></i> 
-                            <div class="notif-text-box">
-                                <span class="notif-title">${notifText}</span>
-                            </div>
-                        </div>`;
-                        hasNotifs = true;
-                    }
-                }
+            // 1. آخر خبرين تم إضافتهما
+            let latestNews = [];
+            if (newsCardsData && newsCardsData.length > 0) {
+                latestNews = newsCardsData.slice(0, 2);
             }
 
-            if (!hasNotifs) {
+            latestNews.forEach(news => {
+                const titleAr = news[2] || '';
+                const titleEn = news[4] || '';
+                const displayTitle = isAr ? titleAr : (titleEn || titleAr);
+                const safeTitle = escapeHTML(displayTitle);
+                
+                html += `
+                <div class="notif-item" onclick="goToSection('home', 'news')">
+                    <i class="fa-solid fa-newspaper"></i> 
+                    <div class="notif-text-box">
+                        <span class="notif-sub" style="color:var(--primary);">${isAr ? 'خبر جديد' : 'New Update'}</span>
+                        <span class="notif-title">${safeTitle}</span>
+                    </div>
+                </div>`;
+            });
+
+            // 2. أقرب بطولة قادمة
+            let latestTour = null;
+            if (tournamentsList && tournamentsList.length > 0) {
+                const upcoming = tournamentsList.filter(t => t.diff > 0).sort((a, b) => a.targetTimeMs - b.targetTimeMs);
+                if (upcoming.length > 0) latestTour = upcoming[0];
+            }
+
+            if (latestTour) {
+                const titleAr = latestTour.nameAr || '';
+                const titleEn = latestTour.nameEn || '';
+                const displayTitle = isAr ? titleAr : (titleEn || titleAr);
+                const safeTitle = escapeHTML(displayTitle);
+
+                html += `
+                <div class="notif-item" onclick="goToSection('leaderboard', 'tournaments')">
+                    <i class="fa-solid fa-trophy"></i> 
+                    <div class="notif-text-box">
+                        <span class="notif-sub" style="color:#eab308;">${isAr ? 'بطولة قادمة' : 'Upcoming Tournament'}</span>
+                        <span class="notif-title">${safeTitle}</span>
+                    </div>
+                </div>`;
+            }
+
+            if (html === '') {
                 html = `<div style="text-align:center; padding:10px; color:var(--text-muted); font-size:12px; font-weight:bold;">${isAr ? 'لا توجد إشعارات حالياً' : 'No recent updates'}</div>`;
             }
 
@@ -1221,7 +1251,7 @@
                 join_us_title: "انضم إلينا",
                 join_us_desc: "إذا كانت لديكم بطولة في مجموعتكم ترغبون بإضافتها، أو تعتقدون أن حسابكم يستحق المنافسة ضمن أقدم الحسابات، أرسلوا لنا التفاصيل عبر الديسكورد من هنا.",
                 join_us_btn: "تواصل معنا",
-                tips_title: "حكمة اليوم", tips_loading: "جاري تحميل الحكمة...",
+                tips_title: "نصائح", tips_loading: "جاري تحميل النصيحة...",
                 weekly_showcase_title: "عناصر الألعاب الأسبوعية",
                 weekly_showcase_desc: "استكشف احدث العناصر المتوفرة لهذا الاسبوع.",
                 desc_yyy: "صانع الأثر، يقود برؤية مستقبلية لخلق بيئة إيجابية لا تعرف المستحيل.", desc_hat: "حضور راسخ، تقود المجتمع بثقة راسخة وترسم معايير الرقي.", desc_bbb: "الحكمة في اتخاذ القرار، يوازن بين الحزم والهدوء لإدارة الأزمات باحترافية.",
@@ -1275,7 +1305,7 @@
                 join_us_title: "Join Us",
                 join_us_desc: "Have a tournament you'd like to add, or think your account belongs among the oldest? Send us the details on Discord here.",
                 join_us_btn: "Contact Us",
-                tips_title: "Wisdom of the Day", tips_loading: "Loading tip...",
+                tips_title: "Tips", tips_loading: "Loading tip...",
                 weekly_showcase_title: "WEEKLY GAME ITEMS",
                 weekly_showcase_desc: "Explore the latest items available this week.",
                 desc_yyy: "The Impact Maker, leading with a futuristic vision to create a positive environment.", desc_hat: "A grounded presence, leading the community with solid confidence and setting standards.", desc_bbb: "Wisdom in decision making, balancing firmness and calmness in management.",
@@ -1333,6 +1363,7 @@
             if (cachedSheetRows) {
                 renderDynamicData();
                 if (newsCardsData.length > 0) buildNewsHTML();
+                renderDailyTip(); 
                 updateNotificationsDropdown();
             }
             safeSetStorage('lang', lang);
@@ -1362,7 +1393,24 @@
 
                     safeSetStorage('plato_data_v3', data);
                     cachedSheetRows = parsedData.slice(1);
-                    renderDynamicData(); renderNewsData(); updateNotificationsDropdown();
+                    
+                    // إعداد النصائح العشوائية من الأعمدة R و S (الفهرس 17 و 18)
+                    validTips = [];
+                    cachedSheetRows.forEach(row => {
+                        const arTip = row[17] ? row[17].trim() : "";
+                        const enTip = row[18] ? row[18].trim() : "";
+                        if (arTip || enTip) {
+                            validTips.push({ ar: arTip, en: enTip });
+                        }
+                    });
+                    if (validTips.length > 0) {
+                        randomTipIndex = Math.floor(Math.random() * validTips.length);
+                    }
+
+                    renderDynamicData(); 
+                    renderNewsData(); 
+                    updateNotificationsDropdown(); 
+                    renderDailyTip();
                 } else { throw new Error("بيانات غير مكتملة"); }
                 
             } catch (error) { 
@@ -1370,33 +1418,41 @@
                 const fallbackCache = safeGetStorage('plato_data_v3');
                 if(fallbackCache && !fallbackCache.includes('<!DOCTYPE html>')) {
                     cachedSheetRows = parseCSV(fallbackCache).slice(1);
-                    renderDynamicData(); renderNewsData(); updateNotificationsDropdown();
+                    
+                    validTips = [];
+                    cachedSheetRows.forEach(row => {
+                        const arTip = row[17] ? row[17].trim() : "";
+                        const enTip = row[18] ? row[18].trim() : "";
+                        if (arTip || enTip) {
+                            validTips.push({ ar: arTip, en: enTip });
+                        }
+                    });
+                    if (validTips.length > 0) {
+                        randomTipIndex = Math.floor(Math.random() * validTips.length);
+                    }
+
+                    renderDynamicData(); renderNewsData(); updateNotificationsDropdown(); renderDailyTip();
                 } else {
                     const isLtr = document.documentElement.getAttribute('lang') === 'en';
                     document.getElementById('tournaments-container').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);" data-i18n="no_tournaments">${isLtr ? "No tournaments at the moment." : "لا بطولات في الوقت الحالي."}</p>`;
                     document.getElementById('spenders-container').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">بيانات الإنفاق غير متوفرة حالياً.</p>`;
                     document.getElementById('newsSlider').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">تعذر الاتصال بالشبكة.</p>`;
+                    document.getElementById('tip-content').innerText = "لا توجد نصائح متوفرة حالياً.";
                 }
             }
         }
 
-        async function loadTipsData() {
-            try {
-                const response = await fetch(tipsSheetURL, { cache: "no-store" });
-                const data = await response.text();
-                const parsedTips = parseCSV(data);
-                
-                if(parsedTips && parsedTips.length > 1) {
-                    const tipsArray = parsedTips.slice(1).map(row => row[0]).filter(tip => tip && tip.trim() !== "");
-                    if(tipsArray.length > 0) {
-                        const randomTip = tipsArray[Math.floor(Math.random() * tipsArray.length)];
-                        document.getElementById('tip-content').innerText = escapeHTML(randomTip);
-                        return;
-                    }
-                }
-                document.getElementById('tip-content').innerText = "لا توجد حِكم متوفرة حالياً.";
-            } catch (error) {
-                document.getElementById('tip-content').innerText = "العمل بذكاء يختصر مسافات العمل بجهد."; 
+        // دالة لعرض النصيحة المستخرجة (بناءً على اللغة ودون تغييرها عند تبديل اللغة)
+        function renderDailyTip() {
+            const tipEl = document.getElementById('tip-content');
+            const currentLang = document.documentElement.getAttribute('lang') || 'en';
+            
+            if (validTips.length > 0 && randomTipIndex !== -1) {
+                const tip = validTips[randomTipIndex];
+                const displayTip = currentLang === 'ar' ? (tip.ar || tip.en) : (tip.en || tip.ar);
+                tipEl.innerText = escapeHTML(displayTip);
+            } else {
+                tipEl.innerText = currentLang === 'ar' ? "العمل بذكاء يختصر مسافات العمل بجهد." : "Work smarter, not harder.";
             }
         }
 
@@ -1709,7 +1765,6 @@
             nSlider.addEventListener('mousemove', (e) => { if (!isDown) return; e.preventDefault(); const x = e.pageX - nSlider.offsetLeft; const walk = (x - startX) * 2; nSlider.scrollLeft = sLeft - walk; });
             
             loadDynamicData();
-            loadTipsData();
             
             const start = new Date('2026/09/03 00:00:00 GMT+0300').getTime(); 
             const updateOldestPlayers = () => { const added = Math.max(0, Math.floor((getAccurateTime() - start) / (1000 * 60 * 60 * 24))); document.querySelectorAll('.auto-days').forEach(td => { td.innerText = (parseInt(td.getAttribute('data-base-days')) + (isNaN(added) ? 0 : added)); }); };
