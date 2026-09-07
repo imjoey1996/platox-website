@@ -110,7 +110,6 @@
         .nav-actions i { font-size: 22px; cursor: pointer; color: var(--text-main); transition: 0.2s; }
         .nav-actions i:hover { color: var(--primary); text-shadow: 0 0 15px var(--btn-active-glow); }
 
-        /* حركة وميض الإشعار */
         @keyframes pulse-ring {
             0% { transform: scale(0.85); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.8); }
             70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
@@ -123,7 +122,6 @@
         
         .notif-dropdown { position: absolute; top: 45px; right: -10px; width: 230px; background: var(--bg-card); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 12px; padding: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s ease; display: flex; flex-direction: column; gap: 8px; z-index: 1001; }
         [data-theme="light"] .notif-dropdown { background: rgba(255,255,255,0.95); }
-        html[dir="rtl"] .notif-dropdown { right: auto; left: -10px; }
         .notif-dropdown.show { opacity: 1; visibility: visible; transform: translateY(0); }
         .notif-item { display: flex; align-items: center; gap: 12px; padding: 10px; color: var(--text-main); text-decoration: none; border-radius: 8px; transition: 0.2s; cursor: pointer; background: rgba(255,255,255,0.03); }
         [data-theme="light"] .notif-item { background: rgba(0,0,0,0.03); }
@@ -152,6 +150,10 @@
         .bottom-nav-item.active { color: var(--primary); }
         .bottom-nav-item.active i { transform: translateY(-2px) scale(1.1); color: var(--primary); text-shadow: 0 0 15px var(--btn-active-glow); }
         .bottom-nav-item.active span { color: var(--text-main); font-weight: 900; }
+        
+        /* نقاط الإشعارات السفلية */
+        .nav-dot { position: absolute; top: 6px; right: calc(50% - 16px); width: 8px; height: 8px; background: #ef4444; border-radius: 50%; display: none; box-shadow: 0 0 8px #ef4444; pointer-events: none; }
+        .nav-dot.active-dot { display: block; animation: pulse-ring 1.5s infinite; }
 
         section { padding: 45px 15px 25px; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; }
         
@@ -253,7 +255,6 @@
         .leader-name-box { display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 8px; cursor: pointer; margin-bottom: 4px; width: 100%; white-space: nowrap; flex-wrap: nowrap;}
         .leader-copy-icon { font-size: 12px; color: var(--text-muted); flex-shrink: 0;}
         
-        /* تصميم موحد ليوزرات القادة (يستجيب للنمطين النهاري والمظلم) */
         .leader-username { color: var(--primary) !important; font-family: 'Rajdhani', 'Cairo', sans-serif !important; font-weight: 900 !important; margin: 0; flex-shrink: 1; overflow: hidden; text-overflow: ellipsis; text-shadow: none !important; -webkit-text-stroke: 0 !important; }
         
         .server-badge { flex-shrink: 0; width: 38px; height: 20px; border-radius: 10px; margin: 0; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; }
@@ -357,7 +358,7 @@
             <div class="notif-wrapper">
                 <i class="fa-solid fa-bell" onclick="toggleNotif()" id="notif-bell"></i>
                 <div class="notif-dot" id="nav-dot-bell"></div>
-                <div class="notif-dropdown" id="notif-dropdown" dir="rtl">
+                <div class="notif-dropdown" id="notif-dropdown">
                     <div id="notif-content">
                     </div>
                 </div>
@@ -818,14 +819,17 @@
 
     <nav class="bottom-nav-bar" dir="ltr">
         <div class="bottom-nav-item active" onclick="switchView('home', this)" id="nav-btn-home">
+            <div class="nav-dot" id="dot-home"></div>
             <i class="fa-solid fa-house"></i>
             <span data-i18n="nav_home">الرئيسية</span>
         </div>
         <div class="bottom-nav-item" onclick="switchView('leaders', this)">
+            <div class="nav-dot" id="dot-leaders"></div>
             <i class="fa-solid fa-users"></i>
             <span data-i18n="nav_leaders">حول القادة</span>
         </div>
         <div class="bottom-nav-item" onclick="switchView('leaderboard', this)" id="nav-btn-explore">
+            <div class="nav-dot" id="dot-explore"></div>
             <i class="fa-solid fa-compass"></i>
             <span data-i18n="nav_leaderboard">استكشف</span>
         </div>
@@ -865,7 +869,12 @@
 
             const targetView = document.getElementById(`view-${viewName}`);
             if (targetView) targetView.classList.add('active-view');
-            if (itemEl) itemEl.classList.add('active');
+            
+            if (itemEl) {
+                itemEl.classList.add('active');
+                const dot = itemEl.querySelector('.nav-dot');
+                if (dot) dot.classList.remove('active-dot'); 
+            }
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -909,13 +918,19 @@
                 let now = Date.now();
                 if (now - lastVisit > 86400000) { 
                     document.getElementById('nav-dot-bell').classList.add('active-dot');
+                    document.getElementById('dot-home')?.classList.add('active-dot');
+                    document.getElementById('dot-explore')?.classList.add('active-dot');
                 }
             } catch(e) {}
         }
 
         function updateNotificationsDropdown() {
             const notifContent = document.getElementById('notif-content');
+            const dropdownContainer = document.getElementById('notif-dropdown');
             const isAr = document.documentElement.lang === 'ar';
+            
+            dropdownContainer.setAttribute('dir', isAr ? 'rtl' : 'ltr');
+            
             let html = '';
 
             let latestNews = [];
@@ -1351,7 +1366,6 @@
 
         async function loadDynamicData(force = false) {
             try {
-                // الكود الجديد لسحب البيانات فوراً وتخطي كاش جوجل بالكامل
                 const cacheBuster = Math.floor(Math.random() * 100000000);
                 const fetchUrl = tourSheetURL + "&gid=0&_nocache=" + cacheBuster;
 
@@ -1367,6 +1381,8 @@
                     
                     if (oldData && oldData !== data) {
                         document.getElementById('nav-dot-bell').classList.add('active-dot');
+                        document.getElementById('dot-home')?.classList.add('active-dot');
+                        document.getElementById('dot-explore')?.classList.add('active-dot');
                         safeSetStorage('last_visit', '0');
                     }
 
@@ -1392,7 +1408,6 @@
 
         function renderNewsData() {
             if (!cachedSheetRows || cachedSheetRows.length === 0) return;
-            // حسب التقسيم الجديد: I (8) = تاريخ, J (9) = نوع, K (10) = عنوان عربي, L (11) = تفاصيل عربي, M (12) = عنوان انجليزي, N (13) = تفاصيل انجليزي
             let allNews = cachedSheetRows.filter(cols => cols.length >= 10 && (cols[8] || '').trim() && (cols[9] || '').trim());
             allNews.sort((a, b) => (new Date((b[8] || '').trim()).getTime() || 0) - (new Date((a[8] || '').trim()).getTime() || 0));
             newsCardsData = allNews.slice(0, 5).map(cols => [ cols[8], cols[9], cols[10], cols[11], cols[12], cols[13] ]);
@@ -1438,16 +1453,15 @@
             }
         }
 
-        // دالة مشاركة فيديو العناصر
         function shareVideo() {
-            const vidSrc = document.getElementById('weekly-video').src;
+            const pageUrl = window.location.href; 
             if (navigator.share) {
-                navigator.share({ title: 'Weekly Game Items', url: vidSrc }).catch(console.error);
+                navigator.share({ title: 'Weekly Game Items', url: pageUrl }).catch(console.error);
             } else {
-                navigator.clipboard.writeText(vidSrc);
+                navigator.clipboard.writeText(pageUrl);
                 const isAr = document.documentElement.lang === 'ar';
                 const toast = document.getElementById("toast");
-                toast.innerHTML = isAr ? `<i class="fa-solid fa-check"></i> تم نسخ رابط الفيديو!` : `<i class="fa-solid fa-check"></i> Video Link Copied!`;
+                toast.innerHTML = isAr ? `<i class="fa-solid fa-check"></i> تم نسخ رابط الصفحة!` : `<i class="fa-solid fa-check"></i> Page Link Copied!`;
                 toast.className = "show"; setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2500);
             }
         }
@@ -1572,7 +1586,6 @@
             
             const firstRow = cachedSheetRows[0]; 
             if (firstRow) {
-                // حسب التقسيم الجديد G (6) = فيديو، H (7) = تفاصيل الفيديو
                 const videoUrl = firstRow[6] ? escapeHTML(firstRow[6].trim()) : ""; 
                 const weekName = escapeHTML(firstRow[7] ? firstRow[7] : ""); 
                 const vidEl = document.getElementById('weekly-video'); const showcaseSec = document.getElementById('weekly-showcase'); const showcaseDiv = document.getElementById('weekly-divider'); const weekNameEl = document.getElementById('weekly-week-name');
@@ -1593,7 +1606,6 @@
             cachedSheetRows.forEach((cols) => {
                 if(cols.length < 2) return;
                 
-                // حسب التقسيم الجديد: A(0)=الوقت, B(1)=اسم عربي, C(2)=اسم انجليزي, D(3)=جائزة, E(4)=لعبة, F(5)=آدمن
                 const rawTimeStr = escapeHTML(cols[0] ? cols[0].trim() : ""); 
                 const nameAr = escapeHTML(cols[1] ? cols[1].trim() : "");
                 if (!nameAr) return;
@@ -1609,7 +1621,7 @@
                 const prizeStr = escapeHTML(cols[3] ? cols[3].trim() : ""); 
                 const game = escapeHTML(cols[4] ? cols[4].trim() : ""); 
                 const admin = escapeHTML(cols[5] ? cols[5].trim() : "");
-                const image = ""; // لا يوجد عمود للصورة في التقسيم الجديد
+                const image = ""; 
 
                 let numValue = 0; let cleanStr = prizeStr.toUpperCase().replace(/[^0-9.K]/g, '');
                 if (cleanStr.includes('K')) numValue = parseFloat(cleanStr.replace('K', '')) * 1000; else numValue = parseFloat(cleanStr) || 0;
