@@ -123,13 +123,12 @@
         .notif-dropdown { position: absolute; top: 45px; right: -10px; width: 230px; background: var(--bg-card); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 12px; padding: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s ease; display: flex; flex-direction: column; gap: 8px; z-index: 1001; }
         [data-theme="light"] .notif-dropdown { background: rgba(255,255,255,0.95); }
         .notif-dropdown.show { opacity: 1; visibility: visible; transform: translateY(0); }
-        .notif-item { display: flex; align-items: center; gap: 12px; padding: 10px; color: var(--text-main); text-decoration: none; border-radius: 8px; transition: 0.2s; cursor: pointer; background: rgba(255,255,255,0.03); }
+        .notif-item { display: flex; align-items: center; gap: 12px; padding: 10px; color: var(--text-main); text-decoration: none; border-radius: 8px; transition: 0.2s; background: rgba(255,255,255,0.03); }
         [data-theme="light"] .notif-item { background: rgba(0,0,0,0.03); }
         .notif-item:hover { background: rgba(255,255,255,0.1); }
         [data-theme="light"] .notif-item:hover { background: rgba(0,0,0,0.08); }
         .notif-item i { font-size: 18px; color: var(--primary); flex-shrink: 0; }
         .notif-text-box { display: flex; flex-direction: column; gap: 2px; overflow: hidden; width: 100%; }
-        .notif-sub { font-size: 10px; font-weight: 900; letter-spacing: 0.5px; opacity: 0.9; }
         .notif-title { font-size: 13px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
 
         .lang-btn { border: 1px solid var(--glass-border); padding: 6px 15px; border-radius: 20px; cursor: pointer; transition: 0.2s; font-family: 'Cairo', sans-serif; font-weight: 700; font-size: 14px; }
@@ -151,7 +150,6 @@
         .bottom-nav-item.active i { transform: translateY(-2px) scale(1.1); color: var(--primary); text-shadow: 0 0 15px var(--btn-active-glow); }
         .bottom-nav-item.active span { color: var(--text-main); font-weight: 900; }
         
-        /* نقاط الإشعارات السفلية */
         .nav-dot { position: absolute; top: 6px; right: calc(50% - 16px); width: 8px; height: 8px; background: #ef4444; border-radius: 50%; display: none; box-shadow: 0 0 8px #ef4444; pointer-events: none; }
         .nav-dot.active-dot { display: block; animation: pulse-ring 1.5s infinite; }
 
@@ -181,15 +179,7 @@
         .news-body { color: rgba(255,255,255,0.85); line-height: 1.8; white-space: pre-line; word-break: break-word; overflow-wrap: break-word; }
         [data-theme="light"] .news-body { color: var(--text-muted); }
         
-        .news-interactions { margin-top: auto; padding-top: 15px; border-top: 1px solid var(--glass-border); display: flex; gap: 15px; align-items: center; flex-wrap: wrap;}
-        .interact-box { display: flex; align-items: center; gap: 6px; }
-        .news-interact-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: var(--text-main); padding: 6px 12px; border-radius: 8px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; font-weight: bold; font-family: inherit;}
-        .news-interact-btn:hover { background: rgba(255,255,255,0.15); transform: translateY(-2px); }
-        .news-interact-btn.active { color: var(--primary); border-color: var(--primary); box-shadow: 0 0 8px var(--btn-active-glow); }
-        .interact-count { font-size: 13px; font-weight: bold; color: var(--text-muted); font-family: 'Rajdhani', sans-serif; }
-        [data-theme="light"] .news-interact-btn { background: rgba(0,0,0,0.05); }
-
-        .news-bottom-wrapper { display: flex; flex-direction: column; width: 100%; max-width: 360px; margin: 0 auto; gap: 15px; }
+        .news-bottom-wrapper { display: flex; flex-direction: column; width: 100%; max-width: 360px; margin: 0 auto; gap: 15px; margin-top: 15px; }
         .slider-controls { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0;}
         .nav-btn { background: transparent; border: none; color: var(--text-muted); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px; transition: 0.2s; font-family: inherit;}
         .nav-btn:hover:not(.disabled) { color: var(--primary); text-shadow: 0 0 10px var(--btn-active-glow); }
@@ -728,7 +718,7 @@
                 <div class="video-glow-box" style="margin-bottom: 0;">
                     <video id="weekly-video" src="" controls playsinline preload="metadata"></video>
                     <div style="display: flex; justify-content: flex-end; margin-top: 10px; width: 100%;">
-                        <button type="button" class="news-interact-btn share-btn" onclick="shareVideo()" style="padding: 6px 15px; font-size: 14px;"><i class="fa-solid fa-share-nodes"></i></button>
+                        <button type="button" class="nav-btn share-btn" onclick="shareVideo()" style="padding: 6px 15px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius:8px;"><i class="fa-solid fa-share-nodes"></i></button>
                     </div>
                 </div>
             </div>
@@ -802,6 +792,17 @@
 
         <div class="cyber-divider"><div class="center-node"></div></div>
 
+        <!-- قسم الحِكم الجديد -->
+        <section id="daily-tips">
+            <h2 class="section-title" data-i18n="tips_title">حكمة اليوم</h2>
+            <div class="glass-panel" style="width: 100%; max-width: 750px; padding: 30px; border-radius: 16px; text-align: center; position: relative;">
+                <i class="fa-solid fa-quote-right" style="position: absolute; top: 15px; right: 20px; font-size: 25px; color: var(--glass-border);"></i>
+                <p id="tip-content" class="glass-desc-text" style="font-weight: 700; font-size: 1.1rem; line-height: 1.8; margin-top: 10px;" data-i18n="tips_loading">جاري تحميل الحكمة...</p>
+            </div>
+        </section>
+
+        <div class="cyber-divider"><div class="center-node"></div></div>
+
         <section id="join-us">
             <h2 class="section-title" data-i18n="join_us_title">انضم إلينا</h2>
             <div class="glass-panel" style="width: 100%; max-width: 750px; padding: 30px; border-radius: 16px; text-align: center; display: flex; flex-direction: column; align-items: center;">
@@ -846,6 +847,9 @@
         let activeTourTimers = [];
 
         const tourSheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/gviz/tq?tqx=out:csv"; 
+        
+        // --- ضع رابط الشيت الخاص بالحِكم هنا ---
+        const tipsSheetURL = "https://docs.google.com/spreadsheets/d/YOUR_TIPS_SHEET_ID/gviz/tq?tqx=out:csv"; 
 
         function parseCSV(str) {
             var arr = []; var quote = false; var col = 0, row = 0;
@@ -877,7 +881,6 @@
             }
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
-
             if (viewName === 'home') setTimeout(updateCarouselButtons, 80);
         }
 
@@ -893,7 +896,6 @@
         function goToSection(view, sectionId) {
             const navBtn = view === 'home' ? document.getElementById('nav-btn-home') : document.getElementById('nav-btn-explore');
             switchView(view, navBtn);
-            
             document.getElementById('notif-dropdown').classList.remove('show');
             
             setTimeout(() => {
@@ -928,57 +930,29 @@
             const notifContent = document.getElementById('notif-content');
             const dropdownContainer = document.getElementById('notif-dropdown');
             const isAr = document.documentElement.lang === 'ar';
-            
             dropdownContainer.setAttribute('dir', isAr ? 'rtl' : 'ltr');
             
             let html = '';
+            let hasNotifs = false;
 
-            let latestNews = [];
-            if (newsCardsData && newsCardsData.length > 0) {
-                latestNews = newsCardsData.slice(0, 2);
+            if (cachedSheetRows && cachedSheetRows.length > 0) {
+                for (let i = 0; i < 5; i++) {
+                    if (cachedSheetRows[i] && cachedSheetRows[i][15] && cachedSheetRows[i][15].trim() !== '') {
+                        const notifText = escapeHTML(cachedSheetRows[i][15]);
+                        html += `
+                        <div class="notif-item">
+                            <i class="fa-solid fa-bell"></i> 
+                            <div class="notif-text-box">
+                                <span class="notif-title">${notifText}</span>
+                            </div>
+                        </div>`;
+                        hasNotifs = true;
+                    }
+                }
             }
 
-            let latestTour = null;
-            if (tournamentsList && tournamentsList.length > 0) {
-                const upcoming = tournamentsList.filter(t => t.diff > 0).sort((a, b) => a.targetTimeMs - b.targetTimeMs);
-                if (upcoming.length > 0) latestTour = upcoming[0];
-                else latestTour = tournamentsList[0]; 
-            }
-
-            latestNews.forEach(news => {
-                const titleAr = news[2] || '';
-                const titleEn = news[4] || '';
-                const displayTitle = isAr ? titleAr : (titleEn || titleAr);
-                const safeTitle = escapeHTML(displayTitle);
-                
-                html += `
-                <div class="notif-item" onclick="goToSection('home', 'news')">
-                    <i class="fa-solid fa-newspaper"></i> 
-                    <div class="notif-text-box">
-                        <span class="notif-sub" style="color:var(--primary);">${isAr ? 'خبر جديد' : 'New News'}</span>
-                        <span class="notif-title">${safeTitle}</span>
-                    </div>
-                </div>`;
-            });
-
-            if (latestTour) {
-                const titleAr = latestTour.nameAr || '';
-                const titleEn = latestTour.nameEn || '';
-                const displayTitle = isAr ? titleAr : (titleEn || titleAr);
-                const safeTitle = escapeHTML(displayTitle);
-
-                html += `
-                <div class="notif-item" onclick="goToSection('leaderboard', 'tournaments')">
-                    <i class="fa-solid fa-trophy"></i> 
-                    <div class="notif-text-box">
-                        <span class="notif-sub" style="color:#eab308;">${isAr ? 'أقرب بطولة' : 'Upcoming Tournament'}</span>
-                        <span class="notif-title">${safeTitle}</span>
-                    </div>
-                </div>`;
-            }
-
-            if (html === '') {
-                html = `<div style="text-align:center; padding:10px; color:var(--text-muted); font-size:12px; font-weight:bold;">${isAr ? 'لا توجد إشعارات' : 'No notifications'}</div>`;
+            if (!hasNotifs) {
+                html = `<div style="text-align:center; padding:10px; color:var(--text-muted); font-size:12px; font-weight:bold;">${isAr ? 'لا توجد إشعارات حالياً' : 'No recent updates'}</div>`;
             }
 
             notifContent.innerHTML = html;
@@ -1084,7 +1058,7 @@
             try { const ipRes = await fetch("https://api.ipify.org?format=json"); const ipData = await ipRes.json(); userIP = ipData.ip; } catch(e) { console.log("تعذر جلب IP"); }
 
             const bugType = bugTypeElement.value;
-            const scriptURL = "https://script.google.com/macros/s/AKfycbz7Qh_2gIQSYnZSfxNKnJFQ8y9-iPl7sIOfXvwF0aGOfWpBhF6Q5U2tlPn1acudOoIbAQ/exec"; 
+            const scriptURL = "https://script.google.com/macros/s/AKfycbw50pY2KrpmdaiRXjjovU3mVmSTOld-N4tPUEFXcRgkhOfg1lqAZOaRukZeiiM4Zkvz0Q/exec"; 
 
             const submitBtn = document.querySelector('#bug-details .submit-btn');
             const originalText = submitBtn.innerText;
@@ -1093,10 +1067,8 @@
 
             try {
                 const finalURL = scriptURL + "?plato_id=" + encodeURIComponent(platoId) + "&issue_type=" + encodeURIComponent(bugType) + "&description=" + encodeURIComponent(bugDesc) + "&ip=" + encodeURIComponent(userIP);
-                
                 const fetchPromise = fetch(finalURL, { mode: "no-cors", cache: "no-store" });
                 const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 8000));
-                
                 await Promise.race([fetchPromise, timeoutPromise]);
                 
                 safeSetStorage('last_bug_report', Date.now().toString());
@@ -1249,6 +1221,7 @@
                 join_us_title: "انضم إلينا",
                 join_us_desc: "إذا كانت لديكم بطولة في مجموعتكم ترغبون بإضافتها، أو تعتقدون أن حسابكم يستحق المنافسة ضمن أقدم الحسابات، أرسلوا لنا التفاصيل عبر الديسكورد من هنا.",
                 join_us_btn: "تواصل معنا",
+                tips_title: "حكمة اليوم", tips_loading: "جاري تحميل الحكمة...",
                 weekly_showcase_title: "عناصر الألعاب الأسبوعية",
                 weekly_showcase_desc: "استكشف احدث العناصر المتوفرة لهذا الاسبوع.",
                 desc_yyy: "صانع الأثر، يقود برؤية مستقبلية لخلق بيئة إيجابية لا تعرف المستحيل.", desc_hat: "حضور راسخ، تقود المجتمع بثقة راسخة وترسم معايير الرقي.", desc_bbb: "الحكمة في اتخاذ القرار، يوازن بين الحزم والهدوء لإدارة الأزمات باحترافية.",
@@ -1302,6 +1275,7 @@
                 join_us_title: "Join Us",
                 join_us_desc: "Have a tournament you'd like to add, or think your account belongs among the oldest? Send us the details on Discord here.",
                 join_us_btn: "Contact Us",
+                tips_title: "Wisdom of the Day", tips_loading: "Loading tip...",
                 weekly_showcase_title: "WEEKLY GAME ITEMS",
                 weekly_showcase_desc: "Explore the latest items available this week.",
                 desc_yyy: "The Impact Maker, leading with a futuristic vision to create a positive environment.", desc_hat: "A grounded presence, leading the community with solid confidence and setting standards.", desc_bbb: "Wisdom in decision making, balancing firmness and calmness in management.",
@@ -1406,39 +1380,32 @@
             }
         }
 
+        async function loadTipsData() {
+            try {
+                const response = await fetch(tipsSheetURL, { cache: "no-store" });
+                const data = await response.text();
+                const parsedTips = parseCSV(data);
+                
+                if(parsedTips && parsedTips.length > 1) {
+                    const tipsArray = parsedTips.slice(1).map(row => row[0]).filter(tip => tip && tip.trim() !== "");
+                    if(tipsArray.length > 0) {
+                        const randomTip = tipsArray[Math.floor(Math.random() * tipsArray.length)];
+                        document.getElementById('tip-content').innerText = escapeHTML(randomTip);
+                        return;
+                    }
+                }
+                document.getElementById('tip-content').innerText = "لا توجد حِكم متوفرة حالياً.";
+            } catch (error) {
+                document.getElementById('tip-content').innerText = "العمل بذكاء يختصر مسافات العمل بجهد."; 
+            }
+        }
+
         function renderNewsData() {
             if (!cachedSheetRows || cachedSheetRows.length === 0) return;
             let allNews = cachedSheetRows.filter(cols => cols.length >= 10 && (cols[8] || '').trim() && (cols[9] || '').trim());
             allNews.sort((a, b) => (new Date((b[8] || '').trim()).getTime() || 0) - (new Date((a[8] || '').trim()).getTime() || 0));
             newsCardsData = allNews.slice(0, 5).map(cols => [ cols[8], cols[9], cols[10], cols[11], cols[12], cols[13] ]);
             buildNewsHTML();
-        }
-
-        async function interactNews(index, type, newsTitle) {
-            const isAr = document.documentElement.lang === 'ar';
-            let storedInteractions = JSON.parse(safeGetStorage('news_interactions') || '{}');
-            let currentStatus = storedInteractions[index];
-            
-            if(currentStatus === type) {
-                const toast = document.getElementById("toast");
-                toast.innerHTML = isAr ? `<i class="fa-solid fa-circle-exclamation"></i> لقد قمت بإضافة هذا التفاعل مسبقاً` : `<i class="fa-solid fa-circle-exclamation"></i> You already submitted this reaction`;
-                toast.className = "show"; setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2500);
-                return;
-            }
-            
-            storedInteractions[index] = type;
-            safeSetStorage('news_interactions', JSON.stringify(storedInteractions));
-            buildNewsHTML(); 
-
-            const likesScriptURL = "https://script.google.com/macros/s/AKfycbw_cq3j8agW2Z7LLk0spKBe6dfOEh0GZ2eEufJF3mYTK1Rs27FBDYlfdxet_Rh8gUGpvg/exec"; 
-            if (likesScriptURL) {
-                try {
-                    let userIP = "Unknown";
-                    try { const ipRes = await fetch("https://api.ipify.org?format=json"); const ipData = await ipRes.json(); userIP = ipData.ip; } catch(e) {}
-                    const finalURL = `${likesScriptURL}?action=${type}&news_id=${encodeURIComponent(newsTitle)}&ip=${encodeURIComponent(userIP)}`;
-                    fetch(finalURL, { mode: "no-cors" }); 
-                } catch(e) {}
-            }
         }
         
         function shareNews(title) {
@@ -1471,8 +1438,6 @@
             const dotsContainer = document.getElementById('newsDots');
             const isAr = document.documentElement.getAttribute('lang') === 'ar';
             let sliderHTML = ''; let dotsHTML = '';
-            
-            let storedInteractions = JSON.parse(safeGetStorage('news_interactions') || '{}');
 
             if(newsCardsData.length === 0) {
                 slider.innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">لا توجد أخبار حالياً.</p>`;
@@ -1507,13 +1472,6 @@
                     else if (tagLower.includes('تحديث') || tagLower.includes('update')) { displayTag = 'تحديث'; tagColor = '#10b981'; tagBg = 'rgba(16, 185, 129, 0.15)'; icon = 'fa-wrench'; }
                     else if (tagLower.includes('مهم') || tagLower.includes('important')) { displayTag = 'مهم'; tagColor = '#ef4444'; tagBg = 'rgba(239, 68, 68, 0.15)'; icon = 'fa-circle-exclamation'; }
                 }
-                
-                let baseLikes = titleAr.length * 3 + 15; 
-                let baseDislikes = Math.floor(titleAr.length / 2);
-                
-                const userChoice = storedInteractions[index];
-                if (userChoice === 'like') { baseLikes += 1; }
-                if (userChoice === 'dislike') { baseDislikes += 1; }
 
                 sliderHTML += `
                     <div class="news-slide-card glass-panel">
@@ -1524,16 +1482,8 @@
                         <h3 class="news-headline">${displayTitle}</h3>
                         <p class="news-body">${displayBody}</p>
                         
-                        <div class="news-interactions">
-                            <div class="interact-box">
-                                <button class="news-interact-btn ${userChoice==='like'?'active':''}" onclick="interactNews(${index}, 'like', '${displayTitle.replace(/'/g, "\\'")}')"><i class="fa-solid fa-thumbs-up"></i></button>
-                                <span class="interact-count">${baseLikes}</span>
-                            </div>
-                            <div class="interact-box">
-                                <button class="news-interact-btn ${userChoice==='dislike'?'active':''}" onclick="interactNews(${index}, 'dislike', '${displayTitle.replace(/'/g, "\\'")}')"><i class="fa-solid fa-thumbs-down"></i></button>
-                                <span class="interact-count">${baseDislikes}</span>
-                            </div>
-                            <button class="news-interact-btn share-btn" style="margin-inline-start: auto;" onclick="shareNews('${displayTitle.replace(/'/g, "\\'")}')"><i class="fa-solid fa-share-nodes"></i></button>
+                        <div style="display:flex; justify-content:flex-end; margin-top: auto; padding-top: 15px; border-top: 1px solid var(--glass-border);">
+                            <button class="nav-btn share-btn" style="padding: 6px 15px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius:8px;" onclick="shareNews('${displayTitle.replace(/'/g, "\\'")}')"><i class="fa-solid fa-share-nodes"></i></button>
                         </div>
                     </div>`;
                 dotsHTML += `<div class="dot ${index === 0 ? 'active' : ''}"></div>`;
@@ -1555,9 +1505,11 @@
         }
 
         document.querySelectorAll('.nav-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                if(!btn.classList.contains('disabled') && !btn.disabled) { slideNews(btn.id === 'btnNewer' ? -1 : 1); }
-            });
+            if(btn.id === 'btnNewer' || btn.id === 'btnOlder') {
+                btn.addEventListener('click', function(e) {
+                    if(!btn.classList.contains('disabled') && !btn.disabled) { slideNews(btn.id === 'btnNewer' ? -1 : 1); }
+                });
+            }
         });
 
         function updateCarouselButtons() {
@@ -1757,6 +1709,7 @@
             nSlider.addEventListener('mousemove', (e) => { if (!isDown) return; e.preventDefault(); const x = e.pageX - nSlider.offsetLeft; const walk = (x - startX) * 2; nSlider.scrollLeft = sLeft - walk; });
             
             loadDynamicData();
+            loadTipsData();
             
             const start = new Date('2026/09/03 00:00:00 GMT+0300').getTime(); 
             const updateOldestPlayers = () => { const added = Math.max(0, Math.floor((getAccurateTime() - start) / (1000 * 60 * 60 * 24))); document.querySelectorAll('.auto-days').forEach(td => { td.innerText = (parseInt(td.getAttribute('data-base-days')) + (isNaN(added) ? 0 : added)); }); };
