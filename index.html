@@ -25,8 +25,8 @@
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --discord-color: #5865F2;
+            --error-color: #ef4444;
 
-            /* English Server Variables for Dark Mode */
             --eng-bg: #000000;
             --eng-text: #ffffff;
             --eng-name: #000000;
@@ -43,7 +43,6 @@
             --text-main: #0f172a; 
             --text-muted: #475569;
 
-            /* English Server Variables for Light Mode */
             --eng-text-stroke: 1px #ffffff;
             --eng-badge-glow: 0 2px 5px rgba(0, 0, 0, 0.3);
             --eng-profile-glow: 0 0 15px rgba(0, 0, 0, 0.4);
@@ -73,7 +72,7 @@
         
         html {
             scroll-behavior: smooth; 
-            scroll-padding-top: 85px; 
+            scroll-padding-top: calc(85px + env(safe-area-inset-top)); 
             background-color: var(--bg-main);
             overscroll-behavior-y: none;
         }
@@ -89,7 +88,8 @@
             background-color: transparent; 
             position: relative;
             overscroll-behavior-y: none;
-            padding-bottom: 115px; 
+            padding-bottom: calc(115px + env(safe-area-inset-bottom)); 
+            padding-top: env(safe-area-inset-top);
             -webkit-font-smoothing: antialiased;
         }
         
@@ -133,7 +133,7 @@
         html[dir="ltr"] .glass-panel { border-left: 1px solid var(--glass-border); border-right: 1px solid rgba(255, 255, 255, 0.05); }
         [data-theme="light"] .glass-panel { box-shadow: 0 8px 30px 0 rgba(31, 38, 135, 0.07); border-top: 1px solid rgba(255, 255, 255, 0.6); }
 
-        .navbar { position: fixed; top: 0; left: 0; width: 100%; padding: 12px 25px; display: flex; justify-content: space-between; align-items: center; background: rgba(5, 5, 8, 0.65); backdrop-filter: blur(25px); border-bottom: 1px solid var(--glass-border); z-index: 1000; direction: ltr; }
+        .navbar { position: fixed; top: 0; left: 0; width: 100%; padding: calc(12px + env(safe-area-inset-top)) 25px 12px; display: flex; justify-content: space-between; align-items: center; background: rgba(5, 5, 8, 0.65); backdrop-filter: blur(25px); border-bottom: 1px solid var(--glass-border); z-index: 1000; direction: ltr; }
         [data-theme="light"] .navbar { background: rgba(255, 255, 255, 0.8); }
         
         .navbar h1 { font-size: 24px; font-weight: 900; letter-spacing: 1px; display: flex; align-items: baseline; margin: 0; }
@@ -159,11 +159,8 @@
             font-weight: 700; 
             font-size: 14px;
         }
-        @media (hover: hover) {
-            .lang-btn:hover:not(.active) { color: var(--primary); border-color: var(--primary); }
-        }
 
-        .main-lang-switch { display: flex; justify-content: center; gap: 15px; margin: 95px auto 15px; position: relative; z-index: 10; }
+        .main-lang-switch { display: flex; justify-content: center; gap: 15px; margin: calc(95px + env(safe-area-inset-top)) auto 15px; position: relative; z-index: 10; }
         .main-lang-switch .lang-btn { 
             background: rgba(15, 15, 20, 0.5); 
             color: var(--text-muted); 
@@ -194,7 +191,7 @@
         .tab-view.active-view { display: block; }
 
         .bottom-nav-bar {
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 440px;
+            position: fixed; bottom: calc(20px + env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); width: 90%; max-width: 440px;
             height: 65px; background: rgba(15, 15, 20, 0.75); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
             border: 1px solid var(--glass-border); border-top: 1px solid rgba(255, 255, 255, 0.15); border-radius: 40px;
             display: flex; justify-content: space-around; align-items: center; padding: 0 10px; z-index: 1000;
@@ -227,7 +224,7 @@
         .section-title::before { content: ''; position: absolute; right: -15px; top: 50%; transform: translateY(-50%); width: 6px; height: 20px; background: var(--primary); border-radius: 3px; box-shadow: 0 0 15px var(--primary-glow);}
         html[dir="ltr"] .section-title::before { right: auto; left: -15px; }
 
-        #ptr-loader { position: fixed; top: 0; left: 0; width: 100%; height: 60px; display: flex; justify-content: center; align-items: center; gap: 10px; background: var(--primary); color: #fff; font-weight: bold; font-family: 'Cairo', sans-serif; font-size: 1.1rem; transform: translateY(-100%); z-index: 9999; transition: transform 0.2s ease-out; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        #ptr-loader { position: fixed; top: env(safe-area-inset-top); left: 0; width: 100%; height: 60px; display: flex; justify-content: center; align-items: center; gap: 10px; background: var(--primary); color: #fff; font-weight: bold; font-family: 'Cairo', sans-serif; font-size: 1.1rem; transform: translateY(-100%); z-index: 9999; transition: transform 0.2s ease-out; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
         #ptr-loader.refreshing { transform: translateY(0) !important; background: #3b82f6; }
         #ptr-loader.refreshing i { animation: spin 0.8s infinite linear; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
@@ -265,11 +262,25 @@
         .bug-radio { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; padding: 15px; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(0,0,0,0.2); }
         .bug-radio input { margin-top: 4px; accent-color: var(--primary); transform: scale(1.2); }
         [data-theme="light"] .bug-radio { background: rgba(255,255,255,0.4); }
-        .bug-input { width: 100%; padding: 15px; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(15, 15, 20, 0.4); color: var(--text-main); font-family: inherit; font-size: 15px; outline: none; transition: 0.2s; }
+        .bug-input { width: 100%; padding: 15px; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(15, 15, 20, 0.4); color: var(--text-main); font-family: inherit; font-size: 15px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
         .bug-input:focus { border-color: var(--primary); background: rgba(15, 15, 20, 0.6); }
         [data-theme="light"] .bug-input { background: rgba(255,255,255,0.6); }
         [data-theme="light"] .bug-input:focus { background: #fff; }
         
+        .input-error {
+            border-color: var(--error-color) !important;
+            box-shadow: 0 0 0 1px var(--error-color) inset !important;
+        }
+        .input-error-msg {
+            color: var(--error-color);
+            font-size: 13.5px;
+            font-weight: 700;
+            margin-top: 6px;
+            display: none;
+            text-align: right;
+        }
+        html[dir="ltr"] .input-error-msg { text-align: left; }
+
         .fit-btn { padding: 8px 18px; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; transition: 0.2s; font-family: inherit; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; width: fit-content; flex: none; white-space: nowrap; height: 38px;}
         .submit-btn, .cancel-btn { border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; transition: 0.2s; font-family: inherit; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; flex: 1; padding: 10px; white-space: nowrap; height: 42px;}
         
@@ -370,10 +381,10 @@
         .feedback-btn-wrapper { width: 100%; display: flex; justify-content: flex-start; } 
 
         #toast { visibility: hidden; min-width: 200px; background: rgba(15, 15, 20, 0.95); backdrop-filter: blur(10px); color: #fff; text-align: center; border-radius: 10px; padding: 12px 20px; position: fixed; z-index: 9999; left: 50%; bottom: 25px; transform: translateX(-50%); font-size: 14px; opacity: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid var(--primary); font-family: 'Cairo', sans-serif; font-weight:bold; transition: opacity 0.3s;}
-        #toast.show { visibility: visible; bottom: 95px; opacity: 1; }
+        #toast.show { visibility: visible; bottom: calc(95px + env(safe-area-inset-bottom)); opacity: 1; }
 
         @media (max-width: 600px) {
-            .main-lang-switch { margin-top: 85px; margin-bottom: 10px; } 
+            .main-lang-switch { margin-top: calc(85px + env(safe-area-inset-top)); margin-bottom: 10px; } 
             .main-lang-switch .lang-btn { padding: 6px 15px; }
             section { padding: 35px 15px 20px; }
             .hero { min-height: 150px; margin-top: 10px;}
@@ -486,9 +497,15 @@
                 </div>
 
                 <div id="bug-details" style="display: none; flex-direction: column; gap: 15px;">
-                    <!-- تم تقييد الإدخال بحروف إنجليزية وأرقام و _ فقط مع حد أقصى 12 حرف -->
-                    <input type="text" id="plato-id" class="bug-input num-font" placeholder="يوزرك في اللعبة" maxlength="12" dir="ltr" oninput="this.value = this.value.replace(/[^a-zA-Z0-9_]/g, '')">
-                    <textarea id="bug-desc" class="bug-input" rows="4" placeholder="وصف المشكلة..." style="resize: vertical;"></textarea>
+                    <div style="position: relative; width: 100%;">
+                        <input type="text" id="plato-id" class="bug-input num-font" placeholder="يوزرك في اللعبة" maxlength="12" dir="ltr" oninput="clearInputError('plato-id')">
+                        <div id="plato-id-error" class="input-error-msg"></div>
+                    </div>
+                    
+                    <div style="position: relative; width: 100%;">
+                        <textarea id="bug-desc" class="bug-input" rows="4" placeholder="وصف المشكلة..." style="resize: vertical;" oninput="clearInputError('bug-desc')"></textarea>
+                        <div id="bug-desc-error" class="input-error-msg"></div>
+                    </div>
                     
                     <div style="display: flex; gap: 10px;">
                         <button type="button" onclick="submitBugReport();" class="submit-btn" data-i18n="bug_submit">إرسال البلاغ</button>
@@ -933,12 +950,25 @@
             });
         }
 
+        function clearInputError(inputId) {
+            document.getElementById(inputId).classList.remove('input-error');
+            document.getElementById(inputId + '-error').style.display = 'none';
+        }
+
         function showBugForm() { document.getElementById('bug-details').style.display = 'flex'; }
+        
         function hideBugForm() {
             document.getElementById('bug-details').style.display = 'none';
             document.querySelectorAll('input[name="bugType"]').forEach(r => r.checked = false);
-            document.getElementById('plato-id').value = '';
-            document.getElementById('bug-desc').value = '';
+            
+            const platoIdInput = document.getElementById('plato-id');
+            const bugDescInput = document.getElementById('bug-desc');
+            
+            platoIdInput.value = '';
+            bugDescInput.value = '';
+            
+            clearInputError('plato-id');
+            clearInputError('bug-desc');
         }
 
         function escapeHTML(str) {
@@ -955,24 +985,50 @@
         }
 
         async function submitBugReport() {
+            const isAr = document.documentElement.lang === 'ar';
             const bugTypeElement = document.querySelector('input[name="bugType"]:checked');
             const platoIdInput = document.getElementById('plato-id');
+            const bugDescInput = document.getElementById('bug-desc');
+            
             const platoId = platoIdInput.value.trim();
-            const bugDesc = document.getElementById('bug-desc').value.trim();
-            const isAr = document.documentElement.lang === 'ar';
+            const bugDesc = bugDescInput.value.trim();
+            
+            clearInputError('plato-id');
+            clearInputError('bug-desc');
 
-            if(!bugTypeElement || !platoId || !bugDesc) {
-                alert(isAr ? "يرجى تعبئة جميع الحقول أولاً!" : "Please fill all fields first!");
+            let hasError = false;
+
+            if(!bugTypeElement) {
+                const toast = document.getElementById("toast");
+                toast.innerHTML = isAr ? `<i class="fa-solid fa-circle-exclamation"></i> يرجى اختيار نوع المشكلة` : `<i class="fa-solid fa-circle-exclamation"></i> Please select issue type`;
+                toast.className = "show";
+                setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2500);
                 return;
             }
 
-            // التحقق من أن اليوزر إنجليزي فقط مع _ وطوله بين 3 و 12 حرف
-            const platoIdRegex = /^[a-zA-Z0-9_]{3,12}$/;
-            if (!platoIdRegex.test(platoId)) {
-                alert(isAr ? "يجب أن يكون اليوزر باللغة الإنجليزية، وبطول من 3 إلى 12 حرفاً فقط (يُسمح بالرمز _ فقط)." : "Plato ID must be in English, between 3 to 12 characters, and can only contain letters, numbers, and '_'.");
-                platoIdInput.focus();
-                return;
+            if (platoId.length < 3 || platoId.length > 12) {
+                const errorMsg = document.getElementById('plato-id-error');
+                errorMsg.innerText = isAr ? "يجب أن يكون اليوزر بين 3 و 12 حرفاً" : "Plato ID must be between 3 and 12 characters";
+                errorMsg.style.display = 'block';
+                platoIdInput.classList.add('input-error');
+                hasError = true;
+            } else if (!/^[a-zA-Z0-9_]+$/.test(platoId)) {
+                const errorMsg = document.getElementById('plato-id-error');
+                errorMsg.innerText = isAr ? "يوزر غير صالح. استخدم A-Z و 0-9 و _ فقط" : "Invalid Plato ID. Use A-Z, 0-9 and underscores only";
+                errorMsg.style.display = 'block';
+                platoIdInput.classList.add('input-error');
+                hasError = true;
             }
+
+            if (!bugDesc) {
+                const descError = document.getElementById('bug-desc-error');
+                descError.innerText = isAr ? "يرجى كتابة وصف المشكلة" : "Please describe the issue";
+                descError.style.display = 'block';
+                bugDescInput.classList.add('input-error');
+                hasError = true;
+            }
+
+            if (hasError) return;
 
             const bugType = bugTypeElement.value;
             const scriptURL = "https://script.google.com/macros/s/AKfycbz24P1RDGQbXI7psG7FOPhVNszKWzzf7X7yRQ4hFOjvC4k3zPuU0qsrSS2Ct0IZTGirHQ/exec"; 
@@ -994,7 +1050,10 @@
 
             } catch (err) {
                 console.error("Error:", err);
-                alert(isAr ? `تعذر الإرسال: تأكد من اتصالك بالإنترنت.` : `Error: Network connection failed.`);
+                const toast = document.getElementById("toast");
+                toast.innerHTML = isAr ? `<i class="fa-solid fa-xmark"></i> تعذر الإرسال: تأكد من اتصالك` : `<i class="fa-solid fa-xmark"></i> Error: Network connection failed`;
+                toast.className = "show";
+                setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
             } finally {
                 submitBtn.innerText = originalText;
                 submitBtn.disabled = false;
@@ -1042,7 +1101,7 @@
         
         function renderGlobalLeaders() {
             const container = document.getElementById('global-leaders-grid');
-            container.innerHTML = '';
+            let htmlStr = '';
             const currentLang = document.documentElement.getAttribute('lang') || 'ar';
             
             globalLeadersData.forEach(leader => {
@@ -1063,7 +1122,7 @@
                 const profBorder = sTheme.profileBorder ? `border: ${sTheme.profileBorder};` : `border: 2px solid rgba(255,255,255,0.1);`;
                 const strokeStyle = sTheme.textStroke ? `-webkit-text-stroke: ${sTheme.textStroke};` : '';
 
-                const iconColor = (leader.server === 'english') ? '#ffffff' : '#ffffff';
+                const iconColor = '#ffffff';
                 const badgeSvg = `
                     <svg viewBox="0 0 54 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="21" cy="11" r="6" fill="${iconColor}"/>
@@ -1073,7 +1132,7 @@
                     </svg>
                 `;
 
-                container.innerHTML += `
+                htmlStr += `
                     <div class="global-leader glass-panel" data-server="${leader.server}">
                         <img src="${imageSource}" alt="${leader.name}" style="${profBorder}">
                         <div class="leader-name-box" onclick="copyAdminID('${leader.name}')" title="انسخ اليوزر">
@@ -1088,6 +1147,7 @@
                     </div>
                 `;
             });
+            container.innerHTML = htmlStr;
         }
 
         function filterServer(serverName) {
@@ -1365,6 +1425,9 @@
             
             document.getElementById('plato-id').placeholder = lang === 'ar' ? 'يوزرك في اللعبة' : 'Your Plato ID';
             document.getElementById('bug-desc').placeholder = lang === 'ar' ? 'وصف المشكلة...' : 'Issue description...';
+            
+            clearInputError('plato-id');
+            clearInputError('bug-desc');
 
             const feedbackBtnWrapper = document.querySelector('.feedback-btn-wrapper');
             if (feedbackBtnWrapper) {
@@ -1735,12 +1798,10 @@
                 ptrEl.classList.add('refreshing');
                 ptrEl.style.transform = 'translateY(0)';
                 
-                localStorage.removeItem('plato_data_v3');
-                localStorage.removeItem('plato_data_v3_time');
-                
-                setTimeout(() => {
-                    location.reload();
-                }, 400);
+                loadDynamicData(true).then(() => {
+                    ptrEl.style.transform = 'translateY(-100%)';
+                    setTimeout(() => { ptrEl.classList.remove('refreshing'); }, 200);
+                });
             } else {
                 ptrEl.style.transform = 'translateY(-100%)';
             }
