@@ -1,21 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://worldtimeapi.org https://timeapi.io https://api.ipify.org https://docs.google.com https://script.google.com https://script.googleusercontent.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline'; img-src 'self' data: https: http:; media-src https: http: 'self';">
+    <!-- تم إضافة خوادم جوجل الخاصة بالسكربت لتخطي الحظر والسماح بإرسال البلاغات -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://worldtimeapi.org https://timeapi.io https://docs.google.com https://script.google.com https://script.googleusercontent.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline'; img-src 'self' data: https: http:; media-src https: http: 'self';">
     
-    <title>PlatoX | Community</title>
+    <title>PlatoX | مجتمع اللاعبين العرب</title>
     
     <script>
-        const safeGet = (k) => { try { return localStorage.getItem(k); } catch(e){ return null; } };
-        let savedTheme = safeGet('theme') || 'dark';
+        let savedTheme = localStorage.getItem('theme') || 'dark';
         document.documentElement.setAttribute('data-theme', savedTheme);
-        
-        let savedLang = safeGet('lang') || 'en';
-        document.documentElement.setAttribute('lang', savedLang);
-        document.documentElement.setAttribute('dir', savedLang === 'ar' ? 'rtl' : 'ltr');
     </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,8 +29,8 @@
             --glass-border: rgba(255, 255, 255, 0.08);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
+            --discord-color: #5865F2;
             --error-color: #ef4444;
-            --success-color: #10b981;
 
             --eng-bg: #000000;
             --eng-text: #ffffff;
@@ -59,76 +55,165 @@
             --eng-profile-glow: 0 0 15px rgba(0, 0, 0, 0.4);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            -webkit-tap-highlight-color: transparent; 
+            -webkit-touch-callout: none; 
+            touch-action: manipulation; 
+        }
 
-        button, a, input, textarea, .slider-controls, .nav-btn, .nav-label, .arrow-icon, .bottom-nav-item, .lang-btn, .fit-btn, .submit-btn, .cancel-btn, .action-btn {
+        button, a, input, textarea, .slider-controls, .nav-btn, .nav-label, .arrow-icon, .bottom-nav-item, .lang-btn, .fit-btn, .submit-btn, .cancel-btn {
             touch-action: manipulation !important;
             user-select: none;
             -webkit-user-select: none;
         }
         
-        img { pointer-events: none; user-select: none; -webkit-user-drag: none; }
+        img {
+            -webkit-user-drag: none;
+            pointer-events: none; 
+            user-select: none;
+            -webkit-user-select: none;
+        }
         
-        html { scroll-behavior: smooth; scroll-padding-top: calc(85px + env(safe-area-inset-top)); background-color: var(--bg-main); overscroll-behavior-y: none; }
+        html {
+            scroll-behavior: smooth; 
+            scroll-padding-top: calc(85px + env(safe-area-inset-top)); 
+            background-color: var(--bg-main);
+            overscroll-behavior-y: none;
+        }
+
         html[lang="ar"] body { font-size: 14px; }
         html[lang="en"] body { font-size: 15.5px; }
 
-        body { color: var(--text-main); font-family: 'Cairo', sans-serif; overflow-x: clip; width: 100%; background-color: transparent; position: relative; padding-bottom: calc(115px + env(safe-area-inset-bottom)); padding-top: env(safe-area-inset-top); -webkit-font-smoothing: antialiased; }
+        body { 
+            color: var(--text-main); 
+            font-family: 'Cairo', sans-serif; 
+            overflow-x: clip; 
+            width: 100%;
+            background-color: transparent; 
+            position: relative;
+            padding-bottom: calc(115px + env(safe-area-inset-bottom)); 
+            padding-top: env(safe-area-inset-top);
+            -webkit-font-smoothing: antialiased;
+        }
+        
         html[dir="ltr"] body, .num-font, .navbar h1 { font-family: 'Rajdhani', sans-serif; }
 
-        /* Professional Esports/Cyber Grid Background */
         .static-gaming-bg {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh; z-index: -3; pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100dvh;
+            z-index: -3;
+            pointer-events: none;
             background-color: var(--bg-main);
             background-image: 
-                radial-gradient(circle at 15% 15%, rgba(255, 255, 255, 0.04), transparent 45%),
-                radial-gradient(circle at 85% 85%, rgba(100, 100, 150, 0.08), transparent 45%),
-                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-            background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
-            background-position: center;
-        }
-        [data-theme="light"] .static-gaming-bg {
-            background-image: 
-                radial-gradient(circle at 15% 15%, rgba(0, 0, 0, 0.04), transparent 45%),
-                radial-gradient(circle at 85% 85%, rgba(50, 50, 100, 0.06), transparent 45%),
-                linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+                radial-gradient(circle at 15% 15%, rgba(255, 255, 255, 0.06), transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(26, 47, 102, 0.15), transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.02), transparent 60%),
+                url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3C!-- Gamepad --%3E%3Crect x='15' y='20' width='30' height='16' rx='8'/%3E%3Crect x='20' y='25' width='6' height='2'/%3E%3Crect x='22' y='23' width='2' height='6'/%3E%3Ccircle cx='36' cy='25' r='1.5'/%3E%3Ccircle cx='39' cy='28' r='1.5'/%3E%3C!-- Dice --%3E%3Crect x='75' y='20' width='16' height='16' rx='3'/%3E%3Ccircle cx='80' cy='25' r='1.5'/%3E%3Ccircle cx='86' cy='31' r='1.5'/%3E%3C!-- Chat Bubble --%3E%3Crect x='25' y='75' width='22' height='14' rx='4'/%3E%3Cpolygon points='30,89 30,95 34,89'/%3E%3C!-- Card Diamond --%3E%3Cpolygon points='85,75 90,82 85,89 80,82'/%3E%3C/g%3E%3C/svg%3E");
+            background-repeat: repeat;
         }
 
-        .glass-panel { background: var(--bg-card); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--glass-border); border-top: 1px solid rgba(255, 255, 255, 0.12); border-left: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 8px 30px 0 rgba(0, 0, 0, 0.35); border-radius: 16px; contain: paint; }
+        [data-theme="light"] .static-gaming-bg {
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(0, 0, 0, 0.06), transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(59, 130, 246, 0.06), transparent 45%),
+                url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000000' fill-opacity='0.04'%3E%3C!-- Gamepad --%3E%3Crect x='15' y='20' width='30' height='16' rx='8'/%3E%3Crect x='20' y='25' width='6' height='2'/%3E%3Crect x='22' y='23' width='2' height='6'/%3E%3Ccircle cx='36' cy='25' r='1.5'/%3E%3Ccircle cx='39' cy='28' r='1.5'/%3E%3C!-- Dice --%3E%3Crect x='75' y='20' width='16' height='16' rx='3'/%3E%3Ccircle cx='80' cy='25' r='1.5'/%3E%3Ccircle cx='86' cy='31' r='1.5'/%3E%3C!-- Chat Bubble --%3E%3Crect x='25' y='75' width='22' height='14' rx='4'/%3E%3Cpolygon points='30,89 30,95 34,89'/%3E%3C!-- Card Diamond --%3E%3Cpolygon points='85,75 90,82 85,89 80,82'/%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .glass-panel { 
+            background: var(--bg-card); 
+            backdrop-filter: blur(16px); 
+            -webkit-backdrop-filter: blur(16px); 
+            border: 1px solid var(--glass-border); 
+            border-top: 1px solid rgba(255, 255, 255, 0.12); 
+            border-left: 1px solid rgba(255, 255, 255, 0.05); 
+            box-shadow: 0 8px 30px 0 rgba(0, 0, 0, 0.35); 
+            border-radius: 16px; 
+            contain: paint;
+        }
         html[dir="ltr"] .glass-panel { border-left: 1px solid var(--glass-border); border-right: 1px solid rgba(255, 255, 255, 0.05); }
         [data-theme="light"] .glass-panel { box-shadow: 0 8px 30px 0 rgba(31, 38, 135, 0.07); border-top: 1px solid rgba(255, 255, 255, 0.6); }
 
-        .pro-title-glow, .pro-icon-glow { color: var(--primary); font-weight: 900; text-shadow: 0 0 15px var(--btn-active-glow), 0 0 30px var(--btn-active-glow); }
+        .pro-title-glow, .pro-icon-glow {
+            color: var(--primary);
+            font-weight: 900;
+            text-shadow: 0 0 15px var(--btn-active-glow), 0 0 30px var(--btn-active-glow);
+        }
 
         .navbar { position: fixed; top: 0; left: 0; width: 100%; padding: calc(12px + env(safe-area-inset-top)) 25px 12px; display: flex; justify-content: space-between; align-items: center; background: rgba(5, 5, 8, 0.65); backdrop-filter: blur(25px); border-bottom: 1px solid var(--glass-border); z-index: 1000; direction: ltr; }
         [data-theme="light"] .navbar { background: rgba(255, 255, 255, 0.8); }
         
-        .nav-brand-group { display: flex; align-items: baseline; gap: 15px; }
         .navbar h1 { font-size: 24px; font-weight: 900; letter-spacing: 1px; display: flex; align-items: baseline; margin: 0; }
-        .navbar h1 span { color: var(--primary); font-size: 1.6em; transform: translateY(2px); margin-left: 3px; text-shadow: 0 0 25px var(--text-glow-x), 0 0 10px var(--text-glow-x); }
+        .navbar h1 span { 
+            color: var(--primary); 
+            font-size: 1.6em; 
+            transform: translateY(2px); 
+            margin-left: 3px;
+            text-shadow: 0 0 25px var(--text-glow-x), 0 0 10px var(--text-glow-x);
+        }
         
-        /* Live Visitor Counter */
-        .live-counter-box { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; }
-        [data-theme="light"] .live-counter-box { background: rgba(0,0,0,0.05); }
-        .pulse-dot { width: 8px; height: 8px; background-color: var(--success-color); border-radius: 50%; box-shadow: 0 0 8px var(--success-color); animation: pulse-anim 2s infinite; }
-        @keyframes pulse-anim { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
-
         .nav-actions { display: flex; align-items: center; gap: 18px; }
         .nav-actions i { font-size: 22px; cursor: pointer; color: var(--text-main); transition: 0.2s; }
         .nav-actions i:hover { color: var(--primary); text-shadow: 0 0 15px var(--btn-active-glow); }
 
-        .main-lang-switch { display: flex; justify-content: center; gap: 15px; margin: calc(95px + env(safe-area-inset-top)) auto 15px; position: relative; z-index: 10; direction: rtl;}
-        .main-lang-switch .lang-btn { background: rgba(15, 15, 20, 0.5); color: var(--text-muted); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid var(--glass-border); padding: 8px 25px; border-radius: 20px; cursor: pointer; font-family: 'Cairo', sans-serif; font-weight: 700; font-size: 14px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        [data-theme="light"] .main-lang-switch .lang-btn { background: rgba(255, 255, 255, 0.9); color: #475569; }
-        .main-lang-switch .lang-btn.active, [data-theme="light"] .main-lang-switch .lang-btn.active { color: var(--bg-main) !important; background: var(--primary) !important; border-color: var(--primary) !important; box-shadow: 0 0 20px var(--btn-active-glow), 0 0 40px var(--btn-active-glow) !important; text-shadow: none; font-weight: 900; transform: scale(1.05); }
+        .lang-btn { 
+            border: 1px solid var(--glass-border); 
+            padding: 6px 15px; 
+            border-radius: 20px; 
+            cursor: pointer; 
+            transition: 0.2s; 
+            font-family: 'Cairo', sans-serif; 
+            font-weight: 700; 
+            font-size: 14px;
+        }
+
+        .main-lang-switch { display: flex; justify-content: center; gap: 15px; margin: calc(95px + env(safe-area-inset-top)) auto 15px; position: relative; z-index: 10; }
+        .main-lang-switch .lang-btn { 
+            background: rgba(15, 15, 20, 0.5); 
+            color: var(--text-muted); 
+            backdrop-filter: blur(15px); 
+            -webkit-backdrop-filter: blur(15px); 
+            border: 1px solid var(--glass-border); 
+            padding: 8px 25px; 
+            border-radius: 20px; 
+            cursor: pointer; 
+            font-family: 'Cairo', sans-serif; 
+            font-weight: 700; 
+            font-size: 14px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        [data-theme="light"] .main-lang-switch .lang-btn { 
+            background: rgba(255, 255, 255, 0.9); 
+            color: #475569; 
+        }
+        .main-lang-switch .lang-btn.active, 
+        [data-theme="light"] .main-lang-switch .lang-btn.active { 
+            color: var(--bg-main) !important; 
+            background: var(--primary) !important; 
+            border-color: var(--primary) !important; 
+            box-shadow: 0 0 20px var(--btn-active-glow), 0 0 40px var(--btn-active-glow) !important; 
+            text-shadow: none;
+            font-weight: 900;
+            transform: scale(1.05);
+        }
 
         .tab-view { display: none; width: 100%; }
         .tab-view.active-view { display: block; }
 
-        .bottom-nav-bar { position: fixed; bottom: calc(20px + env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); width: 90%; max-width: 440px; height: 65px; background: rgba(15, 15, 20, 0.75); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border: 1px solid var(--glass-border); border-top: 1px solid rgba(255, 255, 255, 0.15); border-radius: 40px; display: flex; justify-content: space-around; align-items: center; padding: 0 10px; z-index: 1000; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5); }
+        .bottom-nav-bar {
+            position: fixed; bottom: calc(20px + env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); width: 90%; max-width: 440px;
+            height: 65px; background: rgba(15, 15, 20, 0.75); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border); border-top: 1px solid rgba(255, 255, 255, 0.15); border-radius: 40px;
+            display: flex; justify-content: space-around; align-items: center; padding: 0 10px; z-index: 1000;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
         [data-theme="light"] .bottom-nav-bar { background: rgba(255, 255, 255, 0.85); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); border-top: 1px solid rgba(255, 255, 255, 0.9); }
+        
         .bottom-nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: var(--text-muted); cursor: pointer; height: 100%; transition: color 0.2s; position: relative; }
         .bottom-nav-item i { font-size: 22px; transition: transform 0.2s, color 0.2s; }
         .bottom-nav-item span { font-size: 12px; font-weight: 700; }
@@ -137,9 +222,13 @@
         .bottom-nav-item.active span { color: var(--text-main); font-weight: 900; }
 
         section { padding: 45px 15px 25px; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; }
+        
         .hero { height: auto; min-height: 180px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px 15px;}
         .hero h2 { font-size: 3.2rem; font-weight: 900; margin: 0; color: var(--text-main); display: flex; align-items: center; justify-content: center; flex-wrap: wrap;}
-        .hero h2 span.hero-x { color: var(--primary); font-size: 1.5em; margin: 0 10px; transform: translateY(2px); text-shadow: 0 0 25px var(--text-glow-x), 0 0 10px var(--text-glow-x); }
+        .hero h2 span.hero-x { 
+            color: var(--primary); font-size: 1.5em; margin: 0 10px; transform: translateY(2px);
+            text-shadow: 0 0 25px var(--text-glow-x), 0 0 10px var(--text-glow-x);
+        }
 
         .cyber-divider { display: flex; align-items: center; justify-content: center; width: 100%; max-width: 600px; margin: 15px auto; opacity: 0.4; }
         .cyber-divider::before, .cyber-divider::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--text-muted), transparent); }
@@ -149,10 +238,6 @@
         .section-title::before { content: ''; position: absolute; right: -15px; top: 50%; transform: translateY(-50%); width: 6px; height: 20px; background: var(--primary); border-radius: 3px; box-shadow: 0 0 15px var(--btn-active-glow);}
         html[dir="ltr"] .section-title::before { right: auto; left: -15px; }
 
-        /* Dynamic NEW Badge */
-        .new-badge { display: inline-block; background: var(--error-color); color: #fff; font-size: 11px; font-weight: 900; padding: 2px 8px; border-radius: 12px; margin: 0 8px; vertical-align: middle; animation: blink-soft 2s infinite; font-family: 'Rajdhani', sans-serif;}
-        @keyframes blink-soft { 0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(239, 68, 68, 0.8); } 50% { opacity: 0.6; box-shadow: none;} }
-
         .skeleton { position: relative; overflow: hidden; background-color: rgba(255, 255, 255, 0.05) !important; border-color: transparent !important; box-shadow: none !important; }
         [data-theme="light"] .skeleton { background-color: rgba(0, 0, 0, 0.05) !important; }
 
@@ -160,22 +245,13 @@
         .news-slider { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; -ms-overflow-style: none; scrollbar-width: none; padding: 25px 20px; cursor: grab;}
         .news-slider:active { cursor: grabbing; }
         .news-slider::-webkit-scrollbar { display: none; }
-        .news-slide-card { width: 100%; flex: 0 0 100%; scroll-snap-align: center; padding: 30px; border-radius: 16px; position: relative; display: flex; flex-direction: column; }
+        .news-slide-card { width: 100%; flex: 0 0 100%; scroll-snap-align: center; padding: 30px; border-radius: 16px; position: relative; }
         .news-header-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; }
         .news-badge { padding: 5px 12px; border-radius: 8px; font-weight: 900; font-size: 13px; display: flex; align-items: center; gap: 8px; border: 1px solid transparent; }
         .news-date-sub { font-family: 'Rajdhani', sans-serif; font-size: 13px; color: var(--text-muted); font-weight: bold;}
         .news-headline { font-size: 1.4rem; font-weight: 900; line-height: 1.4; color: var(--text-main); margin-top: 15px; margin-bottom: 8px;}
-        .news-body { color: rgba(255,255,255,0.85); line-height: 1.8; white-space: pre-line; word-break: break-word; overflow-wrap: break-word; flex-grow: 1; }
+        .news-body { color: rgba(255,255,255,0.85); line-height: 1.8; white-space: pre-line; word-break: break-word; overflow-wrap: break-word; }
         [data-theme="light"] .news-body { color: var(--text-muted); }
-        
-        /* News Actions */
-        .news-footer-actions { display: flex; justify-content: flex-end; align-items: center; gap: 15px; margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.05); }
-        [data-theme="light"] .news-footer-actions { border-top-color: rgba(0,0,0,0.05); }
-        .action-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 6px 12px; border-radius: 8px; cursor: pointer; color: var(--text-muted); font-weight: bold; font-size: 13px; transition: 0.2s; display: flex; align-items: center; gap: 6px; }
-        [data-theme="light"] .action-btn { background: rgba(0,0,0,0.03); }
-        .action-btn:hover { color: var(--text-main); background: rgba(255,255,255,0.1); }
-        .action-btn.liked { color: var(--error-color); border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.1); }
-
         .news-bottom-wrapper { display: flex; flex-direction: column; width: 100%; max-width: 360px; margin: 0 auto; gap: 15px; }
         .slider-controls { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0;}
         .nav-btn { background: transparent; border: none; color: var(--text-muted); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px; transition: 0.2s; font-family: inherit;}
@@ -190,7 +266,7 @@
         [data-theme="light"] .dot { background: rgba(0,0,0,0.1); }
         
         .more-news-link { display: flex; justify-content: center; align-items: center; width: 100%; gap: 8px; color: var(--text-muted); text-decoration: none; transition: 0.2s; font-weight: 700; background: var(--bg-card); padding: 10px 24px; border-radius: 12px; border: 1px solid var(--glass-border); backdrop-filter: blur(10px); font-family: inherit; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; height: 42px;}
-        .more-news-link i { font-size: 18px; }
+        .more-news-link i { color: var(--discord-color); font-size: 18px; }
 
         .bug-radio { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; padding: 15px; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(0,0,0,0.2); }
         .bug-radio input { margin-top: 4px; accent-color: var(--primary); transform: scale(1.2); }
@@ -200,12 +276,32 @@
         [data-theme="light"] .bug-input { background: rgba(255,255,255,0.6); }
         [data-theme="light"] .bug-input:focus { background: #fff; }
         
-        .input-error { border-color: var(--error-color) !important; box-shadow: 0 0 0 1px var(--error-color) inset !important; }
-        .input-error-msg { color: var(--error-color); font-size: 13.5px; font-weight: 700; margin-top: 6px; display: none; text-align: right; }
+        .input-error {
+            border-color: var(--error-color) !important;
+            box-shadow: 0 0 0 1px var(--error-color) inset !important;
+        }
+        .input-error-msg {
+            color: var(--error-color);
+            font-size: 13.5px;
+            font-weight: 700;
+            margin-top: 6px;
+            display: none;
+            text-align: right;
+        }
         html[dir="ltr"] .input-error-msg { text-align: left; }
 
-        .char-counter-badge { position: absolute; bottom: 12px; font-size: 13px; color: var(--text-muted); font-weight: 700; pointer-events: none; z-index: 10; opacity: 0.8; }
-        html[dir="rtl"] .char-counter-badge { left: 15px; } html[dir="ltr"] .char-counter-badge { right: 15px; }
+        .char-counter-badge {
+            position: absolute;
+            bottom: 12px;
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 700;
+            pointer-events: none;
+            z-index: 10;
+            opacity: 0.8;
+        }
+        html[dir="rtl"] .char-counter-badge { left: 15px; }
+        html[dir="ltr"] .char-counter-badge { right: 15px; }
 
         .fit-btn { padding: 8px 18px; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; transition: 0.2s; font-family: inherit; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; width: fit-content; flex: none; white-space: nowrap; height: 38px;}
         .submit-btn, .cancel-btn { border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; transition: 0.2s; font-family: inherit; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; flex: 1; padding: 10px; white-space: nowrap; height: 42px;}
@@ -219,7 +315,7 @@
         .guideline-icon { color: var(--text-main); font-size: 18px; margin-top: 3px; flex-shrink: 0; }
         .guideline-text { line-height: 1.6; color: rgba(255,255,255,0.85); font-size: 0.95rem; }
         [data-theme="light"] .guideline-text { color: var(--text-main); }
-        .guideline-warning { background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.3); color: var(--error-color); padding: 15px; border-radius: 8px; font-weight: 700; line-height: 1.6; margin-top: 15px; display: flex; gap: 10px; align-items: center; font-size: 0.9rem;}
+        .guideline-warning { background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.3); color: #ef4444; padding: 15px; border-radius: 8px; font-weight: 700; line-height: 1.6; margin-top: 15px; display: flex; gap: 10px; align-items: center; font-size: 0.9rem;}
 
         .birthday-badge { display: inline-flex; align-items: center; justify-content: center; gap: 6px; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border); padding: 4px 10px; border-radius: 8px; font-weight: 700; color: var(--text-muted); margin-top: 10px; font-size: 12px; }
         [data-theme="light"] .birthday-badge { background: rgba(0, 0, 0, 0.03); }
@@ -243,8 +339,22 @@
         .leader-name-box h3 { font-size: 1.15rem; font-family: 'Rajdhani', 'Cairo', sans-serif !important; font-weight: 900 !important; margin: 0; flex-shrink: 1; overflow: hidden; text-overflow: ellipsis;}
         .leader-copy-icon { font-size: 12px; color: var(--text-muted); flex-shrink: 0;}
         
-        .server-badge { flex-shrink: 0; width: 38px; height: 20px; border-radius: 10px; margin: 0; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; }
-        .server-badge svg { width: 26px; height: 14px; display: block; }
+        .server-badge { 
+            flex-shrink: 0; 
+            width: 38px; 
+            height: 20px; 
+            border-radius: 10px; 
+            margin: 0; 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+            box-sizing: border-box;
+        }
+        .server-badge svg {
+            width: 26px;
+            height: 14px;
+            display: block;
+        }
 
         .premium-list { width: 100%; max-width: 700px; display: flex; flex-direction: column; gap: 10px; position: relative; z-index: 2;}
         .list-row { padding: 15px; display: flex; align-items: center; gap: 15px; }
@@ -268,7 +378,7 @@
         .tour-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;}
         .tour-title-box { display: flex; align-items: center; gap: 10px; }
         .tour-title { font-size: 1.15rem; font-weight: 900; color: var(--text-main); }
-        .countdown-box { background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.3); color: var(--error-color); padding: 4px 10px; border-radius: 4px; font-weight: bold; font-size: 14px; display: flex; align-items: center; gap: 6px; }
+        .countdown-box { background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.3); color: #ef4444; padding: 4px 10px; border-radius: 4px; font-weight: bold; font-size: 14px; display: flex; align-items: center; gap: 6px; }
         .tour-desc { color: rgba(255,255,255,0.7); line-height: 1.7; margin-bottom: 15px; font-size: 0.95rem; }
         [data-theme="light"] .tour-desc { color: var(--text-muted); }
         .tour-footer { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -291,8 +401,7 @@
         [data-theme="light"] .video-glow-box { background: rgba(0,0,0,0.1); }
         .video-glow-box video { width: 100%; display: block; border-radius: 12px; max-height: 70vh; object-fit: cover; background: #000; }
 
-        /* Feedback Button Alignment */
-        .feedback-btn-wrapper { width: 100%; display: flex; justify-content: flex-end; } 
+        .feedback-btn-wrapper { width: 100%; display: flex; justify-content: flex-start; } 
 
         #toast { visibility: hidden; min-width: 200px; background: rgba(15, 15, 20, 0.95); backdrop-filter: blur(10px); color: #fff; text-align: center; border-radius: 10px; padding: 12px 20px; position: fixed; z-index: 9999; left: 50%; bottom: 25px; transform: translateX(-50%); font-size: 14px; opacity: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid var(--primary); font-family: 'Cairo', sans-serif; font-weight:bold; transition: opacity 0.3s;}
         #toast.show { visibility: visible; bottom: calc(95px + env(safe-area-inset-bottom)); opacity: 1; }
@@ -330,24 +439,16 @@
 </head>
 <body>
 
-    <!-- Pull to refresh loader -->
     <div id="ptr-loader" style="position: fixed; top: 0; left: 0; width: 100%; text-align: center; padding: 20px; z-index: 9999; transform: translateY(-100%); transition: transform 0.2s; pointer-events: none;">
-        <div style="background: var(--bg-card); display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; box-shadow: 0 5px 15px rgba(0,0,0,0.3); border: 1px solid var(--glass-border); backdrop-filter: blur(10px);">
-            <i class="fa-solid fa-rotate-right" id="ptr-icon" style="font-size: 18px; color: var(--primary); transition: transform 0.3s; text-shadow: 0 0 10px var(--btn-active-glow);"></i>
+        <div style="background: var(--bg-card); display: inline-block; padding: 10px; border-radius: 50%; box-shadow: 0 5px 15px rgba(0,0,0,0.3); border: 1px solid var(--glass-border); backdrop-filter: blur(10px);">
+            <i class="fa-solid fa-rotate-right" style="font-size: 20px; color: var(--primary); transition: transform 0.3s; text-shadow: 0 0 10px var(--btn-active-glow);"></i>
         </div>
     </div>
 
     <div class="static-gaming-bg"></div>
 
     <nav class="navbar" dir="ltr">
-        <div class="nav-brand-group">
-            <h1 class="num-font">Plato<span>X</span></h1>
-            <!-- Professional Live Visitor Counter -->
-            <div class="live-counter-box" title="Online Users">
-                <span class="pulse-dot"></span>
-                <span class="num-font" id="live-count">0</span>
-            </div>
-        </div>
+        <h1 class="num-font">Plato<span>X</span></h1>
         <div class="nav-actions">
             <i class="fa-solid fa-moon theme-toggle" id="theme-icon" onclick="toggleTheme();"></i>
             <a href="https://discord.gg/plato" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-discord"></i></a>
@@ -356,8 +457,8 @@
     </nav>
 
     <div class="main-lang-switch" dir="rtl">
-        <button type="button" class="lang-btn" onclick="changeLang('ar')" id="btn-ar">العربية</button>
-        <button type="button" class="lang-btn active" onclick="changeLang('en')" id="btn-en">English</button>
+        <button type="button" class="lang-btn active" onclick="changeLang('ar')" id="btn-ar">العربية</button>
+        <button type="button" class="lang-btn" onclick="changeLang('en')" id="btn-en">English</button>
     </div>
 
     <main id="view-home" class="tab-view active-view">
@@ -367,11 +468,11 @@
         </section>
 
         <section id="about-site" style="padding-top: 5px;">
-            <h2 class="section-title" data-i18n="about_site_title">About the Website</h2>
+            <h2 class="section-title" data-i18n="about_site_title">نبذة عن الموقع</h2>
             <div class="glass-panel" style="width: 100%; max-width: 700px; padding: 30px; border-radius: 16px; text-align: center; display: flex; flex-direction: column; align-items: center;">
                 <i class="fa-solid fa-globe pro-icon-glow" style="font-size: 35px; margin-bottom: 15px;"></i>
                 <p class="glass-desc-text" style="font-weight: 600; margin: 0;" data-i18n="about_site_desc">
-                    A community website developed and managed by the Arabic Leaders, serving as a trusted source for Plato news, guidelines, reporting, community resources, and Arabic server information.
+                    موقع مجتمعي تم تطويره وإدارته بواسطة القادة العرب، ليكون مرجعًا موثوقًا لأخبار بلاتو، الإرشادات، تقديم البلاغات، موارد المجتمع، ومعلومات الخادم العربي.
                 </p>
             </div>
         </section>
@@ -379,23 +480,23 @@
         <div class="cyber-divider"><div class="center-node"></div></div>
 
         <section id="news">
-            <h2 class="section-title" data-i18n="news_board_title">COMMUNITY NEWS BOARD</h2>
+            <h2 class="section-title" data-i18n="news_board_title">لوحة أخبار المجتمع</h2>
             <div class="news-carousel-container">
                 <div class="news-slider" id="newsSlider"></div>
                 <div class="news-bottom-wrapper">
                     <div class="slider-controls">
                         <button type="button" class="nav-btn disabled" id="btnNewer" disabled>
-                            <span class="nav-label num-font" data-i18n="news_newer">NEWER</span>
+                            <span class="nav-label num-font" data-i18n="news_newer">الأحدث</span>
                             <i class="fa-solid fa-arrow-right arrow-icon prev-icon"></i>
                         </button>
                         <div class="slider-dots" id="newsDots"></div>
                         <button type="button" class="nav-btn disabled" id="btnOlder" disabled>
-                            <span class="nav-label num-font" data-i18n="news_older">OLDER</span>
+                            <span class="nav-label num-font" data-i18n="news_older">الأقدم</span>
                             <i class="fa-solid fa-arrow-left arrow-icon next-icon"></i>
                         </button>
                     </div>
                     <a href="https://discord.gg/plato" target="_blank" rel="noopener noreferrer" class="more-news-link">
-                        <i class="fa-brands fa-discord"></i> <span data-i18n="discord_more">For more news, join our Discord server</span>
+                        <i class="fa-brands fa-discord"></i> <span data-i18n="discord_more">للمزيد من الأخبار انضموا إلى الديسكورد</span>
                     </a>
                 </div>
             </div>
@@ -404,39 +505,39 @@
         <div class="cyber-divider"><div class="center-node"></div></div>
 
         <section id="bug-report">
-            <h2 class="section-title" data-i18n="bug_title">Bug Reporting</h2>
+            <h2 class="section-title" data-i18n="bug_title">تقديم بلاغ</h2>
             <div class="glass-panel" style="width: 100%; max-width: 650px; padding: 30px; border-radius: 16px;">
-                <label style="display:block; margin-bottom: 8px; font-weight: bold; font-size: 18px;" data-i18n="bug_type_label">Issue Type:</label>
-                <span style="display:block; margin-bottom: 20px; color: var(--text-muted); font-weight: 700;" data-i18n="bug_note">This section is not for personal issues.</span>
+                <label style="display:block; margin-bottom: 8px; font-weight: bold; font-size: 18px;" data-i18n="bug_type_label">نوع المشكلة:</label>
+                <span style="display:block; margin-bottom: 20px; color: var(--text-muted); font-weight: 700;" data-i18n="bug_note">هذا القسم غير مخصص للمشاكل الشخصية.</span>
                 
                 <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
                     <label class="bug-radio">
                         <input type="radio" name="bugType" value="Exploits" onchange="showBugForm()">
-                        <span><strong data-i18n="bug_opt1_title">Exploits:</strong> <span data-i18n="bug_exp_desc" style="color: var(--text-muted);">Bugs, glitches, or modified clients.</span></span>
+                        <span><strong data-i18n="bug_opt1_title">الثغرات:</strong> <span data-i18n="bug_exp_desc" style="color: var(--text-muted);">ثغرات، أخطاء برمجية، أو نسخ معدلة.</span></span>
                     </label>
                     <label class="bug-radio">
                         <input type="radio" name="bugType" value="Serious Technical Issue" onchange="showBugForm()">
-                        <span><strong data-i18n="bug_opt2_title">Serious Technical Issue:</strong> <span data-i18n="bug_tech_desc" style="color: var(--text-muted);">High-impact bugs or system problems that can be repeatedly abused.</span></span>
+                        <span><strong data-i18n="bug_opt2_title">مشاكل تقنية:</strong> <span data-i18n="bug_tech_desc" style="color: var(--text-muted);">أخطاء تقنية ذات تأثير عالي أو مشاكل نظام قابلة للاستغلال المتكرر.</span></span>
                     </label>
                 </div>
 
                 <div id="bug-details" style="display: none; flex-direction: column; gap: 15px;">
                     <div style="position: relative; width: 100%;">
-                        <input type="text" id="plato-id" class="bug-input num-font" placeholder="Your Plato ID" maxlength="12" dir="ltr" oninput="clearInputError('plato-id')">
+                        <input type="text" id="plato-id" class="bug-input num-font" placeholder="يوزرك في اللعبة" maxlength="12" dir="ltr" oninput="clearInputError('plato-id')">
                         <div id="plato-id-error" class="input-error-msg"></div>
                     </div>
                     
                     <div style="position: relative; width: 100%;">
                         <div style="position: relative;">
-                            <textarea id="bug-desc" class="bug-input" placeholder="Issue description..." maxlength="1499" style="resize: none; overflow: hidden; padding-bottom: 25px; min-height: 110px;" oninput="clearInputError('bug-desc'); updateCharCount(this); autoResizeTextarea(this);"></textarea>
+                            <textarea id="bug-desc" class="bug-input" placeholder="وصف المشكلة..." maxlength="1499" style="resize: none; overflow: hidden; padding-bottom: 25px; min-height: 110px;" oninput="clearInputError('bug-desc'); updateCharCount(this); autoResizeTextarea(this);"></textarea>
                             <div class="char-counter-badge num-font" id="char-counter">1499</div>
                         </div>
                         <div id="bug-desc-error" class="input-error-msg"></div>
                     </div>
                     
                     <div style="display: flex; gap: 10px;">
-                        <button type="button" onclick="submitBugReport();" class="submit-btn" data-i18n="bug_submit">Submit Report</button>
-                        <button type="button" onclick="hideBugForm();" class="cancel-btn" data-i18n="bug_cancel">Cancel</button>
+                        <button type="button" onclick="submitBugReport();" class="submit-btn" data-i18n="bug_submit">إرسال البلاغ</button>
+                        <button type="button" onclick="hideBugForm();" class="cancel-btn" data-i18n="bug_cancel">إلغاء</button>
                     </div>
                 </div>
             </div>
@@ -445,30 +546,30 @@
         <div class="cyber-divider"><div class="center-node"></div></div>
 
         <section id="guidelines">
-            <h2 class="section-title" data-i18n="menu_guidelines">GUIDELINES</h2>
+            <h2 class="section-title" data-i18n="menu_guidelines">القوانين</h2>
             
             <div class="glass-panel" style="width: 100%; max-width: 650px; padding: 30px; border-radius: 16px; margin-bottom: 25px;">
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--glass-border);">
                     <i class="fa-solid fa-users pro-icon-glow" style="font-size: 26px;"></i>
-                    <h3 class="pro-title-glow" style="font-size: 22px; margin: 0;" data-i18n="community_guide_title">Community Guidelines</h3>
+                    <h3 class="pro-title-glow" style="font-size: 22px; margin: 0;" data-i18n="community_guide_title">إرشادات المجتمع</h3>
                 </div>
-                <p style="margin-bottom: 15px; font-weight: bold;" data-i18n="community_guide_sub">You can't do the following on Plato:</p>
+                <p style="margin-bottom: 15px; font-weight: bold;" data-i18n="community_guide_sub">لا يمكنك القيام بما يلي على بلاتو:</p>
                 <div>
                     <div class="guideline-item">
                         <i class="fa-solid fa-bug guideline-icon"></i>
-                        <div class="guideline-text" data-i18n="comm_guide_1">Exploit or interfere with Plato or another user's experience.</div>
+                        <div class="guideline-text" data-i18n="comm_guide_1">استغلال أو التدخل في تجربة بلاتو أو تجربة مستخدم آخر.</div>
                     </div>
                     <div class="guideline-item">
                         <i class="fa-solid fa-ranking-star guideline-icon"></i>
-                        <div class="guideline-text" data-i18n="comm_guide_2">Win-trade or manipulate the ranking system.</div>
+                        <div class="guideline-text" data-i18n="comm_guide_2">تبادل الفوز أو التلاعب بنظام التصنيف.</div>
                     </div>
                     <div class="guideline-item">
                         <i class="fa-solid fa-robot guideline-icon"></i>
-                        <div class="guideline-text" data-i18n="comm_guide_3">Use third-party programs to gain an unfair advantage.</div>
+                        <div class="guideline-text" data-i18n="comm_guide_3">استخدام برامج طرف ثالث للحصول على ميزة غير عادلة.</div>
                     </div>
                     <div class="guideline-item">
                         <i class="fa-solid fa-money-bill-transfer guideline-icon"></i>
-                        <div class="guideline-text" data-i18n="comm_guide_4">Buy or sell accounts for real money.</div>
+                        <div class="guideline-text" data-i18n="comm_guide_4">بيع أو شراء الحسابات مقابل مال حقيقي.</div>
                     </div>
                 </div>
             </div>
@@ -476,35 +577,35 @@
             <div class="glass-panel" style="width: 100%; max-width: 650px; padding: 30px; border-radius: 16px;">
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--glass-border);">
                     <i class="fa-solid fa-shield-halved pro-icon-glow" style="font-size: 26px;"></i>
-                    <h3 class="pro-title-glow" style="font-size: 22px; margin: 0;" data-i18n="guide_title">Public Room Chat Guidelines</h3>
+                    <h3 class="pro-title-glow" style="font-size: 22px; margin: 0;" data-i18n="guide_title">إرشادات الدردشة في الغرف العامة</h3>
                 </div>
 
                 <div>
                     <div class="guideline-item">
                         <i class="fa-solid fa-ban guideline-icon"></i>
-                        <div class="guideline-text" data-i18n="guide_1">No obscene, sexual, pornographic, or illegal content.</div>
+                        <div class="guideline-text" data-i18n="guide_1">يُمنع نشر محتوى فاحش، جنسي، إباحي، أو غير قانوني.</div>
                     </div>
                     <div class="guideline-item">
                         <i class="fa-solid fa-user-shield guideline-icon"></i>
-                        <div class="guideline-text" data-i18n="guide_2">Do not share another user's personal or confidential information.</div>
+                        <div class="guideline-text" data-i18n="guide_2">يُمنع مشاركة معلومات شخصية أو سرية تخص مستخدمًا آخر.</div>
                     </div>
                     <div class="guideline-item">
                         <i class="fa-solid fa-comment-slash guideline-icon"></i>
-                        <div class="guideline-text" data-i18n="guide_3">Do not spam or disrupt the flow of chat.</div>
+                        <div class="guideline-text" data-i18n="guide_3">يُمنع إرسال رسائل مزعجة (سبام) أو تعطيل سير الدردشة.</div>
                     </div>
                     <div class="guideline-item">
                         <i class="fa-solid fa-hand-fist guideline-icon"></i>
-                        <div class="guideline-text" data-i18n="guide_4">Do not encourage violence, self-harm, suicide, or hate against any group.</div>
+                        <div class="guideline-text" data-i18n="guide_4">يُمنع التشجيع على العنف، إيذاء النفس، الانتحار، أو الكراهية ضد أي مجموعة.</div>
                     </div>
                     <div class="guideline-item">
                         <i class="fa-solid fa-globe guideline-icon"></i>
-                        <div class="guideline-text" data-i18n="guide_5">Use only the language of the selected server.</div>
+                        <div class="guideline-text" data-i18n="guide_5">استخدم فقط لغة الخادم الذي تم اختياره.</div>
                     </div>
                 </div>
 
-                <div class="guideline-warning">
-                    <i class="fa-solid fa-triangle-exclamation pro-icon-glow" style="font-size: 24px; flex-shrink: 0; color: var(--error-color) !important;"></i>
-                    <span data-i18n="guide_warning">Breaking these guidelines may result in a 4 hour chat restriction or further moderation action (permanent ban).</span>
+                <div class="guideline-warning" style="background: rgba(128, 128, 128, 0.15); border-color: rgba(128, 128, 128, 0.3); color: var(--text-main); margin-top: 20px;">
+                    <i class="fa-solid fa-triangle-exclamation pro-icon-glow" style="font-size: 24px; flex-shrink: 0;"></i>
+                    <span data-i18n="guide_warning">قد يؤدي انتهاك هذه الإرشادات إلى تقييد الدردشة لمدة 4 ساعات أو اتخاذ إجراءات إشرافية إضافية (حظر دائم).</span>
                 </div>
             </div>
         </section>
@@ -512,34 +613,34 @@
         <div class="cyber-divider"><div class="center-node"></div></div>
 
         <section id="related-links">
-            <h2 class="section-title" data-i18n="links_title">RELATED SITES</h2>
+            <h2 class="section-title" data-i18n="links_title">مواقع ذات صلة</h2>
             <div class="links-grid">
                 <a href="https://platoapp.com/en" target="_blank" rel="noopener noreferrer" class="link-card glass-panel">
                     <img src="IMG_0195.png" alt="Plato Web" class="link-brand-icon">
                     <div class="link-info">
                         <span class="link-title num-font">Plato Web</span>
-                        <span class="link-sub" data-i18n="link_plato_desc">The official website for Plato, featuring the game's main services and information.</span>
+                        <span class="link-sub" data-i18n="link_plato_desc">الموقع الرسمي والأساسي للعبة بلاتو، ويضم المعلومات والخدمات الرئيسية المتعلقة باللعبة.</span>
                     </div>
                 </a>
                 <a href="https://platopedia.com/profilebuilder" target="_blank" rel="noopener noreferrer" class="link-card glass-panel">
                     <img src="IMG_0196.png" alt="Platopedia" class="link-brand-icon">
                     <div class="link-info">
                         <span class="link-title num-font" data-i18n="link_platopedia">Platopedia</span>
-                        <span class="link-sub" data-i18n="link_platopedia_desc">A Plato encyclopedia covering items and profile customization.</span>
+                        <span class="link-sub" data-i18n="link_platopedia_desc">موسوعة متخصصة في بلاتو، توفر معلومات شاملة حول العناصر المتاحة، إلى جانب خيارات تخصيص الملفات الشخصية ومتابعة تفاصيلها.</span>
                     </div>
                 </a>
                 <a href="https://werepedia.com/en" target="_blank" rel="noopener noreferrer" class="link-card glass-panel">
                     <img src="IMG_0188.webp" alt="Werepedia" class="link-brand-icon">
                     <div class="link-info">
                         <span class="link-title num-font" data-i18n="link_werepedia">Werepedia</span>
-                        <span class="link-sub" data-i18n="link_werepedia_desc">A Werewolf guide covering cards, roles, and gameplay strategies.</span>
+                        <span class="link-sub" data-i18n="link_werepedia_desc">موقع متخصص في لعبة الذئب، يقدّم شرحًا مفصلًا للبطاقات والأدوار، بالإضافة إلى استراتيجيات ونصائح تساعد على تطوير أسلوب اللعب.</span>
                     </div>
                 </a>
                 <a href="https://platoapp.com/en/in-app/how-to-play/match3battle/monsterpedia" target="_blank" rel="noopener noreferrer" class="link-card glass-panel">
                     <img src="IMG_0193.png" alt="Monsterpedia" class="link-brand-icon">
                     <div class="link-info">
                         <span class="link-title num-font" data-i18n="link_monsterpedia">Monsterpedia</span>
-                        <span class="link-sub" data-i18n="link_monsterpedia_desc">A Monster guide covering the game's content in detail.</span>
+                        <span class="link-sub" data-i18n="link_monsterpedia_desc">موسوعة متخصصة في لعبة الوحوش، تشرح محتوى اللعبة بالتفصيل.</span>
                     </div>
                 </a>
             </div>
@@ -552,72 +653,72 @@
             <div class="glass-panel" style="width: 100%; max-width: 850px; padding: 30px; border-radius: 16px; margin-bottom: 5px;">
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
                     <i class="fa-solid fa-circle-question pro-icon-glow" style="font-size: 26px;"></i>
-                    <h3 class="pro-title-glow" style="font-size: 22px; margin: 0;" data-i18n="who_are_leaders">Who are the Leaders?</h3>
+                    <h3 class="pro-title-glow" style="font-size: 22px; margin: 0;" data-i18n="who_are_leaders">من هم القادة؟</h3>
                 </div>
                 <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 25px; font-weight: 700;" data-i18n="who_are_leaders_desc">
-                    Leaders are official community representatives who act as a bridge between players and the development team, helping build a fun, safe, and fair environment for everyone.
+                    القادة هم الممثلون الرسميون للمجتمع ويعملون كحلقة وصل بين اللاعبين وفريق التطوير، للمساعدة في بناء بيئة ممتعة، آمنة، وعادلة للجميع.
                 </p>
 
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px; margin-top: 25px; padding-top: 25px; border-top: 1px solid var(--glass-border);">
                     <i class="fa-solid fa-list-check pro-icon-glow" style="font-size: 26px;"></i>
-                    <h3 class="pro-title-glow" style="font-size: 22px; margin: 0;" data-i18n="leaders_tasks">What are the Leaders' tasks?</h3>
+                    <h3 class="pro-title-glow" style="font-size: 22px; margin: 0;" data-i18n="leaders_tasks">ما مهام القادة؟</h3>
                 </div>
                 <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px; margin:0;">
                     <li class="guideline-item">
                         <i class="fa-solid fa-bug guideline-icon"></i> 
-                        <span class="guideline-text" data-i18n="task_1" style="font-weight: 600;">Reporting bugs and technical issues to the development team.</span>
+                        <span class="guideline-text" data-i18n="task_1" style="font-weight: 600;">الإبلاغ عن الأخطاء والمشاكل التقنية لفريق التطوير.</span>
                     </li>
                     <li class="guideline-item">
                         <i class="fa-solid fa-comment-dots guideline-icon"></i> 
-                        <span class="guideline-text" data-i18n="task_2" style="font-weight: 600;">Sharing player feedback, concerns, and suggestions.</span>
+                        <span class="guideline-text" data-i18n="task_2" style="font-weight: 600;">مشاركة ملاحظات، مخاوف، واقتراحات اللاعبين.</span>
                     </li>
                     <li class="guideline-item">
                         <i class="fa-solid fa-lightbulb guideline-icon"></i> 
-                        <span class="guideline-text" data-i18n="task_3" style="font-weight: 600;">Proposing ideas to improve the player experience.</span>
+                        <span class="guideline-text" data-i18n="task_3" style="font-weight: 600;">اقتراح أفكار لتحسين تجربة اللاعبين.</span>
                     </li>
                     <li class="guideline-item">
                         <i class="fa-solid fa-image-portrait guideline-icon"></i> 
-                        <span class="guideline-text" data-i18n="task_4" style="font-weight: 600;">Reviewing and removing inappropriate profiles or bios.</span>
+                        <span class="guideline-text" data-i18n="task_4" style="font-weight: 600;">مراجعة وإزالة الملفات الشخصية أو السير الذاتية غير اللائقة.</span>
                     </li>
                     <li class="guideline-item">
                         <i class="fa-solid fa-user-lock guideline-icon"></i> 
-                        <span class="guideline-text" data-i18n="task_5" style="font-weight: 600;">Submitting ban requests for repeated rule violations.</span>
+                        <span class="guideline-text" data-i18n="task_5" style="font-weight: 600;">رفع طلبات الحظر للانتهاكات المتكررة للقوانين.</span>
                     </li>
                     <li class="guideline-item" style="border: none; padding-bottom: 0; margin-bottom: 0;">
                         <i class="fa-solid fa-eye guideline-icon"></i> 
-                        <span class="guideline-text" data-i18n="task_6" style="font-weight: 600;">Moderating rooms and taking appropriate action.</span>
+                        <span class="guideline-text" data-i18n="task_6" style="font-weight: 600;">الإشراف على الغرف واتخاذ الإجراءات المناسبة.</span>
                     </li>
                 </ul>
 
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px; margin-top: 30px; padding-top: 25px; border-top: 1px solid var(--glass-border);">
                     <i class="fa-solid fa-user-plus pro-icon-glow" style="font-size: 26px;"></i>
-                    <h3 class="pro-title-glow" style="font-size: 22px; margin: 0;" data-i18n="how_to_be_leader">How to become a leader?</h3>
+                    <h3 class="pro-title-glow" style="font-size: 22px; margin: 0;" data-i18n="how_to_be_leader">كيف تصبح قائدًا؟</h3>
                 </div>
                 <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px; margin:0;">
                     <li class="guideline-item" style="border: none; padding-bottom: 0; margin-bottom: 0;">
                         <i class="fa-solid fa-check-circle guideline-icon"></i> 
-                        <span class="guideline-text" data-i18n="be_leader_1" style="font-weight: 600;">Leaders are chosen based on their positive engagement and active involvement in the community.</span>
+                        <span class="guideline-text" data-i18n="be_leader_1" style="font-weight: 600;">يتم اختيار القادة بناءً على تفاعلهم الإيجابي ومشاركتهم الفعالة في المجتمع.</span>
                     </li>
                     <li class="guideline-item" style="border: none; padding-bottom: 0; margin-bottom: 0;">
                         <i class="fa-solid fa-check-circle guideline-icon"></i> 
-                        <span class="guideline-text" data-i18n="be_leader_2" style="font-weight: 600;">Candidates are nominated by current Leaders and must be approved by the game developer.</span>
+                        <span class="guideline-text" data-i18n="be_leader_2" style="font-weight: 600;">يتم ترشيح المرشحين من قِبل القادة الحاليين ويجب الموافقة عليهم من قِبل مطور اللعبة.</span>
                     </li>
                 </ul>
                 <div class="guideline-warning" style="background: rgba(128, 128, 128, 0.15); border-color: rgba(128, 128, 128, 0.3); color: var(--text-main); margin-top: 20px;">
                     <i class="fa-solid fa-circle-info pro-icon-glow" style="font-size: 24px; flex-shrink: 0;"></i>
-                    <span data-i18n="be_leader_note" style="font-weight: 600;">New Leaders are appointed when needed, with a maximum of 4 Leaders per server.</span>
+                    <span data-i18n="be_leader_note" style="font-weight: 600;">يتم تعيين قادة جدد عند الحاجة، بحد أقصى 4 قادة لكل خادم.</span>
                 </div>
                 
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px; margin-top: 30px; padding-top: 25px; border-top: 1px solid var(--glass-border);">
                     <i class="fa-solid fa-comments pro-icon-glow" style="font-size: 26px;"></i>
-                    <h3 class="pro-title-glow" style="font-size: 22px; margin: 0;" data-i18n="feedback_title">Community Feedback</h3>
+                    <h3 class="pro-title-glow" style="font-size: 22px; margin: 0;" data-i18n="feedback_title">آراء المجتمع</h3>
                 </div>
                 <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 20px; font-weight: 600;" data-i18n="feedback_desc">
-                    A place to share your ideas and suggestions about the game, give feedback on your experience in the community, and help make the community a better place for everyone.
+                    مساحتك لمشاركة الأفكار والمقترحات حول اللعبة، وتقديم الملاحظات حول تجربتك في المجتمع، بما يسهم في تطوير المجتمع وتحسين تجربة اللاعبين.
                 </p>
                 <div class="feedback-btn-wrapper">
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSfdTHwSEhAB_apQrXarWH9TswkuEPgkDVBt33ndhIB97sIwFg/viewform" target="_blank" rel="noopener noreferrer" class="fit-btn">
-                        <i class="fa-solid fa-paper-plane"></i> <span data-i18n="feedback_btn">Submit Feedback & Ideas</span>
+                        <i class="fa-solid fa-paper-plane"></i> <span data-i18n="feedback_btn">تقديم الاقتراحات والملاحظات</span>
                     </a>
                 </div>
 
@@ -627,7 +728,7 @@
         <div class="cyber-divider"><div class="center-node"></div></div>
 
         <section id="arabic-leaders">
-            <h2 class="section-title" data-i18n="leaders_title">ARABIC LEADERS</h2>
+            <h2 class="section-title" data-i18n="leaders_title">القادة العرب</h2>
             <div class="grid-container">
                 <div class="card glass-panel card-yyy" style="border-top: 2px solid rgba(255,255,255,0.8); border-bottom: 2px solid rgba(255,255,255,0.8); box-shadow: 0 -8px 20px rgba(255,255,255,0.3), 0 8px 20px rgba(255,255,255,0.3);">
                     <img src="IMG_3154.png" alt="YYY">
@@ -643,8 +744,8 @@
                             </svg>
                         </div>
                     </div>
-                    <p class="leader-desc" data-i18n="desc_yyy">The Impact Maker, leading with a futuristic vision to create a positive environment.</p>
-                    <div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: #ffffff;"></i> <span data-i18n="bday_yyy">January 1</span></div>
+                    <p class="leader-desc" data-i18n="desc_yyy">صانع الأثر، يقود برؤية مستقبلية لخلق بيئة إيجابية لا تعرف المستحيل.</p>
+                    <div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: #ffffff;"></i> <span data-i18n="bday_yyy">1 يناير</span></div>
                 </div>
                 <div class="card glass-panel card-hat" style="border-top: 2px solid rgba(255,255,255,0.8); border-bottom: 2px solid rgba(255,255,255,0.8); box-shadow: 0 -8px 20px rgba(255,255,255,0.3), 0 8px 20px rgba(255,255,255,0.3);">
                     <img src="f3b8c20da38a9320fa2f250f52f7f16a.png" alt="HAT">
@@ -660,8 +761,8 @@
                             </svg>
                         </div>
                     </div>
-                    <p class="leader-desc" data-i18n="desc_hat">A grounded presence, leading the community with solid confidence and setting standards.</p>
-                    <div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: #ffffff;"></i> <span data-i18n="bday_hat">September 1</span></div>
+                    <p class="leader-desc" data-i18n="desc_hat">حضور راسخ، تقود المجتمع بثقة راسخة وترسم معايير الرقي.</p>
+                    <div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: #ffffff;"></i> <span data-i18n="bday_hat">1 سبتمبر</span></div>
                 </div>
                 <div class="card glass-panel card-bbb" style="border-top: 2px solid rgba(255,255,255,0.8); border-bottom: 2px solid rgba(255,255,255,0.8); box-shadow: 0 -8px 20px rgba(255,255,255,0.3), 0 8px 20px rgba(255,255,255,0.3);">
                     <img src="a_368d018a788facdb964b3f1df658ecde.gif" alt="BBB">
@@ -677,7 +778,7 @@
                             </svg>
                         </div>
                     </div>
-                    <p class="leader-desc" data-i18n="desc_bbb">Wisdom in decision making, balancing firmness and calmness in management.</p>
+                    <p class="leader-desc" data-i18n="desc_bbb">الحكمة في اتخاذ القرار، يوازن بين الحزم والهدوء لإدارة الأزمات باحترافية.</p>
                 </div>
             </div>
         </section>
@@ -685,7 +786,7 @@
         <div class="cyber-divider"><div class="center-node"></div></div>
 
         <section id="global-leaders">
-            <h2 class="section-title" data-i18n="global_leaders_title">GLOBAL SERVERS LEADERS</h2>
+            <h2 class="section-title" data-i18n="global_leaders_title">قادة السيرفرات العالمية</h2>
             <div class="server-tabs" dir="ltr">
                 <button type="button" class="server-tab active" data-target="english" onclick="filterServer('english')">English</button>
                 <button type="button" class="server-tab" data-target="persian" onclick="filterServer('persian')">Persian</button>
@@ -704,11 +805,11 @@
     <main id="view-leaderboard" class="tab-view">
 
         <section id="weekly-showcase" style="display: none;">
-            <h2 class="section-title" data-i18n="weekly_showcase_title">WEEKLY GAME ITEMS</h2>
+            <h2 class="section-title" data-i18n="weekly_showcase_title">عناصر الألعاب الأسبوعية</h2>
             <div class="glass-panel" style="width: 100%; max-width: 750px; padding: 30px 20px; border-radius: 16px; display: flex; flex-direction: column; align-items: center;">
                 
                 <p class="glass-desc-text" style="font-weight: 600; text-align: center; margin-bottom: 20px;" data-i18n="weekly_showcase_desc">
-                    Explore the latest items available this week.
+                    استكشف احدث العناصر المتوفرة لهذا الاسبوع.
                 </p>
 
                 <h3 id="weekly-week-name" class="num-font pro-title-glow" style="text-align: center; margin-bottom: 15px; display: none;"></h3>
@@ -724,21 +825,21 @@
         <div class="cyber-divider" id="weekly-divider" style="display: none;"><div class="center-node"></div></div>
 
         <section id="tournaments">
-            <h2 class="section-title" data-i18n="tournaments_title">TOURNAMENTS</h2>
+            <h2 class="section-title" data-i18n="tournaments_title">مركز البطولات</h2>
             <div class="tournaments-grid" id="tournaments-container"></div>
         </section>
 
         <div class="cyber-divider"><div class="center-node"></div></div>
 
         <section id="top-spending">
-            <h2 class="section-title" data-i18n="spending_title">TOP SPENDING GROUPS</h2>
+            <h2 class="section-title" data-i18n="spending_title">ترتيب المجموعات الأكثر إنفاقًا</h2>
             <div class="premium-list" id="spenders-container"></div>
         </section>
 
         <div class="cyber-divider"><div class="center-node"></div></div>
 
         <section id="accounts">
-            <h2 class="section-title" data-i18n="players_title">OLDEST PLAYERS</h2>
+            <h2 class="section-title" data-i18n="players_title">اللاعبين الاقدم</h2>
             <div class="premium-list">
                 <div class="list-row glass-panel rank-1">
                     <div class="rank-num num-font">01</div>
@@ -746,7 +847,7 @@
                         <img src="84fbda49d60a3ab730108bb40c635feb.png" class="list-img" alt="abc">
                         <div class="list-name num-font">abc</div>
                     </div>
-                    <div class="score-val num-font"><span class="auto-days" data-base-days="3563"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">DAYS</span></div>
+                    <div class="score-val num-font"><span class="auto-days" data-base-days="3563"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
                 </div>
 
                 <div class="list-row glass-panel rank-2">
@@ -755,7 +856,7 @@
                         <img src="IMG_9764.png" class="list-img" alt="RIP">
                         <div class="list-name num-font">RIP</div>
                     </div>
-                    <div class="score-val num-font"><span class="auto-days" data-base-days="3491"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">DAYS</span></div>
+                    <div class="score-val num-font"><span class="auto-days" data-base-days="3491"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
                 </div>
 
                 <div class="list-row glass-panel rank-3">
@@ -764,7 +865,7 @@
                         <img src="a_368d018a788facdb964b3f1df658ecde.gif" class="list-img" alt="BBB">
                         <div class="list-name num-font">BBB</div>
                     </div>
-                    <div class="score-val num-font"><span class="auto-days" data-base-days="3005"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">DAYS</span></div>
+                    <div class="score-val num-font"><span class="auto-days" data-base-days="3005"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
                 </div>
 
                 <div class="list-row glass-panel">
@@ -773,7 +874,7 @@
                         <img src="a_368d018a788facdb964b3f1df658ecde.gif" class="list-img" alt="MMM">
                         <div class="list-name num-font">MMM</div>
                     </div>
-                    <div class="score-val num-font"><span class="auto-days" data-base-days="3005"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">DAYS</span></div>
+                    <div class="score-val num-font"><span class="auto-days" data-base-days="3005"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
                 </div>
 
                 <div class="list-row glass-panel">
@@ -782,7 +883,7 @@
                         <img src="IMG_9766.png" class="list-img" alt="Alive">
                         <div class="list-name num-font">Alive</div>
                     </div>
-                    <div class="score-val num-font"><span class="auto-days" data-base-days="2981"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">DAYS</span></div>
+                    <div class="score-val num-font"><span class="auto-days" data-base-days="2981"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
                 </div>
             </div>
         </section>
@@ -790,14 +891,15 @@
         <div class="cyber-divider"><div class="center-node"></div></div>
 
         <section id="join-us">
-            <h2 class="section-title" data-i18n="join_us_title">Join Us</h2>
+            <h2 class="section-title" data-i18n="join_us_title">انضم إلينا</h2>
             <div class="glass-panel" style="width: 100%; max-width: 750px; padding: 30px; border-radius: 16px; text-align: center; display: flex; flex-direction: column; align-items: center;">
-                <i class="fa-brands fa-discord" style="font-size: 40px; margin-bottom: 15px; color: var(--text-main);"></i>
+                <!-- إزالة كلاس التوهج وتوحيد اللون للديسكورد الطبيعي -->
+                <i class="fa-brands fa-discord" style="font-size: 40px; margin-bottom: 15px; color: var(--discord-color);"></i>
                 <p class="glass-desc-text" style="font-weight: 600; margin-bottom: 20px;" data-i18n="join_us_desc">
-                    Have a tournament you'd like to add, or think your account belongs among the oldest? Send us the details on Discord here.
+                    إذا كانت لديكم بطولة في مجموعتكم ترغبون بإضافتها، أو تعتقدون أن حسابكم يستحق المنافسة ضمن أقدم الحسابات، أرسلوا لنا التفاصيل عبر الديسكورد من هنا.
                 </p>
-                <a href="https://discord.com/channels/1476420629698711778/1476603091095916738" target="_blank" rel="noopener noreferrer" class="fit-btn" style="background-color: var(--bg-card); color: var(--text-main); border: 1px solid var(--glass-border);">
-                    <i class="fa-brands fa-discord"></i> <span data-i18n="join_us_btn">Contact Us</span>
+                <a href="https://discord.com/channels/1476420629698711778/1476603091095916738" target="_blank" rel="noopener noreferrer" class="fit-btn" style="background-color: var(--discord-color); color: #fff;">
+                    <i class="fa-brands fa-discord"></i> <span data-i18n="join_us_btn">تواصل معنا</span>
                 </a>
             </div>
         </section>
@@ -807,27 +909,21 @@
     <nav class="bottom-nav-bar" dir="ltr">
         <div class="bottom-nav-item active" onclick="switchView('home', this)">
             <i class="fa-solid fa-house"></i>
-            <span data-i18n="nav_home">Home</span>
+            <span data-i18n="nav_home">الرئيسية</span>
         </div>
         <div class="bottom-nav-item" onclick="switchView('leaders', this)">
             <i class="fa-solid fa-users"></i>
-            <span data-i18n="nav_leaders">About Leaders</span>
+            <span data-i18n="nav_leaders">حول القادة</span>
         </div>
         <div class="bottom-nav-item" onclick="switchView('leaderboard', this)">
             <i class="fa-solid fa-compass"></i>
-            <span data-i18n="nav_leaderboard">Explore</span>
+            <span data-i18n="nav_leaderboard">استكشف</span>
         </div>
     </nav>
 
     <div id="toast"></div>
 
     <script>
-        // Safe Storage Wrapper (Fixes Incognito QuotaExceededError in some browsers)
-        const storage = {
-            get: (k) => { try { return localStorage.getItem(k); } catch(e){ return null; } },
-            set: (k, v) => { try { localStorage.setItem(k, v); } catch(e){} }
-        };
-
         function parseCSV(str) {
             var arr = [];
             var quote = false;
@@ -850,25 +946,34 @@
         function switchView(viewName, itemEl) {
             document.querySelectorAll('.tab-view').forEach(view => view.classList.remove('active-view'));
             document.querySelectorAll('.bottom-nav-item').forEach(item => item.classList.remove('active'));
+
             const targetView = document.getElementById(`view-${viewName}`);
-            if (targetView) targetView.classList.add('active-view');
-            if (itemEl) itemEl.classList.add('active');
+            if (targetView) {
+                targetView.classList.add('active-view');
+            }
+            if (itemEl) {
+                itemEl.classList.add('active');
+            }
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            if (viewName === 'home') setTimeout(updateCarouselButtons, 80);
+
+            if (viewName === 'home') {
+                setTimeout(updateCarouselButtons, 80);
+            }
         }
 
         function toggleTheme() {
             const currentTheme = document.documentElement.getAttribute('data-theme');
             const newTheme = currentTheme === 'light' ? 'dark' : 'light';
             document.documentElement.setAttribute('data-theme', newTheme);
-            storage.set('theme', newTheme);
+            localStorage.setItem('theme', newTheme);
             document.getElementById('theme-icon').className = newTheme === 'light' ? 'fa-solid fa-sun theme-toggle' : 'fa-solid fa-moon theme-toggle';
         }
 
-        function copyToClip(txt, msgAr, msgEn) {
-            navigator.clipboard.writeText(txt).then(() => {
+        function copyAdminID(id) {
+            navigator.clipboard.writeText(id).then(() => {
                 const toast = document.getElementById("toast");
-                toast.innerHTML = (document.documentElement.getAttribute('lang') === 'ar') ? `<i class="fa-solid fa-check"></i> ${msgAr}` : `<i class="fa-solid fa-check"></i> ${msgEn}`;
+                toast.innerHTML = (document.documentElement.getAttribute('lang') === 'ar') ? `<i class="fa-solid fa-check"></i> تم النسخ: ${id}` : `<i class="fa-solid fa-check"></i> Copied: ${id}`;
                 toast.className = "show";
                 setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2500);
             });
@@ -878,7 +983,7 @@
             const copyBtn = e.target.closest('.copy-admin-btn, .admin-copy-btn');
             if (copyBtn) {
                 const id = copyBtn.getAttribute('data-id');
-                if (id) copyToClip(id, `تم النسخ: ${id}`, `Copied: ${id}`);
+                if (id) copyAdminID(id);
             }
         });
 
@@ -901,30 +1006,36 @@
         function hideBugForm() {
             document.getElementById('bug-details').style.display = 'none';
             document.querySelectorAll('input[name="bugType"]').forEach(r => r.checked = false);
+            
             const platoIdInput = document.getElementById('plato-id');
             const bugDescInput = document.getElementById('bug-desc');
-            platoIdInput.value = ''; bugDescInput.value = ''; bugDescInput.style.height = 'auto';
-            clearInputError('plato-id'); clearInputError('bug-desc');
+            
+            platoIdInput.value = '';
+            bugDescInput.value = '';
+            bugDescInput.style.height = 'auto';
+            
+            clearInputError('plato-id');
+            clearInputError('bug-desc');
             document.getElementById('char-counter').innerText = '1499';
         }
 
         function escapeHTML(str) {
             if (!str) return "";
-            return str.replace(/[&<>'"]/g, tag => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'}[tag]));
+            return str.replace(/[&<>'"]/g, 
+                tag => ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    "'": '&#39;',
+                    '"': '&quot;'
+                }[tag])
+            );
         }
-
-        function sanitizeCSV(str) {
-            return str.replace(/^[=+\-@\t\r\n]/, ' $&');
-        }
-
-        // Real IP Fetching for Backend Rate Limiting
-        let userIP = 'Unknown';
-        fetch('https://api.ipify.org?format=json').then(r => r.json()).then(data => userIP = data.ip).catch(e => {});
 
         async function submitBugReport() {
             const isAr = document.documentElement.lang === 'ar';
             
-            const lastReportTime = storage.get('last_bug_report');
+            const lastReportTime = localStorage.getItem('last_bug_report');
             if (lastReportTime) {
                 const elapsed = Date.now() - parseInt(lastReportTime);
                 const cooldown = 30 * 60 * 1000; 
@@ -945,7 +1056,8 @@
             const platoId = platoIdInput.value.trim();
             const bugDesc = bugDescInput.value.trim();
             
-            clearInputError('plato-id'); clearInputError('bug-desc');
+            clearInputError('plato-id');
+            clearInputError('bug-desc');
 
             let hasError = false;
 
@@ -960,17 +1072,23 @@
             if (platoId.length < 3 || platoId.length > 12) {
                 const errorMsg = document.getElementById('plato-id-error');
                 errorMsg.innerText = isAr ? "يجب أن يكون اليوزر بين 3 و 12 حرفاً" : "Plato ID must be between 3 and 12 characters";
-                errorMsg.style.display = 'block'; platoIdInput.classList.add('input-error'); hasError = true;
+                errorMsg.style.display = 'block';
+                platoIdInput.classList.add('input-error');
+                hasError = true;
             } else if (!/^[a-zA-Z0-9_]+$/.test(platoId)) {
                 const errorMsg = document.getElementById('plato-id-error');
                 errorMsg.innerText = isAr ? "يوزر غير صالح. استخدم A-Z و 0-9 و _ فقط" : "Invalid Plato ID. Use A-Z, 0-9 and underscores only";
-                errorMsg.style.display = 'block'; platoIdInput.classList.add('input-error'); hasError = true;
+                errorMsg.style.display = 'block';
+                platoIdInput.classList.add('input-error');
+                hasError = true;
             }
 
             if (!bugDesc) {
                 const descError = document.getElementById('bug-desc-error');
                 descError.innerText = isAr ? "يرجى كتابة وصف المشكلة" : "Please describe the issue";
-                descError.style.display = 'block'; bugDescInput.classList.add('input-error'); hasError = true;
+                descError.style.display = 'block';
+                bugDescInput.classList.add('input-error');
+                hasError = true;
             }
 
             if (hasError) return;
@@ -983,21 +1101,12 @@
             submitBtn.innerText = isAr ? 'جاري الإرسال...' : 'Sending...';
             submitBtn.disabled = true;
 
-            const safePlatoId = sanitizeCSV(platoId);
-            const safeBugDesc = sanitizeCSV(bugDesc);
-
             try {
-                // Changed from GET back to POST so user IP and long descriptions work safely, removed 'no-cors' to catch errors
-                const formData = new FormData();
-                formData.append("plato_id", safePlatoId);
-                formData.append("issue_type", bugType);
-                formData.append("description", safeBugDesc);
-                formData.append("ip_address", userIP);
-
-                const response = await fetch(scriptURL, { method: "POST", body: formData });
-                if(!response.ok) throw new Error("Server Error");
+                // الكود الأصلي والمضمون للإرسال بدون فلاتر تكسر الإتصال مع Google Script
+                const finalURL = scriptURL + "?plato_id=" + encodeURIComponent(platoId) + "&issue_type=" + encodeURIComponent(bugType) + "&description=" + encodeURIComponent(bugDesc);
+                await fetch(finalURL, { mode: "no-cors" });
                 
-                storage.set('last_bug_report', Date.now().toString());
+                localStorage.setItem('last_bug_report', Date.now().toString());
 
                 const toast = document.getElementById("toast");
                 toast.innerHTML = isAr ? `<i class="fa-solid fa-check"></i> تم إرسال البلاغ بنجاح` : `<i class="fa-solid fa-check"></i> Report Submitted Successfully`;
@@ -1059,7 +1168,7 @@
         function renderGlobalLeaders() {
             const container = document.getElementById('global-leaders-grid');
             let htmlStr = '';
-            const currentLang = document.documentElement.getAttribute('lang') || 'en';
+            const currentLang = document.documentElement.getAttribute('lang') || 'ar';
             
             globalLeadersData.forEach(leader => {
                 const sTheme = serverThemes[leader.server];
@@ -1100,7 +1209,7 @@
                 htmlStr += `
                     <div class="global-leader glass-panel" data-server="${escapeHTML(leader.server)}" style="${cardGlowStyle}">
                         <img src="${imageSource}" alt="${escapeHTML(leader.name)}" style="${profBorder}">
-                        <div class="leader-name-box copy-admin-btn" data-id="${escapeHTML(leader.name)}" title="Copy User">
+                        <div class="leader-name-box copy-admin-btn" data-id="${escapeHTML(leader.name)}" title="انسخ اليوزر">
                             <i class="fa-regular fa-copy leader-copy-icon"></i>
                             <h3 class="num-font" style="color: ${sTheme.nameColor} !important; text-shadow: ${sTheme.shadow} !important; ${strokeStyle}">${escapeHTML(leader.name)}</h3>
                             <div class="server-badge" style="background: ${sTheme.bg}; ${badgeGlowStyle} ${badgeBorder}">
@@ -1142,7 +1251,11 @@
             });
             
             document.querySelectorAll('.global-leader').forEach(card => {
-                card.style.display = card.dataset.server === serverName ? 'flex' : 'none';
+                if(card.dataset.server === serverName) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
             });
         }
 
@@ -1269,16 +1382,24 @@
                 newsSkel += `<div class="news-slide-card glass-panel skeleton" style="height: 200px;"></div>`;
             }
             document.getElementById('newsSlider').innerHTML = newsSkel;
-            document.getElementById('tournaments-container').innerHTML = `<div class="tour-card glass-panel skeleton" style="height: 120px; margin-bottom:15px;"></div>`.repeat(2);
-            document.getElementById('spenders-container').innerHTML = `<div class="list-row glass-panel skeleton" style="height: 60px;"></div>`.repeat(3);
+
+            let tourSkel = '';
+            for(let i=0; i<2; i++) {
+                tourSkel += `<div class="tour-card glass-panel skeleton" style="height: 120px; margin-bottom:15px;"></div>`;
+            }
+            document.getElementById('tournaments-container').innerHTML = tourSkel;
+
+            let spendSkel = '';
+            for(let i=0; i<3; i++) {
+                spendSkel += `<div class="list-row glass-panel skeleton" style="height: 60px;"></div>`;
+            }
+            document.getElementById('spenders-container').innerHTML = spendSkel;
         }
 
         async function loadDynamicData(force = false) {
             try {
-                if(force) storage.set('plato_data_v3_time', '0'); // clear cache on refresh
-                
-                const cached = storage.get('plato_data_v3');
-                const cacheTime = storage.get('plato_data_v3_time');
+                const cached = localStorage.getItem('plato_data_v3');
+                const cacheTime = localStorage.getItem('plato_data_v3_time');
                 const now = Date.now();
                 
                 if (!force && cached && cacheTime && (now - parseInt(cacheTime) < 120000) && !cached.includes('<!DOCTYPE html>')) {
@@ -1291,26 +1412,26 @@
                     }
                 }
 
-                const response = await fetch(tourSheetURL + "&_cache=" + new Date().getTime(), { cache: "no-store" });
-                if (!response.ok) throw new Error("Connection failed");
+                const response = await fetch(tourSheetURL + "&t=" + new Date().getTime(), { cache: "no-store" });
+                if (!response.ok) throw new Error("فشل الاتصال بالشيت");
                 const data = await response.text();
                 
-                if (data.includes('<!DOCTYPE html>')) throw new Error("Invalid response");
+                if (data.includes('<!DOCTYPE html>')) throw new Error("جوجل أرسلت استجابة غير صالحة");
 
                 const parsedData = parseCSV(data);
                 if(parsedData && parsedData.length > 1) {
-                    storage.set('plato_data_v3', data);
-                    storage.set('plato_data_v3_time', now.toString());
+                    localStorage.setItem('plato_data_v3', data);
+                    localStorage.setItem('plato_data_v3_time', now.toString());
                     cachedSheetRows = parsedData.slice(1);
                     renderDynamicData();
                     renderNewsData();
                 } else {
-                    throw new Error("Incomplete data");
+                    throw new Error("بيانات غير مكتملة");
                 }
                 
             } catch (error) { 
-                console.error("Fetch Error:", error); 
-                const fallbackCache = storage.get('plato_data_v3');
+                console.error("حدث خطأ:", error); 
+                const fallbackCache = localStorage.getItem('plato_data_v3');
                 if(fallbackCache && !fallbackCache.includes('<!DOCTYPE html>')) {
                     cachedSheetRows = parseCSV(fallbackCache).slice(1);
                     renderDynamicData();
@@ -1318,42 +1439,14 @@
                 } else {
                     const isLtr = document.documentElement.getAttribute('lang') === 'en';
                     document.getElementById('tournaments-container').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);" data-i18n="no_tournaments">${isLtr ? "No tournaments at the moment." : "لا بطولات في الوقت الحالي."}</p>`;
-                    document.getElementById('spenders-container').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">Data unavailable.</p>`;
-                    document.getElementById('newsSlider').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">Network issue.</p>`;
+                    document.getElementById('spenders-container').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">بيانات الإنفاق غير متوفرة حالياً.</p>`;
+                    document.getElementById('newsSlider').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">تعذر الاتصال بالشبكة.</p>`;
                 }
             }
         }
 
-        // News Interactions
-        function toggleLike(btn, newsId) {
-            btn.classList.toggle('liked');
-            let icon = btn.querySelector('i');
-            let countSpan = btn.querySelector('.react-count');
-            let count = parseInt(countSpan.innerText);
-            
-            if(btn.classList.contains('liked')) {
-                icon.classList.remove('fa-regular');
-                icon.classList.add('fa-solid');
-                countSpan.innerText = count + 1;
-                storage.set('liked_' + newsId, '1');
-            } else {
-                icon.classList.remove('fa-solid');
-                icon.classList.add('fa-regular');
-                countSpan.innerText = count - 1;
-                storage.set('liked_' + newsId, '0');
-            }
-        }
-
-        function shareNews(newsId) {
-            const isAr = document.documentElement.lang === 'ar';
-            const url = window.location.origin + window.location.pathname + "#news-" + newsId;
-            copyToClip(url, 'تم نسخ رابط الخبر!', 'News link copied!');
-        }
-
         function renderNewsData() {
             if (!cachedSheetRows || cachedSheetRows.length === 0) return;
-            const nowTime = getAccurateTime();
-            const isAr = document.documentElement.getAttribute('lang') === 'ar';
             
             let allNews = cachedSheetRows.filter(cols => cols.length >= 10 && (cols[9] || '').trim() && (cols[10] || '').trim());
             
@@ -1363,82 +1456,145 @@
                 return dateB - dateA;
             });
 
-            newsCardsData = allNews.slice(0, 5).map((cols, idx) => {
-                return {
-                    id: 'n' + new Date((cols[9] || '').trim()).getTime() + idx,
-                    dateMs: new Date((cols[9] || '').trim()).getTime() || 0,
-                    dateStr: escapeHTML(cols[0] || '').trim(),
-                    tagType: escapeHTML(cols[1] || '').trim(),
-                    titleAr: escapeHTML(cols[2] || '').trim(),
-                    bodyAr: escapeHTML(cols[3] || '').trim(),
-                    titleEn: escapeHTML(cols[4] || '').trim(),
-                    bodyEn: escapeHTML(cols[5] || '').trim()
-                };
+            newsCardsData = allNews.slice(0, 5).map(cols => {
+                return [
+                    cols[9],  
+                    cols[10], 
+                    cols[11], 
+                    cols[12], 
+                    cols[13], 
+                    cols[14]  
+                ];
             });
+            buildNewsHTML();
+        }
 
+        async function syncRealTime() {
+            try {
+                const response = await fetch('https://worldtimeapi.org/api/timezone/Asia/Riyadh');
+                if (!response.ok) throw new Error('API Blocked');
+                const data = await response.json();
+                baseRealTime = new Date(data.utc_datetime).getTime();
+                basePerfTime = performance.now();
+            } catch (error) {
+                try {
+                    const res2 = await fetch('https://timeapi.io/api/Time/current/zone?timeZone=Asia/Riyadh');
+                    if (!res2.ok) throw new Error();
+                    const data2 = await res2.json();
+                    baseRealTime = new Date(data2.dateTime + '+03:00').getTime();
+                    basePerfTime = performance.now();
+                } catch(e) { console.log("تم حظر التوقيت، سيتم استخدام وقت الجهاز كبديل."); }
+            }
+        }
+
+        function getAccurateTime() {
+            return baseRealTime + (performance.now() - basePerfTime);
+        }
+
+        function changeLang(lang) {
+            document.documentElement.setAttribute('lang', lang); 
+            document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+            
+            document.getElementById('btn-ar').classList.toggle('active', lang === 'ar');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => { 
+                if(translations[lang][el.getAttribute('data-i18n')]) {
+                    el.innerText = translations[lang][el.getAttribute('data-i18n')]; 
+                }
+            });
+            
+            document.getElementById('plato-id').placeholder = lang === 'ar' ? 'يوزرك في اللعبة' : 'Your Plato ID';
+            document.getElementById('bug-desc').placeholder = lang === 'ar' ? 'وصف المشكلة...' : 'Issue description...';
+            
+            clearInputError('plato-id');
+            clearInputError('bug-desc');
+
+            const feedbackBtnWrapper = document.querySelector('.feedback-btn-wrapper');
+            if (feedbackBtnWrapper) {
+                feedbackBtnWrapper.style.justifyContent = lang === 'ar' ? 'flex-start' : 'flex-end'; 
+            }
+            
+            renderGlobalLeaders();
+            const activeTab = document.querySelector('.server-tab.active');
+            if(activeTab) filterServer(activeTab.dataset.target);
+            
+            if (cachedSheetRows) {
+                renderDynamicData();
+                if (newsCardsData.length > 0) buildNewsHTML();
+            }
+            
+            localStorage.setItem('lang', lang);
+        }
+
+        function buildNewsHTML() {
             const slider = document.getElementById('newsSlider');
             const dotsContainer = document.getElementById('newsDots');
-            let sliderHTML = ''; let dotsHTML = '';
+            const isAr = document.documentElement.getAttribute('lang') === 'ar';
+            let sliderHTML = '';
+            let dotsHTML = '';
 
             if(newsCardsData.length === 0) {
                 slider.innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">لا توجد أخبار حالياً.</p>`;
                 return;
             }
 
-            newsCardsData.forEach((news, index) => {
-                const displayTitle = isAr ? news.titleAr : (news.titleEn || news.titleAr);
-                const displayBody = isAr ? news.bodyAr : (news.bodyEn || news.bodyAr);
-                let displayTag = news.tagType;
-                const tagLower = news.tagType.toLowerCase();
-                
+            newsCardsData.forEach((cols, index) => {
+                const dateStr = escapeHTML((cols[0] || '').trim());
+                const tagType = escapeHTML((cols[1] || '').trim());
+                const titleAr = escapeHTML((cols[2] || '').trim());
+                const bodyAr  = escapeHTML((cols[3] || '').trim());
+                const titleEn = escapeHTML((cols[4] || '').trim());
+                const bodyEn  = escapeHTML((cols[5] || '').trim());
+
+                const displayTitle = isAr ? titleAr : (titleEn || titleAr);
+                const displayBody = isAr ? bodyAr : (bodyEn || bodyAr);
+
                 let tagColor = 'var(--primary)', tagBg = 'var(--btn-active-glow)', icon = 'fa-bolt';
+                let displayTag = tagType;
+                const tagLower = tagType.toLowerCase();
+
                 if (!isAr) {
-                    if (tagLower.includes('إعلان') || tagLower.includes('announcement')) { displayTag = 'Announcement'; tagColor = '#3b82f6'; tagBg = 'rgba(59, 130, 246, 0.15)'; icon = 'fa-bullhorn'; } 
-                    else if (tagLower.includes('إشعار') || tagLower.includes('notice')) { displayTag = 'Notice'; tagColor = '#eab308'; tagBg = 'rgba(234, 179, 8, 0.15)'; icon = 'fa-bell'; } 
-                    else if (tagLower.includes('تذكير') || tagLower.includes('reminder')) { displayTag = 'Reminder'; tagColor = 'var(--primary)'; tagBg = 'var(--glass-border)'; icon = 'fa-clock'; } 
-                    else if (tagLower.includes('تحديث') || tagLower.includes('update')) { displayTag = 'Update'; tagColor = '#10b981'; tagBg = 'rgba(16, 185, 129, 0.15)'; icon = 'fa-wrench'; } 
-                    else if (tagLower.includes('مهم') || tagLower.includes('important')) { displayTag = 'Important'; tagColor = '#ef4444'; tagBg = 'rgba(239, 68, 68, 0.15)'; icon = 'fa-circle-exclamation'; }
+                    if (tagLower.includes('إعلان') || tagLower.includes('announcement')) {
+                        displayTag = 'Announcement'; tagColor = '#3b82f6'; tagBg = 'rgba(59, 130, 246, 0.15)'; icon = 'fa-bullhorn';
+                    } else if (tagLower.includes('إشعار') || tagLower.includes('notice')) {
+                        displayTag = 'Notice'; tagColor = '#eab308'; tagBg = 'rgba(234, 179, 8, 0.15)'; icon = 'fa-bell';
+                    } else if (tagLower.includes('تذكير') || tagLower.includes('reminder')) {
+                        displayTag = 'Reminder'; tagColor = 'var(--primary)'; tagBg = 'var(--glass-border)'; icon = 'fa-clock';
+                    } else if (tagLower.includes('تحديث') || tagLower.includes('update')) {
+                        displayTag = 'Update'; tagColor = '#10b981'; tagBg = 'rgba(16, 185, 129, 0.15)'; icon = 'fa-wrench';
+                    } else if (tagLower.includes('مهم') || tagLower.includes('important')) {
+                        displayTag = 'Important'; tagColor = '#ef4444'; tagBg = 'rgba(239, 68, 68, 0.15)'; icon = 'fa-circle-exclamation';
+                    }
                 } else {
-                    if (tagLower.includes('إعلان') || tagLower.includes('announcement')) { displayTag = 'إعلان'; tagColor = '#3b82f6'; tagBg = 'rgba(59, 130, 246, 0.15)'; icon = 'fa-bullhorn'; } 
-                    else if (tagLower.includes('إشعار') || tagLower.includes('notice')) { displayTag = 'إشعار'; tagColor = '#eab308'; tagBg = 'rgba(234, 179, 8, 0.15)'; icon = 'fa-bell'; } 
-                    else if (tagLower.includes('تذكير') || tagLower.includes('reminder')) { displayTag = 'تذكير'; tagColor = 'var(--primary)'; tagBg = 'var(--glass-border)'; icon = 'fa-clock'; } 
-                    else if (tagLower.includes('تحديث') || tagLower.includes('update')) { displayTag = 'تحديث'; tagColor = '#10b981'; tagBg = 'rgba(16, 185, 129, 0.15)'; icon = 'fa-wrench'; } 
-                    else if (tagLower.includes('مهم') || tagLower.includes('important')) { displayTag = 'مهم'; tagColor = '#ef4444'; tagBg = 'rgba(239, 68, 68, 0.15)'; icon = 'fa-circle-exclamation'; }
+                    if (tagLower.includes('إعلان') || tagLower.includes('announcement')) {
+                        displayTag = 'إعلان'; tagColor = '#3b82f6'; tagBg = 'rgba(59, 130, 246, 0.15)'; icon = 'fa-bullhorn';
+                    } else if (tagLower.includes('إشعار') || tagLower.includes('notice')) {
+                        displayTag = 'إشعار'; tagColor = '#eab308'; tagBg = 'rgba(234, 179, 8, 0.15)'; icon = 'fa-bell';
+                    } else if (tagLower.includes('تذكير') || tagLower.includes('reminder')) {
+                        displayTag = 'تذكير'; tagColor = 'var(--primary)'; tagBg = 'var(--glass-border)'; icon = 'fa-clock';
+                    } else if (tagLower.includes('تحديث') || tagLower.includes('update')) {
+                        displayTag = 'تحديث'; tagColor = '#10b981'; tagBg = 'rgba(16, 185, 129, 0.15)'; icon = 'fa-wrench';
+                    } else if (tagLower.includes('مهم') || tagLower.includes('important')) {
+                        displayTag = 'مهم'; tagColor = '#ef4444'; tagBg = 'rgba(239, 68, 68, 0.15)'; icon = 'fa-circle-exclamation';
+                    }
                 }
 
-                // New Badge Logic (within 48 hours)
-                const isNew = (nowTime - news.dateMs) < (48 * 60 * 60 * 1000) && (nowTime - news.dateMs) >= 0;
-                const newBadge = isNew ? `<span class="new-badge">${isAr ? 'جديد' : 'NEW'}</span>` : '';
-
-                const randLikes = Math.floor(Math.random() * 50) + 10; // Mock likes
-                const isLiked = storage.get('liked_' + news.id) === '1';
-
                 sliderHTML += `
-                    <div class="news-slide-card glass-panel" id="news-${news.id}">
+                    <div class="news-slide-card glass-panel">
                         <div class="news-header-top">
-                            <div>
-                                <span class="news-badge" style="color:${tagColor}; border-color:${tagColor}; background:${tagBg};"><i class="fa-solid ${icon}"></i> <span>${displayTag}</span></span>
-                                ${newBadge}
-                            </div>
-                            <span class="news-date-sub num-font">${news.dateStr}</span>
+                            <span class="news-badge" style="color:${tagColor}; border-color:${tagColor}; background:${tagBg};"><i class="fa-solid ${icon}"></i> <span>${displayTag}</span></span>
+                            <span class="news-date-sub num-font">${dateStr}</span>
                         </div>
                         <h3 class="news-headline">${displayTitle}</h3>
                         <p class="news-body">${displayBody}</p>
-                        
-                        <div class="news-footer-actions">
-                            <div class="action-btn ${isLiked ? 'liked' : ''}" onclick="toggleLike(this, '${news.id}')">
-                                <i class="${isLiked ? 'fa-solid' : 'fa-regular'} fa-heart"></i> <span class="react-count num-font">${isLiked ? randLikes + 1 : randLikes}</span>
-                            </div>
-                            <div class="action-btn" onclick="shareNews('${news.id}')">
-                                <i class="fa-solid fa-share-nodes"></i>
-                            </div>
-                        </div>
                     </div>`;
                 dotsHTML += `<div class="dot ${index === 0 ? 'active' : ''}"></div>`;
             });
 
             slider.innerHTML = sliderHTML;
             if (dotsContainer) dotsContainer.innerHTML = dotsHTML;
+            
             setTimeout(updateCarouselButtons, 50);
         }
 
@@ -1446,6 +1602,7 @@
             const slider = document.getElementById('newsSlider');
             const cards = slider.querySelectorAll('.news-slide-card');
             if(cards.length === 0) return;
+            
             let scrollAmount = cards[0].offsetWidth + 15; 
             const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
             slider.scrollBy({ left: scrollAmount * (isRTL ? -direction : direction), behavior: 'smooth' });
@@ -1454,7 +1611,8 @@
         document.querySelectorAll('.nav-btn').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 if(!btn.classList.contains('disabled') && !btn.disabled) {
-                    slideNews(btn.id === 'btnNewer' ? -1 : 1);
+                    const dir = btn.id === 'btnNewer' ? -1 : 1;
+                    slideNews(dir);
                 }
             });
         });
@@ -1463,16 +1621,25 @@
             const slider = document.getElementById('newsSlider');
             const dots = document.querySelectorAll('.dot');
             const cardElement = slider.querySelector('.news-slide-card');
+            
             if(!cardElement || !dots.length) return;
             
             let index = Math.round(Math.abs(slider.scrollLeft) / (cardElement.offsetWidth + 15));
             if (index >= dots.length) index = dots.length - 1;
+            
             dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
 
             const btnNewer = document.getElementById('btnNewer');
             const btnOlder = document.getElementById('btnOlder');
-            if (btnNewer) { btnNewer.classList.toggle('disabled', index === 0); btnNewer.disabled = (index === 0); }
-            if (btnOlder) { btnOlder.classList.toggle('disabled', index === dots.length - 1); btnOlder.disabled = (index === dots.length - 1); }
+            
+            if (btnNewer) {
+                btnNewer.classList.toggle('disabled', index === 0);
+                btnNewer.disabled = (index === 0);
+            }
+            if (btnOlder) {
+                btnOlder.classList.toggle('disabled', index === dots.length - 1);
+                btnOlder.disabled = (index === dots.length - 1);
+            }
         }
 
         let scrollTimeout;
@@ -1483,25 +1650,9 @@
 
         function renderDynamicData() {
             if (!cachedSheetRows || cachedSheetRows.length === 0) return;
-            const nowTime = getAccurateTime();
-            const currentLang = document.documentElement.getAttribute('lang') || 'en';
-            const isAr = currentLang === 'ar';
-            const isLtr = !isAr;
-
+            
             const firstRow = cachedSheetRows[0]; 
             if (firstRow) {
-                const rawDateStr = escapeHTML(firstRow[0] ? firstRow[0].trim() : "");
-                let targetTimeMs = NaN;
-                if (rawDateStr) {
-                    let safeTimeStr = rawDateStr.replace(/-/g, '/'); 
-                    if (!safeTimeStr.includes('+') && !safeTimeStr.toUpperCase().includes('GMT') && !safeTimeStr.toUpperCase().includes('Z')) safeTimeStr += ' GMT+0300';
-                    targetTimeMs = new Date(safeTimeStr).getTime();
-                }
-
-                // New Badge logic for weekly showcase (Within last 3 days)
-                const isNew = !isNaN(targetTimeMs) && (nowTime - targetTimeMs) < (3 * 24 * 60 * 60 * 1000) && (nowTime - targetTimeMs) >= 0;
-                const newBadge = isNew ? `<span class="new-badge">${isAr ? 'جديد' : 'NEW'}</span>` : '';
-
                 const videoUrl = firstRow[7] ? escapeHTML(firstRow[7].trim()) : ""; 
                 const weekName = escapeHTML(firstRow[8] ? firstRow[8] : ""); 
                 
@@ -1511,9 +1662,11 @@
                 const weekNameEl = document.getElementById('weekly-week-name');
                 
                 if (videoUrl) { 
-                    if (vidEl.getAttribute('src') !== videoUrl) vidEl.src = videoUrl;
+                    if (vidEl.getAttribute('src') !== videoUrl) {
+                        vidEl.src = videoUrl;
+                    }
                     if (weekName) {
-                        weekNameEl.innerHTML = weekName + newBadge;
+                        weekNameEl.innerText = weekName;
                         weekNameEl.style.display = 'block';
                     } else {
                         weekNameEl.style.display = 'none';
@@ -1529,19 +1682,27 @@
             const tourContainer = document.getElementById('tournaments-container');
             const spendContainer = document.getElementById('spenders-container');
             
+            const currentLang = document.documentElement.getAttribute('lang') || 'ar';
+            const isLtr = currentLang === 'en';
+            
+            const nowTime = getAccurateTime();
             let groupsSpending = {}; 
             let tournamentsList = [];
 
             cachedSheetRows.forEach((cols) => {
                 if(cols.length < 2) return;
+
                 const nameAr = escapeHTML(cols[1] ? cols[1].trim() : "");
                 if (!nameAr) return;
 
                 const rawTimeStr = escapeHTML(cols[0] ? cols[0].trim() : ""); 
                 let targetTimeMs = NaN;
+
                 if (rawTimeStr) {
                     let safeTimeStr = rawTimeStr.replace(/-/g, '/'); 
-                    if (!safeTimeStr.includes('+') && !safeTimeStr.toUpperCase().includes('GMT') && !safeTimeStr.toUpperCase().includes('Z')) safeTimeStr += ' GMT+0300';
+                    if (!safeTimeStr.includes('+') && !safeTimeStr.toUpperCase().includes('GMT') && !safeTimeStr.toUpperCase().includes('Z')) {
+                        safeTimeStr += ' GMT+0300';
+                    }
                     targetTimeMs = new Date(safeTimeStr).getTime();
                 }
 
@@ -1553,14 +1714,22 @@
 
                 let numValue = 0;
                 let cleanStr = prizeStr.toUpperCase().replace(/[^0-9.K]/g, '');
-                if (cleanStr.includes('K')) numValue = parseFloat(cleanStr.replace('K', '')) * 1000;
-                else numValue = parseFloat(cleanStr) || 0;
+                if (cleanStr.includes('K')) {
+                    numValue = parseFloat(cleanStr.replace('K', '')) * 1000;
+                } else {
+                    numValue = parseFloat(cleanStr) || 0;
+                }
 
-                if (!groupsSpending[nameAr]) groupsSpending[nameAr] = { nameAr, nameEn, image, total: 0 };
+                if (!groupsSpending[nameAr]) {
+                    groupsSpending[nameAr] = { nameAr, nameEn, image, total: 0 };
+                }
                 groupsSpending[nameAr].total += numValue;
 
-                if (!isNaN(targetTimeMs) && (targetTimeMs - nowTime) > -1800000) {
-                    tournamentsList.push({ targetTimeMs, nameAr, nameEn, image, prizeStr, game, admin, diff: targetTimeMs - nowTime });
+                if (!isNaN(targetTimeMs)) {
+                    const diff = targetTimeMs - nowTime;
+                    if (diff > -1800000) {
+                        tournamentsList.push({ targetTimeMs, nameAr, nameEn, image, prizeStr, game, admin, diff });
+                    }
                 }
             });
 
@@ -1572,18 +1741,15 @@
             sortedTournaments.forEach(tour => {
                 const displayName = currentLang === 'ar' ? tour.nameAr : (tour.nameEn || tour.nameAr);
                 const borderStyle = isLtr ? `border-left-color: var(--primary);` : `border-right-color: var(--primary);`;
-                const imgTag = tour.image ? `<img src="${tour.image}" class="entity-img" style="border-radius:8px; width:35px; height:35px; object-fit:cover;" onerror="this.style.display='none'">` : ``;
                 
-                // New Tournament Badge (Created within 3 days)
-                const isNew = tour.diff > 0 && (tour.targetTimeMs - nowTime) > (1 * 24 * 60 * 60 * 1000) ? false : true; // Simplistic logic for upcoming/recent
-                const newBadge = (tour.diff > 0 && (tour.targetTimeMs - nowTime) > 0) ? `<span class="new-badge">${isAr ? 'جديد' : 'NEW'}</span>` : '';
+                const imgTag = tour.image ? `<img src="${tour.image}" class="entity-img" style="border-radius:8px; width:35px; height:35px; object-fit:cover;" onerror="this.style.display='none'">` : ``;
 
                 tourHTML += `
                     <div class="tour-card glass-panel" style="${borderStyle}">
                         <div class="tour-header">
                             <div class="tour-title-box">
                                 ${imgTag}
-                                <div class="tour-title">${displayName} ${newBadge}</div>
+                                <div class="tour-title">${displayName}</div>
                             </div>
                             <div class="countdown-box sheet-timer" data-time="${tour.targetTimeMs}">
                                 <i class="fa-regular fa-clock"></i> <span class="num-font countdown-val">00:00:00</span>
@@ -1592,11 +1758,12 @@
                         <div class="tour-footer" style="margin-top: 15px;">
                             <div class="info-badge"><i class="fa-solid fa-gamepad"></i> <span>${tour.game}</span></div>
                             <div class="info-badge prize-badge"><i class="fa-solid fa-trophy"></i> <span class="num-font">${tour.prizeStr}</span></div>
-                            <div class="info-badge admin-copy-btn" data-id="${escapeHTML(tour.admin)}" title="Copy User">
+                            <div class="info-badge admin-copy-btn" data-id="${escapeHTML(tour.admin)}" title="انسخ اليوزر">
                                 <i class="fa-solid fa-copy"></i> <span class="num-font">${tour.admin}</span>
                             </div>
                         </div>
-                    </div>`;
+                    </div>
+                `;
             });
 
             let sortedGroups = Object.values(groupsSpending).sort((a, b) => b.total - a.total).slice(0, 3);
@@ -1615,6 +1782,7 @@
                 else if (rankNum === '3') { rankClass = 'rank-3'; color = '#cd7f32'; barBg = '#cd7f32'; }
 
                 let displayScore = group.total >= 1000 ? (group.total / 1000) + 'K' : group.total;
+                
                 const imgTag = group.image ? `<img src="${group.image}" class="list-img group-img" style="object-fit:cover;" onerror="this.style.display='none'">` : ``;
 
                 spendHTML += `
@@ -1628,11 +1796,12 @@
                             </div>
                         </div>
                         <div class="score-val num-font" style="color: ${color};">${displayScore}</div>
-                    </div>`;
+                    </div>
+                `;
             });
             
             if (tourHTML === '') tourHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);" data-i18n="no_tournaments">${isLtr ? "No tournaments at the moment." : "لا بطولات في الوقت الحالي."}</p>`;
-            if (spendHTML === '') spendHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">Data unavailable.</p>`;
+            if (spendHTML === '') spendHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">لم يتم تسجيل بيانات إنفاق حتى الآن.</p>`;
 
             tourContainer.innerHTML = tourHTML;
             spendContainer.innerHTML = spendHTML;
@@ -1665,42 +1834,40 @@
                     const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
                     const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
                     const s = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+                    
                     timer.valSpan.innerText = d > 0 ? `${d}d ${h}:${m}:${s}` : `${h}:${m}:${s}`;
                 }
             });
         }
-
-        // Live Counter Logic
-        function updateLiveCounter() {
-            const countEl = document.getElementById('live-count');
-            if(!countEl) return;
-            let currentCount = parseInt(storage.get('live_visitors') || '1024');
-            // Random fluctuation (-2 to +5)
-            const change = Math.floor(Math.random() * 8) - 2;
-            currentCount = Math.max(120, currentCount + change);
-            storage.set('live_visitors', currentCount.toString());
-            countEl.innerText = currentCount.toLocaleString();
-        }
-        setInterval(updateLiveCounter, 3500);
 
         let ptrStartX = 0, ptrStartY = 0, ptrCurrentY = 0, isPulling = false, isHorizontal = false;
         const ptrEl = document.getElementById('ptr-loader');
         
         document.addEventListener('touchstart', e => {
             if(window.scrollY <= 5) { 
-                ptrStartX = e.touches[0].screenX; ptrStartY = e.touches[0].screenY; ptrCurrentY = ptrStartY; isPulling = true; isHorizontal = false;
+                ptrStartX = e.touches[0].screenX;
+                ptrStartY = e.touches[0].screenY; 
+                ptrCurrentY = ptrStartY; 
+                isPulling = true; 
+                isHorizontal = false;
             }
         }, {passive: true});
         
         document.addEventListener('touchmove', e => {
             if(!isPulling) return;
-            let currentX = e.touches[0].screenX; ptrCurrentY = e.touches[0].screenY;
-            let pullY = ptrCurrentY - ptrStartY; let pullX = currentX - ptrStartX;
-            if(Math.abs(pullX) > Math.abs(pullY) && pullY < 20) isHorizontal = true;
+            let currentX = e.touches[0].screenX;
+            ptrCurrentY = e.touches[0].screenY;
+            let pullY = ptrCurrentY - ptrStartY;
+            let pullX = currentX - ptrStartX;
+            
+            if(Math.abs(pullX) > Math.abs(pullY) && pullY < 20) {
+                isHorizontal = true;
+            }
 
             if(pullY > 0 && window.scrollY <= 5 && !isHorizontal) {
-                ptrEl.style.transform = `translateY(${Math.min(pullY - 60, 20)}px)`;
-                ptrEl.querySelector('i').style.transform = `rotate(${Math.min(pullY * 2, 360)}deg)`;
+                ptrEl.style.transform = `translateY(${Math.min(pullY - 60, 0)}px)`;
+                if(pullY > 80) ptrEl.querySelector('i').style.transform = 'rotate(180deg)';
+                else ptrEl.querySelector('i').style.transform = 'rotate(0deg)';
             }
         }, {passive: true});
         
@@ -1709,12 +1876,12 @@
             isPulling = false;
             let pull = ptrCurrentY - ptrStartY;
             if(pull > 80 && window.scrollY <= 5 && !isHorizontal) {
-                ptrEl.querySelector('i').classList.add('fa-spin');
+                ptrEl.classList.add('refreshing');
+                ptrEl.style.transform = 'translateY(0)';
+                
                 loadDynamicData(true).then(() => {
-                    setTimeout(() => { 
-                        ptrEl.style.transform = 'translateY(-100%)'; 
-                        ptrEl.querySelector('i').classList.remove('fa-spin'); 
-                    }, 500);
+                    ptrEl.style.transform = 'translateY(-100%)';
+                    setTimeout(() => { ptrEl.classList.remove('refreshing'); }, 200);
                 });
             } else {
                 ptrEl.style.transform = 'translateY(-100%)';
@@ -1722,36 +1889,89 @@
         }, {passive: true});
 
         document.addEventListener("DOMContentLoaded", () => {
-            updateLiveCounter();
-            changeLang(savedLang); // Ensure initial English layout paints correctly
+            const savedTheme = localStorage.getItem('theme') || 'dark'; 
+            document.getElementById('theme-icon').className = savedTheme === 'light' ? 'fa-solid fa-sun theme-toggle' : 'fa-solid fa-moon theme-toggle';
+            
+            const savedLang = localStorage.getItem('lang') || 'ar'; 
+            changeLang(savedLang);
             
             const nSlider = document.getElementById('newsSlider');
             let isDown = false, startX, sLeft;
-            nSlider.addEventListener('mousedown', (e) => { isDown = true; startX = e.pageX - nSlider.offsetLeft; sLeft = nSlider.scrollLeft; });
+            nSlider.addEventListener('mousedown', (e) => {
+                isDown = true;
+                startX = e.pageX - nSlider.offsetLeft;
+                sLeft = nSlider.scrollLeft;
+            });
             nSlider.addEventListener('mouseleave', () => isDown = false);
             nSlider.addEventListener('mouseup', () => isDown = false);
             nSlider.addEventListener('mousemove', (e) => {
-                if (!isDown) return; e.preventDefault();
-                const x = e.pageX - nSlider.offsetLeft; const walk = (x - startX) * 2; nSlider.scrollLeft = sLeft - walk;
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - nSlider.offsetLeft;
+                const walk = (x - startX) * 2;
+                nSlider.scrollLeft = sLeft - walk;
             });
             
-            if (!storage.get('plato_data_v3')) showSkeletons();
+            const cachedDyn = localStorage.getItem('plato_data_v3');
+            if (!cachedDyn) {
+                showSkeletons();
+            }
+            
             loadDynamicData();
             
             const start = new Date('2026/09/03 00:00:00 GMT+0300').getTime(); 
             const updateOldestPlayers = () => {
                 const added = Math.max(0, Math.floor((getAccurateTime() - start) / (1000 * 60 * 60 * 24))); 
-                document.querySelectorAll('.auto-days').forEach(td => { td.innerText = (parseInt(td.getAttribute('data-base-days')) + (isNaN(added) ? 0 : added)); });
+                document.querySelectorAll('.auto-days').forEach(td => { 
+                    td.innerText = (parseInt(td.getAttribute('data-base-days')) + (isNaN(added) ? 0 : added)); 
+                });
             };
             updateOldestPlayers();
-            syncRealTime().then(() => updateOldestPlayers());
+
+            syncRealTime().then(() => {
+                updateOldestPlayers();
+            });
             
             renderGlobalLeaders();
             const activeTab = document.querySelector('.server-tab.active');
             if(activeTab) filterServer(activeTab.dataset.target); 
+            
             setInterval(updateSheetTimers, 1000);
         });
 
+        document.addEventListener('touchstart', function(e) {
+            if (e.touches.length > 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        document.addEventListener('touchmove', function(e) {
+            if (e.scale !== 1 && e.scale !== undefined) { 
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(e) {
+            let now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                e.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, { passive: false });
+
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && (e.key === '+' || e.key === '-' || e.key === '=')) {
+                e.preventDefault();
+            }
+        });
+
+        document.addEventListener('wheel', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                e.preventDefault();
+            }
+        }, { passive: false });
     </script>
 </body>
 </html>
+
