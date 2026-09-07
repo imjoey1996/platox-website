@@ -120,7 +120,6 @@
         .notif-dot { position: absolute; top: -2px; right: -2px; width: 10px; height: 10px; background: #ef4444; border-radius: 50%; display: none; box-shadow: 0 0 8px #ef4444; border: 2px solid var(--bg-card); }
         .notif-dot.active-dot { display: block !important; animation: pulse-ring 1.5s infinite; }
         
-        /* تم إصلاح اتجاه القائمة */
         .notif-dropdown { position: absolute; top: 45px; right: -5px; width: 230px; background: var(--bg-card); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 12px; padding: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s ease; display: flex; flex-direction: column; gap: 8px; z-index: 1001; }
         [data-theme="light"] .notif-dropdown { background: rgba(255,255,255,0.95); }
         .notif-dropdown.show { opacity: 1; visibility: visible; transform: translateY(0); }
@@ -152,7 +151,6 @@
         .bottom-nav-item.active i { transform: translateY(-2px) scale(1.1); color: var(--primary); text-shadow: 0 0 15px var(--btn-active-glow); }
         .bottom-nav-item.active span { color: var(--text-main); font-weight: 900; }
         
-        /* نقاط التنبيه السفلية */
         .bottom-nav-dot { position: absolute; top: 6px; right: calc(50% - 16px); width: 8px; height: 8px; background: #ef4444; border-radius: 50%; display: none; box-shadow: 0 0 6px #ef4444; z-index: 5; }
 
         section { padding: 45px 15px 25px; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; }
@@ -252,6 +250,7 @@
         .leader-name-box { display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 8px; cursor: pointer; margin-bottom: 4px; width: 100%; white-space: nowrap; flex-wrap: nowrap;}
         .leader-copy-icon { font-size: 12px; color: var(--text-muted); flex-shrink: 0;}
         
+        /* يوزرات القادة موحدة باللون الأبيض في المظلم والأسود في الفاتح */
         .leader-username { color: var(--primary) !important; font-family: 'Rajdhani', 'Cairo', sans-serif !important; font-weight: 900 !important; margin: 0; flex-shrink: 1; overflow: hidden; text-overflow: ellipsis; text-shadow: none !important; -webkit-text-stroke: 0 !important; }
         
         .server-badge { flex-shrink: 0; width: 38px; height: 20px; border-radius: 10px; margin: 0; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; }
@@ -842,7 +841,8 @@
         let basePerfTime = performance.now();
         let activeTourTimers = [];
 
-        const tourSheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/gviz/tq?tqx=out:csv"; 
+        // الرابط المباشر مع استبعاد الكاش
+        const tourSheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/export?format=csv"; 
 
         function parseCSV(str) {
             var arr = []; var quote = false; var col = 0, row = 0;
@@ -1353,10 +1353,12 @@
 
         async function loadDynamicData(force = false) {
             try {
-                const cacheBuster = Math.floor(Math.random() * 100000000);
-                const fetchUrl = tourSheetURL + "&gid=0&_nocache=" + cacheBuster;
+                const fetchUrl = tourSheetURL + "&_cb=" + Date.now() + Math.random().toString(36).substring(2);
 
-                const response = await fetch(fetchUrl, { cache: "no-store" });
+                const response = await fetch(fetchUrl, { 
+                    cache: "no-store",
+                    headers: { 'Cache-Control': 'no-cache', 'Pragma': 'no-cache' }
+                });
                 if (!response.ok) throw new Error("فشل الاتصال بالشيت");
                 const data = await response.text();
                 
@@ -1403,9 +1405,9 @@
 
         function renderNewsData() {
             if (!cachedSheetRows || cachedSheetRows.length === 0) return;
-            let allNews = cachedSheetRows.filter(cols => cols.length >= 10 && (cols[8] || '').trim() && (cols[9] || '').trim());
+            let allNews = cachedSheetRows.filter(cols => cols.length > 8 && (cols[8] || '').trim() && (cols[9] || '').trim());
             allNews.sort((a, b) => (new Date((b[8] || '').trim()).getTime() || 0) - (new Date((a[8] || '').trim()).getTime() || 0));
-            newsCardsData = allNews.slice(0, 5).map(cols => [ cols[8], cols[9], cols[10], cols[11], cols[12], cols[13] ]);
+            newsCardsData = allNews.slice(0, 5).map(cols => [ cols[8]||'', cols[9]||'', cols[10]||'', cols[11]||'', cols[12]||'', cols[13]||'' ]);
             buildNewsHTML();
         }
 
@@ -1538,7 +1540,7 @@
             const firstRow = cachedSheetRows[0]; 
             if (firstRow) {
                 const videoUrl = firstRow[6] ? escapeHTML(firstRow[6].trim()) : ""; 
-                const weekName = escapeHTML(firstRow[7] ? firstRow[7] : ""); 
+                const weekName = escapeHTML(firstRow[7] ? firstRow[7].trim() : ""); 
                 const vidEl = document.getElementById('weekly-video'); const showcaseSec = document.getElementById('weekly-showcase'); const showcaseDiv = document.getElementById('weekly-divider'); const weekNameEl = document.getElementById('weekly-week-name');
                 if (videoUrl) { 
                     if (vidEl.getAttribute('src') !== videoUrl) vidEl.src = videoUrl;
