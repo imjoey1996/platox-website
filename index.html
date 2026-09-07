@@ -510,7 +510,7 @@
                     <div style="position: relative; width: 100%;">
                         <div style="position: relative;">
                             <textarea id="bug-desc" class="bug-input" placeholder="وصف المشكلة..." maxlength="1499" style="resize: none; overflow: hidden; padding-bottom: 25px; min-height: 110px;" oninput="clearInputError('bug-desc'); updateCharCount(this); autoResizeTextarea(this);"></textarea>
-                            <div class="char-counter-badge num-font" id="char-counter">1499/1499</div>
+                            <div class="char-counter-badge num-font" id="char-counter">1499</div>
                         </div>
                         <div id="bug-desc-error" class="input-error-msg"></div>
                     </div>
@@ -964,7 +964,7 @@
         }
 
         function updateCharCount(element) {
-            document.getElementById('char-counter').innerText = 1499 - element.value.length + '/1499';
+            document.getElementById('char-counter').innerText = 1499 - element.value.length;
         }
 
         function autoResizeTextarea(element) {
@@ -987,7 +987,7 @@
             
             clearInputError('plato-id');
             clearInputError('bug-desc');
-            document.getElementById('char-counter').innerText = '1499/1499';
+            document.getElementById('char-counter').innerText = '1499';
         }
 
         function escapeHTML(str) {
@@ -1784,6 +1784,54 @@
                 }
             });
         }
+
+        let ptrStartX = 0, ptrStartY = 0, ptrCurrentY = 0, isPulling = false, isHorizontal = false;
+        const ptrEl = document.getElementById('ptr-loader');
+        
+        document.addEventListener('touchstart', e => {
+            if(window.scrollY <= 5) { 
+                ptrStartX = e.touches[0].screenX;
+                ptrStartY = e.touches[0].screenY; 
+                ptrCurrentY = ptrStartY; 
+                isPulling = true; 
+                isHorizontal = false;
+            }
+        }, {passive: true});
+        
+        document.addEventListener('touchmove', e => {
+            if(!isPulling) return;
+            let currentX = e.touches[0].screenX;
+            ptrCurrentY = e.touches[0].screenY;
+            let pullY = ptrCurrentY - ptrStartY;
+            let pullX = currentX - ptrStartX;
+            
+            if(Math.abs(pullX) > Math.abs(pullY) && pullY < 20) {
+                isHorizontal = true;
+            }
+
+            if(pullY > 0 && window.scrollY <= 5 && !isHorizontal) {
+                ptrEl.style.transform = `translateY(${Math.min(pullY - 60, 0)}px)`;
+                if(pullY > 80) ptrEl.querySelector('i').style.transform = 'rotate(180deg)';
+                else ptrEl.querySelector('i').style.transform = 'rotate(0deg)';
+            }
+        }, {passive: true});
+        
+        document.addEventListener('touchend', e => {
+            if(!isPulling) return;
+            isPulling = false;
+            let pull = ptrCurrentY - ptrStartY;
+            if(pull > 80 && window.scrollY <= 5 && !isHorizontal) {
+                ptrEl.classList.add('refreshing');
+                ptrEl.style.transform = 'translateY(0)';
+                
+                loadDynamicData(true).then(() => {
+                    ptrEl.style.transform = 'translateY(-100%)';
+                    setTimeout(() => { ptrEl.classList.remove('refreshing'); }, 200);
+                });
+            } else {
+                ptrEl.style.transform = 'translateY(-100%)';
+            }
+        }, {passive: true});
 
         document.addEventListener("DOMContentLoaded", () => {
             const savedTheme = localStorage.getItem('theme') || 'dark'; 
