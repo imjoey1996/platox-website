@@ -224,11 +224,6 @@
         .section-title::before { content: ''; position: absolute; right: -15px; top: 50%; transform: translateY(-50%); width: 6px; height: 20px; background: var(--primary); border-radius: 3px; box-shadow: 0 0 15px var(--primary-glow);}
         html[dir="ltr"] .section-title::before { right: auto; left: -15px; }
 
-        #ptr-loader { position: fixed; top: env(safe-area-inset-top); left: 0; width: 100%; height: 60px; display: flex; justify-content: center; align-items: center; gap: 10px; background: var(--primary); color: #fff; font-weight: bold; font-family: 'Cairo', sans-serif; font-size: 1.1rem; transform: translateY(-100%); z-index: 9999; transition: transform 0.2s ease-out; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
-        #ptr-loader.refreshing { transform: translateY(0) !important; background: #3b82f6; }
-        #ptr-loader.refreshing i { animation: spin 0.8s infinite linear; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-
         .skeleton { position: relative; overflow: hidden; background-color: rgba(255, 255, 255, 0.05) !important; border-color: transparent !important; box-shadow: none !important; }
         [data-theme="light"] .skeleton { background-color: rgba(0, 0, 0, 0.05) !important; }
 
@@ -430,10 +425,6 @@
 </head>
 <body>
 
-    <div id="ptr-loader">
-        <i class="fa-solid fa-rotate-right"></i> <span data-i18n="pull_refresh">جاري التحديث...</span>
-    </div>
-
     <div class="static-gaming-bg"></div>
 
     <nav class="navbar" dir="ltr">
@@ -518,8 +509,8 @@
                     
                     <div style="position: relative; width: 100%;">
                         <div style="position: relative;">
-                            <textarea id="bug-desc" class="bug-input" rows="4" placeholder="وصف المشكلة..." maxlength="1499" style="resize: vertical; padding-bottom: 25px;" oninput="clearInputError('bug-desc'); updateCharCount(this);"></textarea>
-                            <div class="char-counter-badge num-font" id="char-counter">1499</div>
+                            <textarea id="bug-desc" class="bug-input" placeholder="وصف المشكلة..." maxlength="1499" style="resize: none; overflow: hidden; padding-bottom: 25px; min-height: 110px;" oninput="clearInputError('bug-desc'); updateCharCount(this); autoResizeTextarea(this);"></textarea>
+                            <div class="char-counter-badge num-font" id="char-counter">1499/1499</div>
                         </div>
                         <div id="bug-desc-error" class="input-error-msg"></div>
                     </div>
@@ -973,7 +964,12 @@
         }
 
         function updateCharCount(element) {
-            document.getElementById('char-counter').innerText = 1499 - element.value.length;
+            document.getElementById('char-counter').innerText = 1499 - element.value.length + '/1499';
+        }
+
+        function autoResizeTextarea(element) {
+            element.style.height = 'auto';
+            element.style.height = element.scrollHeight + 'px';
         }
 
         function showBugForm() { document.getElementById('bug-details').style.display = 'flex'; }
@@ -987,10 +983,11 @@
             
             platoIdInput.value = '';
             bugDescInput.value = '';
+            bugDescInput.style.height = 'auto';
             
             clearInputError('plato-id');
             clearInputError('bug-desc');
-            document.getElementById('char-counter').innerText = '1499';
+            document.getElementById('char-counter').innerText = '1499/1499';
         }
 
         function escapeHTML(str) {
@@ -1787,54 +1784,6 @@
                 }
             });
         }
-
-        let ptrStartX = 0, ptrStartY = 0, ptrCurrentY = 0, isPulling = false, isHorizontal = false;
-        const ptrEl = document.getElementById('ptr-loader');
-        
-        document.addEventListener('touchstart', e => {
-            if(window.scrollY <= 5) { 
-                ptrStartX = e.touches[0].screenX;
-                ptrStartY = e.touches[0].screenY; 
-                ptrCurrentY = ptrStartY; 
-                isPulling = true; 
-                isHorizontal = false;
-            }
-        }, {passive: true});
-        
-        document.addEventListener('touchmove', e => {
-            if(!isPulling) return;
-            let currentX = e.touches[0].screenX;
-            ptrCurrentY = e.touches[0].screenY;
-            let pullY = ptrCurrentY - ptrStartY;
-            let pullX = currentX - ptrStartX;
-            
-            if(Math.abs(pullX) > Math.abs(pullY) && pullY < 20) {
-                isHorizontal = true;
-            }
-
-            if(pullY > 0 && window.scrollY <= 5 && !isHorizontal) {
-                ptrEl.style.transform = `translateY(${Math.min(pullY - 60, 0)}px)`;
-                if(pullY > 80) ptrEl.querySelector('i').style.transform = 'rotate(180deg)';
-                else ptrEl.querySelector('i').style.transform = 'rotate(0deg)';
-            }
-        }, {passive: true});
-        
-        document.addEventListener('touchend', e => {
-            if(!isPulling) return;
-            isPulling = false;
-            let pull = ptrCurrentY - ptrStartY;
-            if(pull > 80 && window.scrollY <= 5 && !isHorizontal) {
-                ptrEl.classList.add('refreshing');
-                ptrEl.style.transform = 'translateY(0)';
-                
-                loadDynamicData(true).then(() => {
-                    ptrEl.style.transform = 'translateY(-100%)';
-                    setTimeout(() => { ptrEl.classList.remove('refreshing'); }, 200);
-                });
-            } else {
-                ptrEl.style.transform = 'translateY(-100%)';
-            }
-        }, {passive: true});
 
         document.addEventListener("DOMContentLoaded", () => {
             const savedTheme = localStorage.getItem('theme') || 'dark'; 
