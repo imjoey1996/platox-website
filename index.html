@@ -997,15 +997,6 @@
         return;
     }
 
-    const lastReport = localStorage.getItem('last_bug_report_time');
-    const now = getAccurateTime();
-    
-    if (lastReport && now - parseInt(lastReport) < 3600000) { 
-        const waitMins = Math.ceil((3600000 - (now - parseInt(lastReport))) / 60000);
-        alert(isAr ? `يرجى الانتظار ${waitMins} دقيقة قبل إرسال بلاغ جديد لتجنب الضغط على الإدارة.` : `Please wait ${waitMins} minutes before sending a new report.`);
-        return;
-    }
-
     const bugType = bugTypeElement.value;
     const scriptURL = "https://script.google.com/macros/s/AKfycbz24P1RDGQbXI7psG7FOPhVNszKWzzf7X7yRQ4hFOjvC4k3zPuU0qsrSS2Ct0IZTGirHQ/exec"; 
 
@@ -1015,12 +1006,10 @@
     submitBtn.disabled = true;
 
     try {
-        // استخدام طريقة GET المضمونة لتخطي حظر المتصفحات
         const finalURL = scriptURL + "?plato_id=" + encodeURIComponent(platoId) + "&issue_type=" + encodeURIComponent(bugType) + "&description=" + encodeURIComponent(bugDesc);
         
         await fetch(finalURL, { mode: "no-cors" });
 
-        localStorage.setItem('last_bug_report_time', now);
         const toast = document.getElementById("toast");
         toast.innerHTML = isAr ? `<i class="fa-solid fa-check"></i> تم إرسال البلاغ بنجاح` : `<i class="fa-solid fa-check"></i> Report Submitted Successfully`;
         toast.className = "show";
