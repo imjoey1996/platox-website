@@ -95,7 +95,6 @@
         
         html[dir="ltr"] body, .num-font, .navbar h1 { font-family: 'Rajdhani', sans-serif; }
 
-        /* خلفية ثابتة احترافية خفيفة بدون أي تحريك تناسب أندرويد والأجهزة الضعيفة */
         .static-gaming-bg {
             position: fixed;
             top: 0;
@@ -307,7 +306,6 @@
         .leader-name-box h3 { font-size: 1.15rem; font-family: 'Rajdhani', 'Cairo', sans-serif !important; font-weight: 900 !important; margin: 0; flex-shrink: 1; overflow: hidden; text-overflow: ellipsis;}
         .leader-copy-icon { font-size: 12px; color: var(--text-muted); flex-shrink: 0;}
         
-        /* شارة القادة المطابقة تماماً للصورة المعطاة (Pill shape + Front Solid user + Back Outline user) */
         .server-badge { 
             flex-shrink: 0; 
             width: 38px; 
@@ -356,7 +354,6 @@
         .prize-badge { border-color: rgba(227, 179, 65, 0.3); background: rgba(227, 179, 65, 0.1); color: #d4af37; }
         .admin-copy-btn { cursor: pointer; }
 
-        /* المواقع ذات الصلة مع صور الأيقونات الجديدة */
         .links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; width: 100%; max-width: 850px; }
         .link-card { display: flex; align-items: center; gap: 15px; padding: 20px; text-decoration: none; color: var(--text-main); border-radius: 16px; position: relative; overflow: hidden; }
         .link-brand-icon { width: 44px; height: 44px; border-radius: 10px; object-fit: contain; flex-shrink: 0; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3)); }
@@ -412,7 +409,6 @@
         <i class="fa-solid fa-rotate-right"></i> <span data-i18n="pull_refresh">جاري التحديث...</span>
     </div>
 
-    <!-- خلفية ثابتة خفيفة بدون تحريك -->
     <div class="static-gaming-bg"></div>
 
     <nav class="navbar" dir="ltr">
@@ -490,7 +486,8 @@
                 </div>
 
                 <div id="bug-details" style="display: none; flex-direction: column; gap: 15px;">
-                    <input type="text" id="plato-id" class="bug-input num-font" placeholder="يوزرك في اللعبة">
+                    <!-- تم تقييد الإدخال بحروف إنجليزية وأرقام و _ فقط مع حد أقصى 12 حرف -->
+                    <input type="text" id="plato-id" class="bug-input num-font" placeholder="يوزرك في اللعبة" maxlength="12" dir="ltr" oninput="this.value = this.value.replace(/[^a-zA-Z0-9_]/g, '')">
                     <textarea id="bug-desc" class="bug-input" rows="4" placeholder="وصف المشكلة..." style="resize: vertical;"></textarea>
                     
                     <div style="display: flex; gap: 10px;">
@@ -762,7 +759,6 @@
 
     <main id="view-leaderboard" class="tab-view">
 
-        <!-- Weekly Showcase Section -->
         <section id="weekly-showcase" style="display: none;">
             <h2 class="section-title" data-i18n="weekly_showcase_title">عناصر الألعاب الأسبوعية</h2>
             <div class="glass-panel" style="width: 100%; max-width: 750px; padding: 30px 20px; border-radius: 16px; display: flex; flex-direction: column; align-items: center;">
@@ -771,10 +767,8 @@
                     استكشف احدث العناصر المتوفرة لهذا الاسبوع.
                 </p>
 
-                <!-- Weekly Name -->
                 <h3 id="weekly-week-name" class="num-font" style="text-align: center; color: var(--primary); margin-bottom: 15px; font-size: 22px; display: none; text-shadow: 0 0 10px var(--primary-glow);"></h3>
 
-                <!-- Video Player -->
                 <div class="video-glow-box" style="margin-bottom: 0;">
                     <video id="weekly-video" src="" controls playsinline preload="metadata"></video>
                 </div>
@@ -851,7 +845,6 @@
 
         <div class="cyber-divider"><div class="center-node"></div></div>
 
-        <!-- Join Us Section -->
         <section id="join-us">
             <h2 class="section-title" data-i18n="join_us_title">انضم إلينا</h2>
             <div class="glass-panel" style="width: 100%; max-width: 750px; padding: 30px; border-radius: 16px; text-align: center; display: flex; flex-direction: column; align-items: center;">
@@ -963,12 +956,21 @@
 
         async function submitBugReport() {
             const bugTypeElement = document.querySelector('input[name="bugType"]:checked');
-            const platoId = document.getElementById('plato-id').value.trim();
+            const platoIdInput = document.getElementById('plato-id');
+            const platoId = platoIdInput.value.trim();
             const bugDesc = document.getElementById('bug-desc').value.trim();
             const isAr = document.documentElement.lang === 'ar';
 
             if(!bugTypeElement || !platoId || !bugDesc) {
                 alert(isAr ? "يرجى تعبئة جميع الحقول أولاً!" : "Please fill all fields first!");
+                return;
+            }
+
+            // التحقق من أن اليوزر إنجليزي فقط مع _ وطوله بين 3 و 12 حرف
+            const platoIdRegex = /^[a-zA-Z0-9_]{3,12}$/;
+            if (!platoIdRegex.test(platoId)) {
+                alert(isAr ? "يجب أن يكون اليوزر باللغة الإنجليزية، وبطول من 3 إلى 12 حرفاً فقط (يُسمح بالرمز _ فقط)." : "Plato ID must be in English, between 3 to 12 characters, and can only contain letters, numbers, and '_'.");
+                platoIdInput.focus();
                 return;
             }
 
@@ -1061,7 +1063,6 @@
                 const profBorder = sTheme.profileBorder ? `border: ${sTheme.profileBorder};` : `border: 2px solid rgba(255,255,255,0.1);`;
                 const strokeStyle = sTheme.textStroke ? `-webkit-text-stroke: ${sTheme.textStroke};` : '';
 
-                // أيقونة شارة القادة المطابقة تماماً لشكل الكبسولة والرسم الداخلي
                 const iconColor = (leader.server === 'english') ? '#ffffff' : '#ffffff';
                 const badgeSvg = `
                     <svg viewBox="0 0 54 28" fill="none" xmlns="http://www.w3.org/2000/svg">
