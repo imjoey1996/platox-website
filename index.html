@@ -332,7 +332,7 @@
             .card { padding: 30px 10px; width: 100%; }
             .global-leader { padding: 18px 10px; gap: 8px; }
             .global-leader img { width: 60px; height: 60px; margin-bottom: 2px; }
-            .leader-name-box h3 { font-size: 1.15rem; }
+            .leader-name-box h3 { font-size: 1.05rem; }
             
             .list-row { padding: 15px 10px; gap: 8px; } .rank-num { font-size: 1rem; width: 20px; } .list-img { width: 30px; height: 30px; } .list-name { font-size: 0.95rem; } .score-val { font-size: 1rem; }
             .tour-card { padding: 20px 15px; } .tour-title { font-size: 1.05rem; } .tour-footer { flex-direction: column; gap: 8px; } .info-badge { width: 100%; justify-content: center; padding: 6px;}
@@ -658,7 +658,7 @@
                         </div>
                     </div>
                     <p class="leader-desc" data-i18n="desc_yyy">صانع الأثر، يقود برؤية مستقبلية لخلق بيئة إيجابية لا تعرف المستحيل.</p>
-                    <div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: #ffffff;"></i> <span data-i18n="bday_yyy">1 يناير</span></div>
+                    <div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: var(--primary);"></i> <span data-i18n="bday_yyy">1 يناير</span></div>
                 </div>
                 <div class="card glass-panel card-hat" style="border-top: 2px solid rgba(255,255,255,0.8); border-bottom: 2px solid rgba(255,255,255,0.8); box-shadow: 0 -8px 20px rgba(255,255,255,0.3), 0 8px 20px rgba(255,255,255,0.3);">
                     <img src="f3b8c20da38a9320fa2f250f52f7f16a.png" alt="HAT">
@@ -675,7 +675,7 @@
                         </div>
                     </div>
                     <p class="leader-desc" data-i18n="desc_hat">حضور راسخ، تقود المجتمع بثقة راسخة وترسم معايير الرقي.</p>
-                    <div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: #ffffff;"></i> <span data-i18n="bday_hat">1 سبتمبر</span></div>
+                    <div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: var(--primary);"></i> <span data-i18n="bday_hat">1 سبتمبر</span></div>
                 </div>
                 <div class="card glass-panel card-bbb" style="border-top: 2px solid rgba(255,255,255,0.8); border-bottom: 2px solid rgba(255,255,255,0.8); box-shadow: 0 -8px 20px rgba(255,255,255,0.3), 0 8px 20px rgba(255,255,255,0.3);">
                     <img src="a_368d018a788facdb964b3f1df658ecde.gif" alt="BBB">
@@ -692,7 +692,6 @@
                         </div>
                     </div>
                     <p class="leader-desc" data-i18n="desc_bbb">الحكمة في اتخاذ القرار، يوازن بين الحزم والهدوء لإدارة الأزمات باحترافية.</p>
-                    <div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: #ffffff;"></i> <span data-i18n="bday_bbb">11 نوفمبر</span></div>
                 </div>
             </div>
         </section>
@@ -727,7 +726,6 @@
                 <h3 id="weekly-week-name" class="num-font pro-title-glow" style="text-align: center; margin-bottom: 15px; display: none;"></h3>
                 <div class="video-glow-box" style="margin-bottom: 0;">
                     <video id="weekly-video" src="" controls playsinline preload="metadata"></video>
-                    <!-- زر المشاركة المضاف حديثاً -->
                     <div style="display: flex; justify-content: flex-end; margin-top: 10px; width: 100%;">
                         <button type="button" class="news-interact-btn share-btn" onclick="shareVideo()" style="padding: 6px 15px; font-size: 14px;"><i class="fa-solid fa-share-nodes"></i></button>
                     </div>
@@ -843,7 +841,6 @@
         let basePerfTime = performance.now();
         let activeTourTimers = [];
 
-        // الرابط الجديد لمنع التخزين المؤقت تماماً وسحب البيانات الحية مباشرة
         const tourSheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/gviz/tq?tqx=out:csv"; 
 
         function parseCSV(str) {
@@ -1121,9 +1118,9 @@
             { name: "Reza", server: "persian", img: "IMG_7443.png", birthday: { en: "November 17", ar: "17 نوفمبر" }, desc: { ar: "قائد محترم وودود، دائماً متعاون وهادئ، ومكرس لخدمة مجتمع صحي.", en: "A respected and approachable leader, always helpful, calm, and dedicated to a healthy community." } }, 
             { name: "NarGc", server: "persian", img: "13b8f453f2ee334ab01a7e53fc4c23fb.png", birthday: { en: "November 10", ar: "10 نوفمبر" }, desc: { ar: "قائدة نشيطة ومبدعة ومهتمة، تتميز بالتفاني والعمل الجاد.", en: "An energetic, creative, and caring leader who is dedicated and hardworking." } },
             { name: "H22", server: "french", img: "IMG_7442.png", birthday: { en: "December 21", ar: "21 ديسمبر" }, desc: { ar: "ودود ومحفز، مستعد دائماً للمساعدة والتواصل مع الأشخاص.", en: "Friendly and encouraging, always willing to help and connect with people from all servers." } },
-            { name: "love_hope", server: "french", img: "f74613af2e55aecdde0d31ff33964698.png", birthday: { en: "February 13", ar: "13 فبراير" }, desc: { ar: "بانية حقيقية للفريق وداعمة له، تتميز بتواصلها الواضح", en: "A supportive team builder who communicates clearly and fosters a positive work atmosphere." } }, 
+            { name: "love_hope", server: "french", img: "f74613af2e55aecdde0d31ff33964698.png", birthday: { en: "February 13", ar: "13 فبراير" }, desc: { ar: "بانية حقيقية للفريق وداعمة له، تتميز بتواصلها الواضح.", en: "A supportive team builder who communicates clearly and fosters a positive work atmosphere." } }, 
             { name: "Mdame", server: "french", img: "de6ac96df41f0d3378e934e467ccee32.png", desc: { ar: "قائدة مجتمع متميزة، موثوق بها للحفاظ على المعايير وتعزيز مجتمع أقوى وأكثر أمانًا.", en: "A distinguished community leader, trusted to uphold standards and foster a stronger, safer community." } }, 
-            { name: "Algerien", server: "french", img: "IMG_7444.png", desc: { ar: "مبادر في حل المشكلات، يحافظ على هدوئه تحت الضغط ويوجه المشاريع بفاعلية.", en: "A proactive problem-solver who stays calm under pressure and guides projects effectively." } }, 
+            { name: "Algerian", server: "french", img: "IMG_7444.png", desc: { ar: "مبادر في حل المشكلات، يحافظ على هدوئه تحت الضغط ويوجه المشاريع بفاعلية.", en: "A proactive problem-solver who stays calm under pressure and guides projects effectively." } }, 
             { name: "Nefya", server: "turkish", img: "IMG_7438.png", desc: { ar: "ودودة، يُعتمد عليها، وسهلة التعامل. أستمتع بلقاء أشخاص طيبين، وبناء صداقات حقيقية، وأن أكون جزءًا من مجتمع إيجابي.", en: "Friendly, reliable, and easygoing. I enjoy meeting good people, building genuine friendships, and being part of a positive community." } },
             { name: "esthell", server: "turkish", img: "8b85aa900d60b226406c24f3fef88da0.png", birthday: { en: "May 13", ar: "13 مايو" }, desc: { ar: "قائدة دافئة وملهمة تنشر الطاقة الإيجابية، وتدعم الآخرين، وتجعل الجميع يشعرون بالترحيب.", en: "A warm and inspiring leader who brings positive energy, supports others, and makes everyone feel welcome." } }, 
             { name: "Fyy", server: "melayu", img: "f36561c947960941324127485f6b5886.png", birthday: { en: "April 29", ar: "29 أبريل" }, desc: { ar: "قائدة محبة للمرح تجلب الدفء والطاقة الإيجابية مع بناء روابط ذات معنى.", en: "A fun-loving leader who brings warmth and energy while fostering meaningful connections." } }, 
@@ -1152,7 +1149,7 @@
                 if (leader.birthday) {
                     bdayText = currentLang === 'ar' && leader.birthday.ar ? escapeHTML(leader.birthday.ar) : escapeHTML(leader.birthday.en);
                 }
-                const bdayHTML = bdayText ? `<div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: ${sTheme.nameColor};"></i> <span style="margin-top:2px;">${bdayText}</span></div>` : "";
+                const bdayHTML = bdayText ? `<div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: var(--primary);"></i> <span style="margin-top:2px;">${bdayText}</span></div>` : "";
                 
                 const descText = leader.desc ? (currentLang === 'ar' && leader.desc.ar ? escapeHTML(leader.desc.ar) : escapeHTML(leader.desc.en)) : "";
                 const descHTML = descText ? `<p class="leader-desc">${descText}</p>` : "";
@@ -1256,7 +1253,7 @@
                 guide_4: "يُمنع التشجيع على العنف، إيذاء النفس، الانتحار، أو الكراهية ضد أي مجموعة.",
                 guide_5: "استخدم فقط لغة الخادم الذي تم اختياره.",
                 guide_warning: "قد يؤدي انتهاك هذه الإرشادات إلى تقييد الدردشة لمدة 4 ساعات أو اتخاذ إجراءات إشرافية إضافية (حظر دائم).",
-                bday_yyy: "1 يناير", bday_hat: "1 سبتمبر", bday_bbb: "11 نوفمبر",
+                bday_yyy: "1 يناير", bday_hat: "1 سبتمبر",
                 links_title: "مواقع ذات صلة", link_platopedia: "Platopedia", link_werepedia: "Werepedia", link_monsterpedia: "Monsterpedia",
                 link_plato_desc: "الموقع الرسمي والأساسي للعبة بلاتو، ويضم المعلومات والخدمات الرئيسية المتعلقة باللعبة.",
                 link_platopedia_desc: "موسوعة متخصصة في بلاتو، توفر معلومات شاملة حول العناصر المتاحة، إلى جانب خيارات تخصيص الملفات الشخصية ومتابعة تفاصيلها.",
@@ -1309,7 +1306,7 @@
                 guide_4: "Do not encourage violence, self-harm, suicide, or hate against any group.",
                 guide_5: "Use only the language of the selected server.",
                 guide_warning: "Breaking these guidelines may result in a 4 hour chat restriction or further moderation action (permanent ban).",
-                bday_yyy: "January 1", bday_hat: "September 1", bday_bbb: "November 11",
+                bday_yyy: "January 1", bday_hat: "September 1",
                 links_title: "RELATED SITES", link_platopedia: "Platopedia", link_werepedia: "Werepedia", link_monsterpedia: "Monsterpedia",
                 link_plato_desc: "The official website for Plato, featuring the game's main services and information.",
                 link_platopedia_desc: "A Plato encyclopedia covering items and profile customization.",
@@ -1354,7 +1351,7 @@
 
         async function loadDynamicData(force = false) {
             try {
-                // الكود الجديد لمنع التخزين المؤقت واستخدام gviz
+                // الكود الجديد لسحب البيانات فوراً وتخطي كاش جوجل بالكامل
                 const cacheBuster = Math.floor(Math.random() * 100000000);
                 const fetchUrl = tourSheetURL + "&gid=0&_nocache=" + cacheBuster;
 
@@ -1395,9 +1392,10 @@
 
         function renderNewsData() {
             if (!cachedSheetRows || cachedSheetRows.length === 0) return;
-            let allNews = cachedSheetRows.filter(cols => cols.length >= 10 && (cols[9] || '').trim() && (cols[10] || '').trim());
-            allNews.sort((a, b) => (new Date((b[9] || '').trim()).getTime() || 0) - (new Date((a[9] || '').trim()).getTime() || 0));
-            newsCardsData = allNews.slice(0, 5).map(cols => [ cols[9], cols[10], cols[11], cols[12], cols[13], cols[14] ]);
+            // حسب التقسيم الجديد: I (8) = تاريخ, J (9) = نوع, K (10) = عنوان عربي, L (11) = تفاصيل عربي, M (12) = عنوان انجليزي, N (13) = تفاصيل انجليزي
+            let allNews = cachedSheetRows.filter(cols => cols.length >= 10 && (cols[8] || '').trim() && (cols[9] || '').trim());
+            allNews.sort((a, b) => (new Date((b[8] || '').trim()).getTime() || 0) - (new Date((a[8] || '').trim()).getTime() || 0));
+            newsCardsData = allNews.slice(0, 5).map(cols => [ cols[8], cols[9], cols[10], cols[11], cols[12], cols[13] ]);
             buildNewsHTML();
         }
 
@@ -1574,8 +1572,9 @@
             
             const firstRow = cachedSheetRows[0]; 
             if (firstRow) {
-                const videoUrl = firstRow[7] ? escapeHTML(firstRow[7].trim()) : ""; 
-                const weekName = escapeHTML(firstRow[8] ? firstRow[8] : ""); 
+                // حسب التقسيم الجديد G (6) = فيديو، H (7) = تفاصيل الفيديو
+                const videoUrl = firstRow[6] ? escapeHTML(firstRow[6].trim()) : ""; 
+                const weekName = escapeHTML(firstRow[7] ? firstRow[7] : ""); 
                 const vidEl = document.getElementById('weekly-video'); const showcaseSec = document.getElementById('weekly-showcase'); const showcaseDiv = document.getElementById('weekly-divider'); const weekNameEl = document.getElementById('weekly-week-name');
                 if (videoUrl) { 
                     if (vidEl.getAttribute('src') !== videoUrl) vidEl.src = videoUrl;
@@ -1593,9 +1592,12 @@
 
             cachedSheetRows.forEach((cols) => {
                 if(cols.length < 2) return;
+                
+                // حسب التقسيم الجديد: A(0)=الوقت, B(1)=اسم عربي, C(2)=اسم انجليزي, D(3)=جائزة, E(4)=لعبة, F(5)=آدمن
+                const rawTimeStr = escapeHTML(cols[0] ? cols[0].trim() : ""); 
                 const nameAr = escapeHTML(cols[1] ? cols[1].trim() : "");
                 if (!nameAr) return;
-                const rawTimeStr = escapeHTML(cols[0] ? cols[0].trim() : ""); 
+                
                 let targetTimeMs = NaN;
                 if (rawTimeStr) {
                     let safeTimeStr = rawTimeStr.replace(/-/g, '/'); 
@@ -1603,7 +1605,11 @@
                     targetTimeMs = new Date(safeTimeStr).getTime();
                 }
 
-                const nameEn = escapeHTML(cols[2] ? cols[2].trim() : ""); const image = cols[3] ? escapeHTML(cols[3].trim()) : ""; const prizeStr = escapeHTML(cols[4] ? cols[4].trim() : ""); const game = escapeHTML(cols[5] ? cols[5].trim() : ""); const admin = escapeHTML(cols[6] ? cols[6].trim() : "");
+                const nameEn = escapeHTML(cols[2] ? cols[2].trim() : ""); 
+                const prizeStr = escapeHTML(cols[3] ? cols[3].trim() : ""); 
+                const game = escapeHTML(cols[4] ? cols[4].trim() : ""); 
+                const admin = escapeHTML(cols[5] ? cols[5].trim() : "");
+                const image = ""; // لا يوجد عمود للصورة في التقسيم الجديد
 
                 let numValue = 0; let cleanStr = prizeStr.toUpperCase().replace(/[^0-9.K]/g, '');
                 if (cleanStr.includes('K')) numValue = parseFloat(cleanStr.replace('K', '')) * 1000; else numValue = parseFloat(cleanStr) || 0;
