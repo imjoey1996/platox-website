@@ -857,6 +857,17 @@
 
         const tourSheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/gviz/tq?tqx=out:csv"; 
 
+        // دالة لإنشاء بصمة فريدة لأي نص (تكتشف أي تعديل ولو بحرف واحد)
+        function hashCode(str) {
+            let hash = 0;
+            for (let i = 0, len = str.length; i < len; i++) {
+                let chr = str.charCodeAt(i);
+                hash = (hash << 5) - hash + chr;
+                hash |= 0;
+            }
+            return hash.toString();
+        }
+
         function parseCSV(str) {
             var arr = []; var quote = false; var col = 0, row = 0;
             for (var c = 0; c < str.length; c++) {
@@ -935,7 +946,7 @@
             let hasNewHome = false;
             let hasNewExplore = false;
 
-            // 1. فحص الأخبار
+            // 1. فحص الأخبار (تعديل أو إضافة)
             if (currentLatestNews && currentLatestNews.id !== seenNews) {
                 hasNewHome = true;
                 const displayTitle = isAr ? currentLatestNews.titleAr : (currentLatestNews.titleEn || currentLatestNews.titleAr);
@@ -950,7 +961,7 @@
                 </div>`;
             }
 
-            // 2. فحص البطولات
+            // 2. فحص البطولات (إضافة بطولة جديدة أو تعديل)
             if (currentLatestTour && currentLatestTour.id !== seenTour) {
                 hasNewExplore = true;
                 const displayTitle = isAr ? currentLatestTour.titleAr : (currentLatestTour.titleEn || currentLatestTour.titleAr);
@@ -968,7 +979,7 @@
             // 3. فحص العناصر الأسبوعية
             if (currentLatestWeekly && currentLatestWeekly.id !== seenWeekly) {
                 hasNewExplore = true;
-                const safeTitle = escapeHTML(decodeURIComponent(currentLatestWeekly.id));
+                const safeTitle = escapeHTML(currentLatestWeekly.display);
                 html += `
                 <div class="notif-item" onclick="markSeenAndGo('weekly', '${currentLatestWeekly.id}', 'leaderboard', 'weekly-showcase')">
                     <i class="fa-solid fa-gift" style="color:#a855f7;"></i> 
@@ -985,7 +996,7 @@
 
             notifContent.innerHTML = html;
 
-            // تحديث النقاط الحمراء
+            // توجيه النقاط الحمراء فقط للأقسام اللي بيها تعديل
             const bellDot = document.getElementById('nav-dot-bell');
             const homeDot = document.getElementById('dot-home');
             const exploreDot = document.getElementById('dot-explore');
@@ -1374,7 +1385,7 @@
             
             if (cachedSheetRows) {
                 renderDynamicData();
-                if (newsCardsData.length > 0) buildNewsHTML();
+                renderNewsData();
                 renderDailyTip(); 
                 updateNotificationsDropdown();
             }
@@ -1468,8 +1479,9 @@
             
             if (newsCardsData.length > 0) {
                 const top = newsCardsData[0];
+                const newsContentHash = (top[0] || '') + (top[2] || '') + (top[3] || '') + (top[4] || '') + (top[5] || '');
                 currentLatestNews = {
-                    id: encodeURIComponent((top[0] || '') + (top[2] || top[4] || '')), 
+                    id: 'news_' + hashCode(newsContentHash), 
                     titleAr: top[2] || '',
                     titleEn: top[4] || ''
                 };
@@ -1618,11 +1630,13 @@
                     if (weekName) { 
                         weekNameEl.innerText = weekName; 
                         weekNameEl.style.display = 'block'; 
-                        currentLatestWeekly = { id: encodeURIComponent(weekName) };
                     } else { 
                         weekNameEl.style.display = 'none'; 
-                        currentLatestWeekly = null;
                     }
+                    currentLatestWeekly = { 
+                        id: 'weekly_' + hashCode(weekName + videoUrl),
+                        display: weekName || 'عناصر جديدة'
+                    };
                     showcaseSec.style.display = 'flex'; if(showcaseDiv) showcaseDiv.style.display = 'flex';
                 } else { 
                     showcaseSec.style.display = 'none'; if(showcaseDiv) showcaseDiv.style.display = 'none'; 
@@ -1672,8 +1686,9 @@
             let upcomingTours = tournamentsList.filter(t => t.diff > 0).sort((a, b) => a.targetTimeMs - b.targetTimeMs);
             if (upcomingTours.length > 0) {
                 const topTour = upcomingTours[0];
+                const allToursHash = upcomingTours.map(t => t.nameAr + t.targetTimeMs + t.prizeStr).join('|');
                 currentLatestTour = {
-                    id: encodeURIComponent(topTour.nameAr + topTour.targetTimeMs),
+                    id: 'tour_' + hashCode(allToursHash),
                     titleAr: topTour.nameAr,
                     titleEn: topTour.nameEn
                 };
