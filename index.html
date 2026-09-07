@@ -281,6 +281,20 @@
         }
         html[dir="ltr"] .input-error-msg { text-align: left; }
 
+        /* Counter Styles */
+        .char-counter-badge {
+            position: absolute;
+            bottom: 12px;
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 700;
+            pointer-events: none;
+            z-index: 10;
+            opacity: 0.8;
+        }
+        html[dir="rtl"] .char-counter-badge { left: 15px; }
+        html[dir="ltr"] .char-counter-badge { right: 15px; }
+
         .fit-btn { padding: 8px 18px; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; transition: 0.2s; font-family: inherit; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; width: fit-content; flex: none; white-space: nowrap; height: 38px;}
         .submit-btn, .cancel-btn { border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; transition: 0.2s; font-family: inherit; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; flex: 1; padding: 10px; white-space: nowrap; height: 42px;}
         
@@ -503,13 +517,11 @@
                     </div>
                     
                     <div style="position: relative; width: 100%;">
-                        <textarea id="bug-desc" class="bug-input" rows="4" placeholder="وصف المشكلة..." maxlength="1499" style="resize: vertical;" oninput="clearInputError('bug-desc'); updateCharCount(this);"></textarea>
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-top: 6px;">
-                            <div id="bug-desc-error" class="input-error-msg" style="margin-top: 0;"></div>
-                            <div class="num-font" style="font-size: 13.5px; color: var(--text-muted); font-weight: bold; direction: ltr; margin-right: auto; padding-left: 5px;">
-                                <span id="char-counter">1499</span> / 1499
-                            </div>
+                        <div style="position: relative;">
+                            <textarea id="bug-desc" class="bug-input" rows="4" placeholder="وصف المشكلة..." maxlength="1499" style="resize: vertical; padding-bottom: 25px;" oninput="clearInputError('bug-desc'); updateCharCount(this);"></textarea>
+                            <div class="char-counter-badge num-font" id="char-counter">1499</div>
                         </div>
+                        <div id="bug-desc-error" class="input-error-msg"></div>
                     </div>
                     
                     <div style="display: flex; gap: 10px;">
@@ -707,7 +719,7 @@
         <section id="arabic-leaders">
             <h2 class="section-title" data-i18n="leaders_title">القادة العرب</h2>
             <div class="grid-container">
-                <div class="card glass-panel card-yyy">
+                <div class="card glass-panel card-yyy" style="border-top: 2px solid rgba(255,255,255,0.8); border-bottom: 2px solid rgba(255,255,255,0.8); box-shadow: 0 -8px 20px rgba(255,255,255,0.3), 0 8px 20px rgba(255,255,255,0.3);">
                     <img src="IMG_3154.png" alt="YYY">
                     <div class="leader-name-box" onclick="copyAdminID('YYY')" title="انسخ اليوزر">
                         <i class="fa-regular fa-copy leader-copy-icon"></i>
@@ -724,7 +736,7 @@
                     <p class="leader-desc" data-i18n="desc_yyy">صانع الأثر، يقود برؤية مستقبلية لخلق بيئة إيجابية لا تعرف المستحيل.</p>
                     <div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: #ffffff;"></i> <span data-i18n="bday_yyy">1 يناير</span></div>
                 </div>
-                <div class="card glass-panel card-hat">
+                <div class="card glass-panel card-hat" style="border-top: 2px solid rgba(255,255,255,0.8); border-bottom: 2px solid rgba(255,255,255,0.8); box-shadow: 0 -8px 20px rgba(255,255,255,0.3), 0 8px 20px rgba(255,255,255,0.3);">
                     <img src="f3b8c20da38a9320fa2f250f52f7f16a.png" alt="HAT">
                     <div class="leader-name-box" onclick="copyAdminID('HAT')" title="انسخ اليوزر">
                         <i class="fa-regular fa-copy leader-copy-icon"></i>
@@ -741,7 +753,7 @@
                     <p class="leader-desc" data-i18n="desc_hat">حضور راسخ، تقود المجتمع بثقة راسخة وترسم معايير الرقي.</p>
                     <div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: #ffffff;"></i> <span data-i18n="bday_hat">1 سبتمبر</span></div>
                 </div>
-                <div class="card glass-panel card-bbb">
+                <div class="card glass-panel card-bbb" style="border-top: 2px solid rgba(255,255,255,0.8); border-bottom: 2px solid rgba(255,255,255,0.8); box-shadow: 0 -8px 20px rgba(255,255,255,0.3), 0 8px 20px rgba(255,255,255,0.3);">
                     <img src="a_368d018a788facdb964b3f1df658ecde.gif" alt="BBB">
                     <div class="leader-name-box" onclick="copyAdminID('BBB')" title="انسخ اليوزر">
                         <i class="fa-regular fa-copy leader-copy-icon"></i>
@@ -1144,7 +1156,7 @@
 
                 let cardGlowStyle = '';
                 if (leader.server === 'english') {
-                    cardGlowStyle = 'border-top: 2px solid rgba(255,255,255,0.4); border-bottom: 2px solid rgba(255,255,255,0.4); box-shadow: 0 -5px 15px rgba(255,255,255,0.08), 0 5px 15px rgba(255,255,255,0.08);';
+                    cardGlowStyle = 'border-top: 2px solid #000000; border-bottom: 2px solid #000000; box-shadow: 0 -8px 20px rgba(0,0,0,0.9), 0 8px 20px rgba(0,0,0,0.9);';
                 } else {
                     cardGlowStyle = `border-top: 2px solid ${sTheme.nameColor}99; border-bottom: 2px solid ${sTheme.nameColor}99; box-shadow: 0 -6px 18px ${sTheme.nameColor}30, 0 6px 18px ${sTheme.nameColor}30;`;
                 }
