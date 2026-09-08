@@ -4,13 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://worldtimeapi.org https://timeapi.io https://docs.google.com https://script.google.com https://script.googleusercontent.com https://api.ipify.org; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline'; img-src 'self' data: https: http:; media-src https: http: 'self';">
+    <!-- تم تقييد الأمان هنا لمنع الثغرات وتحميل البيانات من الروابط المشفرة فقط -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://worldtimeapi.org https://timeapi.io https://docs.google.com https://script.google.com https://script.googleusercontent.com https://api.ipify.org; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline'; img-src 'self' data: https:; media-src https: 'self';">
     
     <title>PlatoX | مجتمع اللاعبين العرب</title>
     
     <script>
         function safeSetStorage(key, value) { try { localStorage.setItem(key, value); } catch(e) {} }
         function safeGetStorage(key) { try { return localStorage.getItem(key); } catch(e) { return null; } }
+        function safeSetSession(key, value) { try { sessionStorage.setItem(key, value); } catch(e) {} }
+        function safeGetSession(key) { try { return sessionStorage.getItem(key); } catch(e) { return null; } }
 
         let savedLang = safeGetStorage('lang') || 'en';
         let savedTheme = safeGetStorage('theme') || 'dark';
@@ -763,14 +766,12 @@
         
         let activeTourTimers = [];
 
-        // متغيرات التتبع للإشعارات
         let currentLatestNews = null;
         let currentLatestTour = null;
         let currentLatestWeekly = null;
 
         const tourSheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/gviz/tq?tqx=out:csv"; 
 
-        // دالة لإنشاء بصمة فريدة لأي نص (تكتشف أي تعديل ولو بحرف واحد)
         function hashCode(str) {
             let hash = 0;
             for (let i = 0, len = str.length; i < len; i++) {
@@ -960,15 +961,17 @@
             document.getElementById('char-counter').innerText = '1499';
         }
 
+        // تم تحسين دالة التنظيف للحماية من XSS
         function escapeHTML(str) {
             if (!str) return "";
-            return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag]) );
+            return String(str).replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag) );
         }
 
         async function submitBugReport() {
             const isAr = document.documentElement.lang === 'ar';
             
-            const lastReportTime = safeGetStorage('last_bug_report');
+            // حماية مضاعفة من السبام
+            const lastReportTime = safeGetStorage('last_bug_report') || safeGetSession('last_bug_report_session');
             if (lastReportTime) {
                 const elapsed = Date.now() - parseInt(lastReportTime);
                 const cooldown = 30 * 60 * 1000; 
@@ -1024,12 +1027,25 @@
             submitBtn.disabled = true;
 
             try {
-                const finalURL = scriptURL + "?plato_id=" + encodeURIComponent(platoId) + "&issue_type=" + encodeURIComponent(bugType) + "&description=" + encodeURIComponent(bugDesc) + "&ip=" + encodeURIComponent(userIP);
-                const fetchPromise = fetch(finalURL, { mode: "no-cors", cache: "no-store" });
+                // تأمين الإرسال: استخدام طريقة POST لإخفاء البيانات من الرابط
+                const formData = new URLSearchParams();
+                formData.append("plato_id", platoId);
+                formData.append("issue_type", bugType);
+                formData.append("description", bugDesc);
+                formData.append("ip", userIP);
+
+                const fetchPromise = fetch(scriptURL, { 
+                    method: 'POST',
+                    mode: "no-cors", 
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: formData.toString()
+                });
+                
                 const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 8000));
                 await Promise.race([fetchPromise, timeoutPromise]);
                 
                 safeSetStorage('last_bug_report', Date.now().toString());
+                safeSetSession('last_bug_report_session', Date.now().toString());
 
                 const toast = document.getElementById("toast");
                 toast.innerHTML = isAr ? `<i class="fa-solid fa-check"></i> تم إرسال البلاغ بنجاح` : `<i class="fa-solid fa-check"></i> Report Submitted Successfully`;
@@ -1852,7 +1868,6 @@
 
             loadDynamicData();
 
-            // قراءة الصفحة الحالية من الذاكرة والذهاب لها (يحل مشكلة الرفرش)
             let savedView = safeGetStorage('currentView') || 'home';
             switchView(savedView);
             
@@ -1870,4 +1885,3 @@
     </script>
 </body>
 </html>
-
