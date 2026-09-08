@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
+    <!-- تم تقييد الأمان هنا لمنع الثغرات وتحميل البيانات من الروابط المشفرة فقط -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://worldtimeapi.org https://timeapi.io https://docs.google.com https://script.google.com https://script.googleusercontent.com https://api.ipify.org; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline'; img-src 'self' data: https:; media-src https: 'self';">
     
     <title>PlatoX | مجتمع اللاعبين العرب</title>
@@ -306,7 +307,6 @@
         .hidden-player { display: none !important; }
 
         @media (max-width: 600px) {
-            .notif-dropdown { right: -85px; width: 280px; max-width: 90vw; }
             .main-lang-switch { margin-top: calc(85px + env(safe-area-inset-top)); margin-bottom: 10px; } 
             .main-lang-switch .lang-btn { padding: 6px 15px; }
             section { padding: 35px 15px 20px; }
@@ -798,24 +798,7 @@
             return arr;
         }
 
-        // دالة تحديث الرابط في المتصفح حسب اللغة والقسم
-        function updateURL() {
-            const currentLang = document.documentElement.getAttribute('lang') || 'en';
-            const currentView = safeGetStorage('currentView') || 'home';
-            let path = '/' + currentLang;
-            
-            if (currentView === 'leaders') {
-                path += '/leaders';
-            } else if (currentView === 'leaderboard') {
-                path += '/explore';
-            }
-            
-            if (window.location.pathname !== path) {
-                window.history.pushState({ lang: currentLang, view: currentView }, '', path);
-            }
-        }
-
-        function switchView(viewName, itemEl, updateHistory = true) {
+        function switchView(viewName, itemEl) {
             document.querySelectorAll('.tab-view').forEach(view => view.classList.remove('active-view'));
             document.querySelectorAll('.bottom-nav-item').forEach(item => item.classList.remove('active'));
 
@@ -831,8 +814,6 @@
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
             if (viewName === 'home') setTimeout(updateCarouselButtons, 80);
-
-            if (updateHistory !== false) updateURL();
         }
 
         function toggleNotif() {
@@ -980,6 +961,7 @@
             document.getElementById('char-counter').innerText = '1499';
         }
 
+        // تم تحسين دالة التنظيف للحماية من XSS
         function escapeHTML(str) {
             if (!str) return "";
             return String(str).replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag) );
@@ -988,6 +970,7 @@
         async function submitBugReport() {
             const isAr = document.documentElement.lang === 'ar';
             
+            // حماية مضاعفة من السبام
             const lastReportTime = safeGetStorage('last_bug_report') || safeGetSession('last_bug_report_session');
             if (lastReportTime) {
                 const elapsed = Date.now() - parseInt(lastReportTime);
@@ -1044,6 +1027,7 @@
             submitBtn.disabled = true;
 
             try {
+                // تأمين الإرسال: استخدام طريقة POST لإخفاء البيانات من الرابط
                 const formData = new URLSearchParams();
                 formData.append("plato_id", platoId);
                 formData.append("issue_type", bugType);
@@ -1311,7 +1295,7 @@
             }
         };
 
-        function changeLang(lang, updateHistory = true) {
+        function changeLang(lang) {
             document.documentElement.setAttribute('lang', lang); 
             document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
             
@@ -1345,7 +1329,6 @@
                 updateNotificationsDropdown();
             }
             safeSetStorage('lang', lang);
-            if (updateHistory !== false) updateURL();
         }
 
         async function loadDynamicData(force = false) {
@@ -1873,26 +1856,8 @@
 
         document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('theme-icon').className = savedTheme === 'light' ? 'fa-solid fa-sun theme-toggle' : 'fa-solid fa-moon theme-toggle';
+            changeLang(savedLang);
             
-            const path = window.location.pathname;
-            let initialLang = savedLang;
-            if (path.startsWith('/ar')) initialLang = 'ar';
-            else if (path.startsWith('/en')) initialLang = 'en';
-
-            let initialView = safeGetStorage('currentView') || 'home';
-            if (path.includes('/leaders')) initialView = 'leaders';
-            else if (path.includes('/explore')) initialView = 'leaderboard';
-            else if (path === '/ar' || path === '/en' || path === '/') initialView = 'home';
-            
-            savedLang = initialLang;
-            safeSetStorage('lang', savedLang);
-            safeSetStorage('currentView', initialView);
-
-            changeLang(savedLang, false);
-            switchView(initialView, null, false);
-            
-            window.history.replaceState({ lang: savedLang, view: initialView }, '', window.location.pathname !== '/' ? window.location.pathname : '/' + savedLang);
-
             const nSlider = document.getElementById('newsSlider');
             let isDown = false, startX, sLeft;
             if(nSlider) {
@@ -1902,18 +1867,13 @@
             }
 
             loadDynamicData();
+
+            let savedView = safeGetStorage('currentView') || 'home';
+            switchView(savedView);
             
             if (typeof syncRealTime === "function") {
                 syncRealTime().then(() => { if (typeof updateSheetTimers === "function") updateSheetTimers(); });
                 setInterval(updateSheetTimers, 1000);
-            }
-        });
-
-        // لتفعيل زر الرجوع في المتصفح
-        window.addEventListener('popstate', (e) => {
-            if (e.state) {
-                if (e.state.lang) changeLang(e.state.lang, false);
-                if (e.state.view) switchView(e.state.view, null, false);
             }
         });
 
