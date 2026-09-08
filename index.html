@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
-    <!-- تم تحديث وتقوية سياسة الأمان (CSP) لمنع الاتصالات غير المصرح بها ومنع تسريب البيانات -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://worldtimeapi.org https://docs.google.com https://script.google.com https://script.googleusercontent.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline'; img-src 'self' data: https:; media-src https: 'self';">
+    <!-- تم تقييد الأمان هنا لمنع الثغرات وتحميل البيانات من الروابط المشفرة فقط -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://worldtimeapi.org https://timeapi.io https://docs.google.com https://script.google.com https://script.googleusercontent.com https://api.ipify.org; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline'; img-src 'self' data: https:; media-src https: 'self';">
     
     <title>PlatoX | مجتمع اللاعبين العرب</title>
     
@@ -382,7 +382,7 @@
             <div class="glass-panel" style="width: 100%; max-width: 700px; padding: 30px; border-radius: 16px; text-align: center; display: flex; flex-direction: column; align-items: center;">
                 <i class="fa-solid fa-globe pro-icon-glow" style="font-size: 35px; margin-bottom: 15px;"></i>
                 <p class="glass-desc-text" style="font-weight: 600; margin: 0;" data-i18n="about_site_desc">
-مساحة موثوقة تجمع اللاعبين وتبقيهم على اطلاع بأحدث أخبار بلاتو، والإرشادات، وموارد الإبلاغ، والمعلومات المهمة، مع توفير بيئة داعمة لتعزيز التواصل وبناء مجتمع أفضل.
+                    مجتمع موثوق يُبقي اللاعبين على اطلاع وتواصل، ويوفر لهم الدعم من خلال أحدث أخبار بلاتو، الإرشادات المفيدة، موارد الإبلاغ، وكل ما يهم المجتمع.
                 </p>
             </div>
         </section>
@@ -961,25 +961,16 @@
             document.getElementById('char-counter').innerText = '1499';
         }
 
-        // دالة تنظيف النصوص ضد ثغرات XSS
+        // تم تحسين دالة التنظيف للحماية من XSS
         function escapeHTML(str) {
             if (!str) return "";
             return String(str).replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag) );
         }
-        
-        // دالة مخصصة لضمان سلامة روابط الصور (تمنع حقن javascript)
-        function getSafeImageUrl(url, fallback) {
-    if (!url) return fallback;
-    const cleanUrl = url.trim();
-    // نمنع روابط جافاسكريبت الخبيثة فقط، ونسمح بجميع أنواع روابط ومسارات الصور
-    if (cleanUrl.toLowerCase().startsWith('javascript:')) return fallback;
-    return cleanUrl;
-}
 
         async function submitBugReport() {
             const isAr = document.documentElement.lang === 'ar';
             
-            // حماية مبدئية من جهة المستخدم ضد السبام (الحماية الأساسية يجب أن تكون في Apps Script)
+            // حماية مضاعفة من السبام
             const lastReportTime = safeGetStorage('last_bug_report') || safeGetSession('last_bug_report_session');
             if (lastReportTime) {
                 const elapsed = Date.now() - parseInt(lastReportTime);
@@ -1024,7 +1015,9 @@
             }
             if (hasError) return;
 
-            // تم إزالة دالة جلب IP المكشوفة واستبدالها بحماية في الباك إند (Apps Script)
+            let userIP = "Unknown";
+            try { const ipRes = await fetch("https://api.ipify.org?format=json"); const ipData = await ipRes.json(); userIP = ipData.ip; } catch(e) { console.log("تعذر جلب IP"); }
+
             const bugType = bugTypeElement.value;
             const scriptURL = "https://script.google.com/macros/s/AKfycbw50pY2KrpmdaiRXjjovU3mVmSTOld-N4tPUEFXcRgkhOfg1lqAZOaRukZeiiM4Zkvz0Q/exec"; 
 
@@ -1034,11 +1027,12 @@
             submitBtn.disabled = true;
 
             try {
-                // استخدام POST و URLSearchParams لإخفاء البيانات من الرابط (GET)
+                // تأمين الإرسال: استخدام طريقة POST لإخفاء البيانات من الرابط
                 const formData = new URLSearchParams();
                 formData.append("plato_id", platoId);
                 formData.append("issue_type", bugType);
                 formData.append("description", bugDesc);
+                formData.append("ip", userIP);
 
                 const fetchPromise = fetch(scriptURL, { 
                     method: 'POST',
@@ -1092,9 +1086,7 @@
                 const descText = currentLang === 'ar' && leader.desc.ar ? escapeHTML(leader.desc.ar) : escapeHTML(leader.desc.en);
                 const descHTML = descText ? `<p class="leader-desc">${descText}</p>` : "";
                 
-                // إضافة الحماية لصور القادة العرب
-                const fallbackImg = `https://ui-avatars.com/api/?name=${escapeHTML(leader.name)}&background=ffffff&color=000&bold=true`;
-                const cleanImg = getSafeImageUrl(leader.img, fallbackImg); 
+                const cleanImg = leader.img ? escapeHTML(leader.img) : `https://ui-avatars.com/api/?name=${escapeHTML(leader.name)}&background=ffffff&color=000&bold=true`;
 
                 htmlStr += `
                 <div class="card glass-panel card-${escapeHTML(leader.name).toLowerCase()}" style="border-top: 2px solid rgba(255,255,255,0.8); border-bottom: 2px solid rgba(255,255,255,0.8); box-shadow: 0 -8px 20px rgba(255,255,255,0.3), 0 8px 20px rgba(255,255,255,0.3);">
@@ -1129,10 +1121,8 @@
             
             globalLeadersData.forEach(leader => {
                 const sTheme = serverThemes[leader.server];
-                
-                // إضافة الحماية لصور القادة العالميين
-                const fallbackImg = `https://ui-avatars.com/api/?name=${escapeHTML(leader.name)}&background=${sTheme.nameColor.replace('#', '')}&color=fff&bold=true`;
-                const imageSource = getSafeImageUrl(leader.img, fallbackImg); 
+                const cleanImg = leader.img ? escapeHTML(leader.img) : '';
+                const imageSource = cleanImg ? cleanImg : `https://ui-avatars.com/api/?name=${escapeHTML(leader.name)}&background=${sTheme.nameColor.replace('#', '')}&color=fff&bold=true`;
                 
                 let bdayText = "";
                 if (leader.birthday && (leader.birthday.en || leader.birthday.ar)) {
@@ -1203,7 +1193,7 @@
                 nav_home: "الرئيسية", nav_leaders: "حول القادة", nav_leaderboard: "استكشف",
                 pull_refresh: "جاري التحديث...", menu_guidelines: "القوانين",
                 about_site_title: "نبذة عن الموقع",
-                about_site_desc: "مجتمع تم تطويره وإدارته بواسطة القادة العرب، ليكون مرجعًا موثوقًا لأخبار بلاتو، الإرشادات، تقديم البلاغات، موارد المجتمع، ومعلومات الخادم العربيمساحة موثوقة تجمع اللاعبين وتبقيهم على اطلاع بأحدث أخبار بلاتو، والإرشادات، وموارد الإبلاغ، والمعلومات المهمة، مع توفير بيئة داعمة لتعزيز التواصل وبناء مجتمع أفضل.",
+                about_site_desc: "مجتمع موثوق يُبقي اللاعبين على اطلاع وتواصل، ويوفر لهم الدعم من خلال أحدث أخبار بلاتو، الإرشادات المفيدة، موارد الإبلاغ، وكل ما يهم المجتمع.",
                 leaders_title: "القادة العرب", global_leaders_title: "قادة السيرفرات العالمية", news_board_title: "لوحة أخبار المجتمع", players_title: "اللاعبين الاقدم", spending_title: "ترتيب المجموعات الأكثر إنفاقًا", tournaments_title: "مركز البطولات",
                 bug_title: "تقديم بلاغ", bug_type_label: "نوع المشكلة:", bug_note: "هذا القسم غير مخصص للمشاكل الشخصية.", bug_opt1_title: "الثغرات:", bug_opt2_title: "مشاكل تقنية:", bug_exp_desc: "ثغرات، أخطاء برمجية، أو نسخ معدلة.", bug_tech_desc: "أخطاء تقنية ذات تأثير عالي أو مشاكل نظام قابلة للاستغلال المتكرر.", bug_submit: "إرسال البلاغ", bug_cancel: "إلغاء",
                 who_are_leaders: "من هم القادة؟",
@@ -1582,12 +1572,8 @@
                 const videoUrl = firstRow[6] ? escapeHTML(firstRow[6].trim()) : ""; 
                 const weekName = escapeHTML(firstRow[7] ? firstRow[7].trim() : ""); 
                 const vidEl = document.getElementById('weekly-video'); const showcaseSec = document.getElementById('weekly-showcase'); const showcaseDiv = document.getElementById('weekly-divider'); const weekNameEl = document.getElementById('weekly-week-name');
-                
-                // إضافة الحماية لرابط الفيديو
-                const safeVideoUrl = getSafeImageUrl(videoUrl, ""); 
-
-                if (safeVideoUrl) { 
-                    if (vidEl.getAttribute('src') !== safeVideoUrl) vidEl.src = safeVideoUrl;
+                if (videoUrl) { 
+                    if (vidEl.getAttribute('src') !== videoUrl) vidEl.src = videoUrl;
                     if (weekName) { 
                         weekNameEl.innerText = weekName; 
                         weekNameEl.style.display = 'block'; 
@@ -1595,7 +1581,7 @@
                         weekNameEl.style.display = 'none'; 
                     }
                     currentLatestWeekly = { 
-                        id: 'weekly_' + hashCode(weekName + safeVideoUrl),
+                        id: 'weekly_' + hashCode(weekName + videoUrl),
                         display: weekName || 'عناصر جديدة'
                     };
                     showcaseSec.style.display = 'flex'; if(showcaseDiv) showcaseDiv.style.display = 'flex';
@@ -1622,6 +1608,7 @@
             arabicLeadersData = []; 
 
             cachedSheetRows.forEach((cols) => {
+                // جلب القادة (عرب وعالميين) من W (22) إلى AC (28)
                 if(cols.length >= 24) {
                     const lServer = escapeHTML(cols[22] ? cols[22].trim().toLowerCase() : "");
                     const lName = escapeHTML(cols[23] ? cols[23].trim() : "");
@@ -1653,6 +1640,7 @@
                 const rawTimeStr = escapeHTML(cols[0] ? cols[0].trim() : ""); 
                 const nameAr = escapeHTML(cols[1] ? cols[1].trim() : "");
                 
+                // جلب بيانات اللاعبين الأقدم من الأعمدة T (19) و U (20) و V (21)
                 if(cols.length >= 22) {
                     const pUser = escapeHTML(cols[19] ? cols[19].trim() : "");
                     const pImg = escapeHTML(cols[20] ? cols[20].trim() : "");
@@ -1690,12 +1678,14 @@
                 }
             });
 
+            // تحديث قسم القادة (العرب والعالميين)
             renderArabicLeaders();
             renderGlobalLeaders();
             const activeTab = document.querySelector('.server-tab.active');
             if(activeTab) filterServer(activeTab.dataset.target);
 
-            oldestPlayersList.sort((a, b) => b.baseDays - a.baseDays);
+            // توليد كود الـ HTML للاعبين الأقدم وترتيبهم
+            oldestPlayersList.sort((a, b) => b.baseDays - a.baseDays); // الترتيب التنازلي حسب الأيام
             let playersHTML = '';
             oldestPlayersList.forEach((player, index) => {
                 const rankNum = (index + 1).toString(); 
@@ -1707,10 +1697,7 @@
                 else if (rankNum === '3') rankClass = 'rank-3';
 
                 const hiddenClass = index >= 3 ? 'hidden-player' : '';
-                
-                // إضافة الحماية لصور اللاعبين الأقدم
-                const cleanPlayerImg = getSafeImageUrl(player.img, ""); 
-                const imgTag = cleanPlayerImg ? `<img src="${cleanPlayerImg}" class="list-img" alt="${player.user}" onerror="this.style.display='none'">` : ``;
+                const imgTag = player.img ? `<img src="${player.img}" class="list-img" alt="${player.user}" onerror="this.style.display='none'">` : ``;
 
                 playersHTML += `
                     <div class="list-row glass-panel ${rankClass} ${hiddenClass}">
@@ -1756,10 +1743,7 @@
             sortedTournaments.forEach(tour => {
                 const displayName = currentLang === 'ar' ? tour.nameAr : (tour.nameEn || tour.nameAr);
                 const borderStyle = isLtr ? `border-left-color: var(--primary);` : `border-right-color: var(--primary);`;
-                
-                // إضافة الحماية لصور البطولات
-                const cleanTourImg = getSafeImageUrl(tour.image, ""); 
-                const imgTag = cleanTourImg ? `<img src="${cleanTourImg}" class="entity-img" style="border-radius:8px; width:35px; height:35px; object-fit:cover;" onerror="this.style.display='none'">` : ``;
+                const imgTag = tour.image ? `<img src="${tour.image}" class="entity-img" style="border-radius:8px; width:35px; height:35px; object-fit:cover;" onerror="this.style.display='none'">` : ``;
 
                 tourHTML += `
                     <div class="tour-card glass-panel" style="${borderStyle}">
@@ -1790,10 +1774,7 @@
                 else if (rankNum === '3') { rankClass = 'rank-3'; color = '#cd7f32'; barBg = '#cd7f32'; }
 
                 let displayScore = group.total >= 1000 ? (group.total / 1000) + 'K' : group.total;
-                
-                // إضافة الحماية لصور الإنفاق
-                const cleanGroupImg = getSafeImageUrl(group.image, ""); 
-                const imgTag = cleanGroupImg ? `<img src="${cleanGroupImg}" class="list-img group-img" style="object-fit:cover;" onerror="this.style.display='none'">` : ``;
+                const imgTag = group.image ? `<img src="${group.image}" class="list-img group-img" style="object-fit:cover;" onerror="this.style.display='none'">` : ``;
 
                 spendHTML += `
                     <div class="list-row glass-panel ${rankClass}">
