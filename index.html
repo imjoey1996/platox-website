@@ -757,8 +757,8 @@
         let newsCardsData = [];
         let tournamentsList = [];
         let validTips = [];
-        let globalLeadersData = []; // للقادة العالميين
-        let arabicLeadersData = []; // للقادة العرب
+        let globalLeadersData = []; 
+        let arabicLeadersData = []; 
         let randomTipIndex = -1;
         
         let baseRealTime = Date.now();
@@ -1078,7 +1078,6 @@
                 
                 const cleanImg = leader.img ? escapeHTML(leader.img) : `https://ui-avatars.com/api/?name=${escapeHTML(leader.name)}&background=ffffff&color=000&bold=true`;
 
-                // نفس التأثيرات البيضاء والظل الموجودة مسبقاً للقادة العرب تم الحفاظ عليها هنا
                 htmlStr += `
                 <div class="card glass-panel card-${escapeHTML(leader.name).toLowerCase()}" style="border-top: 2px solid rgba(255,255,255,0.8); border-bottom: 2px solid rgba(255,255,255,0.8); box-shadow: 0 -8px 20px rgba(255,255,255,0.3), 0 8px 20px rgba(255,255,255,0.3);">
                     <img src="${cleanImg}" alt="${escapeHTML(leader.name)}">
