@@ -301,6 +301,8 @@
         #toast { visibility: hidden; min-width: 200px; background: rgba(15, 15, 20, 0.95); backdrop-filter: blur(10px); color: #fff; text-align: center; border-radius: 10px; padding: 12px 20px; position: fixed; z-index: 9999; left: 50%; bottom: 25px; transform: translateX(-50%); font-size: 14px; opacity: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid var(--primary); font-family: 'Cairo', sans-serif; font-weight:bold; transition: opacity 0.3s;}
         #toast.show { visibility: visible; bottom: calc(95px + env(safe-area-inset-bottom)); opacity: 1; }
 
+        .hidden-player { display: none !important; }
+
         @media (max-width: 600px) {
             .main-lang-switch { margin-top: calc(85px + env(safe-area-inset-top)); margin-bottom: 10px; } 
             .main-lang-switch .lang-btn { padding: 6px 15px; }
@@ -743,52 +745,12 @@
 
         <section id="accounts">
             <h2 class="section-title" data-i18n="players_title">اللاعبين الاقدم</h2>
-            <div class="premium-list">
-                <div class="list-row glass-panel rank-1">
-                    <div class="rank-num num-font">01</div>
-                    <div class="list-info">
-                        <img src="84fbda49d60a3ab730108bb40c635feb.png" class="list-img" alt="abc">
-                        <div class="list-name num-font">abc</div>
-                    </div>
-                    <div class="score-val num-font"><span class="auto-days" data-base-days="3563"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
-                </div>
-
-                <div class="list-row glass-panel rank-2">
-                    <div class="rank-num num-font">02</div>
-                    <div class="list-info">
-                        <img src="IMG_9764.png" class="list-img" alt="RIP">
-                        <div class="list-name num-font">RIP</div>
-                    </div>
-                    <div class="score-val num-font"><span class="auto-days" data-base-days="3491"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
-                </div>
-
-                <div class="list-row glass-panel rank-3">
-                    <div class="rank-num num-font">03</div>
-                    <div class="list-info">
-                        <img src="a_368d018a788facdb964b3f1df658ecde.gif" class="list-img" alt="BBB">
-                        <div class="list-name num-font">BBB</div>
-                    </div>
-                    <div class="score-val num-font"><span class="auto-days" data-base-days="3005"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
-                </div>
-
-                <div class="list-row glass-panel">
-                    <div class="rank-num num-font">04</div>
-                    <div class="list-info">
-                        <img src="a_368d018a788facdb964b3f1df658ecde.gif" class="list-img" alt="MMM">
-                        <div class="list-name num-font">MMM</div>
-                    </div>
-                    <div class="score-val num-font"><span class="auto-days" data-base-days="3005"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
-                </div>
-
-                <div class="list-row glass-panel">
-                    <div class="rank-num num-font">05</div>
-                    <div class="list-info">
-                        <img src="IMG_9766.png" class="list-img" alt="Alive">
-                        <div class="list-name num-font">Alive</div>
-                    </div>
-                    <div class="score-val num-font"><span class="auto-days" data-base-days="2981"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">يوم</span></div>
-                </div>
+            <div class="premium-list" id="oldest-players-container">
+                <!-- سيتم جلب وعرض بيانات اللاعبين الأقدم هنا من الشيت -->
             </div>
+            <button type="button" class="cancel-btn" id="show-more-players" onclick="showMorePlayers()" style="margin-top: 15px; display: none; width: auto; padding: 8px 20px;">
+                <span data-i18n="show_more">عرض المزيد</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
         </section>
 
         <div class="cyber-divider"><div class="center-node"></div></div>
@@ -1276,7 +1238,7 @@
                 desc_yyy: "صانع الأثر، يقود برؤية مستقبلية لخلق بيئة إيجابية لا تعرف المستحيل.", desc_hat: "حضور راسخ، تقود المجتمع بثقة راسخة وترسم معايير الرقي.", desc_bbb: "الحكمة في اتخاذ القرار، يوازن بين الحزم والهدوء لإدارة الأزمات باحترافية.",
                 news_newer: "الأحدث", news_older: "الأقدم",
                 discord_more: "للمزيد من الأخبار انضموا إلى الديسكورد",
-                th_player: "اللاعب", th_days: "يوم",
+                th_player: "اللاعب", th_days: "يوم", show_more: "عرض المزيد",
                 community_guide_title: "إرشادات المجتمع",
                 community_guide_sub: "لا يمكنك القيام بما يلي على بلاتو:",
                 comm_guide_1: "استغلال تطبيق بلاتو أو التشويش على تجربة مستخدم آخر.",
@@ -1330,7 +1292,7 @@
                 desc_yyy: "The Impact Maker, leading with a futuristic vision to create a positive environment.", desc_hat: "A grounded presence, leading the community with solid confidence and setting standards.", desc_bbb: "Wisdom in decision making, balancing firmness and calmness in management.",
                 news_newer: "NEWER", news_older: "OLDER",
                 discord_more: "For more news, join our Discord server",
-                th_player: "PLAYER", th_days: "DAYS",
+                th_player: "PLAYER", th_days: "DAYS", show_more: "Show More",
                 community_guide_title: "Community Guidelines",
                 community_guide_sub: "You can't do the following on Plato:",
                 comm_guide_1: "Exploit Plato app or interfere with another user's experience.",
@@ -1450,6 +1412,8 @@
                     document.getElementById('spenders-container').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">بيانات الإنفاق غير متوفرة حالياً.</p>`;
                     document.getElementById('newsSlider').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">تعذر الاتصال بالشبكة.</p>`;
                     document.getElementById('tip-content').innerText = "لا توجد نصائح متوفرة حالياً.";
+                    document.getElementById('oldest-players-container').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">${isLtr ? "Data not available at the moment." : "بيانات اللاعبين غير متوفرة حالياً."}</p>`;
+                    document.getElementById('show-more-players').style.display = 'none';
                 }
             }
         }
@@ -1611,6 +1575,14 @@
             scrollTimeout = window.requestAnimationFrame(updateCarouselButtons);
         });
 
+        // دالة عرض باقي اللاعبين الأقدم
+        function showMorePlayers() {
+            document.querySelectorAll('.hidden-player').forEach(el => {
+                el.classList.remove('hidden-player');
+            });
+            document.getElementById('show-more-players').style.display = 'none';
+        }
+
         function renderDynamicData() {
             if (!cachedSheetRows || cachedSheetRows.length === 0) return;
             
@@ -1644,12 +1616,25 @@
             const isLtr = currentLang === 'en';
             const nowTime = getAccurateTime();
             let groupsSpending = {}; tournamentsList = [];
+            let oldestPlayersList = [];
 
             cachedSheetRows.forEach((cols) => {
                 if(cols.length < 2) return;
                 
                 const rawTimeStr = escapeHTML(cols[0] ? cols[0].trim() : ""); 
                 const nameAr = escapeHTML(cols[1] ? cols[1].trim() : "");
+                
+                // جلب بيانات اللاعبين الأقدم من الأعمدة T (19) و U (20) و V (21)
+                if(cols.length >= 22) {
+                    const pUser = escapeHTML(cols[19] ? cols[19].trim() : "");
+                    const pImg = escapeHTML(cols[20] ? cols[20].trim() : "");
+                    const pDays = parseInt(cols[21] ? cols[21].trim() : "0", 10);
+                    
+                    if (pUser && !isNaN(pDays) && pDays > 0) {
+                        oldestPlayersList.push({ user: pUser, img: pImg, baseDays: pDays });
+                    }
+                }
+
                 if (!nameAr) return;
                 
                 let targetTimeMs = NaN;
@@ -1677,9 +1662,51 @@
                 }
             });
 
+            // توليد كود الـ HTML للاعبين الأقدم وترتيبهم
+            oldestPlayersList.sort((a, b) => b.baseDays - a.baseDays); // الترتيب التنازلي حسب الأيام
+            let playersHTML = '';
+            oldestPlayersList.forEach((player, index) => {
+                const rankNum = (index + 1).toString(); 
+                const rank = rankNum.padStart(2, '0');
+                
+                let rankClass = '';
+                if (rankNum === '1') rankClass = 'rank-1';
+                else if (rankNum === '2') rankClass = 'rank-2';
+                else if (rankNum === '3') rankClass = 'rank-3';
+
+                const hiddenClass = index >= 3 ? 'hidden-player' : '';
+                const imgTag = player.img ? `<img src="${player.img}" class="list-img" alt="${player.user}" onerror="this.style.display='none'">` : ``;
+
+                playersHTML += `
+                    <div class="list-row glass-panel ${rankClass} ${hiddenClass}">
+                        <div class="rank-num num-font">${rank}</div>
+                        <div class="list-info">
+                            ${imgTag}
+                            <div class="list-name num-font">${player.user}</div>
+                        </div>
+                        <div class="score-val num-font"><span class="auto-days" data-base-days="${player.baseDays}"></span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">${isLtr ? 'Days' : 'يوم'}</span></div>
+                    </div>`;
+            });
+
+            const playersContainer = document.getElementById('oldest-players-container');
+            const showMoreBtn = document.getElementById('show-more-players');
+
+            if (playersHTML === '') {
+                playersContainer.innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">${isLtr ? "No data available." : "لا توجد بيانات حالياً."}</p>`;
+                showMoreBtn.style.display = 'none';
+            } else {
+                playersContainer.innerHTML = playersHTML;
+                if (oldestPlayersList.length > 3) {
+                    showMoreBtn.style.display = 'inline-flex';
+                    showMoreBtn.innerHTML = `<span data-i18n="show_more">${isLtr ? 'Show More' : 'عرض المزيد'}</span> <i class="fa-solid fa-chevron-down"></i>`;
+                } else {
+                    showMoreBtn.style.display = 'none';
+                }
+            }
+
+
             let upcomingTours = tournamentsList.filter(t => t.diff > 0).sort((a, b) => a.targetTimeMs - b.targetTimeMs);
             if (tournamentsList.length > 0) {
-                // البصمة تشمل كل البطولات المعروضة مع تفاصيلها، أي إضافة لبطولة أو تعديل لبطولة حالية سيغير البصمة
                 const allToursHash = tournamentsList.map(t => t.nameAr + t.targetTimeMs + t.prizeStr + t.game + t.admin).join('|');
                 currentLatestTour = {
                     id: 'tour_' + hashCode(allToursHash)
@@ -1747,7 +1774,9 @@
 
             tourContainer.innerHTML = tourHTML; spendContainer.innerHTML = spendHTML;
             activeTourTimers = Array.from(tourContainer.querySelectorAll('.sheet-timer')).map(el => ({ el: el, valSpan: el.querySelector('.countdown-val'), targetMs: parseInt(el.getAttribute('data-time')) }));
+            
             updateSheetTimers(); 
+            updateOldestPlayers(); // تفعيل حساب الأيام للاعبين اللي انضافوا من الشيت
         }
 
         async function syncRealTime() {
@@ -1775,6 +1804,15 @@
                 }
             });
         }
+
+        // تم نقل حساب الأيام إلى المستوى العام حتى تعمل مع البيانات المسحوبة من الشيت بشكل سليم
+        const startGlobal = new Date('2026/09/03 00:00:00 GMT+0300').getTime(); 
+        const updateOldestPlayers = () => { 
+            const added = Math.max(0, Math.floor((getAccurateTime() - startGlobal) / (1000 * 60 * 60 * 24))); 
+            document.querySelectorAll('.auto-days').forEach(td => { 
+                td.innerText = (parseInt(td.getAttribute('data-base-days')) + (isNaN(added) ? 0 : added)); 
+            }); 
+        };
 
         let ptrStartX = 0, ptrStartY = 0, ptrCurrentY = 0, isPulling = false, isHorizontal = false;
         const ptrEl = document.getElementById('ptr-loader');
@@ -1810,8 +1848,6 @@
             
             loadDynamicData();
             
-            const start = new Date('2026/09/03 00:00:00 GMT+0300').getTime(); 
-            const updateOldestPlayers = () => { const added = Math.max(0, Math.floor((getAccurateTime() - start) / (1000 * 60 * 60 * 24))); document.querySelectorAll('.auto-days').forEach(td => { td.innerText = (parseInt(td.getAttribute('data-base-days')) + (isNaN(added) ? 0 : added)); }); };
             updateOldestPlayers(); syncRealTime().then(() => { updateOldestPlayers(); });
             
             renderGlobalLeaders(); const activeTab = document.querySelector('.server-tab.active'); if(activeTab) filterServer(activeTab.dataset.target); 
