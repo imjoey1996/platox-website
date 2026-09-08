@@ -969,11 +969,12 @@
         
         // دالة مخصصة لضمان سلامة روابط الصور (تمنع حقن javascript)
         function getSafeImageUrl(url, fallback) {
-            if (!url) return fallback;
-            const cleanUrl = url.trim();
-            if (cleanUrl.startsWith('https://')) return escapeHTML(cleanUrl);
-            return fallback;
-        }
+    if (!url) return fallback;
+    const cleanUrl = url.trim();
+    // نمنع روابط جافاسكريبت الخبيثة فقط، ونسمح بجميع أنواع روابط ومسارات الصور
+    if (cleanUrl.toLowerCase().startsWith('javascript:')) return fallback;
+    return cleanUrl;
+}
 
         async function submitBugReport() {
             const isAr = document.documentElement.lang === 'ar';
