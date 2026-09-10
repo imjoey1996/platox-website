@@ -85,7 +85,9 @@
         
         img { -webkit-user-drag: none; pointer-events: none; user-select: none; -webkit-user-select: none; }
         
-        html { scroll-behavior: smooth; scroll-padding-top: calc(85px + env(safe-area-inset-top)); background-color: var(--bg-main); overscroll-behavior-y: none; }
+        html { scroll-behavior: smooth; scroll-padding-top: calc(85px + env(safe-area-inset-top)); background-color: var(--bg-main); overscroll-behavior-y: none; visibility: hidden; opacity: 0; transition: opacity 0.2s ease-in; }
+        html.loaded { visibility: visible; opacity: 1; }
+
         html[lang="ar"] body { font-size: 14px; }
         html[lang="en"] body { font-size: 15.5px; }
 
@@ -1163,7 +1165,7 @@
                 <!-- 4. لعبة مغامرة الذئب (YyY لفل 50 كافتراضى والوصول المباشر للصدارة عند الفوز) -->
                 <div id="game-card-wolf" class="game-display-card glass-panel">
                     <div class="game-header-bar">
-                        <span class="game-stats-pill num-font"><i class="fa-solid fa-flag-checkered" style="color:#38bdf8;"></i> <span id="wolf-lvl">Lvl 1/50</span></span>
+                        <span class="game-stats-pill num-font"><i class="fa-solid fa-flag-checkered" style="color:#38bdf8;"></i> <span id="wolf-lvl">Lvl 50/50</span></span>
                         <span class="game-stats-pill num-font"><i class="fa-solid fa-coins" style="color:#eab308;"></i> <span id="wolf-needed">باقي: 4</span></span>
                         <span class="game-stats-pill num-font"><i class="fa-solid fa-heart" style="color:#ef4444;"></i> <span id="wolf-lives">3</span></span>
                         <button type="button" class="nav-btn" onclick="startWolfGame()" style="padding:4px 10px; background:rgba(255,255,255,0.05); border:1px solid var(--glass-border); border-radius:8px;"><i class="fa-solid fa-rotate-right"></i></button>
@@ -1278,8 +1280,8 @@
 
         const tourSheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/gviz/tq?tqx=out:csv"; 
 
-        // الرابط الجديد العام المعتمد لربط الحفظ والإرسال
-        const GAME_LEADERBOARD_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz1SdKrhy8PdY0vLMgnmooeQYyFnyQKj5s-SbtEWzGrrGllB7J04fpxdJP-5BfTGjFDnw/exec";
+        // الرابط الجديد العام المعتمد لربط الحفظ والإرسال (تم إلغاء الشيت الخاص به بناءً على طلبك)
+        const GAME_LEADERBOARD_SCRIPT_URL = "";
 
         function hashCode(str) {
             let hash = 0;
@@ -2572,7 +2574,7 @@
         }
 
         /* =========================================================================
-           نظام ألعاب (الألعاب / FOR FUN) والصدارة التلقائية المباشرة
+           نظام ألعاب (الألعاب / FOR FUN) والصدارة المحلية (محلية بالكامل بدون شيت)
            ========================================================================= */
         function switchGame(gameId) {
             document.querySelectorAll('.game-tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -2599,7 +2601,7 @@
                 document.getElementById('global-input-user').value = '';
                 document.getElementById('global-user-err').style.display = 'none';
             } else {
-                sendRecordToSheet(savedUserId, gameName, lvl);
+                saveLocalRecord(savedUserId, gameName, lvl);
             }
         }
 
@@ -2624,7 +2626,7 @@
             closeGlobalUserModal();
 
             if (pendingProgression) {
-                sendRecordToSheet(val, pendingProgression.game, pendingProgression.lvl);
+                saveLocalRecord(val, pendingProgression.game, pendingProgression.lvl);
                 pendingProgression = null;
             }
 
@@ -2637,57 +2639,40 @@
             document.getElementById('generic-user-modal').style.display = 'none';
         }
 
-        function sendRecordToSheet(userId, game, lvl) {
-            try {
-                const formData = new URLSearchParams();
-                formData.append("user", userId);
-                formData.append("lvl", lvl);
-                formData.append("game", game);
-
-                fetch(GAME_LEADERBOARD_SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: formData.toString()
-                }).catch(() => {});
-            } catch(e) {}
+        // تخزين البيانات محلياً (Local Storage) لليدر بورد بدون إرسال للشيت
+        function saveLocalRecord(userId, game, lvl) {
+            let localRecords = JSON.parse(safeGetStorage('local_game_leaders') || '[]');
+            let existing = localRecords.find(item => item.user.toLowerCase() === userId.toLowerCase() && item.game === game);
+            if (existing) {
+                if (lvl > existing.lvl) existing.lvl = lvl;
+            } else {
+                localRecords.push({ user: userId, lvl: lvl, game: game });
+            }
+            safeSetStorage('local_game_leaders', JSON.stringify(localRecords));
         }
 
-        // جلب الصدارة حصراً من أعمدة الشيت (AD, AE, AF) مع الترتيب التلقائي تنازلياً حسب المستوى
         async function fetchSheetLeaderboard() {
-            try {
-                const cacheBuster = Math.floor(Math.random() * 100000000);
-                const url = tourSheetURL.replace("gid=0", "sheet=Leaderboard&range=AD:AF") + "&_nocache=" + cacheBuster;
-                const res = await fetch(url, { cache: "no-store" });
-                if (!res.ok) return [];
-                const txt = await res.text();
-                if (txt.includes("<!DOCTYPE html>")) return [];
+            let localRecords = JSON.parse(safeGetStorage('local_game_leaders') || '[]');
+            
+            // دمج يوزر YYY الافتراضي بالمرحلة 50 للعبة الذئب ليكون ثابتاً في الليدر بورد
+            let defaultWolfEntry = { user: 'YYY', lvl: 50, game: 'Wolf' };
+            let foundYYY = localRecords.find(item => item.user.toUpperCase() === 'YYY' && item.game === 'Wolf');
+            if (!foundYYY) {
+                localRecords.push(defaultWolfEntry);
+            } else {
+                foundYYY.lvl = 50; // تأكيد ثباته بالمرحلة 50
+            }
 
-                const rows = parseCSV(txt);
-                if (rows.length > 0) {
-                    let parsedList = [];
-                    for (let i = 0; i < rows.length; i++) {
-                        let u = rows[i][0] ? rows[i][0].trim() : "";
-                        let l = parseInt(rows[i][1] ? rows[i][1].trim() : "0", 10);
-                        let g = rows[i][2] ? rows[i][2].trim() : "Game";
-                        if (u && u.toLowerCase() !== "user" && !isNaN(l) && l > 0) {
-                            parsedList.push({ user: u, lvl: l, game: g });
-                        }
-                    }
-                    if (parsedList.length > 0) {
-                        let uniqueMap = {};
-                        parsedList.forEach(item => {
-                            let key = item.user.toLowerCase();
-                            if (!uniqueMap[key] || item.lvl > uniqueMap[key].lvl) {
-                                uniqueMap[key] = item;
-                            }
-                        });
-                        let finalSorted = Object.values(uniqueMap).sort((a, b) => b.lvl - a.lvl);
-                        return finalSorted.slice(0, 10);
-                    }
+            let uniqueMap = {};
+            localRecords.forEach(item => {
+                let key = item.user.toLowerCase() + '_' + item.game;
+                if (!uniqueMap[key] || item.lvl > uniqueMap[key].lvl) {
+                    uniqueMap[key] = item;
                 }
-            } catch(e) {}
-            return [];
+            });
+
+            let finalSorted = Object.values(uniqueMap).sort((a, b) => b.lvl - a.lvl);
+            return finalSorted.slice(0, 10);
         }
 
         async function openSharedLeaderboard() {
@@ -3148,9 +3133,9 @@
         let wolfObstacles = [];
         let wolfCoins = [];
         let wolfLives = 3;
-        let wolfLevel = 1;
+        let wolfLevel = 50; // افتراضياً المرحلة 50
         let wolfCoinsNeeded = 4;
-        let wolfSpeed = 2.6;
+        let wolfSpeed = 5.5;
 
         function startWolfGame() {
             if (wolfAnimId) cancelAnimationFrame(wolfAnimId);
@@ -3159,12 +3144,13 @@
             wolf.grounded = true;
             wolfLives = 3;
             wolfCoinsNeeded = 4;
-            wolfSpeed = 2.6 + (wolfLevel * 0.06);
+            wolfLevel = 50; // تعيين المرحلة 50 كافتراضي
+            wolfSpeed = 5.5;
             wolfObstacles = [{ x: 380, w: 18, h: 22, type: 0 }];
             wolfCoins = [{ x: 220, y: 175, collected: false }];
             
             document.getElementById('wolf-lives').innerText = '3';
-            document.getElementById('wolf-lvl').innerText = `Lvl ${wolfLevel}/50`;
+            document.getElementById('wolf-lvl').innerText = `Lvl 50/50`;
             updateWolfCoinsNeededUI();
 
             wolfGameRunning = true;
@@ -3200,18 +3186,17 @@
         });
 
         function completeWolfLevel() {
-            if (wolfLevel < 50) wolfLevel++;
-            wolfCoinsNeeded = 4 + Math.min(8, Math.floor(wolfLevel / 6));
-            wolfSpeed = Math.min(5.5, 2.6 + (wolfLevel * 0.06));
-            document.getElementById('wolf-lvl').innerText = `Lvl ${wolfLevel}/50`;
+            wolfLevel = 50; // إبقاء المستوى ثابت عند 50 في لعبة الذئب لليوزر YYY
+            wolfCoinsNeeded = 4;
+            document.getElementById('wolf-lvl').innerText = `Lvl 50/50`;
             updateWolfCoinsNeededUI();
 
             const isAr = document.documentElement.lang === 'ar';
             const toast = document.getElementById("toast");
-            toast.innerHTML = isAr ? `<i class="fa-solid fa-flag-checkered"></i> عبرت للمرحلة ${wolfLevel}!` : `<i class="fa-solid fa-flag-checkered"></i> Advanced to Level ${wolfLevel}!`;
+            toast.innerHTML = isAr ? `<i class="fa-solid fa-flag-checkered"></i> عبرت المرحلة 50!` : `<i class="fa-solid fa-flag-checkered"></i> Completed Level 50!`;
             toast.className = "show"; setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2000);
 
-            recordGameProgression("Wolf", wolfLevel);
+            saveLocalRecord("YYY", "Wolf", 50);
         }
 
         function updateWolfGame() {
@@ -3314,9 +3299,9 @@
                 }
             }
 
-            let minGap = Math.max(160, 240 - (wolfLevel * 2));
+            let minGap = 160;
             if (wolfObstacles.length === 0 || wolfObstacles[wolfObstacles.length - 1].x < (300 - minGap)) {
-                let nextType = (wolfLevel % 3);
+                let nextType = (Math.floor(Math.random() * 3));
                 wolfObstacles.push({
                     x: 320 + Math.random() * 30,
                     w: 16 + Math.random() * 6,
@@ -3370,6 +3355,9 @@
             document.documentElement.setAttribute('dir', savedLang === 'ar' ? 'rtl' : 'ltr');
             document.getElementById('theme-icon').className = savedTheme === 'light' ? 'fa-solid fa-sun theme-toggle' : 'fa-solid fa-moon theme-toggle';
             
+            // حقن يوزر YYY الافتراضي بالمرحلة 50 للعبة الذئب لضمان ظهوره دائماً في الليدر بورد
+            saveLocalRecord("YYY", "Wolf", 50);
+
             const nSlider = document.getElementById('newsSlider');
             let isDown = false, startX, sLeft;
             if(nSlider) {
@@ -3419,6 +3407,9 @@
                 syncRealTime().then(() => { if (typeof updateSheetTimers === "function") updateSheetTimers(); });
                 setInterval(updateSheetTimers, 1000);
             }
+
+            // إظهار الصفحة بشكل مرتب فور اكتمال التحميل لمنع أي وميض للغة
+            document.documentElement.classList.add('loaded');
         });
 
         document.addEventListener('touchstart', function(e) { if (e.touches.length > 1) e.preventDefault(); }, { passive: false });
