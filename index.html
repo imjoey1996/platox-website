@@ -1146,7 +1146,7 @@
                     </div>
                 </div>
 
-                <!-- 3. لعبة كاسر الطوب Breaker (قفل التمرير محصور داخل هذا الكانفاس فقط) -->
+                <!-- 3. لعبة كاسر الطوب Breaker (قفل التمرير محصور داخل هذا المربع فقط) -->
                 <div id="game-card-breaker" class="game-display-card glass-panel">
                     <div class="game-header-bar">
                         <span class="game-stats-pill num-font"><i class="fa-solid fa-layer-group" style="color:#a855f7;"></i> <span id="breaker-lvl">Lvl 1/50</span></span>
@@ -1180,15 +1180,15 @@
         <!-- نافذة تسجيل اليوزر لمرة واحدة فقط لأي لعبة تعبر مرحلة -->
         <div class="wolf-modal-backdrop" id="generic-user-modal" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh; z-index: 3000;">
             <div class="glass-panel" style="padding: 25px 20px; width: 90%; max-width: 320px; text-align: center;">
-                <h3 style="font-size:1.15rem; font-weight:900; color:var(--primary); margin-bottom:4px;">إنجاز جديد! 🎉</h3>
-                <p style="font-size:12px; color:var(--text-muted); margin-bottom:14px;">سجّل يوزرك للمرة الأولى ليتم إضافتك للصدارة تلقائياً:</p>
+                <h3 style="font-size:1.15rem; font-weight:900; color:var(--primary); margin-bottom:4px;" data-i18n="modal_congrats">إنجاز جديد! 🎉</h3>
+                <p style="font-size:12px; color:var(--text-muted); margin-bottom:14px;" data-i18n="modal_desc">سجّل يوزرك للمرة الأولى ليتم إضافتك للصدارة تلقائياً:</p>
                 
                 <input type="text" id="global-input-user" class="bug-input num-font" placeholder="Your ID" maxlength="12" dir="ltr" style="padding:8px 12px; font-size:14px; text-align:center; margin-bottom:4px;">
                 <div id="global-user-err" class="input-error-msg" style="margin-bottom:10px; font-size:11px;"></div>
                 
                 <div style="display:flex; gap:8px; width:100%;">
-                    <button type="button" class="submit-btn" style="height:36px; font-size:12px;" onclick="confirmGlobalUser()">حفظ</button>
-                    <button type="button" class="cancel-btn" style="height:36px; font-size:12px;" onclick="closeGlobalUserModal()">تخطي</button>
+                    <button type="button" class="submit-btn" style="height:36px; font-size:12px;" onclick="confirmGlobalUser()" data-i18n="modal_save">حفظ</button>
+                    <button type="button" class="cancel-btn" style="height:36px; font-size:12px;" onclick="closeGlobalUserModal()" data-i18n="modal_skip">تخطي</button>
                 </div>
             </div>
         </div>
@@ -1775,9 +1775,13 @@
                 wolf_tap_jump: "انقر على الشاشة أو زر المسافة (Space) للقفز",
                 btn_open_lb: "لوحة الصدارة (Top 10)",
                 lb_title: "لوحة شرف الألعاب",
-                lb_desc: "أعلى 10 متصدرين (من الشيت مباشرة حسب المستوى):",
+                lb_desc: "أعلى 10 متصدرين مرتبين حسب المستوى:",
                 lb_close: "إغلاق",
-                snake_game_over: "انتهت اللعبة! انقر للبدء مجدداً"
+                snake_game_over: "انتهت اللعبة! انقر للبدء مجددا",
+                modal_congrats: "إنجاز جديد! 🎉",
+                modal_desc: "سجّل يوزرك للمرة الأولى ليتم إضافتك للصدارة تلقائياً:",
+                modal_save: "حفظ",
+                modal_skip: "تخطي"
             },
             en: {
                 nav_home: "Home", nav_leaders: "About Leaders", nav_leaderboard: "Explore",
@@ -1856,9 +1860,13 @@
                 wolf_tap_jump: "Tap screen or Space to jump",
                 btn_open_lb: "Leaderboard (Top 10)",
                 lb_title: "Games Hall of Fame",
-                lb_desc: "Top 10 players directly from Sheet ranked by level:",
+                lb_desc: "Top 10 players ranked by level:",
                 lb_close: "Close",
-                snake_game_over: "Game Over! Try Again"
+                snake_game_over: "Game Over! Try Again",
+                modal_congrats: "New Achievement! 🎉",
+                modal_desc: "Register your ID for the first time to appear on the leaderboard:",
+                modal_save: "Save",
+                modal_skip: "Skip"
             }
         };
 
@@ -2563,7 +2571,7 @@
         }
 
         /* =========================================================================
-           نظام ألعاب (الألعاب / FOR FUN) والصدارة الحية المطلقة من الشيت
+           نظام ألعاب (الألعاب / FOR FUN) والصدارة الحية المطلقة من الشيت (AD, AE, AF)
            ========================================================================= */
         function switchGame(gameId) {
             document.querySelectorAll('.game-tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -2644,7 +2652,7 @@
             } catch(e) {}
         }
 
-        // قراءة مباشرة وحصرية من أعمدة الشيت (AD, AE, AF) مع الترتيب التلقائي حسب المستوى
+        // قراءة مباشرة وحصرية من الشيت (أعمدة AD, AE, AF) مع ترتيب تصاعدي حسب المستوى (Level) بدون أي بيانات وهمية
         async function fetchSheetLeaderboard() {
             try {
                 const cacheBuster = Math.floor(Math.random() * 100000000);
@@ -2673,7 +2681,7 @@
                                 uniqueMap[key] = item;
                             }
                         });
-                        // الترتيب التلقائي من الأعلى للأدنى حسب المستوى (Level)
+                        // الترتيب التلقائي حسب المستوى (Level) من الأعلى للأدنى
                         let finalSorted = Object.values(uniqueMap).sort((a, b) => b.lvl - a.lvl);
                         return finalSorted.slice(0, 10);
                     }
@@ -2684,13 +2692,14 @@
 
         async function openSharedLeaderboard() {
             let container = document.getElementById('shared-lb-content');
-            container.innerHTML = `<div style="text-align:center; padding:15px; color:var(--text-muted); font-size:12px; font-weight:bold;">جاري جلب الصدارة من الشيت...</div>`;
+            const isAr = document.documentElement.lang === 'ar';
+            container.innerHTML = `<div style="text-align:center; padding:15px; color:var(--text-muted); font-size:12px; font-weight:bold;">${isAr ? 'جاري جلب الصدارة من الشيت...' : 'Loading leaderboard from sheet...'}</div>`;
             document.getElementById('shared-lb-popup').style.display = 'flex';
 
             let list = await fetchSheetLeaderboard();
 
             if (!list || list.length === 0) {
-                container.innerHTML = `<div style="text-align:center; padding:15px; color:var(--text-muted); font-size:12px; font-weight:bold;">لا توجد أسماء مسجلة في الشيت حالياً.</div>`;
+                container.innerHTML = `<div style="text-align:center; padding:15px; color:var(--text-muted); font-size:12px; font-weight:bold;">${isAr ? 'لا توجد أسماء مسجلة في الشيت حالياً.' : 'No names registered in sheet yet.'}</div>`;
                 return;
             }
 
@@ -2848,7 +2857,7 @@
             status.style.color = "inherit";
         }
 
-        // --- 2. لعبة الأفعى Snake 2.0 (استجابة فورية ونظام طابور أوامر دقيق) ---
+        // --- 2. لعبة الأفعى Snake 2.0 (استجابة فائقة وطابور حركة) ---
         let snakeCanvas = document.getElementById('snakeCanvas');
         let snakeCtx = snakeCanvas ? snakeCanvas.getContext('2d') : null;
         let snakeGrid = 15;
@@ -3397,7 +3406,7 @@
 
             changeLang(initLang, false);
             switchView(initView, null, false);
-            window.history.pushState({ view: initView, lang: initLang }, '', `/${initLang}/${initView}`);
+            window.history.replaceState({ view: initView, lang: initLang }, '', `/${initLang}/${initView}`);
 
             window.addEventListener('popstate', (e) => {
                 if (e.state) {
