@@ -1189,47 +1189,47 @@
         }
 
         function switchView(viewName, itemEl, updateUrl = true) {
-    document.querySelectorAll('.tab-view').forEach(view => view.classList.remove('active-view'));
-    document.querySelectorAll('.bottom-nav-item').forEach(item => item.classList.remove('active'));
+            document.querySelectorAll('.tab-view').forEach(view => view.classList.remove('active-view'));
+            document.querySelectorAll('.bottom-nav-item').forEach(item => item.classList.remove('active'));
 
-    const targetView = document.getElementById(`view-${viewName}`);
-    if (targetView) targetView.classList.add('active-view');
-    
-    let activeNav = itemEl || document.getElementById(`nav-btn-${viewName}`);
-    if (activeNav) {
-        activeNav.classList.add('active');
-    }
-    
-    safeSetSession('currentView', viewName);
+            const targetView = document.getElementById(`view-${viewName}`);
+            if (targetView) targetView.classList.add('active-view');
+            
+            let activeNav = itemEl || document.getElementById(`nav-btn-${viewName}`);
+            if (activeNav) {
+                activeNav.classList.add('active');
+            }
+            
+            safeSetSession('currentView', viewName);
 
-    if (updateUrl) {
-        const currentLang = document.documentElement.getAttribute('lang') || 'en';
-        window.history.pushState({ view: viewName, lang: currentLang }, '', `/${currentLang}/${viewName}`);
-    }
+            if (updateUrl) {
+                const currentLang = document.documentElement.getAttribute('lang') || 'en';
+                window.history.pushState({ view: viewName, lang: currentLang }, '', `/${currentLang}/${viewName}`);
+            }
 
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    if (viewName === 'home') setTimeout(updateCarouselButtons, 80);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (viewName === 'home') setTimeout(updateCarouselButtons, 80);
 
-    // --- التعديل الجديد: إيقاف الألعاب عند الخروج من قسم الاستكشاف ---
-    if (viewName !== 'explore') {
-        // إيقاف لعبة الأفعى
-        if (typeof snakeInterval !== 'undefined' && snakeInterval) {
-            clearInterval(snakeInterval);
-            snakeGameRunning = false;
+            // --- التعديل الجديد: إيقاف الألعاب عند الخروج من قسم الاستكشاف ---
+            if (viewName !== 'explore') {
+                // إيقاف لعبة الأفعى
+                if (typeof snakeInterval !== 'undefined' && snakeInterval) {
+                    clearInterval(snakeInterval);
+                    snakeGameRunning = false;
+                }
+                // إيقاف لعبة كاسر الطوب
+                if (typeof breakerAnimId !== 'undefined' && breakerAnimId) {
+                    cancelAnimationFrame(breakerAnimId);
+                    breakerGameRunning = false;
+                }
+                // إيقاف لعبة الذئب
+                if (typeof wolfAnimId !== 'undefined' && wolfAnimId) {
+                    cancelAnimationFrame(wolfAnimId);
+                    wolfGameRunning = false;
+                }
+            }
+            // ----------------------------------------------------------------
         }
-        // إيقاف لعبة كاسر الطوب
-        if (typeof breakerAnimId !== 'undefined' && breakerAnimId) {
-            cancelAnimationFrame(breakerAnimId);
-            breakerGameRunning = false;
-        }
-        // إيقاف لعبة الذئب
-        if (typeof wolfAnimId !== 'undefined' && wolfAnimId) {
-            cancelAnimationFrame(wolfAnimId);
-            wolfGameRunning = false;
-        }
-    }
-    // ----------------------------------------------------------------
-}
 
         function toggleNotif() {
             const dropdown = document.getElementById('notif-dropdown');
@@ -2466,6 +2466,11 @@
             const targetCard = document.getElementById(`game-card-${gameId}`);
             if (targetCard) targetCard.classList.add('active-game');
 
+            // التعديل الجديد: إيقاف الألعاب الشغالة عند التبديل للعبة أخرى
+            if (typeof snakeInterval !== 'undefined' && snakeInterval) { clearInterval(snakeInterval); snakeGameRunning = false; }
+            if (typeof breakerAnimId !== 'undefined' && breakerAnimId) { cancelAnimationFrame(breakerAnimId); breakerGameRunning = false; }
+            if (typeof wolfAnimId !== 'undefined' && wolfAnimId) { cancelAnimationFrame(wolfAnimId); wolfGameRunning = false; }
+
             if (gameId === 'snake' && !snakeGameRunning) startSnakeGame();
             if (gameId === 'breaker' && !breakerGameRunning) startBreakerGame(false);
             if (gameId === 'wolf' && !wolfGameRunning) startWolfGame();
@@ -3032,9 +3037,10 @@
                         wolfCtx.fillRect(0, 0, 300, 300);
                         wolfCtx.fillStyle = '#fff';
                         const lang = document.documentElement.getAttribute('lang') || 'en';
-                        wolfCtx.font = lang ? '900 16px Cairo, sans-serif' : '900 16px Rajdhani, sans-serif';
+                        wolfCtx.font = lang === 'ar' ? '900 16px Cairo, sans-serif' : '900 16px Rajdhani, sans-serif';
                         wolfCtx.textAlign = 'center';
-                        wolfCtx.fillText(lang ? "سقط الذئب! انقر لإعادة المحاولة" : "Game Over! Tap to retry", 150, 150);
+                        // التعديل الجديد: تصحيح قراءة اللغة
+                        wolfCtx.fillText(lang === 'ar' ? "سقط الذئب! انقر لإعادة المحاولة" : "Game Over! Tap to retry", 150, 150);
                         return;
                     }
                 }
