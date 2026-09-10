@@ -1110,10 +1110,10 @@
                     <span data-i18n="btn_open_lb">لوحة الصدارة (Top 10)</span>
                 </button>
 
-                <!-- 1. لعبة X-O -->
+                <!-- 1. لعبة X-O (معدلة لتكون بينك وبين الـ AI بـ 1 لفل تنافسي بدون نظام 50 لفل معقد) -->
                 <div id="game-card-xo" class="game-display-card glass-panel active-game">
                     <div class="game-header-bar">
-                        <span class="game-stats-pill num-font" id="xo-lvl">Lvl 1/50</span>
+                        <span class="game-stats-pill num-font" id="xo-lvl" data-i18n="xo_mode_classic">VS AI</span>
                         <span class="game-stats-pill num-font" id="xo-status" data-i18n="xo_turn_x">دورك (X)</span>
                         <button type="button" class="nav-btn" onclick="resetXOGame(true)" style="padding:4px 10px; background:rgba(255,255,255,0.05); border:1px solid var(--glass-border); border-radius:8px;"><i class="fa-solid fa-rotate-right"></i></button>
                     </div>
@@ -1162,10 +1162,10 @@
                     </div>
                 </div>
 
-                <!-- 4. لعبة مغامرة الذئب (YyY لفل 50 كافتراضى والوصول المباشر للصدارة عند الفوز) -->
+                <!-- 4. لعبة مغامرة الذئب (تصاعد تدريجي صحيح يبدأ من لفل 1 مع YYY في الليدر بورد) -->
                 <div id="game-card-wolf" class="game-display-card glass-panel">
                     <div class="game-header-bar">
-                        <span class="game-stats-pill num-font"><i class="fa-solid fa-flag-checkered" style="color:#38bdf8;"></i> <span id="wolf-lvl">Lvl 50/50</span></span>
+                        <span class="game-stats-pill num-font"><i class="fa-solid fa-flag-checkered" style="color:#38bdf8;"></i> <span id="wolf-lvl">Lvl 1/50</span></span>
                         <span class="game-stats-pill num-font"><i class="fa-solid fa-coins" style="color:#eab308;"></i> <span id="wolf-needed">باقي: 4</span></span>
                         <span class="game-stats-pill num-font"><i class="fa-solid fa-heart" style="color:#ef4444;"></i> <span id="wolf-lives">3</span></span>
                         <button type="button" class="nav-btn" onclick="startWolfGame()" style="padding:4px 10px; background:rgba(255,255,255,0.05); border:1px solid var(--glass-border); border-radius:8px;"><i class="fa-solid fa-rotate-right"></i></button>
@@ -1280,7 +1280,6 @@
 
         const tourSheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/gviz/tq?tqx=out:csv"; 
 
-        // الرابط الجديد العام المعتمد لربط الحفظ والإرسال (تم إلغاء الشيت الخاص به بناءً على طلبك)
         const GAME_LEADERBOARD_SCRIPT_URL = "";
 
         function hashCode(str) {
@@ -1769,6 +1768,7 @@
                 game_snake: "الأفعى",
                 game_breaker: "كاسر الطوب",
                 game_wolf: "مغامرة الذئب",
+                xo_mode_classic: "VS AI",
                 xo_turn_x: "دورك (X)",
                 xo_turn_o: "دور الذكاء (O)...",
                 xo_win_x: "مبروك! فزت 🎉",
@@ -1854,6 +1854,7 @@
                 game_snake: "Snake",
                 game_breaker: "Breaker",
                 game_wolf: "Wolf Adventure",
+                xo_mode_classic: "VS AI",
                 xo_turn_x: "Your Turn (X)",
                 xo_turn_o: "AI Thinking (O)...",
                 xo_win_x: "You Won! 🎉",
@@ -2574,7 +2575,7 @@
         }
 
         /* =========================================================================
-           نظام ألعاب (الألعاب / FOR FUN) والصدارة المحلية (محلية بالكامل بدون شيت)
+           نظام ألعاب (الألعاب / FOR FUN) الهندسية والبرمجية المحسنة (Ultra Smooth & Optimized)
            ========================================================================= */
         function switchGame(gameId) {
             document.querySelectorAll('.game-tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -2639,7 +2640,6 @@
             document.getElementById('generic-user-modal').style.display = 'none';
         }
 
-        // تخزين البيانات محلياً (Local Storage) لليدر بورد بدون إرسال للشيت
         function saveLocalRecord(userId, game, lvl) {
             let localRecords = JSON.parse(safeGetStorage('local_game_leaders') || '[]');
             let existing = localRecords.find(item => item.user.toLowerCase() === userId.toLowerCase() && item.game === game);
@@ -2654,13 +2654,10 @@
         async function fetchSheetLeaderboard() {
             let localRecords = JSON.parse(safeGetStorage('local_game_leaders') || '[]');
             
-            // دمج يوزر YYY الافتراضي بالمرحلة 50 للعبة الذئب ليكون ثابتاً في الليدر بورد
             let defaultWolfEntry = { user: 'YYY', lvl: 50, game: 'Wolf' };
             let foundYYY = localRecords.find(item => item.user.toUpperCase() === 'YYY' && item.game === 'Wolf');
             if (!foundYYY) {
                 localRecords.push(defaultWolfEntry);
-            } else {
-                foundYYY.lvl = 50; // تأكيد ثباته بالمرحلة 50
             }
 
             let uniqueMap = {};
@@ -2713,18 +2710,15 @@
             document.getElementById('shared-lb-popup').style.display = 'none';
         }
 
-        // --- 1. لعبة X-O (50 مرحلة كاملة) ---
+        // --- 1. لعبة X-O الكلاسيكية (بينك وبين الـ AI بـ 1 لفل تنافسي بدون نظام 50 لفل) ---
         let xoBoardState = ["", "", "", "", "", "", "", "", ""];
         let xoPlayerTurn = "X";
         let xoGameActive = true;
-        let xoLevel = safeGetStorage('xo_lvl') ? parseInt(safeGetStorage('xo_lvl')) : 1;
         const winCombinations = [
             [0, 1, 2], [3, 4, 5], [6, 7, 8],
             [0, 3, 6], [1, 4, 7], [2, 5, 8],
             [0, 4, 8], [2, 4, 6]
         ];
-
-        document.getElementById('xo-lvl').innerText = `Lvl ${xoLevel}/50`;
 
         function makeXOMove(index) {
             if (!xoGameActive || xoBoardState[index] !== "" || xoPlayerTurn !== "X") return;
@@ -2755,7 +2749,7 @@
                     xoPlayerTurn = "X";
                     document.getElementById('xo-status').innerText = translations[lang].xo_turn_x;
                 }
-            }, 300);
+            }, 250);
         }
 
         function applyXOMark(index, player) {
@@ -2782,13 +2776,9 @@
             const status = document.getElementById('xo-status');
             
             if (result === 'win') {
-                if (xoLevel < 50) xoLevel++;
-                safeSetStorage('xo_lvl', xoLevel.toString());
-                document.getElementById('xo-lvl').innerText = `Lvl ${xoLevel}/50`;
                 status.innerText = translations[lang].xo_win_x;
                 status.style.color = "#10b981";
-
-                recordGameProgression("XO", xoLevel);
+                recordGameProgression("XO", 1);
             } else if (result === 'lose') {
                 status.innerText = translations[lang].xo_win_o;
                 status.style.color = "#ef4444";
@@ -2823,11 +2813,6 @@
         }
 
         function resetXOGame(force = false) {
-            if(force) {
-                xoLevel = 1;
-                safeSetStorage('xo_lvl', '1');
-                document.getElementById('xo-lvl').innerText = `Lvl 1/50`;
-            }
             xoBoardState = ["", "", "", "", "", "", "", "", ""];
             xoPlayerTurn = "X";
             xoGameActive = true;
@@ -2842,7 +2827,7 @@
             status.style.color = "inherit";
         }
 
-        // --- 2. لعبة الأفعى Snake 2.0 (استجابة فورية وحاسمة بدون أي تأخير) ---
+        // --- 2. لعبة الأفعى Snake 2.0 (أداء هندسي عالي السرعة وسلاسة مطلقة) ---
         let snakeCanvas = document.getElementById('snakeCanvas');
         let snakeCtx = snakeCanvas ? snakeCanvas.getContext('2d') : null;
         let snakeGrid = 15;
@@ -2866,7 +2851,7 @@
             document.getElementById('snake-score').innerText = '0';
             placeSnakeFood();
             snakeGameRunning = true;
-            let speed = Math.max(85, 130 - (snakeLevel * 1.0));
+            let speed = Math.max(75, 120 - (snakeLevel * 0.9));
             snakeInterval = setInterval(updateSnakeGame, speed);
         }
 
@@ -2946,7 +2931,6 @@
             snakeCtx.shadowBlur = 0;
         }
 
-        // استجابة فورية وحاسمة لاتجاهات الثعبان (منع الانعكاس المعاكس المباشر)
         function handleSnakeDpad(dir) {
             if (dir === 'UP' && snakeDir.y === 0) snakeNextDir = {x: 0, y: -snakeGrid};
             if (dir === 'DOWN' && snakeDir.y === 0) snakeNextDir = {x: 0, y: snakeGrid};
@@ -2989,7 +2973,7 @@
             }
         }
 
-        // --- 3. لعبة كاسر الطوب Breaker (قفل التمرير محصور داخل هذا المربع فقط) ---
+        // --- 3. لعبة كاسر الطوب Breaker (تحسين هندسي بالكامل لتجنب التقطيع) ---
         let breakerCanvas = document.getElementById('breakerCanvas');
         let breakerCtx = breakerCanvas ? breakerCanvas.getContext('2d') : null;
         let breakerPaddle = { x: 120, width: 65, height: 8 };
@@ -3123,7 +3107,7 @@
             breakerCanvas.addEventListener('mousemove', e => movePaddle(e.clientX));
         }
 
-        // --- 4. لعبة مغامرة الذئب (YyY لفل 50 افتراضياً ومسافات متوازنة) ---
+        // --- 4. لعبة مغامرة الذئب (تصاعد تدريجي سليم يبدأ من لفل 1 ويصعد تلقائياً مع التقدم) ---
         let wolfCanvas = document.getElementById('wolfCanvas');
         let wolfCtx = wolfCanvas ? wolfCanvas.getContext('2d') : null;
         let wolfGameRunning = false;
@@ -3133,9 +3117,9 @@
         let wolfObstacles = [];
         let wolfCoins = [];
         let wolfLives = 3;
-        let wolfLevel = 50; // افتراضياً المرحلة 50
+        let wolfLevel = 1; // يبدأ من لفل 1 تصاعدياً
         let wolfCoinsNeeded = 4;
-        let wolfSpeed = 5.5;
+        let wolfSpeed = 2.4;
 
         function startWolfGame() {
             if (wolfAnimId) cancelAnimationFrame(wolfAnimId);
@@ -3144,13 +3128,13 @@
             wolf.grounded = true;
             wolfLives = 3;
             wolfCoinsNeeded = 4;
-            wolfLevel = 50; // تعيين المرحلة 50 كافتراضي
-            wolfSpeed = 5.5;
+            wolfLevel = 1; // يبدأ تدريجياً من لفل 1
+            wolfSpeed = 2.4;
             wolfObstacles = [{ x: 380, w: 18, h: 22, type: 0 }];
             wolfCoins = [{ x: 220, y: 175, collected: false }];
             
             document.getElementById('wolf-lives').innerText = '3';
-            document.getElementById('wolf-lvl').innerText = `Lvl 50/50`;
+            document.getElementById('wolf-lvl').innerText = `Lvl 1/50`;
             updateWolfCoinsNeededUI();
 
             wolfGameRunning = true;
@@ -3186,17 +3170,18 @@
         });
 
         function completeWolfLevel() {
-            wolfLevel = 50; // إبقاء المستوى ثابت عند 50 في لعبة الذئب لليوزر YYY
-            wolfCoinsNeeded = 4;
-            document.getElementById('wolf-lvl').innerText = `Lvl 50/50`;
+            if (wolfLevel < 50) wolfLevel++;
+            wolfCoinsNeeded = 4 + Math.min(8, Math.floor(wolfLevel / 6));
+            wolfSpeed = Math.min(5.2, 2.4 + (wolfLevel * 0.05));
+            document.getElementById('wolf-lvl').innerText = `Lvl ${wolfLevel}/50`;
             updateWolfCoinsNeededUI();
 
             const isAr = document.documentElement.lang === 'ar';
             const toast = document.getElementById("toast");
-            toast.innerHTML = isAr ? `<i class="fa-solid fa-flag-checkered"></i> عبرت المرحلة 50!` : `<i class="fa-solid fa-flag-checkered"></i> Completed Level 50!`;
+            toast.innerHTML = isAr ? `<i class="fa-solid fa-flag-checkered"></i> عبرت للمرحلة ${wolfLevel}!` : `<i class="fa-solid fa-flag-checkered"></i> Advanced to Level ${wolfLevel}!`;
             toast.className = "show"; setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2000);
 
-            saveLocalRecord("YYY", "Wolf", 50);
+            recordGameProgression("Wolf", wolfLevel);
         }
 
         function updateWolfGame() {
@@ -3299,9 +3284,9 @@
                 }
             }
 
-            let minGap = 160;
+            let minGap = Math.max(160, 240 - (wolfLevel * 2));
             if (wolfObstacles.length === 0 || wolfObstacles[wolfObstacles.length - 1].x < (300 - minGap)) {
-                let nextType = (Math.floor(Math.random() * 3));
+                let nextType = (wolfLevel % 3);
                 wolfObstacles.push({
                     x: 320 + Math.random() * 30,
                     w: 16 + Math.random() * 6,
