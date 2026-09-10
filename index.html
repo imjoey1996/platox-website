@@ -120,7 +120,6 @@
         .navbar { position: fixed; top: 0; left: 0; width: 100%; padding: calc(12px + env(safe-area-inset-top)) 25px 12px; display: flex; justify-content: space-between; align-items: center; background: rgba(5, 5, 8, 0.65); backdrop-filter: blur(25px); border-bottom: 1px solid var(--glass-border); z-index: 1000; direction: ltr; }
         [data-theme="light"] .navbar { background: rgba(255, 255, 255, 0.8); }
         
-        /* تنسيق قسم اللوجو والاسم في الهيدر */
         .brand-header { display: flex; align-items: center; gap: 4px; cursor: pointer; transition: transform 0.2s ease; }
         .brand-header:active { transform: scale(0.95); }
         .nav-main-logo { width: 48px; height: 48px; object-fit: contain; border-radius: 10px; }
@@ -358,6 +357,288 @@
         [data-theme="light"] .calc-input-wrapper input:focus { background: #fff; border-color: var(--primary); }
         [data-theme="light"] .calc-input-wrapper input::placeholder { color: rgba(0,0,0,0.4); }
 
+        /* =========================================================
+           ستايلات سكشن الألعاب (الألعاب / FOR FUN) الاحترافية
+           ========================================================= */
+        .games-hub-wrapper {
+            width: 100%;
+            max-width: 750px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .game-tabs-selector {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding: 5px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 14px;
+            border: 1px solid var(--glass-border);
+        }
+        .game-tabs-selector::-webkit-scrollbar { display: none; }
+        [data-theme="light"] .game-tabs-selector { background: rgba(0,0,0,0.05); }
+
+        .game-tab-btn {
+            flex: 1;
+            min-width: 100px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid transparent;
+            background: transparent;
+            color: var(--text-muted);
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 13.5px;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+        .game-tab-btn.active {
+            background: var(--bg-card);
+            color: var(--primary);
+            border-color: var(--glass-border);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+            font-weight: 900;
+        }
+        [data-theme="light"] .game-tab-btn.active {
+            background: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        /* زر فتح المتصدرين الزجاجي */
+        .leaderboard-toggle-btn {
+            width: 100%;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--text-main);
+            font-family: inherit;
+            font-weight: 800;
+            font-size: 13.5px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .leaderboard-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 15px var(--btn-active-glow);
+        }
+
+        .game-display-card {
+            padding: 25px 20px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            min-height: 440px;
+        }
+        .game-display-card.active-game {
+            display: flex;
+        }
+
+        .game-header-bar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .game-stats-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 800;
+            padding: 6px 14px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+        }
+        [data-theme="light"] .game-stats-pill { background: rgba(0,0,0,0.04); }
+
+        /* XO Styling */
+        .xo-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            width: 270px;
+            height: 270px;
+            margin: 15px auto;
+        }
+        .xo-cell {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.8rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            user-select: none;
+        }
+        .xo-cell:hover:not(.occupied) {
+            background: rgba(255, 255, 255, 0.08);
+            transform: scale(0.98);
+        }
+        .xo-cell.x-mark { color: #60a5fa; text-shadow: 0 0 15px rgba(96, 165, 250, 0.6); }
+        .xo-cell.o-mark { color: #f43f5e; text-shadow: 0 0 15px rgba(244, 63, 94, 0.6); }
+        .xo-cell.winning-cell {
+            background: rgba(16, 185, 129, 0.15) !important;
+            border-color: #10b981 !important;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+            animation: pulse-ring 1s infinite;
+        }
+
+        /* Generic Canvas Container */
+        .game-canvas-container {
+            position: relative;
+            width: 100%;
+            max-width: 320px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .game-canvas-canvas {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6);
+            display: block;
+            width: 300px;
+            height: 300px;
+        }
+        [data-theme="light"] .game-canvas-canvas {
+            background: rgba(255, 255, 255, 0.6);
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+
+        /* قفل التمرير والحركة محصور حصراً داخل مربع كسر الطوب فقط */
+        #game-card-breaker .game-canvas-container,
+        #breakerCanvas {
+            touch-action: none !important;
+        }
+
+        /* Snake Modern Futuristic Controller */
+        .modern-controller-pad {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            margin-top: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modern-pad-btn {
+            position: absolute;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .modern-pad-btn:active {
+            background: var(--primary);
+            color: var(--bg-main);
+            transform: scale(0.9);
+            box-shadow: 0 0 15px var(--btn-active-glow);
+        }
+        .pad-btn-up { top: 4px; left: 49px; }
+        .pad-btn-down { bottom: 4px; left: 49px; }
+        .pad-btn-left { left: 4px; top: 49px; }
+        .pad-btn-right { right: 4px; top: 49px; }
+        .pad-center-core { width: 22px; height: 22px; border-radius: 50%; background: var(--glass-border); }
+
+        .wolf-tap-hint {
+            margin-top: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Wolf Registration & Leaderboard Popup */
+        .wolf-modal-backdrop {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 14px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+            z-index: 30;
+        }
+
+        /* Leaderboard Modal System (Top 10) */
+        .shared-leaderboard-popup {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100dvh;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+        .leaderboard-modal-card {
+            width: 100%;
+            max-width: 400px;
+            max-height: 80vh;
+            padding: 25px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            overflow-y: auto;
+        }
+        .lb-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 14px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--glass-border);
+        }
+        .lb-row.top-1 { border-color: rgba(212, 175, 55, 0.4); background: rgba(212, 175, 55, 0.08); }
+        .lb-row.top-2 { border-color: rgba(203, 213, 225, 0.4); }
+        .lb-row.top-3 { border-color: rgba(205, 127, 50, 0.4); }
+
         @media (max-width: 600px) {
             .main-lang-switch { margin-top: calc(85px + env(safe-area-inset-top)); margin-bottom: 10px; } 
             .main-lang-switch .lang-btn { padding: 6px 15px; }
@@ -389,10 +670,12 @@
             
             .notif-dropdown { position: fixed; top: 75px; right: 5vw; width: 90vw; max-width: 320px; }
             
-            /* تعديلات الموبايل للوجو */
             .nav-main-logo { width: 42px; height: 42px; }
             .navbar h1 { font-size: 24px; padding-top: 2px; }
             .brand-header { gap: 3px; }
+
+            .game-tabs-selector { justify-content: flex-start; }
+            .game-tab-btn { min-width: 90px; font-size: 12px; padding: 8px 10px; }
         }
     </style>
 </head>
@@ -407,8 +690,6 @@
     <div class="static-gaming-bg"></div>
 
     <nav class="navbar" dir="ltr">
-        
-        <!-- اللوجو واسم الموقع -->
         <div class="brand-header" onclick="window.scrollTo({top:0, behavior:'smooth'})">
             <img src="IMG_0586.png?v=3" alt="PlatoX Logo" class="nav-main-logo">
             <h1 class="num-font">Plato<span>X</span></h1>
@@ -700,9 +981,7 @@
 
         <section id="arabic-leaders">
             <h2 class="section-title" data-i18n="leaders_title">القادة العرب</h2>
-            <div class="grid-container" id="arabic-leaders-grid">
-                <!-- سيتم جلب القادة العرب من الشيت هنا -->
-            </div>
+            <div class="grid-container" id="arabic-leaders-grid"></div>
         </section>
 
         <div class="cyber-divider"><div class="center-node"></div></div>
@@ -792,13 +1071,146 @@
 
         <section id="accounts">
             <h2 class="section-title" data-i18n="players_title">اللاعبين الاقدم</h2>
-            <div class="premium-list" id="oldest-players-container">
-                <!-- سيتم جلب وعرض بيانات اللاعبين الأقدم هنا من الشيت -->
-            </div>
+            <div class="premium-list" id="oldest-players-container"></div>
             <button type="button" class="cancel-btn" id="show-more-players" onclick="showMorePlayers()" style="margin-top: 15px; display: none; width: auto; padding: 8px 20px;">
                 <span data-i18n="show_more">عرض المزيد</span> <i class="fa-solid fa-chevron-down"></i>
             </button>
         </section>
+
+        <div class="cyber-divider"><div class="center-node"></div></div>
+
+        <!-- ==============================================
+             قسم الألعاب (فوق قسم النصائح مباشرة)
+             ============================================== -->
+        <section id="for-fun">
+            <h2 class="section-title" data-i18n="fun_title">الألعاب</h2>
+            <div class="games-hub-wrapper">
+                
+                <div class="game-tabs-selector">
+                    <button type="button" class="game-tab-btn active" onclick="switchGame('xo')">
+                        <i class="fa-solid fa-xmark"></i> <span data-i18n="game_xo">تيك تاك تو</span>
+                    </button>
+                    <button type="button" class="game-tab-btn" onclick="switchGame('snake')">
+                        <i class="fa-solid fa-staff-snake"></i> <span data-i18n="game_snake">الأفعى</span>
+                    </button>
+                    <button type="button" class="game-tab-btn" onclick="switchGame('breaker')">
+                        <i class="fa-solid fa-shield-cat"></i> <span data-i18n="game_breaker">كاسر الطوب</span>
+                    </button>
+                    <button type="button" class="game-tab-btn" onclick="switchGame('wolf')">
+                        <i class="fa-solid fa-paw"></i> <span data-i18n="game_wolf">مغامرة الذئب</span>
+                    </button>
+                </div>
+
+                <!-- زر فتح لوحة الصدارة المنبثقة -->
+                <button type="button" class="leaderboard-toggle-btn" onclick="openSharedLeaderboard()">
+                    <i class="fa-solid fa-trophy" style="color: #d4af37;"></i>
+                    <span data-i18n="btn_open_lb">لوحة الصدارة (Top 10)</span>
+                </button>
+
+                <!-- 1. لعبة X-O -->
+                <div id="game-card-xo" class="game-display-card glass-panel active-game">
+                    <div class="game-header-bar">
+                        <span class="game-stats-pill num-font" id="xo-lvl">Lvl 1/50</span>
+                        <span class="game-stats-pill num-font" id="xo-status" data-i18n="xo_turn_x">دورك (X)</span>
+                        <button type="button" class="nav-btn" onclick="resetXOGame(true)" style="padding:4px 10px; background:rgba(255,255,255,0.05); border:1px solid var(--glass-border); border-radius:8px;"><i class="fa-solid fa-rotate-right"></i></button>
+                    </div>
+                    <div class="xo-board" id="xo-board">
+                        <div class="xo-cell num-font" onclick="makeXOMove(0)"></div>
+                        <div class="xo-cell num-font" onclick="makeXOMove(1)"></div>
+                        <div class="xo-cell num-font" onclick="makeXOMove(2)"></div>
+                        <div class="xo-cell num-font" onclick="makeXOMove(3)"></div>
+                        <div class="xo-cell num-font" onclick="makeXOMove(4)"></div>
+                        <div class="xo-cell num-font" onclick="makeXOMove(5)"></div>
+                        <div class="xo-cell num-font" onclick="makeXOMove(6)"></div>
+                        <div class="xo-cell num-font" onclick="makeXOMove(7)"></div>
+                        <div class="xo-cell num-font" onclick="makeXOMove(8)"></div>
+                    </div>
+                </div>
+
+                <!-- 2. لعبة الأفعى Snake 2.0 (استجابة فائقة وطابور حركة) -->
+                <div id="game-card-snake" class="game-display-card glass-panel">
+                    <div class="game-header-bar">
+                        <span class="game-stats-pill num-font" id="snake-lvl">Lvl 1/50</span>
+                        <span class="game-stats-pill num-font"><i class="fa-solid fa-apple-whole" style="color:#ef4444;"></i> <span id="snake-score">0</span></span>
+                        <button type="button" class="nav-btn" onclick="startSnakeGame()" style="padding:4px 10px; background:rgba(255,255,255,0.05); border:1px solid var(--glass-border); border-radius:8px;"><i class="fa-solid fa-rotate-right"></i></button>
+                    </div>
+                    <div class="game-canvas-container">
+                        <canvas id="snakeCanvas" class="game-canvas-canvas" width="300" height="300"></canvas>
+                        <div class="modern-controller-pad">
+                            <div class="pad-center-core"></div>
+                            <button type="button" class="modern-pad-btn pad-btn-up" onclick="handleSnakeDpad('UP')"><i class="fa-solid fa-chevron-up"></i></button>
+                            <button type="button" class="modern-pad-btn pad-btn-down" onclick="handleSnakeDpad('DOWN')"><i class="fa-solid fa-chevron-down"></i></button>
+                            <button type="button" class="modern-pad-btn pad-btn-left" onclick="handleSnakeDpad('LEFT')"><i class="fa-solid fa-chevron-left"></i></button>
+                            <button type="button" class="modern-pad-btn pad-btn-right" onclick="handleSnakeDpad('RIGHT')"><i class="fa-solid fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. لعبة كاسر الطوب Breaker (قفل التمرير محصور داخل هذا الكانفاس فقط) -->
+                <div id="game-card-breaker" class="game-display-card glass-panel">
+                    <div class="game-header-bar">
+                        <span class="game-stats-pill num-font"><i class="fa-solid fa-layer-group" style="color:#a855f7;"></i> <span id="breaker-lvl">Lvl 1/50</span></span>
+                        <span class="game-stats-pill num-font"><i class="fa-solid fa-cubes" style="color:#38bdf8;"></i> <span id="breaker-score">0</span></span>
+                        <button type="button" class="nav-btn" onclick="startBreakerGame(true)" style="padding:4px 10px; background:rgba(255,255,255,0.05); border:1px solid var(--glass-border); border-radius:8px;" title="Reset"><i class="fa-solid fa-rotate-right"></i></button>
+                    </div>
+                    <div class="game-canvas-container">
+                        <canvas id="breakerCanvas" class="game-canvas-canvas" width="300" height="300"></canvas>
+                        <span class="wolf-tap-hint"><i class="fa-solid fa-arrows-left-right"></i> <span data-i18n="breaker_drag">اسحب المضرب لصد الكرة</span></span>
+                    </div>
+                </div>
+
+                <!-- 4. لعبة مغامرة الذئب (كوينز بمكان آمن ومسافات متوازنة) -->
+                <div id="game-card-wolf" class="game-display-card glass-panel">
+                    <div class="game-header-bar">
+                        <span class="game-stats-pill num-font"><i class="fa-solid fa-flag-checkered" style="color:#38bdf8;"></i> <span id="wolf-lvl">Lvl 1/50</span></span>
+                        <span class="game-stats-pill num-font"><i class="fa-solid fa-coins" style="color:#eab308;"></i> <span id="wolf-needed">باقي: 4</span></span>
+                        <span class="game-stats-pill num-font"><i class="fa-solid fa-heart" style="color:#ef4444;"></i> <span id="wolf-lives">3</span></span>
+                        <button type="button" class="nav-btn" onclick="startWolfGame()" style="padding:4px 10px; background:rgba(255,255,255,0.05); border:1px solid var(--glass-border); border-radius:8px;"><i class="fa-solid fa-rotate-right"></i></button>
+                    </div>
+                    
+                    <div class="game-canvas-container">
+                        <canvas id="wolfCanvas" class="game-canvas-canvas" width="300" height="300" onclick="triggerWolfJump()"></canvas>
+                        <span class="wolf-tap-hint"><i class="fa-solid fa-hand-pointer"></i> <span data-i18n="wolf_tap_jump">انقر على الشاشة أو زر المسافة (Space) للقفز</span></span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- نافذة تسجيل اليوزر لمرة واحدة فقط لأي لعبة تعبر مرحلة -->
+        <div class="wolf-modal-backdrop" id="generic-user-modal" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh; z-index: 3000;">
+            <div class="glass-panel" style="padding: 25px 20px; width: 90%; max-width: 320px; text-align: center;">
+                <h3 style="font-size:1.15rem; font-weight:900; color:var(--primary); margin-bottom:4px;">إنجاز جديد! 🎉</h3>
+                <p style="font-size:12px; color:var(--text-muted); margin-bottom:14px;">سجّل يوزرك للمرة الأولى ليتم إضافتك للصدارة تلقائياً:</p>
+                
+                <input type="text" id="global-input-user" class="bug-input num-font" placeholder="Your ID" maxlength="12" dir="ltr" style="padding:8px 12px; font-size:14px; text-align:center; margin-bottom:4px;">
+                <div id="global-user-err" class="input-error-msg" style="margin-bottom:10px; font-size:11px;"></div>
+                
+                <div style="display:flex; gap:8px; width:100%;">
+                    <button type="button" class="submit-btn" style="height:36px; font-size:12px;" onclick="confirmGlobalUser()">حفظ</button>
+                    <button type="button" class="cancel-btn" style="height:36px; font-size:12px;" onclick="closeGlobalUserModal()">تخطي</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- نافذة لوحة الصدارة المنبثقة المشتركة (Top 10 - من الشيت مباشرة) -->
+        <div class="shared-leaderboard-popup" id="shared-lb-popup" onclick="if(event.target === this) closeSharedLeaderboard()">
+            <div class="leaderboard-modal-card glass-panel">
+                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--glass-border); padding-bottom:10px;">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <i class="fa-solid fa-trophy" style="color:#d4af37; font-size:18px;"></i>
+                        <h3 style="font-size:1.1rem; font-weight:900; margin:0;" data-i18n="lb_title">لوحة شرف الألعاب</h3>
+                    </div>
+                    <i class="fa-solid fa-xmark" style="cursor:pointer; font-size:18px; color:var(--text-muted);" onclick="closeSharedLeaderboard()"></i>
+                </div>
+                
+                <p style="font-size:11.5px; color:var(--text-muted); margin:0;" data-i18n="lb_desc">أعلى 10 متصدرين مرتبين حسب المستوى:</p>
+
+                <div style="display:flex; flex-direction:column; gap:6px;" id="shared-lb-content"></div>
+
+                <button type="button" class="cancel-btn" onclick="closeSharedLeaderboard()" style="height:36px; margin-top:5px;" data-i18n="lb_close">إغلاق</button>
+            </div>
+        </div>
 
         <div class="cyber-divider"><div class="center-node"></div></div>
 
@@ -864,6 +1276,9 @@
         let currentLatestWeekly = null;
 
         const tourSheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/gviz/tq?tqx=out:csv"; 
+
+        // الرابط المعتمد لإرسال وحفظ صدارة الألعاب بالشيت
+        const GAME_LEADERBOARD_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyBqGWVZ3o8d0Hw6Amsosd1Bte0XzSSmOMruOddIWpQI5flzSi5jwUr_iPx5TCZnZ6CDw/exec";
 
         function hashCode(str) {
             let hash = 0;
@@ -1343,7 +1758,26 @@
                 placeholderPips: "أدخل عدد البيبس...",
                 resultTitle: "القيمة التقديرية العادلة",
                 currCoins: "COINS", 
-                currPips: "PIPS"
+                currPips: "PIPS",
+
+                // سكشن الألعاب
+                fun_title: "الألعاب",
+                game_xo: "تيك تاك تو",
+                game_snake: "الأفعى",
+                game_breaker: "كاسر الطوب",
+                game_wolf: "مغامرة الذئب",
+                xo_turn_x: "دورك (X)",
+                xo_turn_o: "دور الذكاء (O)...",
+                xo_win_x: "مبروك! فزت 🎉",
+                xo_win_o: "فاز الكمبيوتر!",
+                xo_tie: "تعادل!",
+                breaker_drag: "اسحب المضرب لصد الكرة",
+                wolf_tap_jump: "انقر على الشاشة أو زر المسافة (Space) للقفز",
+                btn_open_lb: "لوحة الصدارة (Top 10)",
+                lb_title: "لوحة شرف الألعاب",
+                lb_desc: "أعلى 10 متصدرين (من الشيت مباشرة حسب المستوى):",
+                lb_close: "إغلاق",
+                snake_game_over: "انتهت اللعبة! انقر للبدء مجدداً"
             },
             en: {
                 nav_home: "Home", nav_leaders: "About Leaders", nav_leaderboard: "Explore",
@@ -1405,7 +1839,26 @@
                 placeholderPips: "Enter Pips...",
                 resultTitle: "ESTIMATED VALUE",
                 currCoins: "COINS",
-                currPips: "PIPS"
+                currPips: "PIPS",
+
+                // Games
+                fun_title: "FOR FUN",
+                game_xo: "Tic-Tac-Toe",
+                game_snake: "Snake",
+                game_breaker: "Breaker",
+                game_wolf: "Wolf Adventure",
+                xo_turn_x: "Your Turn (X)",
+                xo_turn_o: "AI Thinking (O)...",
+                xo_win_x: "You Won! 🎉",
+                xo_win_o: "AI Won!",
+                xo_tie: "Draw!",
+                breaker_drag: "Drag paddle to bounce",
+                wolf_tap_jump: "Tap screen or Space to jump",
+                btn_open_lb: "Leaderboard (Top 10)",
+                lb_title: "Games Hall of Fame",
+                lb_desc: "Top 10 players directly from Sheet ranked by level:",
+                lb_close: "Close",
+                snake_game_over: "Game Over! Try Again"
             }
         };
 
@@ -1971,7 +2424,7 @@
         }
 
         /* =========================================================================
-           نظام الحاسبة والذكاء الاصطناعي
+           نظام الحاسبة الذكية
            ========================================================================= */
         let calcMode = 'coins'; 
         let calcAnimationReq;
@@ -2109,6 +2562,802 @@
             animateCalcValue(outVal, currentDisplay, targetValue, 400, isResultFloat, targetColor, targetShadow);
         }
 
+        /* =========================================================================
+           نظام ألعاب (الألعاب / FOR FUN) والصدارة الحية المطلقة من الشيت
+           ========================================================================= */
+        function switchGame(gameId) {
+            document.querySelectorAll('.game-tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.game-display-card').forEach(card => card.classList.remove('active-game'));
+            
+            const selectedBtn = event.currentTarget;
+            if (selectedBtn) selectedBtn.classList.add('active');
+            
+            const targetCard = document.getElementById(`game-card-${gameId}`);
+            if (targetCard) targetCard.classList.add('active-game');
+
+            if (gameId === 'snake' && !snakeGameRunning) startSnakeGame();
+            if (gameId === 'breaker' && !breakerGameRunning) startBreakerGame(false);
+            if (gameId === 'wolf' && !wolfGameRunning) startWolfGame();
+        }
+
+        let pendingProgression = null;
+
+        function recordGameProgression(gameName, lvl) {
+            let savedUserId = safeGetStorage('player_permanent_id');
+            if (!savedUserId) {
+                pendingProgression = { game: gameName, lvl: lvl };
+                document.getElementById('generic-user-modal').style.display = 'flex';
+                document.getElementById('global-input-user').value = '';
+                document.getElementById('global-user-err').style.display = 'none';
+            } else {
+                sendRecordToSheet(savedUserId, gameName, lvl);
+            }
+        }
+
+        function confirmGlobalUser() {
+            const input = document.getElementById('global-input-user');
+            const err = document.getElementById('global-user-err');
+            const val = input.value.trim();
+            const isAr = document.documentElement.lang === 'ar';
+
+            if (val.length < 3 || val.length > 12) {
+                err.innerText = isAr ? "يجب أن يكون اليوزر بين 3 و 12 حرفاً" : "ID must be between 3 and 12 characters";
+                err.style.display = 'block';
+                return;
+            }
+            if (!/^[a-zA-Z0-9_]+$/.test(val)) {
+                err.innerText = isAr ? "يوزر غير صالح. استخدم A-Z و 0-9 و _ فقط" : "Invalid ID. Use A-Z, 0-9 and _ only";
+                err.style.display = 'block';
+                return;
+            }
+
+            safeSetStorage('player_permanent_id', val);
+            closeGlobalUserModal();
+
+            if (pendingProgression) {
+                sendRecordToSheet(val, pendingProgression.game, pendingProgression.lvl);
+                pendingProgression = null;
+            }
+
+            const toast = document.getElementById("toast");
+            toast.innerHTML = isAr ? `<i class="fa-solid fa-check"></i> تم حفظ Your ID بنجاح!` : `<i class="fa-solid fa-check"></i> Your ID saved permanently!`;
+            toast.className = "show"; setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2500);
+        }
+
+        function closeGlobalUserModal() {
+            document.getElementById('generic-user-modal').style.display = 'none';
+        }
+
+        function sendRecordToSheet(userId, game, lvl) {
+            try {
+                const formData = new URLSearchParams();
+                formData.append("user", userId);
+                formData.append("lvl", lvl);
+                formData.append("game", game);
+
+                fetch(GAME_LEADERBOARD_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: formData.toString()
+                }).catch(() => {});
+            } catch(e) {}
+        }
+
+        // قراءة مباشرة وحصرية من أعمدة الشيت (AD, AE, AF) مع الترتيب التلقائي حسب المستوى
+        async function fetchSheetLeaderboard() {
+            try {
+                const cacheBuster = Math.floor(Math.random() * 100000000);
+                const url = tourSheetURL.replace("gid=0", "sheet=Leaderboard&range=AD:AF") + "&_nocache=" + cacheBuster;
+                const res = await fetch(url, { cache: "no-store" });
+                if (!res.ok) return [];
+                const txt = await res.text();
+                if (txt.includes("<!DOCTYPE html>")) return [];
+
+                const rows = parseCSV(txt);
+                if (rows.length > 0) {
+                    let parsedList = [];
+                    for (let i = 0; i < rows.length; i++) {
+                        let u = rows[i][0] ? rows[i][0].trim() : "";
+                        let l = parseInt(rows[i][1] ? rows[i][1].trim() : "0", 10);
+                        let g = rows[i][2] ? rows[i][2].trim() : "Game";
+                        if (u && u.toLowerCase() !== "user" && !isNaN(l) && l > 0) {
+                            parsedList.push({ user: u, lvl: l, game: g });
+                        }
+                    }
+                    if (parsedList.length > 0) {
+                        let uniqueMap = {};
+                        parsedList.forEach(item => {
+                            let key = item.user.toLowerCase();
+                            if (!uniqueMap[key] || item.lvl > uniqueMap[key].lvl) {
+                                uniqueMap[key] = item;
+                            }
+                        });
+                        // الترتيب التلقائي من الأعلى للأدنى حسب المستوى (Level)
+                        let finalSorted = Object.values(uniqueMap).sort((a, b) => b.lvl - a.lvl);
+                        return finalSorted.slice(0, 10);
+                    }
+                }
+            } catch(e) {}
+            return [];
+        }
+
+        async function openSharedLeaderboard() {
+            let container = document.getElementById('shared-lb-content');
+            container.innerHTML = `<div style="text-align:center; padding:15px; color:var(--text-muted); font-size:12px; font-weight:bold;">جاري جلب الصدارة من الشيت...</div>`;
+            document.getElementById('shared-lb-popup').style.display = 'flex';
+
+            let list = await fetchSheetLeaderboard();
+
+            if (!list || list.length === 0) {
+                container.innerHTML = `<div style="text-align:center; padding:15px; color:var(--text-muted); font-size:12px; font-weight:bold;">لا توجد أسماء مسجلة في الشيت حالياً.</div>`;
+                return;
+            }
+
+            let html = '';
+            list.forEach((item, idx) => {
+                let badge = (idx === 0) ? '🥇' : ((idx === 1) ? '🥈' : ((idx === 2) ? '🥉' : `#${idx+1}`));
+                let topClass = (idx === 0) ? 'top-1' : ((idx === 1) ? 'top-2' : ((idx === 2) ? 'top-3' : ''));
+                html += `
+                    <div class="lb-row ${topClass}">
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <span style="font-size:14px; font-weight:bold; min-width:24px;">${badge}</span>
+                            <span class="num-font" style="font-weight:900; font-size:13.5px;">${escapeHTML(item.user)}</span>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:6px;">
+                            <span class="num-font" style="font-weight:900; color:#eab308; font-size:13px;">Lvl ${item.lvl}</span>
+                            <span style="font-size:11px; color:var(--text-muted); font-weight:700;">(${escapeHTML(item.game)})</span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function closeSharedLeaderboard() {
+            document.getElementById('shared-lb-popup').style.display = 'none';
+        }
+
+        // --- 1. لعبة X-O (50 مرحلة كاملة) ---
+        let xoBoardState = ["", "", "", "", "", "", "", "", ""];
+        let xoPlayerTurn = "X";
+        let xoGameActive = true;
+        let xoLevel = safeGetStorage('xo_lvl') ? parseInt(safeGetStorage('xo_lvl')) : 1;
+        const winCombinations = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8],
+            [0, 3, 6], [1, 4, 7], [2, 5, 8],
+            [0, 4, 8], [2, 4, 6]
+        ];
+
+        document.getElementById('xo-lvl').innerText = `Lvl ${xoLevel}/50`;
+
+        function makeXOMove(index) {
+            if (!xoGameActive || xoBoardState[index] !== "" || xoPlayerTurn !== "X") return;
+            
+            applyXOMark(index, "X");
+            if (checkXOWin("X")) {
+                handleXOGameEnd("win");
+                return;
+            } else if (xoBoardState.every(cell => cell !== "")) {
+                handleXOGameEnd("tie");
+                return;
+            }
+
+            xoPlayerTurn = "O";
+            const lang = document.documentElement.getAttribute('lang') || 'en';
+            document.getElementById('xo-status').innerText = translations[lang].xo_turn_o;
+
+            setTimeout(() => {
+                if (!xoGameActive) return;
+                let aiMove = getBestAIMove();
+                applyXOMark(aiMove, "O");
+
+                if (checkXOWin("O")) {
+                    handleXOGameEnd("lose");
+                } else if (xoBoardState.every(cell => cell !== "")) {
+                    handleXOGameEnd("tie");
+                } else {
+                    xoPlayerTurn = "X";
+                    document.getElementById('xo-status').innerText = translations[lang].xo_turn_x;
+                }
+            }, 300);
+        }
+
+        function applyXOMark(index, player) {
+            xoBoardState[index] = player;
+            const cells = document.querySelectorAll('.xo-cell');
+            cells[index].innerText = player;
+            cells[index].classList.add(player.toLowerCase() + '-mark', 'occupied');
+        }
+
+        function checkXOWin(player) {
+            return winCombinations.some(comb => {
+                const win = comb.every(idx => xoBoardState[idx] === player);
+                if (win) {
+                    const cells = document.querySelectorAll('.xo-cell');
+                    comb.forEach(i => cells[i].classList.add('winning-cell'));
+                }
+                return win;
+            });
+        }
+
+        function handleXOGameEnd(result) {
+            xoGameActive = false;
+            const lang = document.documentElement.getAttribute('lang') || 'en';
+            const status = document.getElementById('xo-status');
+            
+            if (result === 'win') {
+                if (xoLevel < 50) xoLevel++;
+                safeSetStorage('xo_lvl', xoLevel.toString());
+                document.getElementById('xo-lvl').innerText = `Lvl ${xoLevel}/50`;
+                status.innerText = translations[lang].xo_win_x;
+                status.style.color = "#10b981";
+
+                recordGameProgression("XO", xoLevel);
+            } else if (result === 'lose') {
+                status.innerText = translations[lang].xo_win_o;
+                status.style.color = "#ef4444";
+            } else {
+                status.innerText = translations[lang].xo_tie;
+                status.style.color = "var(--text-muted)";
+            }
+        }
+
+        function getBestAIMove() {
+            for (let i = 0; i < 9; i++) {
+                if (xoBoardState[i] === "") {
+                    xoBoardState[i] = "O";
+                    if (winCombinations.some(c => c.every(idx => xoBoardState[idx] === "O"))) {
+                        xoBoardState[i] = ""; return i;
+                    }
+                    xoBoardState[i] = "";
+                }
+            }
+            for (let i = 0; i < 9; i++) {
+                if (xoBoardState[i] === "") {
+                    xoBoardState[i] = "X";
+                    if (winCombinations.some(c => c.every(idx => xoBoardState[idx] === "X"))) {
+                        xoBoardState[i] = ""; return i;
+                    }
+                    xoBoardState[i] = "";
+                }
+            }
+            if (xoBoardState[4] === "") return 4;
+            const empty = xoBoardState.map((v, idx) => v === "" ? idx : null).filter(v => v !== null);
+            return empty[Math.floor(Math.random() * empty.length)];
+        }
+
+        function resetXOGame(force = false) {
+            if(force) {
+                xoLevel = 1;
+                safeSetStorage('xo_lvl', '1');
+                document.getElementById('xo-lvl').innerText = `Lvl 1/50`;
+            }
+            xoBoardState = ["", "", "", "", "", "", "", "", ""];
+            xoPlayerTurn = "X";
+            xoGameActive = true;
+            const cells = document.querySelectorAll('.xo-cell');
+            cells.forEach(c => {
+                c.innerText = "";
+                c.className = "xo-cell num-font";
+            });
+            const lang = document.documentElement.getAttribute('lang') || 'en';
+            const status = document.getElementById('xo-status');
+            status.innerText = translations[lang].xo_turn_x;
+            status.style.color = "inherit";
+        }
+
+        // --- 2. لعبة الأفعى Snake 2.0 (استجابة فورية ونظام طابور أوامر دقيق) ---
+        let snakeCanvas = document.getElementById('snakeCanvas');
+        let snakeCtx = snakeCanvas ? snakeCanvas.getContext('2d') : null;
+        let snakeGrid = 15;
+        let snake = [{x: 150, y: 150}];
+        let snakeDir = {x: 15, y: 0};
+        let snakeQueue = [];
+        let snakeFood = {x: 60, y: 60};
+        let snakeScore = 0;
+        let snakeLevel = safeGetStorage('snake_lvl') ? parseInt(safeGetStorage('snake_lvl')) : 1;
+        let snakeInterval = null;
+        let snakeGameRunning = false;
+
+        document.getElementById('snake-lvl').innerText = `Lvl ${snakeLevel}/50`;
+
+        function startSnakeGame() {
+            if (snakeInterval) clearInterval(snakeInterval);
+            snake = [{x: 150, y: 150}, {x: 135, y: 150}, {x: 120, y: 150}];
+            snakeDir = {x: snakeGrid, y: 0};
+            snakeQueue = [];
+            snakeScore = 0;
+            document.getElementById('snake-score').innerText = '0';
+            placeSnakeFood();
+            snakeGameRunning = true;
+            let speed = Math.max(90, 140 - (snakeLevel * 1.0));
+            snakeInterval = setInterval(updateSnakeGame, speed);
+        }
+
+        function placeSnakeFood() {
+            snakeFood.x = Math.floor(Math.random() * (300 / snakeGrid)) * snakeGrid;
+            snakeFood.y = Math.floor(Math.random() * (300 / snakeGrid)) * snakeGrid;
+        }
+
+        function updateSnakeGame() {
+            if (!snakeCtx) return;
+
+            if (snakeQueue.length > 0) {
+                snakeDir = snakeQueue.shift();
+            }
+
+            let head = {x: snake[0].x + snakeDir.x, y: snake[0].y + snakeDir.y};
+
+            if (head.x < 0 || head.x >= 300 || head.y < 0 || head.y >= 300) {
+                endSnakeGame(); return;
+            }
+            for (let part of snake) {
+                if (part.x === head.x && part.y === head.y) { endSnakeGame(); return; }
+            }
+
+            snake.unshift(head);
+            if (head.x === snakeFood.x && head.y === snakeFood.y) {
+                snakeScore++;
+                document.getElementById('snake-score').innerText = snakeScore;
+                
+                if (snakeScore % 5 === 0 && snakeLevel < 50) {
+                    snakeLevel++;
+                    safeSetStorage('snake_lvl', snakeLevel.toString());
+                    document.getElementById('snake-lvl').innerText = `Lvl ${snakeLevel}/50`;
+                    recordGameProgression("Snake", snakeLevel);
+                }
+
+                placeSnakeFood();
+            } else {
+                snake.pop();
+            }
+
+            snakeCtx.clearRect(0, 0, 300, 300);
+            
+            snakeCtx.strokeStyle = 'rgba(255,255,255,0.02)';
+            snakeCtx.lineWidth = 1;
+            for(let i=0; i<300; i+=snakeGrid){
+                snakeCtx.beginPath(); snakeCtx.moveTo(i, 0); snakeCtx.lineTo(i, 300); snakeCtx.stroke();
+                snakeCtx.beginPath(); snakeCtx.moveTo(0, i); snakeCtx.lineTo(300, i); snakeCtx.stroke();
+            }
+
+            snakeCtx.fillStyle = '#ef4444';
+            snakeCtx.shadowColor = '#ef4444';
+            snakeCtx.shadowBlur = 12;
+            snakeCtx.beginPath();
+            snakeCtx.arc(snakeFood.x + snakeGrid/2, snakeFood.y + snakeGrid/2, snakeGrid/2 - 2, 0, Math.PI * 2);
+            snakeCtx.fill();
+            snakeCtx.shadowBlur = 0;
+
+            snake.forEach((part, index) => {
+                if (index === 0) {
+                    snakeCtx.fillStyle = '#10b981';
+                    snakeCtx.shadowColor = '#10b981';
+                    snakeCtx.shadowBlur = 10;
+                } else {
+                    snakeCtx.fillStyle = 'rgba(16, 185, 129, 0.7)';
+                    snakeCtx.shadowBlur = 0;
+                }
+                snakeCtx.beginPath();
+                snakeCtx.roundRect(part.x + 1, part.y + 1, snakeGrid - 2, snakeGrid - 2, 4);
+                snakeCtx.fill();
+
+                if (index === 0) {
+                    snakeCtx.fillStyle = '#0a0a0f';
+                    snakeCtx.beginPath();
+                    snakeCtx.arc(part.x + 5, part.y + 5, 1.8, 0, Math.PI*2);
+                    snakeCtx.arc(part.x + 10, part.y + 5, 1.8, 0, Math.PI*2);
+                    snakeCtx.fill();
+                }
+            });
+            snakeCtx.shadowBlur = 0;
+        }
+
+        function handleSnakeDpad(dir) {
+            let lastDir = snakeQueue.length > 0 ? snakeQueue[snakeQueue.length - 1] : snakeDir;
+            if (dir === 'UP' && lastDir.y === 0) snakeQueue.push({x: 0, y: -snakeGrid});
+            if (dir === 'DOWN' && lastDir.y === 0) snakeQueue.push({x: 0, y: snakeGrid});
+            if (dir === 'LEFT' && lastDir.x === 0) snakeQueue.push({x: -snakeGrid, y: 0});
+            if (dir === 'RIGHT' && lastDir.x === 0) snakeQueue.push({x: snakeGrid, y: 0});
+        }
+
+        if(snakeCanvas) {
+            let sTouchX = 0, sTouchY = 0;
+            snakeCanvas.addEventListener('touchstart', e => {
+                e.preventDefault();
+                sTouchX = e.touches[0].clientX;
+                sTouchY = e.touches[0].clientY;
+            }, {passive: false});
+            snakeCanvas.addEventListener('touchend', e => {
+                e.preventDefault();
+                let diffX = e.changedTouches[0].clientX - sTouchX;
+                let diffY = e.changedTouches[0].clientY - sTouchY;
+                if (Math.abs(diffX) > Math.abs(diffY)) {
+                    if (diffX > 20) handleSnakeDpad('RIGHT');
+                    else if (diffX < -20) handleSnakeDpad('LEFT');
+                } else {
+                    if (diffY > 20) handleSnakeDpad('DOWN');
+                    else if (diffY < -20) handleSnakeDpad('UP');
+                }
+            }, {passive: false});
+        }
+
+        function endSnakeGame() {
+            clearInterval(snakeInterval);
+            snakeGameRunning = false;
+            if (snakeCtx) {
+                snakeCtx.fillStyle = 'rgba(0,0,0,0.75)';
+                snakeCtx.fillRect(0, 0, 300, 300);
+                snakeCtx.fillStyle = '#fff';
+                const lang = document.documentElement.getAttribute('lang') || 'en';
+                snakeCtx.font = lang === 'ar' ? '900 16px Cairo, sans-serif' : '900 16px Rajdhani, sans-serif';
+                snakeCtx.textAlign = 'center';
+                snakeCtx.fillText(translations[lang].snake_game_over, 150, 150);
+            }
+        }
+
+        // --- 3. لعبة كاسر الطوب Breaker (قفل التمرير محصور داخل هذا المربع فقط) ---
+        let breakerCanvas = document.getElementById('breakerCanvas');
+        let breakerCtx = breakerCanvas ? breakerCanvas.getContext('2d') : null;
+        let breakerPaddle = { x: 120, width: 65, height: 8 };
+        let breakerBall = { x: 150, y: 220, dx: 2.5, dy: -2.5, radius: 5 };
+        let breakerBricks = [];
+        let breakerScore = safeGetStorage('breaker_score') ? parseInt(safeGetStorage('breaker_score')) : 0;
+        let breakerLevel = safeGetStorage('breaker_lvl') ? parseInt(safeGetStorage('breaker_lvl')) : 1;
+        let breakerAnimId = null;
+        let breakerGameRunning = false;
+
+        document.getElementById('breaker-score').innerText = breakerScore;
+        document.getElementById('breaker-lvl').innerText = `Lvl ${breakerLevel}/50`;
+
+        function initBreakerBricks(lvl) {
+            breakerBricks = [];
+            const rows = Math.min(3 + Math.floor(lvl / 10), 6);
+            const cols = 5;
+            const brickW = 50, brickH = 12, pad = 8, offsetTop = 25, offsetLeft = 8;
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
+                    breakerBricks.push({
+                        x: c * (brickW + pad) + offsetLeft,
+                        y: r * (brickH + pad) + offsetTop,
+                        status: 1
+                    });
+                }
+            }
+        }
+
+        function startBreakerGame(forceReset = false) {
+            if (forceReset) {
+                breakerScore = 0;
+                breakerLevel = 1;
+                safeSetStorage('breaker_score', '0');
+                safeSetStorage('breaker_lvl', '1');
+            }
+            document.getElementById('breaker-score').innerText = breakerScore;
+            document.getElementById('breaker-lvl').innerText = `Lvl ${breakerLevel}/50`;
+
+            if (breakerAnimId) cancelAnimationFrame(breakerAnimId);
+            initBreakerBricks(breakerLevel);
+            breakerPaddle.x = 120;
+            breakerBall.x = 150;
+            breakerBall.y = 220;
+            let speed = Math.min(5.5, 2.4 + (breakerLevel * 0.08));
+            breakerBall.dx = (Math.random() > 0.5 ? speed : -speed);
+            breakerBall.dy = -speed;
+            breakerGameRunning = true;
+            updateBreaker();
+        }
+
+        function updateBreaker() {
+            if (!breakerGameRunning || !breakerCtx) return;
+
+            breakerCtx.clearRect(0, 0, 300, 300);
+
+            let remainingBricks = 0;
+            breakerBricks.forEach(b => {
+                if (b.status === 1) {
+                    remainingBricks++;
+                    breakerCtx.fillStyle = '#38bdf8';
+                    breakerCtx.beginPath();
+                    breakerCtx.roundRect(b.x, b.y, 50, 12, 3);
+                    breakerCtx.fill();
+
+                    if (breakerBall.x > b.x && breakerBall.x < b.x + 50 && breakerBall.y > b.y && breakerBall.y < b.y + 12) {
+                        breakerBall.dy = -breakerBall.dy;
+                        b.status = 0;
+                        breakerScore += 15;
+                        safeSetStorage('breaker_score', breakerScore.toString());
+                        document.getElementById('breaker-score').innerText = breakerScore;
+                    }
+                }
+            });
+
+            if (remainingBricks === 0) {
+                if (breakerLevel < 50) breakerLevel++;
+                safeSetStorage('breaker_lvl', breakerLevel.toString());
+                document.getElementById('breaker-lvl').innerText = `Lvl ${breakerLevel}/50`;
+                recordGameProgression("Breaker", breakerLevel);
+                startBreakerGame(false);
+                return;
+            }
+
+            breakerCtx.fillStyle = 'var(--primary)';
+            breakerCtx.beginPath();
+            breakerCtx.roundRect(breakerPaddle.x, 280, breakerPaddle.width, breakerPaddle.height, 4);
+            breakerCtx.fill();
+
+            breakerCtx.fillStyle = '#ffffff';
+            breakerCtx.beginPath();
+            breakerCtx.arc(breakerBall.x, breakerBall.y, breakerBall.radius, 0, Math.PI * 2);
+            breakerCtx.fill();
+
+            breakerBall.x += breakerBall.dx;
+            breakerBall.y += breakerBall.dy;
+
+            if (breakerBall.x + breakerBall.radius > 300 || breakerBall.x - breakerBall.radius < 0) breakerBall.dx = -breakerBall.dx;
+            if (breakerBall.y - breakerBall.radius < 0) breakerBall.dy = -breakerBall.dy;
+
+            if (breakerBall.y + breakerBall.radius >= 280 && breakerBall.x >= breakerPaddle.x && breakerBall.x <= breakerPaddle.x + breakerPaddle.width) {
+                breakerBall.dy = -Math.abs(breakerBall.dy);
+            }
+
+            if (breakerBall.y > 300) {
+                breakerGameRunning = false;
+                breakerCtx.fillStyle = 'rgba(0,0,0,0.75)';
+                breakerCtx.fillRect(0, 0, 300, 300);
+                breakerCtx.fillStyle = '#fff';
+                const lang = document.documentElement.getAttribute('lang') || 'en';
+                breakerCtx.font = lang === 'ar' ? '900 16px Cairo, sans-serif' : '900 16px Rajdhani, sans-serif';
+                breakerCtx.textAlign = 'center';
+                breakerCtx.fillText(lang === 'ar' ? "سقطت الكرة! حاول مجدداً" : "Ball Lost! Try Again", 150, 150);
+                return;
+            }
+
+            breakerAnimId = requestAnimationFrame(updateBreaker);
+        }
+
+        if (breakerCanvas) {
+            const movePaddle = (clientX) => {
+                const rect = breakerCanvas.getBoundingClientRect();
+                const relativeX = clientX - rect.left;
+                breakerPaddle.x = Math.max(0, Math.min(300 - breakerPaddle.width, relativeX - breakerPaddle.width / 2));
+            };
+            breakerCanvas.addEventListener('touchmove', e => {
+                e.preventDefault();
+                if (e.touches.length > 0) movePaddle(e.touches[0].clientX);
+            }, { passive: false });
+            breakerCanvas.addEventListener('touchstart', e => e.preventDefault(), { passive: false });
+            breakerCanvas.addEventListener('mousemove', e => movePaddle(e.clientX));
+        }
+
+        // --- 4. لعبة مغامرة الذئب (كوينز بمكان آمن ومسافات متوازنة) ---
+        let wolfCanvas = document.getElementById('wolfCanvas');
+        let wolfCtx = wolfCanvas ? wolfCanvas.getContext('2d') : null;
+        let wolfGameRunning = false;
+        let wolfAnimId = null;
+
+        let wolf = { x: 35, y: 220, w: 28, h: 28, vy: 0, grounded: true };
+        let wolfObstacles = [];
+        let wolfCoins = [];
+        let wolfLives = 3;
+        let wolfLevel = 1;
+        let wolfCoinsNeeded = 4;
+        let wolfSpeed = 2.6;
+
+        function startWolfGame() {
+            if (wolfAnimId) cancelAnimationFrame(wolfAnimId);
+            wolf.y = 220;
+            wolf.vy = 0;
+            wolf.grounded = true;
+            wolfLives = 3;
+            wolfCoinsNeeded = 4;
+            wolfSpeed = 2.6 + (wolfLevel * 0.06);
+            wolfObstacles = [{ x: 380, w: 18, h: 22, type: 0 }];
+            wolfCoins = [{ x: 220, y: 175, collected: false }];
+            
+            document.getElementById('wolf-lives').innerText = '3';
+            document.getElementById('wolf-lvl').innerText = `Lvl ${wolfLevel}/50`;
+            updateWolfCoinsNeededUI();
+
+            wolfGameRunning = true;
+            updateWolfGame();
+        }
+
+        function updateWolfCoinsNeededUI() {
+            const isAr = document.documentElement.lang === 'ar';
+            document.getElementById('wolf-needed').innerText = isAr ? `باقي: ${wolfCoinsNeeded}` : `Left: ${wolfCoinsNeeded}`;
+        }
+
+        function triggerWolfJump() {
+            if (wolf.grounded && wolfGameRunning) {
+                wolf.vy = -8.8;
+                wolf.grounded = false;
+            } else if (!wolfGameRunning) {
+                startWolfGame();
+            }
+        }
+
+        if (wolfCanvas) {
+            wolfCanvas.addEventListener('touchstart', e => {
+                e.preventDefault();
+                triggerWolfJump();
+            }, { passive: false });
+        }
+
+        document.addEventListener('keydown', e => {
+            if ((e.code === 'Space' || e.code === 'ArrowUp') && document.getElementById('game-card-wolf').classList.contains('active-game')) {
+                e.preventDefault();
+                triggerWolfJump();
+            }
+        });
+
+        function completeWolfLevel() {
+            if (wolfLevel < 50) wolfLevel++;
+            wolfCoinsNeeded = 4 + Math.min(8, Math.floor(wolfLevel / 6));
+            wolfSpeed = Math.min(5.5, 2.6 + (wolfLevel * 0.06));
+            document.getElementById('wolf-lvl').innerText = `Lvl ${wolfLevel}/50`;
+            updateWolfCoinsNeededUI();
+
+            const isAr = document.documentElement.lang === 'ar';
+            const toast = document.getElementById("toast");
+            toast.innerHTML = isAr ? `<i class="fa-solid fa-flag-checkered"></i> عبرت للمرحلة ${wolfLevel}!` : `<i class="fa-solid fa-flag-checkered"></i> Advanced to Level ${wolfLevel}!`;
+            toast.className = "show"; setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2000);
+
+            recordGameProgression("Wolf", wolfLevel);
+        }
+
+        function updateWolfGame() {
+            if (!wolfGameRunning || !wolfCtx) return;
+
+            wolfCtx.clearRect(0, 0, 300, 300);
+
+            let floorHue = (wolfLevel * 7) % 360;
+            wolfCtx.strokeStyle = `hsla(${floorHue}, 70%, 65%, 0.4)`;
+            wolfCtx.lineWidth = 2;
+            wolfCtx.beginPath();
+            wolfCtx.moveTo(0, 248);
+            wolfCtx.lineTo(300, 248);
+            wolfCtx.stroke();
+
+            wolf.y += wolf.vy;
+            wolf.vy += 0.48;
+
+            if (wolf.y >= 220) {
+                wolf.y = 220;
+                wolf.vy = 0;
+                wolf.grounded = true;
+            }
+
+            // رسم الذئب
+            wolfCtx.save();
+            wolfCtx.fillStyle = '#e2e8f0';
+            wolfCtx.shadowColor = '#60a5fa';
+            wolfCtx.shadowBlur = 8;
+            wolfCtx.beginPath();
+            wolfCtx.roundRect(wolf.x, wolf.y, wolf.w, wolf.h, 6);
+            wolfCtx.fill();
+
+            wolfCtx.fillStyle = '#94a3b8';
+            wolfCtx.beginPath();
+            wolfCtx.moveTo(wolf.x + 4, wolf.y);
+            wolfCtx.lineTo(wolf.x + 10, wolf.y - 8);
+            wolfCtx.lineTo(wolf.x + 14, wolf.y);
+            wolfCtx.fill();
+
+            wolfCtx.beginPath();
+            wolfCtx.moveTo(wolf.x + 16, wolf.y);
+            wolfCtx.lineTo(wolf.x + 22, wolf.y - 8);
+            wolfCtx.lineTo(wolf.x + 26, wolf.y);
+            wolfCtx.fill();
+            
+            wolfCtx.fillStyle = '#38bdf8';
+            wolfCtx.beginPath();
+            wolfCtx.arc(wolf.x + 21, wolf.y + 10, 2.2, 0, Math.PI*2);
+            wolfCtx.fill();
+            wolfCtx.restore();
+
+            // عقبات
+            for (let i = 0; i < wolfObstacles.length; i++) {
+                let ob = wolfObstacles[i];
+                ob.x -= wolfSpeed;
+
+                wolfCtx.save();
+                if (ob.type === 1) {
+                    wolfCtx.fillStyle = '#f43f5e';
+                    wolfCtx.shadowColor = '#f43f5e';
+                    wolfCtx.shadowBlur = 8;
+                    wolfCtx.beginPath();
+                    wolfCtx.moveTo(ob.x, 248);
+                    wolfCtx.lineTo(ob.x + ob.w/2, 248 - ob.h);
+                    wolfCtx.lineTo(ob.x + ob.w, 248);
+                    wolfCtx.fill();
+                } else if (ob.type === 2) {
+                    wolfCtx.fillStyle = '#a855f7';
+                    wolfCtx.shadowColor = '#a855f7';
+                    wolfCtx.shadowBlur = 10;
+                    wolfCtx.beginPath();
+                    wolfCtx.roundRect(ob.x, 248 - ob.h, ob.w, ob.h, 6);
+                    wolfCtx.fill();
+                } else {
+                    wolfCtx.fillStyle = '#ef4444';
+                    wolfCtx.shadowColor = '#ef4444';
+                    wolfCtx.shadowBlur = 8;
+                    wolfCtx.beginPath();
+                    wolfCtx.roundRect(ob.x, 248 - ob.h, ob.w, ob.h, 3);
+                    wolfCtx.fill();
+                }
+                wolfCtx.restore();
+
+                if (wolf.x + wolf.w > ob.x && wolf.x < ob.x + ob.w && wolf.y + wolf.h > 248 - ob.h) {
+                    wolfLives--;
+                    document.getElementById('wolf-lives').innerText = wolfLives;
+                    ob.x = -50;
+                    if (wolfLives <= 0) {
+                        wolfGameRunning = false;
+                        wolfCtx.fillStyle = 'rgba(0,0,0,0.75)';
+                        wolfCtx.fillRect(0, 0, 300, 300);
+                        wolfCtx.fillStyle = '#fff';
+                        const lang = document.documentElement.getAttribute('lang') || 'en';
+                        wolfCtx.font = lang ? '900 16px Cairo, sans-serif' : '900 16px Rajdhani, sans-serif';
+                        wolfCtx.textAlign = 'center';
+                        wolfCtx.fillText(lang ? "سقط الذئب! انقر لإعادة المحاولة" : "Game Over! Tap to retry", 150, 150);
+                        return;
+                    }
+                }
+            }
+
+            let minGap = Math.max(160, 240 - (wolfLevel * 2));
+            if (wolfObstacles.length === 0 || wolfObstacles[wolfObstacles.length - 1].x < (300 - minGap)) {
+                let nextType = (wolfLevel % 3);
+                wolfObstacles.push({
+                    x: 320 + Math.random() * 30,
+                    w: 16 + Math.random() * 6,
+                    h: 20 + Math.random() * 10,
+                    type: nextType
+                });
+            }
+            wolfObstacles = wolfObstacles.filter(ob => ob.x > -40);
+
+            // كوينز ذكية
+            for (let coin of wolfCoins) {
+                coin.x -= wolfSpeed;
+                if (!coin.collected) {
+                    wolfCtx.fillStyle = '#eab308';
+                    wolfCtx.shadowColor = '#eab308';
+                    wolfCtx.shadowBlur = 10;
+                    wolfCtx.beginPath();
+                    wolfCtx.arc(coin.x, coin.y, 6, 0, Math.PI*2);
+                    wolfCtx.fill();
+                    wolfCtx.shadowBlur = 0;
+
+                    if (wolf.x + wolf.w > coin.x - 6 && wolf.x < coin.x + 6 && wolf.y < coin.y + 6 && wolf.y + wolf.h > coin.y - 6) {
+                        coin.collected = true;
+                        wolfCoinsNeeded--;
+                        updateWolfCoinsNeededUI();
+
+                        if (wolfCoinsNeeded <= 0) {
+                            completeWolfLevel();
+                        }
+                    }
+                }
+            }
+
+            if (wolfCoins.length === 0 || wolfCoins[wolfCoins.length - 1].x < 110) {
+                let safeCoinX = 330;
+                let isNearObstacle = wolfObstacles.some(ob => Math.abs(ob.x - safeCoinX) < 45);
+                if (isNearObstacle) {
+                    wolfCoins.push({ x: safeCoinX, y: 160, collected: false });
+                } else {
+                    wolfCoins.push({ x: safeCoinX, y: 228, collected: false });
+                }
+            }
+            wolfCoins = wolfCoins.filter(c => c.x > -20);
+
+            wolfAnimId = requestAnimationFrame(updateWolfGame);
+        }
+
         // التهيئة المبدئية والراوتينج
         document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('theme-icon').className = savedTheme === 'light' ? 'fa-solid fa-sun theme-toggle' : 'fa-solid fa-moon theme-toggle';
@@ -2148,7 +3397,7 @@
 
             changeLang(initLang, false);
             switchView(initView, null, false);
-            window.history.replaceState({ view: initView, lang: initLang }, '', `/${initLang}/${initView}`);
+            window.history.pushState({ view: initView, lang: initLang }, '', `/${initLang}/${initView}`);
 
             window.addEventListener('popstate', (e) => {
                 if (e.state) {
