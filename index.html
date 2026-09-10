@@ -1189,27 +1189,47 @@
         }
 
         function switchView(viewName, itemEl, updateUrl = true) {
-            document.querySelectorAll('.tab-view').forEach(view => view.classList.remove('active-view'));
-            document.querySelectorAll('.bottom-nav-item').forEach(item => item.classList.remove('active'));
+    document.querySelectorAll('.tab-view').forEach(view => view.classList.remove('active-view'));
+    document.querySelectorAll('.bottom-nav-item').forEach(item => item.classList.remove('active'));
 
-            const targetView = document.getElementById(`view-${viewName}`);
-            if (targetView) targetView.classList.add('active-view');
-            
-            let activeNav = itemEl || document.getElementById(`nav-btn-${viewName}`);
-            if (activeNav) {
-                activeNav.classList.add('active');
-            }
-            
-            safeSetSession('currentView', viewName);
+    const targetView = document.getElementById(`view-${viewName}`);
+    if (targetView) targetView.classList.add('active-view');
+    
+    let activeNav = itemEl || document.getElementById(`nav-btn-${viewName}`);
+    if (activeNav) {
+        activeNav.classList.add('active');
+    }
+    
+    safeSetSession('currentView', viewName);
 
-            if (updateUrl) {
-                const currentLang = document.documentElement.getAttribute('lang') || 'en';
-                window.history.pushState({ view: viewName, lang: currentLang }, '', `/${currentLang}/${viewName}`);
-            }
+    if (updateUrl) {
+        const currentLang = document.documentElement.getAttribute('lang') || 'en';
+        window.history.pushState({ view: viewName, lang: currentLang }, '', `/${currentLang}/${viewName}`);
+    }
 
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            if (viewName === 'home') setTimeout(updateCarouselButtons, 80);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (viewName === 'home') setTimeout(updateCarouselButtons, 80);
+
+    // --- التعديل الجديد: إيقاف الألعاب عند الخروج من قسم الاستكشاف ---
+    if (viewName !== 'explore') {
+        // إيقاف لعبة الأفعى
+        if (typeof snakeInterval !== 'undefined' && snakeInterval) {
+            clearInterval(snakeInterval);
+            snakeGameRunning = false;
         }
+        // إيقاف لعبة كاسر الطوب
+        if (typeof breakerAnimId !== 'undefined' && breakerAnimId) {
+            cancelAnimationFrame(breakerAnimId);
+            breakerGameRunning = false;
+        }
+        // إيقاف لعبة الذئب
+        if (typeof wolfAnimId !== 'undefined' && wolfAnimId) {
+            cancelAnimationFrame(wolfAnimId);
+            wolfGameRunning = false;
+        }
+    }
+    // ----------------------------------------------------------------
+}
 
         function toggleNotif() {
             const dropdown = document.getElementById('notif-dropdown');
