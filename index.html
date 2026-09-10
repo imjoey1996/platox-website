@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
-    <base href="/"> <!-- هذا هو السطر السحري اللي يحل مشكلة اختفاء الصور -->
+    <base href="/"> <!-- هذا هو السطر السحري الذي يحل مشكلة اختفاء الصور -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://worldtimeapi.org https://timeapi.io https://docs.google.com https://script.google.com https://script.googleusercontent.com https://api.ipify.org; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline'; img-src 'self' data: https:; media-src https: 'self';">
@@ -18,6 +18,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="PlatoX">
     <meta name="application-name" content="PlatoX">
+    <meta name="theme-color" content="#0a0a0f">
+    <meta name="msapplication-navbutton-color" content="#0a0a0f">
+    <meta name="msapplication-starturl" content="/">
     <!-- ========================================================== -->
 
     <script>
@@ -118,7 +121,7 @@
         [data-theme="light"] .navbar { background: rgba(255, 255, 255, 0.8); }
         
         /* تنسيق قسم اللوجو والاسم في الهيدر */
-        .brand-header { display: flex; align-items: center; gap: 8px; cursor: pointer; transition: transform 0.2s ease; }
+        .brand-header { display: flex; align-items: center; gap: 4px; cursor: pointer; transition: transform 0.2s ease; }
         .brand-header:active { transform: scale(0.95); }
         .nav-main-logo { width: 48px; height: 48px; object-fit: contain; border-radius: 10px; }
         .navbar h1 { font-size: 26px; font-weight: 900; letter-spacing: 0.5px; display: flex; align-items: baseline; margin: 0; padding-top: 4px; }
@@ -314,7 +317,7 @@
         [data-theme="light"] .video-glow-box { background: rgba(0,0,0,0.1); }
         .video-glow-box video { width: 100%; display: block; border-radius: 12px; max-height: 70vh; object-fit: cover; background: #000; }
 
-        .feedback-btn-wrapper { width: 100%; display: flex; justify-content: flex-end; } 
+        .feedback-btn-wrapper { width: 100%; display: flex; justify-content: center; } 
 
         #toast { visibility: hidden; min-width: 200px; background: rgba(15, 15, 20, 0.95); backdrop-filter: blur(10px); color: #fff; text-align: center; border-radius: 10px; padding: 12px 20px; position: fixed; z-index: 9999; left: 50%; bottom: 25px; transform: translateX(-50%); font-size: 14px; opacity: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid var(--primary); font-family: 'Cairo', sans-serif; font-weight:bold; transition: opacity 0.3s;}
         #toast.show { visibility: visible; bottom: calc(95px + env(safe-area-inset-bottom)); opacity: 1; }
@@ -389,7 +392,7 @@
             /* تعديلات الموبايل للوجو */
             .nav-main-logo { width: 42px; height: 42px; }
             .navbar h1 { font-size: 24px; padding-top: 2px; }
-            .brand-header { gap: 6px; }
+            .brand-header { gap: 3px; }
         }
     </style>
 </head>
@@ -721,7 +724,7 @@
         </section>
     </main>
 
-    <main id="view-leaderboard" class="tab-view">
+    <main id="view-explore" class="tab-view">
 
         <section id="weekly-showcase" style="display: none;">
             <h2 class="section-title" data-i18n="weekly_showcase_title">عناصر الألعاب الأسبوعية</h2>
@@ -836,7 +839,7 @@
             <i class="fa-solid fa-users"></i>
             <span data-i18n="nav_leaders">حول القادة</span>
         </div>
-        <div class="bottom-nav-item" onclick="switchView('leaderboard', this)" id="nav-btn-leaderboard">
+        <div class="bottom-nav-item" onclick="switchView('explore', this)" id="nav-btn-explore">
             <div class="nav-dot" id="dot-explore"></div>
             <i class="fa-solid fa-compass"></i>
             <span data-i18n="nav_leaderboard">استكشف</span>
@@ -970,7 +973,7 @@
             if (currentLatestTour && currentLatestTour.id !== seenTour) {
                 hasNewExplore = true;
                 html += `
-                <div class="notif-item" onclick="markSeenAndGo('tour', '${currentLatestTour.id}', 'leaderboard', 'tournaments')">
+                <div class="notif-item" onclick="markSeenAndGo('tour', '${currentLatestTour.id}', 'explore', 'tournaments')">
                     <i class="fa-solid fa-trophy"></i> 
                     <div class="notif-text-box">
                         <span class="notif-sub" style="color:#eab308;">${isAr ? 'تحديث البطولات' : 'Tournaments Update'}</span>
@@ -983,7 +986,7 @@
                 hasNewExplore = true;
                 const safeTitle = escapeHTML(currentLatestWeekly.display);
                 html += `
-                <div class="notif-item" onclick="markSeenAndGo('weekly', '${currentLatestWeekly.id}', 'leaderboard', 'weekly-showcase')">
+                <div class="notif-item" onclick="markSeenAndGo('weekly', '${currentLatestWeekly.id}', 'explore', 'weekly-showcase')">
                     <i class="fa-solid fa-gift" style="color:#a855f7;"></i> 
                     <div class="notif-text-box">
                         <span class="notif-sub" style="color:#a855f7;">${isAr ? 'عناصر أسبوعية جديدة' : 'New Weekly Items'}</span>
@@ -1429,9 +1432,6 @@
             }
 
             clearInputError('plato-id'); clearInputError('bug-desc');
-            
-            const feedbackBtnWrapper = document.getElementById('feedback-wrapper');
-            if (feedbackBtnWrapper) feedbackBtnWrapper.style.justifyContent = lang === 'ar' ? 'flex-end' : 'flex-start'; 
             
             renderArabicLeaders(); 
             renderGlobalLeaders(); 
@@ -1996,7 +1996,7 @@
                 btnPips.style.color = 'var(--text-muted)';
                 
                 input.placeholder = t.placeholderCoins;
-                icon.src = '/IMG_0571.png';
+                icon.src = 'IMG_0571.png';
                 resultCurr.innerText = t.currPips;
             } else {
                 btnPips.classList.add('active');
@@ -2007,7 +2007,7 @@
                 btnCoins.style.color = 'var(--text-muted)';
                 
                 input.placeholder = t.placeholderPips;
-                icon.src = '/IMG_0569.png';
+                icon.src = 'IMG_0569.png';
                 resultCurr.innerText = t.currCoins;
             }
             
@@ -2141,7 +2141,7 @@
                     initLang = 'en';
                 }
 
-                if (initView !== 'home' && initView !== 'leaders' && initView !== 'leaderboard') {
+                if (initView !== 'home' && initView !== 'leaders' && initView !== 'explore') {
                     initView = 'home';
                 }
             }
