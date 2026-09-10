@@ -415,29 +415,6 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
-        /* زر فتح المتصدرين الزجاجي */
-        .leaderboard-toggle-btn {
-            width: 100%;
-            padding: 10px 20px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            color: var(--text-main);
-            font-family: inherit;
-            font-weight: 800;
-            font-size: 13.5px;
-            cursor: pointer;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        .leaderboard-toggle-btn:hover {
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 0 15px var(--btn-active-glow);
-        }
-
         .game-display-card {
             padding: 25px 20px;
             display: none;
@@ -531,7 +508,6 @@
             box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
         }
 
-        /* قفل التمرير والحركة محصور حصراً داخل مربع كسر الطوب فقط */
         #game-card-breaker .game-canvas-container,
         #breakerCanvas {
             touch-action: none !important;
@@ -588,59 +564,6 @@
             align-items: center;
             gap: 6px;
         }
-
-        /* Wolf Registration & Leaderboard Popup */
-        .wolf-modal-backdrop {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 14px;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            text-align: center;
-            z-index: 30;
-        }
-
-        /* Leaderboard Modal System (Top 10) */
-        .shared-leaderboard-popup {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100dvh;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            padding: 20px;
-        }
-        .leaderboard-modal-card {
-            width: 100%;
-            max-width: 400px;
-            max-height: 80vh;
-            padding: 25px 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            overflow-y: auto;
-        }
-        .lb-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 14px;
-            border-radius: 10px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid var(--glass-border);
-        }
-        .lb-row.top-1 { border-color: rgba(212, 175, 55, 0.4); background: rgba(212, 175, 55, 0.08); }
-        .lb-row.top-2 { border-color: rgba(203, 213, 225, 0.4); }
-        .lb-row.top-3 { border-color: rgba(205, 127, 50, 0.4); }
 
         @media (max-width: 600px) {
             .main-lang-switch { margin-top: calc(85px + env(safe-area-inset-top)); margin-bottom: 10px; } 
@@ -1083,7 +1006,7 @@
         <div class="cyber-divider"><div class="center-node"></div></div>
 
         <!-- ==============================================
-             قسم الألعاب (فوق قسم النصائح مباشرة)
+             قسم الألعاب (بدون ليدر بورد ومع حفظ التقدم)
              ============================================== -->
         <section id="for-fun">
             <h2 class="section-title" data-i18n="fun_title">الألعاب</h2>
@@ -1104,13 +1027,7 @@
                     </button>
                 </div>
 
-                <!-- زر فتح لوحة الصدارة المنبثقة -->
-                <button type="button" class="leaderboard-toggle-btn" onclick="openSharedLeaderboard()">
-                    <i class="fa-solid fa-trophy" style="color: #d4af37;"></i>
-                    <span data-i18n="btn_open_lb">لوحة الصدارة (Top 10)</span>
-                </button>
-
-                <!-- 1. لعبة X-O (معدلة لتكون بينك وبين الـ AI بـ 1 لفل تنافسي بدون نظام 50 لفل معقد) -->
+                <!-- 1. لعبة X-O -->
                 <div id="game-card-xo" class="game-display-card glass-panel active-game">
                     <div class="game-header-bar">
                         <span class="game-stats-pill num-font" id="xo-lvl" data-i18n="xo_mode_classic">VS AI</span>
@@ -1130,7 +1047,7 @@
                     </div>
                 </div>
 
-                <!-- 2. لعبة الأفعى Snake 2.0 (استجابة فائقة فورية) -->
+                <!-- 2. لعبة الأفعى Snake -->
                 <div id="game-card-snake" class="game-display-card glass-panel">
                     <div class="game-header-bar">
                         <span class="game-stats-pill num-font" id="snake-lvl">Lvl 1/50</span>
@@ -1149,7 +1066,7 @@
                     </div>
                 </div>
 
-                <!-- 3. لعبة كاسر الطوب Breaker (قفل التمرير محصور داخل هذا المربع فقط) -->
+                <!-- 3. لعبة كاسر الطوب Breaker -->
                 <div id="game-card-breaker" class="game-display-card glass-panel">
                     <div class="game-header-bar">
                         <span class="game-stats-pill num-font"><i class="fa-solid fa-layer-group" style="color:#a855f7;"></i> <span id="breaker-lvl">Lvl 1/50</span></span>
@@ -1162,7 +1079,7 @@
                     </div>
                 </div>
 
-                <!-- 4. لعبة مغامرة الذئب (تصاعد تدريجي صحيح يبدأ من لفل 1 مع YYY في الليدر بورد) -->
+                <!-- 4. لعبة مغامرة الذئب -->
                 <div id="game-card-wolf" class="game-display-card glass-panel">
                     <div class="game-header-bar">
                         <span class="game-stats-pill num-font"><i class="fa-solid fa-flag-checkered" style="color:#38bdf8;"></i> <span id="wolf-lvl">Lvl 1/50</span></span>
@@ -1179,41 +1096,6 @@
 
             </div>
         </section>
-
-        <!-- نافذة تسجيل اليوزر لمرة واحدة فور الفوز -->
-        <div class="wolf-modal-backdrop" id="generic-user-modal" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh; z-index: 3000;">
-            <div class="glass-panel" style="padding: 25px 20px; width: 90%; max-width: 320px; text-align: center;">
-                <h3 style="font-size:1.15rem; font-weight:900; color:var(--primary); margin-bottom:4px;" data-i18n="modal_congrats">إنجاز جديد! 🎉</h3>
-                <p style="font-size:12px; color:var(--text-muted); margin-bottom:14px;" data-i18n="modal_desc">اكتب يوزرك لتنتقل فوراً إلى لوحة الصدارة:</p>
-                
-                <input type="text" id="global-input-user" class="bug-input num-font" placeholder="Your ID" maxlength="12" dir="ltr" style="padding:8px 12px; font-size:14px; text-align:center; margin-bottom:4px;">
-                <div id="global-user-err" class="input-error-msg" style="margin-bottom:10px; font-size:11px;"></div>
-                
-                <div style="display:flex; gap:8px; width:100%;">
-                    <button type="button" class="submit-btn" style="height:36px; font-size:12px;" onclick="confirmGlobalUser()" data-i18n="modal_save">حفظ</button>
-                    <button type="button" class="cancel-btn" style="height:36px; font-size:12px;" onclick="closeGlobalUserModal()" data-i18n="modal_skip">تخطي</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- نافذة لوحة الصدارة المشتركة (Top 10) -->
-        <div class="shared-leaderboard-popup" id="shared-lb-popup" onclick="if(event.target === this) closeSharedLeaderboard()">
-            <div class="leaderboard-modal-card glass-panel">
-                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--glass-border); padding-bottom:10px;">
-                    <div style="display:flex; align-items:center; gap:8px;">
-                        <i class="fa-solid fa-trophy" style="color:#d4af37; font-size:18px;"></i>
-                        <h3 style="font-size:1.1rem; font-weight:900; margin:0;" data-i18n="lb_title">لوحة شرف الألعاب</h3>
-                    </div>
-                    <i class="fa-solid fa-xmark" style="cursor:pointer; font-size:18px; color:var(--text-muted);" onclick="closeSharedLeaderboard()"></i>
-                </div>
-                
-                <p style="font-size:11.5px; color:var(--text-muted); margin:0;" data-i18n="lb_desc">قائمة أفضل 10 لاعبين متقدمين بالمراحل:</p>
-
-                <div style="display:flex; flex-direction:column; gap:6px;" id="shared-lb-content"></div>
-
-                <button type="button" class="cancel-btn" onclick="closeSharedLeaderboard()" style="height:36px; margin-top:5px;" data-i18n="lb_close">إغلاق</button>
-            </div>
-        </div>
 
         <div class="cyber-divider"><div class="center-node"></div></div>
 
@@ -1279,8 +1161,6 @@
         let currentLatestWeekly = null;
 
         const tourSheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/gviz/tq?tqx=out:csv"; 
-
-        const GAME_LEADERBOARD_SCRIPT_URL = "";
 
         function hashCode(str) {
             let hash = 0;
@@ -1413,7 +1293,7 @@
             }
 
             if (html === '') {
-                html = `<div style="text-align:center; padding:10px; color:var(--text-muted); font-size:12px; font-weight:bold;">${isAr ? 'لا يوجد تحديثات حاليًا' : 'No recent updates'}</div>`;
+                html = `<div style="text-align:center; padding:10px; color:var(--text-muted); font-size:12px; font-weight:bold;">${isAr ? 'لا يوجد تحديثات حالياً' : 'No recent updates'}</div>`;
             }
 
             notifContent.innerHTML = html;
@@ -1752,7 +1632,6 @@
                 link_monsterpedia_desc: "موسوعة متخصصة في لعبة الوحوش، تشرح محتوى اللعبة بالتفصيل.",
                 no_tournaments: "لا بطولات في الوقت الحالي.",
                 
-                // كلمات الحاسبة الذكية
                 calc_title: "الحاسبة الذكية",
                 tabCoins: "كوينز",
                 tabPips: "بيبس",
@@ -1762,7 +1641,6 @@
                 currCoins: "COINS", 
                 currPips: "PIPS",
 
-                // سكشن الألعاب
                 fun_title: "الألعاب",
                 game_xo: "تيك تاك تو",
                 game_snake: "الأفعى",
@@ -1776,15 +1654,7 @@
                 xo_tie: "تعادل!",
                 breaker_drag: "اسحب المضرب لصد الكرة",
                 wolf_tap_jump: "انقر على الشاشة أو زر المسافة (Space) للقفز",
-                btn_open_lb: "لوحة الصدارة (Top 10)",
-                lb_title: "لوحة شرف الألعاب",
-                lb_desc: "قائمة أفضل 10 لاعبين متقدمين بالمراحل:",
-                lb_close: "إغلاق",
-                snake_game_over: "انتهت اللعبة! انقر للبدء مجدداً",
-                modal_congrats: "إنجاز جديد! 🎉",
-                modal_desc: "سجّل يوزرك للمرة الأولى ليتم إضافتك للصدارة تلقائياً:",
-                modal_save: "حفظ",
-                modal_skip: "تخطي"
+                snake_game_over: "انتهت اللعبة! انقر للبدء مجدداً"
             },
             en: {
                 nav_home: "Home", nav_leaders: "About Leaders", nav_leaderboard: "Explore",
@@ -1838,7 +1708,6 @@
                 link_monsterpedia_desc: "A Monster guide covering the game's content in detail.",
                 no_tournaments: "No tournaments at the moment.",
 
-                // Calculator words
                 calc_title: "SMART CALCULATOR",
                 tabCoins: "Coins",
                 tabPips: "Pips",
@@ -1848,7 +1717,6 @@
                 currCoins: "COINS",
                 currPips: "PIPS",
 
-                // Games
                 fun_title: "FOR FUN",
                 game_xo: "Tic-Tac-Toe",
                 game_snake: "Snake",
@@ -1862,15 +1730,7 @@
                 xo_tie: "Draw!",
                 breaker_drag: "Drag paddle to bounce",
                 wolf_tap_jump: "Tap screen or Space to jump",
-                btn_open_lb: "Leaderboard (Top 10)",
-                lb_title: "Top 10 Advanced Players Leaderboard",
-                lb_desc: "Ranked automatically by level:",
-                lb_close: "Close",
-                snake_game_over: "Game Over! Try Again",
-                modal_congrats: "New Achievement! 🎉",
-                modal_desc: "Register your ID for the first time to appear on the leaderboard:",
-                modal_save: "Save",
-                modal_skip: "Skip"
+                snake_game_over: "Game Over! Try Again"
             }
         };
 
@@ -1953,7 +1813,6 @@
                 } else { throw new Error("بيانات غير مكتملة"); }
                 
             } catch (error) { 
-                console.log("استخدام البيانات المخزنة كبديل بسبب:", error);
                 const fallbackCache = safeGetStorage('plato_data_v3');
                 if(fallbackCache && !fallbackCache.includes('<!DOCTYPE html>')) {
                     cachedSheetRows = parseCSV(fallbackCache).slice(1);
@@ -2575,7 +2434,7 @@
         }
 
         /* =========================================================================
-           نظام ألعاب (الألعاب / FOR FUN) الهندسية والبرمجية المحسنة (Ultra Smooth & Optimized)
+           نظام الألعاب (بدون ليدر بورد مع الحفظ التلقائي للمرحلة عبر localStorage)
            ========================================================================= */
         function switchGame(gameId) {
             document.querySelectorAll('.game-tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -2592,125 +2451,7 @@
             if (gameId === 'wolf' && !wolfGameRunning) startWolfGame();
         }
 
-        let pendingProgression = null;
-
-        function recordGameProgression(gameName, lvl) {
-            let savedUserId = safeGetStorage('player_permanent_id');
-            if (!savedUserId) {
-                pendingProgression = { game: gameName, lvl: lvl };
-                document.getElementById('generic-user-modal').style.display = 'flex';
-                document.getElementById('global-input-user').value = '';
-                document.getElementById('global-user-err').style.display = 'none';
-            } else {
-                saveLocalRecord(savedUserId, gameName, lvl);
-            }
-        }
-
-        function confirmGlobalUser() {
-            const input = document.getElementById('global-input-user');
-            const err = document.getElementById('global-user-err');
-            const val = input.value.trim();
-            const isAr = document.documentElement.lang === 'ar';
-
-            if (val.length < 3 || val.length > 12) {
-                err.innerText = isAr ? "يجب أن يكون اليوزر بين 3 و 12 حرفاً" : "ID must be between 3 and 12 characters";
-                err.style.display = 'block';
-                return;
-            }
-            if (!/^[a-zA-Z0-9_]+$/.test(val)) {
-                err.innerText = isAr ? "يوزر غير صالح. استخدم A-Z و 0-9 و _ فقط" : "Invalid ID. Use A-Z, 0-9 and _ only";
-                err.style.display = 'block';
-                return;
-            }
-
-            safeSetStorage('player_permanent_id', val);
-            closeGlobalUserModal();
-
-            if (pendingProgression) {
-                saveLocalRecord(val, pendingProgression.game, pendingProgression.lvl);
-                pendingProgression = null;
-            }
-
-            const toast = document.getElementById("toast");
-            toast.innerHTML = isAr ? `<i class="fa-solid fa-check"></i> تم حفظ Your ID بنجاح!` : `<i class="fa-solid fa-check"></i> Your ID saved permanently!`;
-            toast.className = "show"; setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2500);
-        }
-
-        function closeGlobalUserModal() {
-            document.getElementById('generic-user-modal').style.display = 'none';
-        }
-
-        function saveLocalRecord(userId, game, lvl) {
-            let localRecords = JSON.parse(safeGetStorage('local_game_leaders') || '[]');
-            let existing = localRecords.find(item => item.user.toLowerCase() === userId.toLowerCase() && item.game === game);
-            if (existing) {
-                if (lvl > existing.lvl) existing.lvl = lvl;
-            } else {
-                localRecords.push({ user: userId, lvl: lvl, game: game });
-            }
-            safeSetStorage('local_game_leaders', JSON.stringify(localRecords));
-        }
-
-        async function fetchSheetLeaderboard() {
-            let localRecords = JSON.parse(safeGetStorage('local_game_leaders') || '[]');
-            
-            let defaultWolfEntry = { user: 'YYY', lvl: 50, game: 'Wolf' };
-            let foundYYY = localRecords.find(item => item.user.toUpperCase() === 'YYY' && item.game === 'Wolf');
-            if (!foundYYY) {
-                localRecords.push(defaultWolfEntry);
-            }
-
-            let uniqueMap = {};
-            localRecords.forEach(item => {
-                let key = item.user.toLowerCase() + '_' + item.game;
-                if (!uniqueMap[key] || item.lvl > uniqueMap[key].lvl) {
-                    uniqueMap[key] = item;
-                }
-            });
-
-            let finalSorted = Object.values(uniqueMap).sort((a, b) => b.lvl - a.lvl);
-            return finalSorted.slice(0, 10);
-        }
-
-        async function openSharedLeaderboard() {
-            let container = document.getElementById('shared-lb-content');
-            const isAr = document.documentElement.lang === 'ar';
-            container.innerHTML = `<div style="text-align:center; padding:15px; color:var(--text-muted); font-size:12px; font-weight:bold;">${isAr ? 'جاري جلب القائمة...' : 'Loading leaderboard...'}</div>`;
-            document.getElementById('shared-lb-popup').style.display = 'flex';
-
-            let list = await fetchSheetLeaderboard();
-
-            if (!list || list.length === 0) {
-                container.innerHTML = `<div style="text-align:center; padding:15px; color:var(--text-muted); font-size:12px; font-weight:bold;">${isAr ? 'لا توجد أسماء مسجلة حالياً.' : 'No registered names found.'}</div>`;
-                return;
-            }
-
-            let html = '';
-            list.forEach((item, idx) => {
-                let badge = (idx === 0) ? '🥇' : ((idx === 1) ? '🥈' : ((idx === 2) ? '🥉' : `#${idx+1}`));
-                let topClass = (idx === 0) ? 'top-1' : ((idx === 1) ? 'top-2' : ((idx === 2) ? 'top-3' : ''));
-                html += `
-                    <div class="lb-row ${topClass}">
-                        <div style="display:flex; align-items:center; gap:8px;">
-                            <span style="font-size:14px; font-weight:bold; min-width:24px;">${badge}</span>
-                            <span class="num-font" style="font-weight:900; font-size:13.5px;">${escapeHTML(item.user)}</span>
-                        </div>
-                        <div style="display:flex; align-items:center; gap:6px;">
-                            <span class="num-font" style="font-weight:900; color:#eab308; font-size:13px;">Lvl ${item.lvl}</span>
-                            <span style="font-size:11px; color:var(--text-muted); font-weight:700;">(${escapeHTML(item.game)})</span>
-                        </div>
-                    </div>
-                `;
-            });
-
-            container.innerHTML = html;
-        }
-
-        function closeSharedLeaderboard() {
-            document.getElementById('shared-lb-popup').style.display = 'none';
-        }
-
-        // --- 1. لعبة X-O الكلاسيكية (بينك وبين الـ AI بـ 1 لفل تنافسي بدون نظام 50 لفل) ---
+        // --- 1. لعبة X-O ---
         let xoBoardState = ["", "", "", "", "", "", "", "", ""];
         let xoPlayerTurn = "X";
         let xoGameActive = true;
@@ -2778,7 +2519,6 @@
             if (result === 'win') {
                 status.innerText = translations[lang].xo_win_x;
                 status.style.color = "#10b981";
-                recordGameProgression("XO", 1);
             } else if (result === 'lose') {
                 status.innerText = translations[lang].xo_win_o;
                 status.style.color = "#ef4444";
@@ -2827,7 +2567,7 @@
             status.style.color = "inherit";
         }
 
-        // --- 2. لعبة الأفعى Snake 2.0 (أداء هندسي عالي السرعة وسلاسة مطلقة) ---
+        // --- 2. لعبة الأفعى Snake (تحفظ المرحلة عبر localStorage) ---
         let snakeCanvas = document.getElementById('snakeCanvas');
         let snakeCtx = snakeCanvas ? snakeCanvas.getContext('2d') : null;
         let snakeGrid = 15;
@@ -2882,7 +2622,6 @@
                     snakeLevel++;
                     safeSetStorage('snake_lvl', snakeLevel.toString());
                     document.getElementById('snake-lvl').innerText = `Lvl ${snakeLevel}/50`;
-                    recordGameProgression("Snake", snakeLevel);
                 }
 
                 placeSnakeFood();
@@ -2973,7 +2712,7 @@
             }
         }
 
-        // --- 3. لعبة كاسر الطوب Breaker (تحسين هندسي بالكامل لتجنب التقطيع) ---
+        // --- 3. لعبة كاسر الطوب Breaker (تحفظ المرحلة عبر localStorage) ---
         let breakerCanvas = document.getElementById('breakerCanvas');
         let breakerCtx = breakerCanvas ? breakerCanvas.getContext('2d') : null;
         let breakerPaddle = { x: 120, width: 65, height: 8 };
@@ -3053,7 +2792,6 @@
                 if (breakerLevel < 50) breakerLevel++;
                 safeSetStorage('breaker_lvl', breakerLevel.toString());
                 document.getElementById('breaker-lvl').innerText = `Lvl ${breakerLevel}/50`;
-                recordGameProgression("Breaker", breakerLevel);
                 startBreakerGame(false);
                 return;
             }
@@ -3107,7 +2845,7 @@
             breakerCanvas.addEventListener('mousemove', e => movePaddle(e.clientX));
         }
 
-        // --- 4. لعبة مغامرة الذئب (تصاعد تدريجي سليم يبدأ من لفل 1 ويصعد تلقائياً مع التقدم) ---
+        // --- 4. لعبة مغامرة الذئب (تحفظ المرحلة الحالية عبر localStorage) ---
         let wolfCanvas = document.getElementById('wolfCanvas');
         let wolfCtx = wolfCanvas ? wolfCanvas.getContext('2d') : null;
         let wolfGameRunning = false;
@@ -3117,9 +2855,9 @@
         let wolfObstacles = [];
         let wolfCoins = [];
         let wolfLives = 3;
-        let wolfLevel = 1; // يبدأ من لفل 1 تصاعدياً
+        let wolfLevel = safeGetStorage('wolf_lvl') ? parseInt(safeGetStorage('wolf_lvl')) : 1;
         let wolfCoinsNeeded = 4;
-        let wolfSpeed = 2.4;
+        let wolfSpeed = 2.4 + (wolfLevel * 0.05);
 
         function startWolfGame() {
             if (wolfAnimId) cancelAnimationFrame(wolfAnimId);
@@ -3128,13 +2866,12 @@
             wolf.grounded = true;
             wolfLives = 3;
             wolfCoinsNeeded = 4;
-            wolfLevel = 1; // يبدأ تدريجياً من لفل 1
-            wolfSpeed = 2.4;
+            wolfSpeed = Math.min(5.2, 2.4 + (wolfLevel * 0.05));
             wolfObstacles = [{ x: 380, w: 18, h: 22, type: 0 }];
             wolfCoins = [{ x: 220, y: 175, collected: false }];
             
             document.getElementById('wolf-lives').innerText = '3';
-            document.getElementById('wolf-lvl').innerText = `Lvl 1/50`;
+            document.getElementById('wolf-lvl').innerText = `Lvl ${wolfLevel}/50`;
             updateWolfCoinsNeededUI();
 
             wolfGameRunning = true;
@@ -3171,6 +2908,7 @@
 
         function completeWolfLevel() {
             if (wolfLevel < 50) wolfLevel++;
+            safeSetStorage('wolf_lvl', wolfLevel.toString());
             wolfCoinsNeeded = 4 + Math.min(8, Math.floor(wolfLevel / 6));
             wolfSpeed = Math.min(5.2, 2.4 + (wolfLevel * 0.05));
             document.getElementById('wolf-lvl').innerText = `Lvl ${wolfLevel}/50`;
@@ -3180,8 +2918,6 @@
             const toast = document.getElementById("toast");
             toast.innerHTML = isAr ? `<i class="fa-solid fa-flag-checkered"></i> عبرت للمرحلة ${wolfLevel}!` : `<i class="fa-solid fa-flag-checkered"></i> Advanced to Level ${wolfLevel}!`;
             toast.className = "show"; setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2000);
-
-            recordGameProgression("Wolf", wolfLevel);
         }
 
         function updateWolfGame() {
@@ -3296,7 +3032,7 @@
             }
             wolfObstacles = wolfObstacles.filter(ob => ob.x > -40);
 
-            // كوينز ذكية
+            // كوينز
             for (let coin of wolfCoins) {
                 coin.x -= wolfSpeed;
                 if (!coin.collected) {
@@ -3340,9 +3076,6 @@
             document.documentElement.setAttribute('dir', savedLang === 'ar' ? 'rtl' : 'ltr');
             document.getElementById('theme-icon').className = savedTheme === 'light' ? 'fa-solid fa-sun theme-toggle' : 'fa-solid fa-moon theme-toggle';
             
-            // حقن يوزر YYY الافتراضي بالمرحلة 50 للعبة الذئب لضمان ظهوره دائماً في الليدر بورد
-            saveLocalRecord("YYY", "Wolf", 50);
-
             const nSlider = document.getElementById('newsSlider');
             let isDown = false, startX, sLeft;
             if(nSlider) {
@@ -3353,9 +3086,6 @@
 
             loadDynamicData();
 
-            // =========================================================
-            // نظام قراءة وتوجيه الروابط (Smart Routing)
-            // =========================================================
             const pathSegments = window.location.pathname.split('/').filter(Boolean);
             
             let initLang, initView;
@@ -3386,14 +3116,12 @@
                     switchView(e.state.view, null, false);
                 }
             });
-            // =========================================================
 
             if (typeof syncRealTime === "function") {
                 syncRealTime().then(() => { if (typeof updateSheetTimers === "function") updateSheetTimers(); });
                 setInterval(updateSheetTimers, 1000);
             }
 
-            // إظهار الصفحة بشكل مرتب فور اكتمال التحميل لمنع أي وميض للغة
             document.documentElement.classList.add('loaded');
         });
 
