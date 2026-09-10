@@ -116,13 +116,12 @@
         .navbar { position: fixed; top: 0; left: 0; width: 100%; padding: calc(12px + env(safe-area-inset-top)) 25px 12px; display: flex; justify-content: space-between; align-items: center; background: rgba(5, 5, 8, 0.65); backdrop-filter: blur(25px); border-bottom: 1px solid var(--glass-border); z-index: 1000; direction: ltr; }
         [data-theme="light"] .navbar { background: rgba(255, 255, 255, 0.8); }
         
-        .navbar h1 { font-size: 24px; font-weight: 900; letter-spacing: 1px; display: flex; align-items: baseline; margin: 0; cursor: pointer; }
-        .navbar h1 span { color: var(--primary); font-size: 1.6em; transform: translateY(2px); margin-left: 3px; text-shadow: 0 0 25px var(--text-glow-x), 0 0 10px var(--text-glow-x); }
-        
-        /* تنسيق اللوجو الجديد في الهيدر */
-        .nav-main-logo { width: 30px; height: 30px; margin-left: 8px; object-fit: contain; border-radius: 8px; filter: drop-shadow(0 0 12px var(--btn-active-glow)); transform: translateY(5px); transition: transform 0.3s ease; }
-        [data-theme="light"] .nav-main-logo { filter: drop-shadow(0 0 10px rgba(0,0,0,0.25)); }
-        .navbar h1:active .nav-main-logo { transform: translateY(5px) scale(0.9); }
+        /* تنسيق قسم اللوجو والاسم في الهيدر */
+        .brand-header { display: flex; align-items: center; gap: 12px; cursor: pointer; transition: transform 0.2s ease; }
+        .brand-header:active { transform: scale(0.95); }
+        .nav-main-logo { width: 44px; height: 44px; object-fit: contain; border-radius: 10px; }
+        .navbar h1 { font-size: 26px; font-weight: 900; letter-spacing: 1px; display: flex; align-items: baseline; margin: 0; }
+        .navbar h1 span { color: var(--primary); font-size: 1.5em; transform: translateY(2px); margin-left: 2px; text-shadow: 0 0 25px var(--text-glow-x), 0 0 10px var(--text-glow-x); }
 
         .nav-actions { display: flex; align-items: center; gap: 18px; position: relative; }
         .nav-actions i { font-size: 22px; cursor: pointer; color: var(--text-main); transition: 0.2s; }
@@ -399,10 +398,12 @@
     <div class="static-gaming-bg"></div>
 
     <nav class="navbar" dir="ltr">
-        <h1 class="num-font" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-            Plato<span>X</span>
+        
+        <!-- اللوجو واسم الموقع -->
+        <div class="brand-header" onclick="window.scrollTo({top:0, behavior:'smooth'})">
             <img src="IMG_0586.png" alt="PlatoX Logo" class="nav-main-logo">
-        </h1>
+            <h1 class="num-font">Plato<span>X</span></h1>
+        </div>
         
         <div class="nav-actions">
             <div class="notif-wrapper">
