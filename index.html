@@ -9,14 +9,17 @@
     <title>PlatoX | مجتمع اللاعبين العرب</title>
     
     <!-- ======== إعدادات أيقونة الموقع عند الحفظ كـ تطبيق ======== -->
-    <link rel="icon" type="image/png" href="IMG_0586.png">
-    <link rel="apple-touch-icon" href="IMG_0586.png">
-    <link rel="icon" sizes="192x192" href="IMG_0586.png">
-    <link rel="icon" sizes="512x512" href="IMG_0586.png">
+    <link rel="icon" type="image/png" href="IMG_0586.png?v=3">
+    <link rel="apple-touch-icon" href="IMG_0586.png?v=3">
+    <link rel="icon" sizes="192x192" href="IMG_0586.png?v=3">
+    <link rel="icon" sizes="512x512" href="IMG_0586.png?v=3">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="PlatoX">
     <meta name="application-name" content="PlatoX">
+    <meta name="theme-color" content="#0a0a0f">
+    <meta name="msapplication-navbutton-color" content="#0a0a0f">
+    <meta name="msapplication-starturl" content="/">
     <!-- ========================================================== -->
 
     <script>
@@ -406,7 +409,7 @@
         
         <!-- اللوجو واسم الموقع -->
         <div class="brand-header" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-            <img src="IMG_0586.png" alt="PlatoX Logo" class="nav-main-logo">
+            <img src="IMG_0586.png?v=3" alt="PlatoX Logo" class="nav-main-logo">
             <h1 class="num-font">Plato<span>X</span></h1>
         </div>
         
@@ -887,7 +890,7 @@
             return arr;
         }
 
-        function switchView(viewName, itemEl) {
+        function switchView(viewName, itemEl, updateUrl = true) {
             document.querySelectorAll('.tab-view').forEach(view => view.classList.remove('active-view'));
             document.querySelectorAll('.bottom-nav-item').forEach(item => item.classList.remove('active'));
 
@@ -901,6 +904,11 @@
             
             safeSetSession('currentView', viewName);
 
+            if (updateUrl) {
+                const currentLang = document.documentElement.getAttribute('lang') || 'en';
+                window.history.pushState({ view: viewName, lang: currentLang }, '', `/${currentLang}/${viewName}`);
+            }
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
             if (viewName === 'home') setTimeout(updateCarouselButtons, 80);
         }
@@ -911,7 +919,7 @@
         }
 
         function goToSection(view, sectionId) {
-            switchView(view);
+            switchView(view, null, true);
             document.getElementById('notif-dropdown').classList.remove('show');
             
             setTimeout(() => {
@@ -1400,7 +1408,7 @@
             }
         };
 
-        function changeLang(lang) {
+        function changeLang(lang, updateUrl = true) {
             document.documentElement.setAttribute('lang', lang); 
             document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
             
@@ -1416,7 +1424,6 @@
             document.getElementById('plato-id').placeholder = lang === 'ar' ? 'يوزرك في اللعبة' : 'Your Plato ID';
             document.getElementById('bug-desc').placeholder = lang === 'ar' ? 'وصف المشكلة...' : 'Issue description...';
             
-            // تحديث نصوص الحاسبة المتبقية
             const calcInput = document.getElementById('calcInput');
             if (calcInput) {
                 calcInput.placeholder = calcMode === 'coins' ? translations[lang].placeholderCoins : translations[lang].placeholderPips;
@@ -1441,6 +1448,11 @@
                 updateNotificationsDropdown();
             }
             safeSetStorage('lang', lang);
+
+            if (updateUrl) {
+                const currentView = safeGetSession('currentView') || 'home';
+                window.history.pushState({ view: currentView, lang: lang }, '', `/${lang}/${currentView}`);
+            }
         }
 
         async function loadDynamicData(force = false) {
@@ -2099,10 +2111,9 @@
             animateCalcValue(outVal, currentDisplay, targetValue, 400, isResultFloat, targetColor, targetShadow);
         }
 
-        // التهيئة المبدئية
+        // التهيئة المبدئية والراوتينج
         document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('theme-icon').className = savedTheme === 'light' ? 'fa-solid fa-sun theme-toggle' : 'fa-solid fa-moon theme-toggle';
-            changeLang(savedLang);
             
             const nSlider = document.getElementById('newsSlider');
             let isDown = false, startX, sLeft;
@@ -2114,9 +2125,41 @@
 
             loadDynamicData();
 
-            let savedView = safeGetSession('currentView') || 'home';
-            switchView(savedView);
+            // =========================================================
+            // نظام قراءة وتوجيه الروابط (Smart Routing)
+            // =========================================================
+            const pathSegments = window.location.pathname.split('/').filter(Boolean);
             
+            let initLang, initView;
+
+            if (pathSegments.length === 0) {
+                initLang = 'en';
+                initView = 'home';
+            } else {
+                initLang = pathSegments[0];
+                initView = pathSegments[1];
+
+                if (initLang !== 'en' && initLang !== 'ar') {
+                    initLang = 'en';
+                }
+
+                if (initView !== 'home' && initView !== 'leaders' && initView !== 'leaderboard') {
+                    initView = 'home';
+                }
+            }
+
+            changeLang(initLang, false);
+            switchView(initView, null, false);
+            window.history.replaceState({ view: initView, lang: initLang }, '', `/${initLang}/${initView}`);
+
+            window.addEventListener('popstate', (e) => {
+                if (e.state) {
+                    changeLang(e.state.lang, false);
+                    switchView(e.state.view, null, false);
+                }
+            });
+            // =========================================================
+
             if (typeof syncRealTime === "function") {
                 syncRealTime().then(() => { if (typeof updateSheetTimers === "function") updateSheetTimers(); });
                 setInterval(updateSheetTimers, 1000);
