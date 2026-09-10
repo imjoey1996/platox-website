@@ -899,7 +899,7 @@
                 activeNav.classList.add('active');
             }
             
-            safeSetStorage('currentView', viewName);
+            safeSetSession('currentView', viewName);
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
             if (viewName === 'home') setTimeout(updateCarouselButtons, 80);
@@ -2114,7 +2114,7 @@
 
             loadDynamicData();
 
-            let savedView = safeGetStorage('currentView') || 'home';
+            let savedView = safeGetSession('currentView') || 'home';
             switchView(savedView);
             
             if (typeof syncRealTime === "function") {
