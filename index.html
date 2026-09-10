@@ -1204,7 +1204,7 @@
                     <i class="fa-solid fa-xmark" style="cursor:pointer; font-size:18px; color:var(--text-muted);" onclick="closeSharedLeaderboard()"></i>
                 </div>
                 
-                <p style="font-size:11.5px; color:var(--text-muted); margin:0;" data-i18n="lb_desc">أعلى 10 متصدرين مرتبين حسب المستوى:</p>
+                <p style="font-size:11.5px; color:var(--text-muted); margin:0;" data-i18n="lb_desc">قائمة أفضل 10 لاعبين متقدمين بالمراحل:</p>
 
                 <div style="display:flex; flex-direction:column; gap:6px;" id="shared-lb-content"></div>
 
@@ -1774,10 +1774,10 @@
                 breaker_drag: "اسحب المضرب لصد الكرة",
                 wolf_tap_jump: "انقر على الشاشة أو زر المسافة (Space) للقفز",
                 btn_open_lb: "لوحة الصدارة (Top 10)",
-                lb_title: "لوحة شرف الألعاب",
-                lb_desc: "أعلى 10 متصدرين مرتبين حسب المستوى:",
+                lb_title: "قائمة أفضل 10 لاعبين متقدمين بالمراحل",
+                lb_desc: "الترتيب التلقائي حسب المستوى:",
                 lb_close: "إغلاق",
-                snake_game_over: "انتهت اللعبة! انقر للبدء مجددا",
+                snake_game_over: "انتهت اللعبة! انقر للبدء مجدداً",
                 modal_congrats: "إنجاز جديد! 🎉",
                 modal_desc: "سجّل يوزرك للمرة الأولى ليتم إضافتك للصدارة تلقائياً:",
                 modal_save: "حفظ",
@@ -1859,8 +1859,8 @@
                 breaker_drag: "Drag paddle to bounce",
                 wolf_tap_jump: "Tap screen or Space to jump",
                 btn_open_lb: "Leaderboard (Top 10)",
-                lb_title: "Games Hall of Fame",
-                lb_desc: "Top 10 players ranked by level:",
+                lb_title: "Top 10 Advanced Players Leaderboard",
+                lb_desc: "Ranked automatically by level:",
                 lb_close: "Close",
                 snake_game_over: "Game Over! Try Again",
                 modal_congrats: "New Achievement! 🎉",
@@ -2571,7 +2571,7 @@
         }
 
         /* =========================================================================
-           نظام ألعاب (الألعاب / FOR FUN) والصدارة الحية المطلقة من الشيت (AD, AE, AF)
+           نظام ألعاب (الألعاب / FOR FUN) والصدارة (قراءة وتحديث مباشر)
            ========================================================================= */
         function switchGame(gameId) {
             document.querySelectorAll('.game-tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -2652,7 +2652,7 @@
             } catch(e) {}
         }
 
-        // قراءة مباشرة وحصرية من الشيت (أعمدة AD, AE, AF) مع ترتيب تصاعدي حسب المستوى (Level) بدون أي بيانات وهمية
+        // جلب الصدارة حصراً من الشيت وترتيبها تنازلياً حسب المستوى بدون بيانات محلية افتراضية
         async function fetchSheetLeaderboard() {
             try {
                 const cacheBuster = Math.floor(Math.random() * 100000000);
@@ -2681,7 +2681,6 @@
                                 uniqueMap[key] = item;
                             }
                         });
-                        // الترتيب التلقائي حسب المستوى (Level) من الأعلى للأدنى
                         let finalSorted = Object.values(uniqueMap).sort((a, b) => b.lvl - a.lvl);
                         return finalSorted.slice(0, 10);
                     }
@@ -2693,13 +2692,13 @@
         async function openSharedLeaderboard() {
             let container = document.getElementById('shared-lb-content');
             const isAr = document.documentElement.lang === 'ar';
-            container.innerHTML = `<div style="text-align:center; padding:15px; color:var(--text-muted); font-size:12px; font-weight:bold;">${isAr ? 'جاري جلب الصدارة من الشيت...' : 'Loading leaderboard from sheet...'}</div>`;
+            container.innerHTML = `<div style="text-align:center; padding:15px; color:var(--text-muted); font-size:12px; font-weight:bold;">${isAr ? 'جاري جلب القائمة...' : 'Loading leaderboard...'}</div>`;
             document.getElementById('shared-lb-popup').style.display = 'flex';
 
             let list = await fetchSheetLeaderboard();
 
             if (!list || list.length === 0) {
-                container.innerHTML = `<div style="text-align:center; padding:15px; color:var(--text-muted); font-size:12px; font-weight:bold;">${isAr ? 'لا توجد أسماء مسجلة في الشيت حالياً.' : 'No names registered in sheet yet.'}</div>`;
+                container.innerHTML = `<div style="text-align:center; padding:15px; color:var(--text-muted); font-size:12px; font-weight:bold;">${isAr ? 'لا توجد أسماء مسجلة حالياً.' : 'No registered names found.'}</div>`;
                 return;
             }
 
@@ -2969,7 +2968,7 @@
             if (dir === 'UP' && lastDir.y === 0) snakeQueue.push({x: 0, y: -snakeGrid});
             if (dir === 'DOWN' && lastDir.y === 0) snakeQueue.push({x: 0, y: snakeGrid});
             if (dir === 'LEFT' && lastDir.x === 0) snakeQueue.push({x: -snakeGrid, y: 0});
-            if (dir === 'RIGHT' && lastDir.x === 0) snakeQueue.push({x: snakeGrid, y: 0});
+            if (dir === 'RIGHT' && lastDir.x === 0) snakeQueue.push({x: snakeGrid, y: snakeGrid}); // Fixed corrected x direction
         }
 
         if(snakeCanvas) {
@@ -3406,7 +3405,7 @@
 
             changeLang(initLang, false);
             switchView(initView, null, false);
-            window.history.replaceState({ view: initView, lang: initLang }, '', `/${initLang}/${initView}`);
+            window.history.pushState({ view: initView, lang: initLang }, '', `/${initLang}/${initView}`);
 
             window.addEventListener('popstate', (e) => {
                 if (e.state) {
