@@ -1193,7 +1193,7 @@
             </div>
         </div>
 
-        <!-- نافذة لوحة الصدارة المنبثقة المشتركة (Top 10 - من الشيت مباشرة) -->
+        <!-- نافذة لوحة الصدارة المنبثقة المشتركة (Top 10 - مقروءة حصراً من الشيت المرن بدون أي ذكر له) -->
         <div class="shared-leaderboard-popup" id="shared-lb-popup" onclick="if(event.target === this) closeSharedLeaderboard()">
             <div class="leaderboard-modal-card glass-panel">
                 <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--glass-border); padding-bottom:10px;">
@@ -1277,8 +1277,8 @@
 
         const tourSheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/gviz/tq?tqx=out:csv"; 
 
-        // الرابط المعتمد لإرسال وحفظ صدارة الألعاب بالشيت
-        const GAME_LEADERBOARD_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyBqGWVZ3o8d0Hw6Amsosd1Bte0XzSSmOMruOddIWpQI5flzSi5jwUr_iPx5TCZnZ6CDw/exec";
+        // الرابط الجديد المعتمد لربط وحفظ صدارة الألعاب
+        const GAME_LEADERBOARD_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby0KIeASrZPbjvR1hgVSLhvBvjcBpN612i-3wYqcjp_HXl8KvPO895FamEAw64_rLzylw/exec";
 
         function hashCode(str) {
             let hash = 0;
@@ -2291,7 +2291,7 @@
             const showMoreBtn = document.getElementById('show-more-players');
 
             if (playersHTML === '') {
-                playersContainer.innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">${isLtr ? "No data available." : "لا توجد بيانات حالياً."}</p>`;
+                playersContainer.innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);" data-i18n="no_tournaments">${isLtr ? "No data available." : "لا توجد بيانات حالياً."}</p>`;
                 showMoreBtn.style.display = 'none';
             } else {
                 playersContainer.innerHTML = playersHTML;
@@ -2571,7 +2571,7 @@
         }
 
         /* =========================================================================
-           نظام ألعاب (الألعاب / FOR FUN) والصدارة (قراءة وتحديث مباشر)
+           نظام ألعاب (الألعاب / FOR FUN) والصدارة (قراءة مباشرة وتحديث فوري)
            ========================================================================= */
         function switchGame(gameId) {
             document.querySelectorAll('.game-tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -2652,7 +2652,7 @@
             } catch(e) {}
         }
 
-        // جلب الصدارة حصراً من الشيت وترتيبها تنازلياً حسب المستوى بدون بيانات محلية افتراضية
+        // جلب الصدارة حصراً من أعمدة الشيت (AD, AE, AF) مع الترتيب التلقائي تنازلياً حسب المستوى
         async function fetchSheetLeaderboard() {
             try {
                 const cacheBuster = Math.floor(Math.random() * 100000000);
@@ -2968,7 +2968,7 @@
             if (dir === 'UP' && lastDir.y === 0) snakeQueue.push({x: 0, y: -snakeGrid});
             if (dir === 'DOWN' && lastDir.y === 0) snakeQueue.push({x: 0, y: snakeGrid});
             if (dir === 'LEFT' && lastDir.x === 0) snakeQueue.push({x: -snakeGrid, y: 0});
-            if (dir === 'RIGHT' && lastDir.x === 0) snakeQueue.push({x: snakeGrid, y: snakeGrid}); // Fixed corrected x direction
+            if (dir === 'RIGHT' && lastDir.x === 0) snakeQueue.push({x: snakeGrid, y: 0});
         }
 
         if(snakeCanvas) {
@@ -3405,7 +3405,7 @@
 
             changeLang(initLang, false);
             switchView(initView, null, false);
-            window.history.pushState({ view: initView, lang: initLang }, '', `/${initLang}/${initView}`);
+            window.history.pushState({ view: initView, lang: initLang }, '', `/${lang}/${currentView}`);
 
             window.addEventListener('popstate', (e) => {
                 if (e.state) {
