@@ -32,6 +32,7 @@
         let savedLang = safeGetStorage('lang') || 'en';
         let savedTheme = safeGetStorage('theme') || 'dark';
         
+        // تطبيق اتجاه ولغة الصفحة الفوري لمنع وميض اللغة عند التحديث
         document.documentElement.setAttribute('lang', savedLang);
         document.documentElement.setAttribute('dir', savedLang === 'ar' ? 'rtl' : 'ltr');
         document.documentElement.setAttribute('data-theme', savedTheme);
@@ -1127,7 +1128,7 @@
                     </div>
                 </div>
 
-                <!-- 2. لعبة الأفعى Snake 2.0 (استجابة فائقة وطابور حركة) -->
+                <!-- 2. لعبة الأفعى Snake 2.0 (استجابة فائقة فورية) -->
                 <div id="game-card-snake" class="game-display-card glass-panel">
                     <div class="game-header-bar">
                         <span class="game-stats-pill num-font" id="snake-lvl">Lvl 1/50</span>
@@ -1159,7 +1160,7 @@
                     </div>
                 </div>
 
-                <!-- 4. لعبة مغامرة الذئب (كوينز بمكان آمن ومسافات متوازنة) -->
+                <!-- 4. لعبة مغامرة الذئب (YyY لفل 50 كافتراضى والوصول المباشر للصدارة عند الفوز) -->
                 <div id="game-card-wolf" class="game-display-card glass-panel">
                     <div class="game-header-bar">
                         <span class="game-stats-pill num-font"><i class="fa-solid fa-flag-checkered" style="color:#38bdf8;"></i> <span id="wolf-lvl">Lvl 1/50</span></span>
@@ -1177,11 +1178,11 @@
             </div>
         </section>
 
-        <!-- نافذة تسجيل اليوزر لمرة واحدة فقط لأي لعبة تعبر مرحلة -->
+        <!-- نافذة تسجيل اليوزر لمرة واحدة فور الفوز -->
         <div class="wolf-modal-backdrop" id="generic-user-modal" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh; z-index: 3000;">
             <div class="glass-panel" style="padding: 25px 20px; width: 90%; max-width: 320px; text-align: center;">
                 <h3 style="font-size:1.15rem; font-weight:900; color:var(--primary); margin-bottom:4px;" data-i18n="modal_congrats">إنجاز جديد! 🎉</h3>
-                <p style="font-size:12px; color:var(--text-muted); margin-bottom:14px;" data-i18n="modal_desc">سجّل يوزرك للمرة الأولى ليتم إضافتك للصدارة تلقائياً:</p>
+                <p style="font-size:12px; color:var(--text-muted); margin-bottom:14px;" data-i18n="modal_desc">اكتب يوزرك لتنتقل فوراً إلى لوحة الصدارة:</p>
                 
                 <input type="text" id="global-input-user" class="bug-input num-font" placeholder="Your ID" maxlength="12" dir="ltr" style="padding:8px 12px; font-size:14px; text-align:center; margin-bottom:4px;">
                 <div id="global-user-err" class="input-error-msg" style="margin-bottom:10px; font-size:11px;"></div>
@@ -1193,7 +1194,7 @@
             </div>
         </div>
 
-        <!-- نافذة لوحة الصدارة المنبثقة المشتركة (Top 10 - مقروءة حصراً من الشيت المرن بدون أي ذكر له) -->
+        <!-- نافذة لوحة الصدارة المشتركة (Top 10) -->
         <div class="shared-leaderboard-popup" id="shared-lb-popup" onclick="if(event.target === this) closeSharedLeaderboard()">
             <div class="leaderboard-modal-card glass-panel">
                 <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--glass-border); padding-bottom:10px;">
@@ -1277,8 +1278,8 @@
 
         const tourSheetURL = "https://docs.google.com/spreadsheets/d/10Iuz3frTKBQaR2SZ2_GzSe7Sn5GzaefJ6szTebK91vE/gviz/tq?tqx=out:csv"; 
 
-        // الرابط الجديد المعتمد لربط وحفظ صدارة الألعاب
-        const GAME_LEADERBOARD_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby0KIeASrZPbjvR1hgVSLhvBvjcBpN612i-3wYqcjp_HXl8KvPO895FamEAw64_rLzylw/exec";
+        // الرابط الجديد العام المعتمد لربط الحفظ والإرسال
+        const GAME_LEADERBOARD_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz1SdKrhy8PdY0vLMgnmooeQYyFnyQKj5s-SbtEWzGrrGllB7J04fpxdJP-5BfTGjFDnw/exec";
 
         function hashCode(str) {
             let hash = 0;
@@ -1774,8 +1775,8 @@
                 breaker_drag: "اسحب المضرب لصد الكرة",
                 wolf_tap_jump: "انقر على الشاشة أو زر المسافة (Space) للقفز",
                 btn_open_lb: "لوحة الصدارة (Top 10)",
-                lb_title: "قائمة أفضل 10 لاعبين متقدمين بالمراحل",
-                lb_desc: "الترتيب التلقائي حسب المستوى:",
+                lb_title: "لوحة شرف الألعاب",
+                lb_desc: "قائمة أفضل 10 لاعبين متقدمين بالمراحل:",
                 lb_close: "إغلاق",
                 snake_game_over: "انتهت اللعبة! انقر للبدء مجدداً",
                 modal_congrats: "إنجاز جديد! 🎉",
@@ -2571,7 +2572,7 @@
         }
 
         /* =========================================================================
-           نظام ألعاب (الألعاب / FOR FUN) والصدارة (قراءة مباشرة وتحديث فوري)
+           نظام ألعاب (الألعاب / FOR FUN) والصدارة التلقائية المباشرة
            ========================================================================= */
         function switchGame(gameId) {
             document.querySelectorAll('.game-tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -2856,13 +2857,13 @@
             status.style.color = "inherit";
         }
 
-        // --- 2. لعبة الأفعى Snake 2.0 (استجابة فائقة وطابور حركة) ---
+        // --- 2. لعبة الأفعى Snake 2.0 (استجابة فورية وحاسمة بدون أي تأخير) ---
         let snakeCanvas = document.getElementById('snakeCanvas');
         let snakeCtx = snakeCanvas ? snakeCanvas.getContext('2d') : null;
         let snakeGrid = 15;
         let snake = [{x: 150, y: 150}];
         let snakeDir = {x: 15, y: 0};
-        let snakeQueue = [];
+        let snakeNextDir = {x: 15, y: 0};
         let snakeFood = {x: 60, y: 60};
         let snakeScore = 0;
         let snakeLevel = safeGetStorage('snake_lvl') ? parseInt(safeGetStorage('snake_lvl')) : 1;
@@ -2875,12 +2876,12 @@
             if (snakeInterval) clearInterval(snakeInterval);
             snake = [{x: 150, y: 150}, {x: 135, y: 150}, {x: 120, y: 150}];
             snakeDir = {x: snakeGrid, y: 0};
-            snakeQueue = [];
+            snakeNextDir = {x: snakeGrid, y: 0};
             snakeScore = 0;
             document.getElementById('snake-score').innerText = '0';
             placeSnakeFood();
             snakeGameRunning = true;
-            let speed = Math.max(90, 140 - (snakeLevel * 1.0));
+            let speed = Math.max(85, 130 - (snakeLevel * 1.0));
             snakeInterval = setInterval(updateSnakeGame, speed);
         }
 
@@ -2892,10 +2893,7 @@
         function updateSnakeGame() {
             if (!snakeCtx) return;
 
-            if (snakeQueue.length > 0) {
-                snakeDir = snakeQueue.shift();
-            }
-
+            snakeDir = snakeNextDir;
             let head = {x: snake[0].x + snakeDir.x, y: snake[0].y + snakeDir.y};
 
             if (head.x < 0 || head.x >= 300 || head.y < 0 || head.y >= 300) {
@@ -2963,12 +2961,12 @@
             snakeCtx.shadowBlur = 0;
         }
 
+        // استجابة فورية وحاسمة لاتجاهات الثعبان (منع الانعكاس المعاكس المباشر)
         function handleSnakeDpad(dir) {
-            let lastDir = snakeQueue.length > 0 ? snakeQueue[snakeQueue.length - 1] : snakeDir;
-            if (dir === 'UP' && lastDir.y === 0) snakeQueue.push({x: 0, y: -snakeGrid});
-            if (dir === 'DOWN' && lastDir.y === 0) snakeQueue.push({x: 0, y: snakeGrid});
-            if (dir === 'LEFT' && lastDir.x === 0) snakeQueue.push({x: -snakeGrid, y: 0});
-            if (dir === 'RIGHT' && lastDir.x === 0) snakeQueue.push({x: snakeGrid, y: 0});
+            if (dir === 'UP' && snakeDir.y === 0) snakeNextDir = {x: 0, y: -snakeGrid};
+            if (dir === 'DOWN' && snakeDir.y === 0) snakeNextDir = {x: 0, y: snakeGrid};
+            if (dir === 'LEFT' && snakeDir.x === 0) snakeNextDir = {x: -snakeGrid, y: 0};
+            if (dir === 'RIGHT' && snakeDir.x === 0) snakeNextDir = {x: snakeGrid, y: 0};
         }
 
         if(snakeCanvas) {
@@ -2983,11 +2981,11 @@
                 let diffX = e.changedTouches[0].clientX - sTouchX;
                 let diffY = e.changedTouches[0].clientY - sTouchY;
                 if (Math.abs(diffX) > Math.abs(diffY)) {
-                    if (diffX > 20) handleSnakeDpad('RIGHT');
-                    else if (diffX < -20) handleSnakeDpad('LEFT');
+                    if (diffX > 15) handleSnakeDpad('RIGHT');
+                    else if (diffX < -15) handleSnakeDpad('LEFT');
                 } else {
-                    if (diffY > 20) handleSnakeDpad('DOWN');
-                    else if (diffY < -20) handleSnakeDpad('UP');
+                    if (diffY > 15) handleSnakeDpad('DOWN');
+                    else if (diffY < -15) handleSnakeDpad('UP');
                 }
             }, {passive: false});
         }
@@ -3140,7 +3138,7 @@
             breakerCanvas.addEventListener('mousemove', e => movePaddle(e.clientX));
         }
 
-        // --- 4. لعبة مغامرة الذئب (كوينز بمكان آمن ومسافات متوازنة) ---
+        // --- 4. لعبة مغامرة الذئب (YyY لفل 50 افتراضياً ومسافات متوازنة) ---
         let wolfCanvas = document.getElementById('wolfCanvas');
         let wolfCtx = wolfCanvas ? wolfCanvas.getContext('2d') : null;
         let wolfGameRunning = false;
@@ -3368,6 +3366,8 @@
 
         // التهيئة المبدئية والراوتينج
         document.addEventListener("DOMContentLoaded", () => {
+            document.documentElement.setAttribute('lang', savedLang);
+            document.documentElement.setAttribute('dir', savedLang === 'ar' ? 'rtl' : 'ltr');
             document.getElementById('theme-icon').className = savedTheme === 'light' ? 'fa-solid fa-sun theme-toggle' : 'fa-solid fa-moon theme-toggle';
             
             const nSlider = document.getElementById('newsSlider');
@@ -3405,7 +3405,7 @@
 
             changeLang(initLang, false);
             switchView(initView, null, false);
-            window.history.pushState({ view: initView, lang: initLang }, '', `/${lang}/${currentView}`);
+            window.history.pushState({ view: initView, lang: initLang }, '', `/${initLang}/${initView}`);
 
             window.addEventListener('popstate', (e) => {
                 if (e.state) {
