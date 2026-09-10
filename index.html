@@ -4,11 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
-    <!-- تم تقييد الأمان هنا لمنع الثغرات وتحميل البيانات من الروابط المشفرة فقط -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://worldtimeapi.org https://timeapi.io https://docs.google.com https://script.google.com https://script.googleusercontent.com https://api.ipify.org; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline'; img-src 'self' data: https:; media-src https: 'self';">
     
     <title>PlatoX | مجتمع اللاعبين العرب</title>
     
+    <!-- ======== إعدادات أيقونة الموقع عند الحفظ كـ تطبيق ======== -->
+    <link rel="icon" type="image/png" href="IMG_0586.png">
+    <link rel="apple-touch-icon" href="IMG_0586.png">
+    <link rel="icon" sizes="192x192" href="IMG_0586.png">
+    <link rel="icon" sizes="512x512" href="IMG_0586.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="PlatoX">
+    <meta name="application-name" content="PlatoX">
+    <!-- ========================================================== -->
+
     <script>
         function safeSetStorage(key, value) { try { localStorage.setItem(key, value); } catch(e) {} }
         function safeGetStorage(key) { try { return localStorage.getItem(key); } catch(e) { return null; } }
@@ -106,8 +116,13 @@
         .navbar { position: fixed; top: 0; left: 0; width: 100%; padding: calc(12px + env(safe-area-inset-top)) 25px 12px; display: flex; justify-content: space-between; align-items: center; background: rgba(5, 5, 8, 0.65); backdrop-filter: blur(25px); border-bottom: 1px solid var(--glass-border); z-index: 1000; direction: ltr; }
         [data-theme="light"] .navbar { background: rgba(255, 255, 255, 0.8); }
         
-        .navbar h1 { font-size: 24px; font-weight: 900; letter-spacing: 1px; display: flex; align-items: baseline; margin: 0; }
+        .navbar h1 { font-size: 24px; font-weight: 900; letter-spacing: 1px; display: flex; align-items: baseline; margin: 0; cursor: pointer; }
         .navbar h1 span { color: var(--primary); font-size: 1.6em; transform: translateY(2px); margin-left: 3px; text-shadow: 0 0 25px var(--text-glow-x), 0 0 10px var(--text-glow-x); }
+        
+        /* تنسيق اللوجو الجديد في الهيدر */
+        .nav-main-logo { width: 30px; height: 30px; margin-left: 8px; object-fit: contain; border-radius: 8px; filter: drop-shadow(0 0 12px var(--btn-active-glow)); transform: translateY(5px); transition: transform 0.3s ease; }
+        [data-theme="light"] .nav-main-logo { filter: drop-shadow(0 0 10px rgba(0,0,0,0.25)); }
+        .navbar h1:active .nav-main-logo { transform: translateY(5px) scale(0.9); }
 
         .nav-actions { display: flex; align-items: center; gap: 18px; position: relative; }
         .nav-actions i { font-size: 22px; cursor: pointer; color: var(--text-main); transition: 0.2s; }
@@ -306,6 +321,40 @@
 
         .hidden-player { display: none !important; }
 
+        /* --- Custom Styles for Calculator --- */
+        .custom-calc-icon {
+            width: 22px; height: 22px; object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+        
+        .calc-input-wrapper { position: relative; width: 100%; }
+        .calc-input-wrapper input {
+            width: 100%; background: rgba(0,0,0,0.4); border: 1px solid var(--glass-border);
+            border-radius: 12px; padding: 15px 45px 15px 15px; color: var(--text-main);
+            font-size: 22px; font-weight: 900; outline: none; transition: 0.3s;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+        html[dir="rtl"] .calc-input-wrapper input { padding: 15px 15px 15px 45px; text-align: right; }
+        html[dir="ltr"] .calc-input-wrapper input { padding: 15px 45px 15px 15px; text-align: left; }
+        
+        .calc-input-wrapper input:focus { border-color: var(--primary); background: rgba(0,0,0,0.6); }
+        .calc-input-wrapper input::placeholder { font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.2); font-family: 'Cairo', sans-serif; }
+        
+        .calc-input-wrapper i, .calc-input-wrapper img.custom-input-icon {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            transition: 0.3s;
+        }
+        .calc-input-wrapper img.custom-input-icon {
+            width: 24px; height: 24px; object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+        
+        html[dir="rtl"] .calc-input-wrapper i, html[dir="rtl"] .calc-input-wrapper img.custom-input-icon { left: 15px; right: auto; }
+        html[dir="ltr"] .calc-input-wrapper i, html[dir="ltr"] .calc-input-wrapper img.custom-input-icon { right: 15px; left: auto; }
+        [data-theme="light"] .calc-input-wrapper input { background: rgba(255,255,255,0.5); color: #000; box-shadow: inset 0 0 5px rgba(0,0,0,0.1); border-color: rgba(0,0,0,0.1); }
+        [data-theme="light"] .calc-input-wrapper input:focus { background: #fff; border-color: var(--primary); }
+        [data-theme="light"] .calc-input-wrapper input::placeholder { color: rgba(0,0,0,0.4); }
+
         @media (max-width: 600px) {
             .main-lang-switch { margin-top: calc(85px + env(safe-area-inset-top)); margin-bottom: 10px; } 
             .main-lang-switch .lang-btn { padding: 6px 15px; }
@@ -335,14 +384,7 @@
             .tour-card { padding: 20px 15px; } .tour-title { font-size: 1.05rem; } .tour-footer { flex-direction: column; gap: 8px; } .info-badge { width: 100%; justify-content: center; padding: 6px;}
             .server-tabs { flex-wrap: wrap !important; justify-content: center !important; gap: 10px; padding-bottom: 10px; }
             
-            /* حل مشكلة الإشعارات في الجوال */
-            .notif-dropdown {
-                position: fixed;
-                top: 75px; 
-                right: 5vw;
-                width: 90vw;
-                max-width: 320px;
-            }
+            .notif-dropdown { position: fixed; top: 75px; right: 5vw; width: 90vw; max-width: 320px; }
         }
     </style>
 </head>
@@ -357,15 +399,17 @@
     <div class="static-gaming-bg"></div>
 
     <nav class="navbar" dir="ltr">
-        <h1 class="num-font">Plato<span>X</span></h1>
+        <h1 class="num-font" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+            Plato<span>X</span>
+            <img src="IMG_0586.png" alt="PlatoX Logo" class="nav-main-logo">
+        </h1>
         
         <div class="nav-actions">
             <div class="notif-wrapper">
                 <i class="fa-solid fa-bell" onclick="toggleNotif()" id="notif-bell"></i>
                 <div class="notif-dot" id="nav-dot-bell"></div>
                 <div class="notif-dropdown" id="notif-dropdown">
-                    <div id="notif-content">
-                    </div>
+                    <div id="notif-content"></div>
                 </div>
             </div>
             
@@ -381,7 +425,6 @@
     </div>
 
     <main id="view-home" class="tab-view active-view">
-        
         <section class="hero" id="hero">
             <h2 class="num-font" dir="ltr">Plato <span class="hero-x">X</span> Community</h2>
         </section>
@@ -466,7 +509,6 @@
 
         <section id="guidelines">
             <h2 class="section-title" data-i18n="menu_guidelines">القوانين</h2>
-            
             <div class="glass-panel" style="width: 100%; max-width: 650px; padding: 30px; border-radius: 16px; margin-bottom: 25px;">
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--glass-border);">
                     <i class="fa-solid fa-users pro-icon-glow" style="font-size: 26px;"></i>
@@ -706,6 +748,38 @@
 
         <div class="cyber-divider"><div class="center-node"></div></div>
 
+        <!-- ==============================================
+             الحاسبة الذكية (PlatoX Smart Calculator) 
+             ============================================== -->
+        <section id="plato-calculator">
+            <h2 class="section-title" data-i18n="calc_title">الحاسبة الذكية</h2>
+            <div class="glass-panel calc-wrapper" style="width: 100%; max-width: 550px; padding: 25px; border-radius: 16px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px;">
+                
+                <div class="calc-toggle" style="display: flex; background: rgba(0,0,0,0.3); border-radius: 12px; border: 1px solid var(--glass-border); padding: 4px;">
+                    <button class="calc-mode-btn active" id="btnModeCoins" onclick="setCalcMode('coins')" style="flex: 1; padding: 10px; border: none; background: rgba(255,255,255,0.1); border-radius: 8px; color: var(--primary); font-weight: 900; font-family: inherit; cursor: pointer; transition: 0.3s; display: flex; justify-content: center; align-items: center; gap: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+                        <img src="IMG_0571.png" alt="Coins" class="custom-calc-icon"> <span data-i18n="tabCoins">كوينز</span>
+                    </button>
+                    <button class="calc-mode-btn" id="btnModePips" onclick="setCalcMode('pips')" style="flex: 1; padding: 10px; border: none; background: transparent; border-radius: 8px; color: var(--text-muted); font-weight: 900; font-family: inherit; cursor: pointer; transition: 0.3s; display: flex; justify-content: center; align-items: center; gap: 8px;">
+                        <img src="IMG_0569.png" alt="Pips" class="custom-calc-icon"> <span data-i18n="tabPips">بيبس</span>
+                    </button>
+                </div>
+
+                <div class="calc-input-wrapper">
+                    <input type="text" inputmode="numeric" id="calcInput" class="num-font" placeholder="أدخل عدد الكوينز..." oninput="handleCalcInput(event)">
+                    <img src="IMG_0571.png" id="calcInputIcon" class="custom-input-icon" alt="icon">
+                </div>
+
+                <div class="calc-display" style="background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01)); border: 1px solid var(--glass-border); border-radius: 14px; padding: 25px 15px; text-align: center; box-shadow: inset 0 0 10px rgba(0,0,0,0.2); min-height: 130px; display: flex; flex-direction: column; justify-content: center;">
+                    <div class="calc-label" data-i18n="resultTitle" style="font-size: 13px; font-weight: 700; color: var(--text-muted); margin-bottom: 5px;">القيمة التقديرية العادلة</div>
+                    <div class="calc-value num-font" id="calcResultValue" style="font-size: 3.5rem; font-weight: 900; line-height: 1; margin: 8px 0; color: rgba(255,255,255,0.1); transition: 0.2s;">0</div>
+                    <div class="calc-currency num-font" id="calcResultCurrency" style="font-size: 16px; font-weight: 800; color: var(--text-main); text-transform: uppercase; letter-spacing: 2px;">PIPS</div>
+                </div>
+                
+            </div>
+        </section>
+
+        <div class="cyber-divider"><div class="center-node"></div></div>
+
         <section id="accounts">
             <h2 class="section-title" data-i18n="players_title">اللاعبين الاقدم</h2>
             <div class="premium-list" id="oldest-players-container">
@@ -718,7 +792,7 @@
 
         <div class="cyber-divider"><div class="center-node"></div></div>
 
-        <!-- قسم النصائح الجديد -->
+        <!-- قسم النصائح -->
         <section id="daily-tips">
             <h2 class="section-title" data-i18n="tips_title">نصائح</h2>
             <div class="glass-panel" style="width: 100%; max-width: 750px; padding: 30px; border-radius: 16px; text-align: center; position: relative;">
@@ -970,7 +1044,6 @@
             document.getElementById('char-counter').innerText = '1499';
         }
 
-        // تم تحسين دالة التنظيف للحماية من XSS
         function escapeHTML(str) {
             if (!str) return "";
             return String(str).replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag) );
@@ -978,8 +1051,6 @@
 
         async function submitBugReport() {
             const isAr = document.documentElement.lang === 'ar';
-            
-            // حماية مضاعفة من السبام
             const lastReportTime = safeGetStorage('last_bug_report') || safeGetSession('last_bug_report_session');
             if (lastReportTime) {
                 const elapsed = Date.now() - parseInt(lastReportTime);
@@ -1036,7 +1107,6 @@
             submitBtn.disabled = true;
 
             try {
-                // تأمين الإرسال: استخدام طريقة POST لإخفاء البيانات من الرابط
                 const formData = new URLSearchParams();
                 formData.append("plato_id", platoId);
                 formData.append("issue_type", bugType);
@@ -1248,7 +1318,17 @@
                 link_platopedia_desc: "موسوعة متخصصة في بلاتو، توفر معلومات شاملة حول العناصر المتاحة، إلى جانب خيارات تخصيص الملفات الشخصية ومتابعة تفاصيلها.",
                 link_werepedia_desc: "موقع متخصص في لعبة الذئب، يقدّم شرحًا مفصلًا للبطاقات والأدوار، بالإضافة إلى استراتيجيات ونصائح تساعد على تطوير أسلوب اللعب.",
                 link_monsterpedia_desc: "موسوعة متخصصة في لعبة الوحوش، تشرح محتوى اللعبة بالتفصيل.",
-                no_tournaments: "لا بطولات في الوقت الحالي."
+                no_tournaments: "لا بطولات في الوقت الحالي.",
+                
+                // كلمات الحاسبة الذكية
+                calc_title: "الحاسبة الذكية",
+                tabCoins: "كوينز",
+                tabPips: "بيبس",
+                placeholderCoins: "أدخل عدد الكوينز...",
+                placeholderPips: "أدخل عدد البيبس...",
+                resultTitle: "القيمة التقديرية العادلة",
+                currCoins: "COINS", 
+                currPips: "PIPS"
             },
             en: {
                 nav_home: "Home", nav_leaders: "About Leaders", nav_leaderboard: "Explore",
@@ -1300,7 +1380,17 @@
                 link_platopedia_desc: "A Plato encyclopedia covering items and profile customization.",
                 link_werepedia_desc: "A Werewolf guide covering cards, roles, and gameplay strategies.",
                 link_monsterpedia_desc: "A Monster guide covering the game's content in detail.",
-                no_tournaments: "No tournaments at the moment."
+                no_tournaments: "No tournaments at the moment.",
+
+                // Calculator words
+                calc_title: "SMART CALCULATOR",
+                tabCoins: "Coins",
+                tabPips: "Pips",
+                placeholderCoins: "Enter Coins...",
+                placeholderPips: "Enter Pips...",
+                resultTitle: "ESTIMATED VALUE",
+                currCoins: "COINS",
+                currPips: "PIPS"
             }
         };
 
@@ -1320,10 +1410,17 @@
             document.getElementById('plato-id').placeholder = lang === 'ar' ? 'يوزرك في اللعبة' : 'Your Plato ID';
             document.getElementById('bug-desc').placeholder = lang === 'ar' ? 'وصف المشكلة...' : 'Issue description...';
             
+            // تحديث نصوص الحاسبة المتبقية
+            const calcInput = document.getElementById('calcInput');
+            if (calcInput) {
+                calcInput.placeholder = calcMode === 'coins' ? translations[lang].placeholderCoins : translations[lang].placeholderPips;
+                document.getElementById('calcResultCurrency').innerText = calcMode === 'coins' ? translations[lang].currPips : translations[lang].currCoins;
+            }
+
             clearInputError('plato-id'); clearInputError('bug-desc');
             
             const feedbackBtnWrapper = document.getElementById('feedback-wrapper');
-            if (feedbackBtnWrapper) feedbackBtnWrapper.style.justifyContent = 'flex-end'; 
+            if (feedbackBtnWrapper) feedbackBtnWrapper.style.justifyContent = lang === 'ar' ? 'flex-end' : 'flex-start'; 
             
             renderArabicLeaders(); 
             renderGlobalLeaders(); 
@@ -1565,7 +1662,6 @@
             scrollTimeout = window.requestAnimationFrame(updateCarouselButtons);
         });
 
-        // دالة عرض باقي اللاعبين الأقدم
         function showMorePlayers() {
             document.querySelectorAll('.hidden-player').forEach(el => {
                 el.classList.remove('hidden-player');
@@ -1605,7 +1701,6 @@
             const currentLang = document.documentElement.getAttribute('lang') || 'en';
             const isLtr = currentLang === 'en';
             
-            // نحتاج وقت للبطولات
             let nowTime = Date.now(); 
             if (typeof getAccurateTime === "function") {
                 nowTime = getAccurateTime();
@@ -1617,7 +1712,6 @@
             arabicLeadersData = []; 
 
             cachedSheetRows.forEach((cols) => {
-                // جلب القادة (عرب وعالميين) من W (22) إلى AC (28)
                 if(cols.length >= 24) {
                     const lServer = escapeHTML(cols[22] ? cols[22].trim().toLowerCase() : "");
                     const lName = escapeHTML(cols[23] ? cols[23].trim() : "");
@@ -1649,7 +1743,6 @@
                 const rawTimeStr = escapeHTML(cols[0] ? cols[0].trim() : ""); 
                 const nameAr = escapeHTML(cols[1] ? cols[1].trim() : "");
                 
-                // جلب بيانات اللاعبين الأقدم من الأعمدة T (19) و U (20) و V (21)
                 if(cols.length >= 22) {
                     const pUser = escapeHTML(cols[19] ? cols[19].trim() : "");
                     const pImg = escapeHTML(cols[20] ? cols[20].trim() : "");
@@ -1687,14 +1780,12 @@
                 }
             });
 
-            // تحديث قسم القادة (العرب والعالميين)
             renderArabicLeaders();
             renderGlobalLeaders();
             const activeTab = document.querySelector('.server-tab.active');
             if(activeTab) filterServer(activeTab.dataset.target);
 
-            // توليد كود الـ HTML للاعبين الأقدم وترتيبهم
-            oldestPlayersList.sort((a, b) => b.baseDays - a.baseDays); // الترتيب التنازلي حسب الأيام
+            oldestPlayersList.sort((a, b) => b.baseDays - a.baseDays); 
             let playersHTML = '';
             oldestPlayersList.forEach((player, index) => {
                 const rankNum = (index + 1).toString(); 
@@ -1863,6 +1954,146 @@
             });
         }
 
+        /* =========================================================================
+           نظام الحاسبة والذكاء الاصطناعي
+           ========================================================================= */
+        let calcMode = 'coins'; 
+        let calcAnimationReq;
+
+        function setCalcMode(mode) {
+            calcMode = mode;
+            const currentLang = document.documentElement.getAttribute('lang') || 'en';
+            const t = translations[currentLang];
+            
+            const btnCoins = document.getElementById('btnModeCoins');
+            const btnPips = document.getElementById('btnModePips');
+            const input = document.getElementById('calcInput');
+            const icon = document.getElementById('calcInputIcon');
+            const resultCurr = document.getElementById('calcResultCurrency');
+            
+            if (mode === 'coins') {
+                btnCoins.classList.add('active');
+                btnCoins.style.background = 'rgba(255,255,255,0.1)';
+                btnCoins.style.color = 'var(--primary)';
+                btnPips.classList.remove('active');
+                btnPips.style.background = 'transparent';
+                btnPips.style.color = 'var(--text-muted)';
+                
+                input.placeholder = t.placeholderCoins;
+                icon.src = 'IMG_0571.png';
+                resultCurr.innerText = t.currPips;
+            } else {
+                btnPips.classList.add('active');
+                btnPips.style.background = 'rgba(255,255,255,0.1)';
+                btnPips.style.color = 'var(--primary)';
+                btnCoins.classList.remove('active');
+                btnCoins.style.background = 'transparent';
+                btnCoins.style.color = 'var(--text-muted)';
+                
+                input.placeholder = t.placeholderPips;
+                icon.src = 'IMG_0569.png';
+                resultCurr.innerText = t.currCoins;
+            }
+            
+            input.value = ''; 
+            runCalculation();
+        }
+
+        const convertArabicNumerals = (str) => {
+            return str.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+        };
+
+        function handleCalcInput(e) {
+            let val = e.target.value;
+            val = convertArabicNumerals(val);
+            val = val.replace(/\D/g, ''); 
+            
+            if(val !== '') {
+                val = parseInt(val, 10).toLocaleString('en-US');
+            }
+            
+            e.target.value = val;
+            runCalculation();
+        }
+
+        function getDynamicRate(pips) {
+            if (pips <= 0) return 500;
+            return 400 + 150 * Math.exp(-pips / 15);
+        }
+
+        function animateCalcValue(obj, start, end, duration, isFloat, colorHex, shadowValue) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+                
+                let currentVal = start + (end - start) * easeProgress;
+                
+                if(isFloat) {
+                    let displayValue = (currentVal % 1 !== 0) ? currentVal.toFixed(1) : Math.round(currentVal).toString();
+                    let parts = displayValue.split('.');
+                    parts[0] = parseInt(parts[0] || 0).toLocaleString('en-US');
+                    obj.innerText = parts.join('.');
+                } else {
+                    obj.innerText = Math.round(currentVal).toLocaleString('en-US');
+                }
+
+                if (progress < 1) {
+                    calcAnimationReq = window.requestAnimationFrame(step);
+                } else {
+                    obj.style.color = colorHex;
+                    obj.style.textShadow = shadowValue;
+                }
+            };
+            
+            if(calcAnimationReq) window.cancelAnimationFrame(calcAnimationReq);
+            
+            obj.style.color = colorHex;
+            obj.style.textShadow = shadowValue;
+            
+            calcAnimationReq = window.requestAnimationFrame(step);
+        }
+
+        function runCalculation() {
+            let rawValue = document.getElementById('calcInput').value.replace(/,/g, '');
+            let val = parseFloat(rawValue);
+            const outVal = document.getElementById('calcResultValue');
+
+            if (isNaN(val) || val <= 0) {
+                if(calcAnimationReq) window.cancelAnimationFrame(calcAnimationReq);
+                outVal.innerText = '0';
+                outVal.style.color = 'rgba(255,255,255,0.1)';
+                outVal.style.textShadow = 'none';
+                return;
+            }
+
+            let currentActualRate = 0;
+            let targetValue = 0;
+            let isResultFloat = false;
+            let targetColor = '';
+            let targetShadow = '';
+
+            if (calcMode === 'coins') {
+                let estimatedPips = val / 450; 
+                currentActualRate = getDynamicRate(estimatedPips);
+                targetValue = val / currentActualRate;
+                isResultFloat = true;
+                targetColor = '#6AA8EB';
+                targetShadow = '0 0 25px rgba(106, 168, 235, 0.4)';
+            } else {
+                currentActualRate = getDynamicRate(val);
+                targetValue = Math.round(val * currentActualRate);
+                isResultFloat = false;
+                targetColor = '#fdd74e';
+                targetShadow = '0 0 25px rgba(253, 215, 78, 0.4)';
+            }
+
+            let currentDisplay = parseFloat(outVal.innerText.replace(/,/g, '')) || 0;
+            animateCalcValue(outVal, currentDisplay, targetValue, 400, isResultFloat, targetColor, targetShadow);
+        }
+
+        // التهيئة المبدئية
         document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('theme-icon').className = savedTheme === 'light' ? 'fa-solid fa-sun theme-toggle' : 'fa-solid fa-moon theme-toggle';
             changeLang(savedLang);
