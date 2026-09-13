@@ -2,14 +2,13 @@
 <html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
-    <base href="/"> <!-- هذا هو السطر السحري الذي يحل مشكلة اختفاء الصور -->
+    <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://worldtimeapi.org https://timeapi.io https://docs.google.com https://script.google.com https://script.googleusercontent.com https://api.ipify.org; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline'; img-src 'self' data: https:; media-src https: 'self';">
     
     <title>PlatoX | مجتمع اللاعبين العرب</title>
     
-    <!-- ======== إعدادات أيقونة الموقع عند الحفظ كـ تطبيق ======== -->
     <link rel="icon" type="image/png" href="IMG_0586.png?v=3">
     <link rel="apple-touch-icon" href="IMG_0586.png?v=3">
     <link rel="icon" sizes="192x192" href="IMG_0586.png?v=3">
@@ -21,7 +20,6 @@
     <meta name="theme-color" content="#0a0a0f">
     <meta name="msapplication-navbutton-color" content="#0a0a0f">
     <meta name="msapplication-starturl" content="/">
-    <!-- ========================================================== -->
 
     <script>
         function safeSetStorage(key, value) { try { localStorage.setItem(key, value); } catch(e) {} }
@@ -32,7 +30,6 @@
         let savedLang = safeGetStorage('lang') || 'en';
         let savedTheme = safeGetStorage('theme') || 'dark';
         
-        // تطبيق اتجاه ولغة الصفحة الفوري لمنع وميض اللغة عند التحديث
         document.documentElement.setAttribute('lang', savedLang);
         document.documentElement.setAttribute('dir', savedLang === 'ar' ? 'rtl' : 'ltr');
         document.documentElement.setAttribute('data-theme', savedTheme);
@@ -326,7 +323,6 @@
 
         .hidden-player { display: none !important; }
 
-        /* --- Custom Styles for Calculator --- */
         .custom-calc-icon {
             width: 22px; height: 22px; object-fit: contain;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
@@ -427,7 +423,7 @@
             
             <i class="fa-solid fa-moon theme-toggle" id="theme-icon" onclick="toggleTheme();"></i>
             <a href="https://discord.gg/plato" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-discord" style="color: var(--text-main);"></i></a>
-            <a href="https://instagram.com/platoxar" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://instagram.com/platoarab" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a>
         </div>
     </nav>
 
@@ -758,9 +754,6 @@
 
         <div class="cyber-divider"><div class="center-node"></div></div>
 
-        <!-- ==============================================
-             الحاسبة الذكية (PlatoX Smart Calculator) 
-             ============================================== -->
         <section id="plato-calculator">
             <h2 class="section-title" data-i18n="calc_title">الحاسبة الذكية</h2>
             <div class="glass-panel calc-wrapper" style="width: 100%; max-width: 550px; padding: 25px; border-radius: 16px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px;">
@@ -800,7 +793,6 @@
 
         <div class="cyber-divider"><div class="center-node"></div></div>
 
-        <!-- قسم النصائح -->
         <section id="daily-tips">
             <h2 class="section-title" data-i18n="tips_title">نصائح</h2>
             <div class="glass-panel" style="width: 100%; max-width: 750px; padding: 30px; border-radius: 16px; text-align: center; position: relative;">
@@ -911,25 +903,20 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
             if (viewName === 'home') setTimeout(updateCarouselButtons, 80);
 
-            // --- التعديل الجديد: إيقاف الألعاب عند الخروج من قسم الاستكشاف ---
             if (viewName !== 'explore') {
-                // إيقاف لعبة الأفعى
                 if (typeof snakeInterval !== 'undefined' && snakeInterval) {
                     clearInterval(snakeInterval);
                     snakeGameRunning = false;
                 }
-                // إيقاف لعبة كاسر الطوب
                 if (typeof breakerAnimId !== 'undefined' && breakerAnimId) {
                     cancelAnimationFrame(breakerAnimId);
                     breakerGameRunning = false;
                 }
-                // إيقاف لعبة الذئب
                 if (typeof wolfAnimId !== 'undefined' && wolfAnimId) {
                     cancelAnimationFrame(wolfAnimId);
                     wolfGameRunning = false;
                 }
             }
-            // ----------------------------------------------------------------
         }
 
         function toggleNotif() {
@@ -2015,9 +2002,6 @@
             });
         }
 
-        /* =========================================================================
-           نظام الحاسبة الذكية
-           ========================================================================= */
         let calcMode = 'coins'; 
         let calcAnimationReq;
 
@@ -2154,7 +2138,6 @@
             animateCalcValue(outVal, currentDisplay, targetValue, 400, isResultFloat, targetColor, targetShadow);
         }
 
-        // التهيئة المبدئية والراوتينج
         document.addEventListener("DOMContentLoaded", () => {
             document.documentElement.setAttribute('lang', savedLang);
             document.documentElement.setAttribute('dir', savedLang === 'ar' ? 'rtl' : 'ltr');
