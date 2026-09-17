@@ -425,6 +425,42 @@
             .cb-round { min-width: 160px; }
             .cb-player-name { font-size: 14px; max-width: 100px; }
         }
+
+        body.bracket-only-mode .navbar,
+        body.bracket-only-mode .bottom-nav-bar,
+        body.bracket-only-mode .main-lang-switch,
+        body.bracket-only-mode section:not(#custom-bracket),
+        body.bracket-only-mode .cyber-divider {
+            display: none !important;
+        }
+
+        body.bracket-only-mode {
+            padding: 0 !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100dvh;
+            background-color: var(--bg-main);
+        }
+
+        body.bracket-only-mode #custom-bracket {
+            width: 100%;
+            padding: 15px;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        body.bracket-only-mode #custom-bracket h2.section-title {
+            display: none !important;
+        }
+
+        body.bracket-only-mode #bracket-step-3 {
+            margin: 0;
+            width: 100%;
+            max-width: 900px;
+        }
     </style>
 </head>
 <body>
@@ -2670,6 +2706,7 @@
                 const parsedTour = decodeBracketData(tourDataHash);
                 if (parsedTour && parsedTour.p && parsedTour.m) {
                     initView = 'explore';
+                    document.body.classList.add('bracket-only-mode');
                     cbPlayers = parsedTour.p;
                     cbMatches = parsedTour.m;
                     cbGroup = parsedTour.g || '';
