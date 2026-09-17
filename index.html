@@ -2078,7 +2078,7 @@
                 else if (rankNum === '2') { rankClass = 'rank-2'; color = '#cbd5e1'; barBg = 'silver'; }
                 else if (rankNum === '3') { rankClass = 'rank-3'; color = '#cd7f32'; barBg = '#cd7f32'; }
 
-                let displayScore = group.total >= 1000 ? (group.total / 1000) + 'K' : group.total;
+                let displayScore = group.total >= 1000000 ? (group.total / 1000000) + 'M' : (group.total >= 1000 ? (group.total / 1000) + 'K' : group.total);
                 const imgTag = group.image ? `<img src="${group.image}" class="list-img group-img" style="object-fit:cover;" onerror="this.style.display='none'">` : ``;
 
                 spendHTML += `
