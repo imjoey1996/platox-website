@@ -5,8 +5,10 @@
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://worldtimeapi.org https://timeapi.io https://docs.google.com https://script.google.com https://script.googleusercontent.com https://api.ipify.org; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline'; img-src 'self' data: https:; media-src https: 'self';">
+    
     <title>PlatoX | مجتمع اللاعبين العرب</title>
-     
+    
     <link rel="icon" type="image/png" href="IMG_2335.png?v=6">
     <link rel="apple-touch-icon" href="IMG_2335.png?v=6">
     <link rel="icon" sizes="192x192" href="IMG_2335.png?v=6">
@@ -625,7 +627,7 @@
                     </div>
                 </a>
                 <a href="https://platopedia.com/profilebuilder" target="_blank" rel="noopener noreferrer" class="link-card glass-panel">
-                    <img src="IMG_2327.jpeg" alt="Platopedia" class="link-brand-icon">
+                    <img src="IMG_0196.png" alt="Platopedia" class="link-brand-icon">
                     <div class="link-info">
                         <span class="link-title num-font" data-i18n="link_platopedia">Platopedia</span>
                         <span class="link-sub" data-i18n="link_platopedia_desc">موسوعة متخصصة في بلاتو، توفر معلومات شاملة حول العناصر المتاحة، إلى جانب خيارات تخصيص الملفات الشخصية ومتابعة تفاصيلها.</span>
@@ -796,7 +798,7 @@
                         <img src="IMG_0571.png" alt="Coins" class="custom-calc-icon"> <span data-i18n="tabCoins">كوينز</span>
                     </button>
                     <button class="calc-mode-btn" id="btnModePips" onclick="setCalcMode('pips')" style="flex: 1; padding: 10px; border: none; background: transparent; border-radius: 8px; color: var(--text-muted); font-weight: 900; font-family: inherit; cursor: pointer; transition: 0.3s; display: flex; justify-content: center; align-items: center; gap: 8px;">
-                        <img src="./IMG_0569.png" alt="Pips" class="custom-calc-icon"> <span data-i18n="tabPips">بيبس</span>
+                        <img src="https://i.postimg.cc/d0847Zt7/IMG-0569.png" alt="Pips" class="custom-calc-icon"> <span data-i18n="tabPips">بيبس</span>
                     </button>
                 </div>
 
@@ -2031,7 +2033,7 @@
                 btnCoins.style.color = 'var(--text-muted)';
                 
                 input.placeholder = t.placeholderPips;
-                icon.src = './IMG_0569.png';
+                icon.src = 'https://i.postimg.cc/d0847Zt7/IMG-0569.png';
                 resultCurr.innerText = t.currCoins;
             }
             
