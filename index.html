@@ -5,7 +5,7 @@
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://worldtimeapi.org https://timeapi.io https://docs.google.com https://script.google.com https://script.googleusercontent.com https://api.ipify.org; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; img-src 'self' data: blob: https:; media-src https: 'self';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://worldtimeapi.org https://timeapi.io https://docs.google.com https://script.google.com https://script.googleusercontent.com https://api.ipify.org; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline'; img-src 'self' data: https:; media-src https: 'self';">
     
     <title>PlatoX | مجتمع اللاعبين العرب</title>
     
@@ -39,7 +39,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Rajdhani:wght@600;700;900&display=block" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
     <style>
         :root {
             --bg-main: #2a1b38; 
@@ -1223,7 +1223,8 @@
                             </svg>
                         </div>
                     </div>
-                    ${descHTML}${bdayHTML}
+                    ${descHTML}
+                    ${bdayHTML}
                 </div>`;
             });
             
@@ -1265,7 +1266,7 @@
                 if (leader.server === 'english') {
                     cardGlowStyle = 'border-top: 2px solid #000000; border-bottom: 2px solid #000000; box-shadow: 0 -8px 20px rgba(0,0,0,0.9), 0 8px 20px rgba(0,0,0,0.9);';
                 } else {
-                    cardGlowStyle = `border-top: 2px solid ${sTheme.nameColor}99; border-bottom: 2px solid${sTheme.nameColor}99; box-shadow: 0 -6px 18px ${sTheme.nameColor}30, 0 6px 18px${sTheme.nameColor}30;`;
+                    cardGlowStyle = `border-top: 2px solid ${sTheme.nameColor}99; border-bottom: 2px solid ${sTheme.nameColor}99; box-shadow: 0 -6px 18px ${sTheme.nameColor}30, 0 6px 18px ${sTheme.nameColor}30;`;
                 }
 
                 htmlStr += `
@@ -1274,11 +1275,12 @@
                         <div class="leader-name-box copy-admin-btn" data-id="${escapeHTML(leader.name)}" title="انسخ اليوزر">
                             <i class="fa-regular fa-copy leader-copy-icon"></i>
                             <h3 class="leader-username num-font">${escapeHTML(leader.name)}</h3>
-                            <div class="server-badge" style="background: ${sTheme.bg}; ${badgeGlowStyle}${badgeBorder}">
+                            <div class="server-badge" style="background: ${sTheme.bg}; ${badgeGlowStyle} ${badgeBorder}">
                                 ${badgeSvg}
                             </div>
                         </div>
-                        ${descHTML}${bdayHTML}
+                        ${descHTML}
+                        ${bdayHTML}
                     </div>
                 `;
             });
@@ -1592,64 +1594,6 @@
             }
         }
 
-        async function shareNewsAsImage(btn) {
-            const isAr = document.documentElement.lang === 'ar';
-            const originalIcon = btn.innerHTML;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
-            btn.disabled = true;
-
-            const card = btn.closest('.news-slide-card');
-            
-            try {
-                const actionRow = card.querySelector('div[style*="justify-content:flex-end"]');
-                if (actionRow) actionRow.style.display = 'none';
-
-                const currentTheme = document.documentElement.getAttribute('data-theme');
-                const bgColor = currentTheme === 'light' ? '#eaddf7' : '#2a1b38';
-
-                const canvas = await html2canvas(card, {
-                    backgroundColor: bgColor,
-                    scale: 2, 
-                    useCORS: true
-                });
-
-                if (actionRow) actionRow.style.display = 'flex';
-
-                canvas.toBlob(async (blob) => {
-                    const file = new File([blob], 'PlatoX-News.png', { type: 'image/png' });
-                    
-                    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-                        await navigator.share({
-                            files: [file]
-                        });
-                    } else {
-                        const link = document.createElement('a');
-                        link.download = 'PlatoX-News.png';
-                        link.href = URL.createObjectURL(blob);
-                        link.click();
-                        
-                        const toast = document.getElementById("toast");
-                        toast.innerHTML = `<i class="fa-solid fa-check"></i> ${isAr ? 'تم حفظ صورة الخبر!' : 'News image saved!'}`;
-                        toast.className = "show"; 
-                        setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2500);
-                    }
-                    
-                    btn.innerHTML = originalIcon;
-                    btn.disabled = false;
-                }, 'image/png');
-                
-            } catch (error) {
-                console.error("Error generating image:", error);
-                btn.innerHTML = originalIcon;
-                btn.disabled = false;
-                
-                const toast = document.getElementById("toast");
-                toast.innerHTML = `<i class="fa-solid fa-xmark"></i> ${isAr ? 'حدث خطأ أثناء التجهيز' : 'Error generating image'}`;
-                toast.className = "show"; 
-                setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2500);
-            }
-        }
-
         function shareVideo() {
             const pageUrl = window.location.href; 
             if (navigator.share) {
@@ -1713,7 +1657,7 @@
                         <p class="news-body">${displayBody}</p>
                         
                         <div style="display:flex; justify-content:flex-end; margin-top: auto; padding-top: 15px; border-top: 1px solid var(--glass-border);">
-                            <button class="nav-btn share-btn" style="padding: 6px 15px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius:8px;" onclick="shareNewsAsImage(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                            <button class="nav-btn share-btn" style="padding: 6px 15px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius:8px;" onclick="shareNews('${displayTitle.replace(/'/g, "\\'")}')"><i class="fa-solid fa-share-nodes"></i></button>
                         </div>
                     </div>`;
                 dotsHTML += `<div class="dot ${index === 0 ? 'active' : ''}"></div>`;
@@ -1901,7 +1845,7 @@
                 const imgTag = player.img ? `<img src="${player.img}" class="list-img" alt="${player.user}" onerror="this.style.display='none'">` : ``;
 
                 playersHTML += `
-                    <div class="list-row glass-panel ${rankClass}${hiddenClass}">
+                    <div class="list-row glass-panel ${rankClass} ${hiddenClass}">
                         <div class="rank-num num-font">${rank}</div>
                         <div class="list-info">
                             ${imgTag}
@@ -2078,7 +2022,7 @@
                 btnPips.style.color = 'var(--text-muted)';
                 
                 input.placeholder = t.placeholderCoins;
-                icon.src = 'https://i.postimg.cc/BvWmQBsP/IMG-0571.png';
+                icon.src = 'IMG_0571.png';
                 resultCurr.innerText = t.currPips;
             } else {
                 btnPips.classList.add('active');
