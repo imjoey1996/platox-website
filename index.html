@@ -1620,8 +1620,6 @@
                     
                     if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
                         await navigator.share({
-                            title: 'PlatoX News',
-                            text: isAr ? 'أخبار مجتمع PlatoX\n\n' + window.location.href : 'PlatoX Community News\n\n' + window.location.href,
                             files: [file]
                         });
                     } else {
