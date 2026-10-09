@@ -932,8 +932,7 @@
         let currentLatestTour = null;
         let currentLatestWeekly = null;
 
-        const _a = ["aHR0cHM6Ly9k","b2NzLmdvb2ds","ZS5jb20vc3By","ZWFkc2hlZXRz","L2QvMTBJdXoz","ZnJUS0JRYVIy","U1oyX0d6U2U3","U241R3phZWZK","NnN6VGViSzkx","dkUvZ3Zpei90","cT90cXg9b3V0","OmNzdg=="];
-        const tourSheetURL = atob(_a.join(''));
+        const tourSheetURL = "https://script.google.com/macros/s/AKfycbxcWJ-uEzyH943jgbA5GM_8Y1lcToqXkWYGHjN3Jgs08X17ZSHbN-RvuVH7wp_j0inh4A/exec";
 
         function hashCode(str) {
             let hash = 0;
@@ -1544,7 +1543,7 @@
         async function loadDynamicData(force = false) {
             try {
                 const cacheBuster = Math.floor(Math.random() * 100000000);
-                const fetchUrl = tourSheetURL + "&gid=0&_nocache=" + cacheBuster;
+                const fetchUrl = tourSheetURL + "?_nocache=" + cacheBuster;
 
                 const response = await fetch(fetchUrl, { cache: "no-store" });
                 if (!response.ok) throw new Error("فشل الاتصال بالشيت");
