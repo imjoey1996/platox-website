@@ -93,7 +93,6 @@
         body { color: var(--text-main); font-family: 'Cairo', sans-serif; overflow-x: clip; width: 100%; background-color: transparent; position: relative; padding-bottom: calc(115px + env(safe-area-inset-bottom)); padding-top: env(safe-area-inset-top); -webkit-font-smoothing: antialiased; }
         html[dir="ltr"] body, .num-font, .navbar h1 { font-family: 'Rajdhani', sans-serif; }
 
-        /* خلفية خفيفة بدون تعقيدات */
         .static-gaming-bg {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh; z-index: -3; pointer-events: none;
             background-color: var(--bg-main);
@@ -104,13 +103,11 @@
             background-image: radial-gradient(circle at 50% 50%, rgba(255, 50, 50, 0.08), transparent 70%);
         }
 
-        /* وميض يعتمد على الشفافية لتخفيف الحمل */
         @keyframes neon-flicker {
             0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; }
             20%, 24%, 55% { opacity: 0.6; }
         }
 
-        /* حركات خفيفة ومحسنة للجمجمة وقطرات الدم */
         @keyframes subtle-float { 
             0% { transform: translateY(0); } 
             100% { transform: translateY(-10px); } 
@@ -123,7 +120,6 @@
             100% { transform: translateY(100vh) scale(0.5); opacity: 0; }
         }
 
-        /* عناصر زينة مرعبة خفيفة جداً */
         .floating-skull {
             position: fixed; font-size: 28px; color: var(--primary); opacity: 0.15; z-index: -1;
             display: flex; flex-direction: column; align-items: center; 
@@ -143,7 +139,6 @@
         .blood-drop:nth-child(2) { left: 60%; animation-duration: 7s; animation-delay: 2s; font-size: 20px; }
         .blood-drop:nth-child(3) { left: 80%; animation-duration: 4.5s; animation-delay: 1s; font-size: 16px; }
 
-        /* تمويه خفيف للألواح الزجاجية */
         .glass-panel { background: var(--bg-card); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid var(--glass-border); border-top: 1px solid rgba(255, 100, 100, 0.15); border-left: 1px solid rgba(255, 100, 100, 0.1); box-shadow: 0 4px 15px 0 rgba(150, 0, 0, 0.15); border-radius: 16px; contain: paint; }
         html[dir="ltr"] .glass-panel { border-left: 1px solid var(--glass-border); border-right: 1px solid rgba(255, 100, 100, 0.1); }
         [data-theme="light"] .glass-panel { box-shadow: 0 4px 15px 0 rgba(200, 0, 0, 0.1); border-top: 1px solid rgba(255, 50, 50, 0.15); }
@@ -248,22 +243,6 @@
         [data-theme="light"] .dot { background: rgba(0,0,0,0.2); }
         
         .more-news-link { display: flex; justify-content: center; align-items: center; width: 100%; gap: 8px; color: var(--text-muted); text-decoration: none; transition: 0.2s; font-weight: 700; background: var(--bg-card); padding: 10px 24px; border-radius: 12px; border: 1px solid var(--glass-border); backdrop-filter: blur(5px); font-family: inherit; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; height: 42px;}
-
-        .bug-radio { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; padding: 15px; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(0,0,0,0.4); }
-        .bug-radio input { margin-top: 4px; accent-color: var(--primary); transform: scale(1.2); }
-        [data-theme="light"] .bug-radio { background: rgba(255,255,255,0.1); }
-        .bug-input { width: 100%; padding: 15px; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(0, 0, 0, 0.5); color: var(--text-main); font-family: inherit; font-size: 15px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
-        .bug-input:focus { border-color: var(--primary); background: rgba(0, 0, 0, 0.7); box-shadow: 0 0 10px var(--btn-active-glow); }
-        [data-theme="light"] .bug-input { background: rgba(255,255,255,0.1); }
-        [data-theme="light"] .bug-input:focus { background: rgba(255,255,255,0.2); }
-        
-        .input-error { border-color: var(--error-color) !important; box-shadow: 0 0 0 1px var(--error-color) inset !important; }
-        .input-error-msg { color: var(--error-color); font-size: 13.5px; font-weight: 700; margin-top: 6px; display: none; text-align: right; }
-        html[dir="ltr"] .input-error-msg { text-align: left; }
-
-        .char-counter-badge { position: absolute; bottom: 12px; font-size: 13px; color: var(--text-muted); font-weight: 700; pointer-events: none; z-index: 10; opacity: 0.8; }
-        html[dir="rtl"] .char-counter-badge { left: 15px; }
-        html[dir="ltr"] .char-counter-badge { right: 15px; }
 
         .fit-btn { padding: 8px 18px; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; transition: 0.2s; font-family: inherit; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; width: fit-content; flex: none; white-space: nowrap; height: 38px;}
         .submit-btn, .cancel-btn { border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; transition: 0.2s; font-family: inherit; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; flex: 1; padding: 10px; white-space: nowrap; height: 42px;}
@@ -390,7 +369,6 @@
         [data-theme="light"] .calc-input-wrapper input:focus { background: rgba(255,255,255,0.2); border-color: var(--primary); }
         [data-theme="light"] .calc-input-wrapper input::placeholder { color: rgba(255,255,255,0.5); }
 
-        /* تفعيل خيار إيقاف الحركة للمستخدمين الذين لا يفضلونها */
         @media (prefers-reduced-motion: reduce) {
             .floating-skull, .blood-drop, .pro-title-glow, .pro-icon-glow {
                 animation: none !important;
@@ -436,7 +414,6 @@
 </head>
 <body>
 
-    <!-- تم استبدال العنكبوت والخفافيش بجماجم وقطرات دماء متحركة بخفة -->
     <div class="floating-skull left"><i class="fa-solid fa-skull"></i></div>
     <div class="floating-skull right"><i class="fa-solid fa-skull-crossbones"></i></div>
     
@@ -524,40 +501,25 @@
 
         <section id="bug-report">
             <h2 class="section-title" data-i18n="bug_title">تقديم بلاغ</h2>
-            <div class="glass-panel" style="width: 100%; max-width: 650px; padding: 30px; border-radius: 16px;">
-                <label style="display:block; margin-bottom: 8px; font-weight: bold; font-size: 18px;" data-i18n="bug_type_label">نوع المشكلة:</label>
-                <span style="display:block; margin-bottom: 20px; color: var(--text-muted); font-weight: 700;" data-i18n="bug_note">هذا القسم غير مخصص للمشاكل الشخصية.</span>
+            <div class="glass-panel" style="width: 100%; max-width: 650px; padding: 30px; border-radius: 16px; text-align: center;">
+                <div style="font-size: 38px; color: var(--primary); margin-bottom: 15px;">
+                    <i class="fa-solid fa-envelope-open-text"></i>
+                </div>
+                <h3 style="color: var(--text-main); font-size: 20px; font-weight: 900; margin-bottom: 10px;" data-i18n="bug_email_heading">الإبلاغ المباشر عبر البريد</h3>
+                <p class="glass-desc-text" style="font-weight: 600; line-height: 1.7; margin-bottom: 25px;" data-i18n="bug_email_desc">
+                    إذا واجهتك أي ثغرة أو مشكلة تقنية، يمكنك مراسلتنا مباشرة عبر البريد الإلكتروني أدناه مع ذكر يوزرك ووصف المشكلة.
+                </p>
                 
-                <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
-                    <label class="bug-radio">
-                        <input type="radio" name="bugType" value="Exploits" onchange="showBugForm()">
-                        <span><strong data-i18n="bug_opt1_title">الثغرات:</strong> <span data-i18n="bug_exp_desc" style="color: var(--text-muted);">ثغرات، أخطاء برمجية، أو نسخ معدلة.</span></span>
-                    </label>
-                    <label class="bug-radio">
-                        <input type="radio" name="bugType" value="Serious Technical Issue" onchange="showBugForm()">
-                        <span><strong data-i18n="bug_opt2_title">مشاكل تقنية:</strong> <span data-i18n="bug_tech_desc" style="color: var(--text-muted);">أخطاء تقنية ذات تأثير عالي أو مشاكل نظام قابلة للاستغلال المتكرر.</span></span>
-                    </label>
+                <div style="background: rgba(0, 0, 0, 0.4); border: 1px dashed var(--glass-border); border-radius: 12px; padding: 14px 20px; margin-bottom: 25px; display: flex; align-items: center; justify-content: space-between; direction: ltr;">
+                    <span style="color: var(--primary); font-family: 'Rajdhani', sans-serif; font-size: 18px; font-weight: 900;">yyy@platoxar.com</span>
+                    <button type="button" onclick="navigator.clipboard.writeText('yyy@platoxar.com'); showToast('تم نسخ البريد بنجاح!');" style="background: var(--primary); color: #fff; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 13px; font-family: 'Cairo', sans-serif;">
+                        <i class="fa-solid fa-copy"></i> <span data-i18n="copy_btn">نسخ</span>
+                    </button>
                 </div>
 
-                <div id="bug-details" style="display: none; flex-direction: column; gap: 15px;">
-                    <div style="position: relative; width: 100%;">
-                        <input type="text" id="plato-id" class="bug-input num-font" placeholder="يوزرك في اللعبة" maxlength="12" dir="ltr" oninput="clearInputError('plato-id')">
-                        <div id="plato-id-error" class="input-error-msg"></div>
-                    </div>
-                    
-                    <div style="position: relative; width: 100%;">
-                        <div style="position: relative;">
-                            <textarea id="bug-desc" class="bug-input" placeholder="وصف المشكلة..." maxlength="1499" style="resize: none; overflow: hidden; padding-bottom: 25px; min-height: 110px;" oninput="clearInputError('bug-desc'); updateCharCount(this); autoResizeTextarea(this);"></textarea>
-                            <div class="char-counter-badge num-font" id="char-counter">1499</div>
-                        </div>
-                        <div id="bug-desc-error" class="input-error-msg"></div>
-                    </div>
-                    
-                    <div style="display: flex; gap: 10px;">
-                        <button type="button" onclick="submitBugReport();" class="submit-btn" data-i18n="bug_submit">إرسال البلاغ</button>
-                        <button type="button" onclick="hideBugForm();" class="cancel-btn" data-i18n="bug_cancel">إلغاء</button>
-                    </div>
-                </div>
+                <a href="mailto:yyy@platoxar.com?subject=Bug%20Report%20-%20PlatoX&body=Plato%20ID:%20%0D%0AIssue%20Type:%20%0D%0ADescription:%20" class="fit-btn" style="width: 100%; justify-content: center; padding: 14px; font-size: 16px;">
+                    <i class="fa-solid fa-paper-plane"></i> <span data-i18n="send_email_btn">إرسال بريد إلكتروني</span>
+                </a>
             </div>
         </section>
 
@@ -934,6 +896,13 @@
 
         const tourSheetURL = "https://script.google.com/macros/s/AKfycbxzPhZs8IMZZVJqBj3-7saEgcb1tDth89raDjTJ9MNM6nEUIHlaq26JfVMmeNL27d0zJg/exec";
 
+        function showToast(msg) {
+            const toast = document.getElementById("toast");
+            toast.innerHTML = `<i class="fa-solid fa-check"></i> ${msg}`;
+            toast.className = "show";
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2500);
+        }
+
         function hashCode(str) {
             let hash = 0;
             for (let i = 0, len = str.length; i < len; i++) {
@@ -1109,142 +1078,11 @@
             }
         });
 
-        function clearInputError(inputId) {
-            document.getElementById(inputId).classList.remove('input-error');
-            document.getElementById(inputId + '-error').style.display = 'none';
-        }
-
-        function updateCharCount(element) { document.getElementById('char-counter').innerText = 1499 - element.value.length; }
-        function autoResizeTextarea(element) { element.style.height = 'auto'; element.style.height = element.scrollHeight + 'px'; }
-        function showBugForm() { document.getElementById('bug-details').style.display = 'flex'; }
-        
-        function hideBugForm() {
-            document.getElementById('bug-details').style.display = 'none';
-            document.querySelectorAll('input[name="bugType"]').forEach(r => r.checked = false);
-            document.getElementById('plato-id').value = '';
-            document.getElementById('bug-desc').value = '';
-            document.getElementById('bug-desc').style.height = 'auto';
-            clearInputError('plato-id'); clearInputError('bug-desc');
-            document.getElementById('char-counter').innerText = '1499';
-        }
-
         function escapeHTML(str) {
             if (!str) return "";
             return String(str).replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag) );
         }
 
-        async function submitBugReport() {
-    const isAr = document.documentElement.lang === 'ar';
-    const lastReportTime = safeGetStorage('last_bug_report') || safeGetSession('last_bug_report_session');
-    
-    if (lastReportTime) {
-        const elapsed = Date.now() - parseInt(lastReportTime);
-        const cooldown = 30 * 60 * 1000; 
-        if (elapsed < cooldown) {
-            const remainingMins = Math.ceil((cooldown - elapsed) / 60000);
-            const toast = document.getElementById("toast");
-            toast.innerHTML = isAr ? `<i class="fa-solid fa-clock"></i> يرجى الانتظار ${remainingMins} دقيقة قبل إرسال بلاغ آخر` : `<i class="fa-solid fa-clock"></i> Please wait ${remainingMins} minutes`;
-            toast.className = "show";
-            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3500);
-            return;
-        }
-    }
-
-    const bugTypeElement = document.querySelector('input[name="bugType"]:checked');
-    const platoIdInput = document.getElementById('plato-id');
-    const bugDescInput = document.getElementById('bug-desc');
-    
-    const platoId = platoIdInput.value.trim();
-    const bugDesc = bugDescInput.value.trim();
-    
-    clearInputError('plato-id'); 
-    clearInputError('bug-desc');
-    let hasError = false;
-
-    if(!bugTypeElement) {
-        const toast = document.getElementById("toast");
-        toast.innerHTML = isAr ? `<i class="fa-solid fa-circle-exclamation"></i> يرجى اختيار نوع المشكلة` : `<i class="fa-solid fa-circle-exclamation"></i> Please select issue type`;
-        toast.className = "show"; 
-        setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2500); 
-        return;
-    }
-
-    if (platoId.length < 3 || platoId.length > 12) {
-        document.getElementById('plato-id-error').innerText = isAr ? "يجب أن يكون اليوزر بين 3 و 12 حرفاً" : "ID must be between 3 and 12 characters";
-        document.getElementById('plato-id-error').style.display = 'block'; 
-        platoIdInput.classList.add('input-error'); 
-        hasError = true;
-    } else if (!/^[a-zA-Z0-9_]+$/.test(platoId)) {
-        document.getElementById('plato-id-error').innerText = isAr ? "يوزر غير صالح. استخدم A-Z و 0-9 و _ فقط" : "Invalid ID. Use A-Z, 0-9 and _ only";
-        document.getElementById('plato-id-error').style.display = 'block'; 
-        platoIdInput.classList.add('input-error'); 
-        hasError = true;
-    }
-
-    if (!bugDesc) {
-        document.getElementById('bug-desc-error').innerText = isAr ? "يرجى كتابة وصف المشكلة" : "Please describe the issue";
-        document.getElementById('bug-desc-error').style.display = 'block'; 
-        bugDescInput.classList.add('input-error'); 
-        hasError = true;
-    }
-    if (hasError) return;
-
-    let userIP = "Unknown";
-    try { 
-        const ipRes = await fetch("https://api64.ipify.org?format=json"); 
-        const ipData = await ipRes.json(); 
-        userIP = ipData.ip; 
-    } catch(e) { 
-        try {
-            const ipRes2 = await fetch("https://api.myip.com");
-            const ipData2 = await ipRes2.json();
-            userIP = ipData2.ip;
-        } catch(e2) {}
-    }
-
-    const bugType = bugTypeElement.value;
-    const scriptURL = "https://script.google.com/macros/s/AKfycbwiDxkPrsNvBwCIOl5GQsNqV5HqgyqS4QBrC-c4kYsLa8YaQ7Jnpu4G_VxuAeW9pKQD/exec"; 
-
-    const submitBtn = document.querySelector('#bug-details .submit-btn');
-    const originalText = submitBtn.innerText;
-    submitBtn.innerText = isAr ? 'جاري الإرسال...' : 'Sending...';
-    submitBtn.disabled = true;
-
-    try {
-        const formData = new URLSearchParams();
-        formData.append("plato_id", platoId);
-        formData.append("issue_type", bugType);
-        formData.append("description", bugDesc);
-        formData.append("ip", userIP);
-
-        const fetchPromise = fetch(scriptURL, { 
-            method: 'POST',
-            mode: "no-cors", 
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: formData.toString()
-        });
-        
-        const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 8000));
-        await Promise.race([fetchPromise, timeoutPromise]);
-        
-        safeSetStorage('last_bug_report', Date.now().toString());
-        safeSetSession('last_bug_report_session', Date.now().toString());
-
-        const toast = document.getElementById("toast");
-        toast.innerHTML = isAr ? `<i class="fa-solid fa-check"></i> تم إرسال البلاغ بنجاح` : `<i class="fa-solid fa-check"></i> Report Submitted Successfully`;
-        toast.className = "show"; 
-        setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000); 
-        hideBugForm();
-    } catch (err) {
-        const toast = document.getElementById("toast");
-        toast.innerHTML = isAr ? `<i class="fa-solid fa-xmark"></i> تعذر الإرسال: تأكد من اتصالك بالانترنت` : `<i class="fa-solid fa-xmark"></i> Network Error`;
-        toast.className = "show"; 
-        setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
-    } finally { 
-        submitBtn.innerText = originalText; 
-        submitBtn.disabled = false; 
-    }
-}
         const serverThemes = {
             'english': { bg: 'var(--eng-bg)', text: 'var(--eng-text)', nameColor: 'var(--eng-name)', shadow: 'none', textStroke: 'var(--eng-text-stroke)', badgeGlow: 'var(--eng-badge-glow)', badgeBorder: '1px solid #ffffff', profileBorder: '2px solid #000000', profileGlow: 'var(--eng-profile-glow)' },
             'persian': { bg: '#C92C23', text: '#ffffff', nameColor: '#C92C23', shadow: 'none', badgeGlow: '0 2px 5px rgba(0,0,0,0.5)', badgeBorder: 'none', profileBorder: '2px solid rgba(255,255,255,0.2)', profileGlow: '0 0 15px #C92C23' },
@@ -1381,7 +1219,7 @@
                 about_site_title: "نبذة عن الموقع",
                 about_site_desc: "مجتمع موثوق يُبقي اللاعبين على اطلاع وتواصل، ويوفر لهم الدعم من خلال أحدث أخبار بلاتو، الإرشادات المفيدة، موارد الإبلاغ، وكل ما يهم المجتمع.",
                 leaders_title: "القادة العرب", global_leaders_title: "قادة السيرفرات العالمية", news_board_title: "لوحة أخبار المجتمع", players_title: "اللاعبين الاقدم", spending_title: "ترتيب المجموعات الأكثر إنفاقًا", tournaments_title: "مركز البطولات",
-                bug_title: "تقديم بلاغ", bug_type_label: "نوع المشكلة:", bug_note: "هذا القسم غير مخصص للمشاكل الشخصية.", bug_opt1_title: "الثغرات:", bug_opt2_title: "مشاكل تقنية:", bug_exp_desc: "ثغرات، أخطاء برمجية، أو نسخ معدلة.", bug_tech_desc: "أخطاء تقنية ذات تأثير عالي أو مشاكل نظام قابلة للاستغلال المتكرر.", bug_submit: "إرسال البلاغ", bug_cancel: "إلغاء",
+                bug_title: "تقديم بلاغ", bug_email_heading: "الإبلاغ المباشر عبر البريد", bug_email_desc: "إذا واجهتك أي ثغرة أو مشكلة تقنية، يمكنك مراسلتنا مباشرة عبر البريد الإلكتروني أدناه مع ذكر يوزرك ووصف المشكلة.", copy_btn: "نسخ", send_email_btn: "إرسال بريد إلكتروني",
                 who_are_leaders: "من هم القادة؟",
                 who_are_leaders_desc: "القادة هم الممثلون الرسميون للمجتمع ويعملون كحلقة وصل بين اللاعبين وفريق التطوير، للمساعدة في بناء بيئة ممتعة، آمنة، وعادلة للجميع.",
                 leaders_tasks: "ما مهام القادة؟",
@@ -1450,7 +1288,7 @@
                 about_site_title: "About the Website",
                 about_site_desc: "A trusted community that keeps players informed, connected, and supported through the latest Plato news, helpful guidelines, reporting resources, and everything that matters to the community.",
                 leaders_title: "ARABIC LEADERS", global_leaders_title: "GLOBAL SERVERS LEADERS", news_board_title: "COMMUNITY NEWS BOARD", players_title: "OLDEST PLAYERS", spending_title: "TOP SPENDING GROUPS", tournaments_title: "TOURNAMENTS",
-                bug_title: "Bug Reporting", bug_type_label: "Issue Type:", bug_note: "This section is not for personal issues.", bug_opt1_title: "Exploits:", bug_opt2_title: "Serious Technical Issue:", bug_exp_desc: "Bugs, glitches, or modified clients.", bug_tech_desc: "High-impact bugs or system problems that can be repeatedly abused.", bug_submit: "Submit Report", bug_cancel: "Cancel",
+                bug_title: "Bug Reporting", bug_email_heading: "Direct Email Support", bug_email_desc: "If you encounter any bug or technical issue, you can reach out to us directly via the email below with your ID and issue description.", copy_btn: "Copy", send_email_btn: "Send Email",
                 who_are_leaders: "Who are the Leaders?",
                 who_are_leaders_desc: "Leaders are official community representatives who act as a bridge between players and the development team, helping build a fun, safe, and fair environment for everyone.",
                 leaders_tasks: "What are the Leaders' tasks?",
@@ -1527,23 +1365,6 @@
                     el.innerText = translations[lang][el.getAttribute('data-i18n')]; 
                 }
             });
-            
-            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-                if(translations[lang][el.getAttribute('data-i18n-placeholder')]) {
-                    el.placeholder = translations[lang][el.getAttribute('data-i18n-placeholder')];
-                }
-            });
-
-            document.getElementById('plato-id').placeholder = lang === 'ar' ? 'يوزرك في اللعبة' : 'Your Plato ID';
-            document.getElementById('bug-desc').placeholder = lang === 'ar' ? 'وصف المشكلة...' : 'Issue description...';
-            
-            const calcInput = document.getElementById('calcInput');
-            if (calcInput) {
-                calcInput.placeholder = calcMode === 'coins' ? translations[lang].placeholderCoins : translations[lang].placeholderPips;
-                document.getElementById('calcResultCurrency').innerText = calcMode === 'coins' ? translations[lang].currPips : translations[lang].currCoins;
-            }
-
-            clearInputError('plato-id'); clearInputError('bug-desc');
             
             renderArabicLeaders(); 
             renderGlobalLeaders(); 
@@ -1669,10 +1490,7 @@
                 navigator.share({ title: title, url: window.location.href }).catch(console.error);
             } else {
                 navigator.clipboard.writeText(window.location.href);
-                const isAr = document.documentElement.lang === 'ar';
-                const toast = document.getElementById("toast");
-                toast.innerHTML = isAr ? `<i class="fa-solid fa-check"></i> تم نسخ الرابط!` : `<i class="fa-solid fa-check"></i> Link Copied!`;
-                toast.className = "show"; setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2500);
+                showToast(document.documentElement.lang === 'ar' ? "تم نسخ الرابط!" : "Link Copied!");
             }
         }
 
@@ -1682,10 +1500,7 @@
                 navigator.share({ title: 'Weekly Game Items', url: pageUrl }).catch(console.error);
             } else {
                 navigator.clipboard.writeText(pageUrl);
-                const isAr = document.documentElement.lang === 'ar';
-                const toast = document.getElementById("toast");
-                toast.innerHTML = isAr ? `<i class="fa-solid fa-check"></i> تم نسخ رابط الصفحة!` : `<i class="fa-solid fa-check"></i> Page Link Copied!`;
-                toast.className = "show"; setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2500);
+                showToast(document.documentElement.lang === 'ar' ? "تم نسخ رابط الصفحة!" : "Page Link Copied!");
             }
         }
 
