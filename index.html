@@ -1183,7 +1183,7 @@
             try { const ipRes = await fetch("https://api.ipify.org?format=json"); const ipData = await ipRes.json(); userIP = ipData.ip; } catch(e) { console.log("تعذر جلب IP"); }
 
             const bugType = bugTypeElement.value;
-            const scriptURL = "https://script.google.com/macros/s/AKfycbz-vn2WvQuATAZe0XmO4uIml2jvJqSN-LPh-wKYtf1oHgbcsiNw4Uc_LHY9mYtZR92vRg/exec";  
+            const scriptURL = "https://script.google.com/macros/s/AKfycbwmnbeVvWTnzFcEKggMlXLRjfIJzcq9lPd1sUuqn31Q5Whd8CP-2iI0rjmHSgPN3saGgQ/exec";   
 
             const submitBtn = document.querySelector('#bug-details .submit-btn');
             const originalText = submitBtn.innerText;
