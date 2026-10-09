@@ -1134,92 +1134,117 @@
         }
 
         async function submitBugReport() {
-            const isAr = document.documentElement.lang === 'ar';
-            const lastReportTime = safeGetStorage('last_bug_report') || safeGetSession('last_bug_report_session');
-            if (lastReportTime) {
-                const elapsed = Date.now() - parseInt(lastReportTime);
-                const cooldown = 30 * 60 * 1000; 
-                if (elapsed < cooldown) {
-                    const remainingMins = Math.ceil((cooldown - elapsed) / 60000);
-                    const toast = document.getElementById("toast");
-                    toast.innerHTML = isAr ? `<i class="fa-solid fa-clock"></i> يرجى الانتظار ${remainingMins} دقيقة قبل إرسال بلاغ آخر` : `<i class="fa-solid fa-clock"></i> Please wait ${remainingMins} minutes`;
-                    toast.className = "show";
-                    setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3500);
-                    return;
-                }
-            }
-
-            const bugTypeElement = document.querySelector('input[name="bugType"]:checked');
-            const platoIdInput = document.getElementById('plato-id');
-            const bugDescInput = document.getElementById('bug-desc');
-            
-            const platoId = platoIdInput.value.trim();
-            const bugDesc = bugDescInput.value.trim();
-            
-            clearInputError('plato-id'); clearInputError('bug-desc');
-            let hasError = false;
-
-            if(!bugTypeElement) {
-                const toast = document.getElementById("toast");
-                toast.innerHTML = isAr ? `<i class="fa-solid fa-circle-exclamation"></i> يرجى اختيار نوع المشكلة` : `<i class="fa-solid fa-circle-exclamation"></i> Please select issue type`;
-                toast.className = "show"; setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2500); return;
-            }
-
-            if (platoId.length < 3 || platoId.length > 12) {
-                document.getElementById('plato-id-error').innerText = isAr ? "يجب أن يكون اليوزر بين 3 و 12 حرفاً" : "ID must be between 3 and 12 characters";
-                document.getElementById('plato-id-error').style.display = 'block'; platoIdInput.classList.add('input-error'); hasError = true;
-            } else if (!/^[a-zA-Z0-9_]+$/.test(platoId)) {
-                document.getElementById('plato-id-error').innerText = isAr ? "يوزر غير صالح. استخدم A-Z و 0-9 و _ فقط" : "Invalid ID. Use A-Z, 0-9 and _ only";
-                document.getElementById('plato-id-error').style.display = 'block'; platoIdInput.classList.add('input-error'); hasError = true;
-            }
-
-            if (!bugDesc) {
-                document.getElementById('bug-desc-error').innerText = isAr ? "يرجى كتابة وصف المشكلة" : "Please describe the issue";
-                document.getElementById('bug-desc-error').style.display = 'block'; bugDescInput.classList.add('input-error'); hasError = true;
-            }
-            if (hasError) return;
-
-            let userIP = "Unknown";
-            try { const ipRes = await fetch("https://api.ipify.org?format=json"); const ipData = await ipRes.json(); userIP = ipData.ip; } catch(e) { console.log("تعذر جلب IP"); }
-
-            const bugType = bugTypeElement.value;
-            const scriptURL = "https://script.google.com/macros/s/AKfycbwmnbeVvWTnzFcEKggMlXLRjfIJzcq9lPd1sUuqn31Q5Whd8CP-2iI0rjmHSgPN3saGgQ/exec";   
-
-            const submitBtn = document.querySelector('#bug-details .submit-btn');
-            const originalText = submitBtn.innerText;
-            submitBtn.innerText = isAr ? 'جاري الإرسال...' : 'Sending...';
-            submitBtn.disabled = true;
-
-            try {
-                const formData = new URLSearchParams();
-                formData.append("plato_id", platoId);
-                formData.append("issue_type", bugType);
-                formData.append("description", bugDesc);
-                formData.append("ip", userIP);
-
-                const fetchPromise = fetch(scriptURL, { 
-                    method: 'POST',
-                    mode: "no-cors", 
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: formData.toString()
-                });
-                
-                const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 8000));
-                await Promise.race([fetchPromise, timeoutPromise]);
-                
-                safeSetStorage('last_bug_report', Date.now().toString());
-                safeSetSession('last_bug_report_session', Date.now().toString());
-
-                const toast = document.getElementById("toast");
-                toast.innerHTML = isAr ? `<i class="fa-solid fa-check"></i> تم إرسال البلاغ بنجاح` : `<i class="fa-solid fa-check"></i> Report Submitted Successfully`;
-                toast.className = "show"; setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000); hideBugForm();
-            } catch (err) {
-                const toast = document.getElementById("toast");
-                toast.innerHTML = isAr ? `<i class="fa-solid fa-xmark"></i> تعذر الإرسال: تأكد من اتصالك بالانترنت` : `<i class="fa-solid fa-xmark"></i> Network Error`;
-                toast.className = "show"; setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
-            } finally { submitBtn.innerText = originalText; submitBtn.disabled = false; }
+    const isAr = document.documentElement.lang === 'ar';
+    const lastReportTime = safeGetStorage('last_bug_report') || safeGetSession('last_bug_report_session');
+    
+    if (lastReportTime) {
+        const elapsed = Date.now() - parseInt(lastReportTime);
+        const cooldown = 30 * 60 * 1000; 
+        if (elapsed < cooldown) {
+            const remainingMins = Math.ceil((cooldown - elapsed) / 60000);
+            const toast = document.getElementById("toast");
+            toast.innerHTML = isAr ? `<i class="fa-solid fa-clock"></i> يرجى الانتظار ${remainingMins} دقيقة قبل إرسال بلاغ آخر` : `<i class="fa-solid fa-clock"></i> Please wait ${remainingMins} minutes`;
+            toast.className = "show";
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3500);
+            return;
         }
+    }
 
+    const bugTypeElement = document.querySelector('input[name="bugType"]:checked');
+    const platoIdInput = document.getElementById('plato-id');
+    const bugDescInput = document.getElementById('bug-desc');
+    
+    const platoId = platoIdInput.value.trim();
+    const bugDesc = bugDescInput.value.trim();
+    
+    clearInputError('plato-id'); 
+    clearInputError('bug-desc');
+    let hasError = false;
+
+    if(!bugTypeElement) {
+        const toast = document.getElementById("toast");
+        toast.innerHTML = isAr ? `<i class="fa-solid fa-circle-exclamation"></i> يرجى اختيار نوع المشكلة` : `<i class="fa-solid fa-circle-exclamation"></i> Please select issue type`;
+        toast.className = "show"; 
+        setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2500); 
+        return;
+    }
+
+    if (platoId.length < 3 || platoId.length > 12) {
+        document.getElementById('plato-id-error').innerText = isAr ? "يجب أن يكون اليوزر بين 3 و 12 حرفاً" : "ID must be between 3 and 12 characters";
+        document.getElementById('plato-id-error').style.display = 'block'; 
+        platoIdInput.classList.add('input-error'); 
+        hasError = true;
+    } else if (!/^[a-zA-Z0-9_]+$/.test(platoId)) {
+        document.getElementById('plato-id-error').innerText = isAr ? "يوزر غير صالح. استخدم A-Z و 0-9 و _ فقط" : "Invalid ID. Use A-Z, 0-9 and _ only";
+        document.getElementById('plato-id-error').style.display = 'block'; 
+        platoIdInput.classList.add('input-error'); 
+        hasError = true;
+    }
+
+    if (!bugDesc) {
+        document.getElementById('bug-desc-error').innerText = isAr ? "يرجى كتابة وصف المشكلة" : "Please describe the issue";
+        document.getElementById('bug-desc-error').style.display = 'block'; 
+        bugDescInput.classList.add('input-error'); 
+        hasError = true;
+    }
+    if (hasError) return;
+
+    let userIP = "Unknown";
+    try { 
+        const ipRes = await fetch("https://api64.ipify.org?format=json"); 
+        const ipData = await ipRes.json(); 
+        userIP = ipData.ip; 
+    } catch(e) { 
+        try {
+            const ipRes2 = await fetch("https://api.myip.com");
+            const ipData2 = await ipRes2.json();
+            userIP = ipData2.ip;
+        } catch(e2) {}
+    }
+
+    const bugType = bugTypeElement.value;
+    const scriptURL = "https://script.google.com/macros/s/AKfycbwiDxkPrsNvBwCIOl5GQsNqV5HqgyqS4QBrC-c4kYsLa8YaQ7Jnpu4G_VxuAeW9pKQD/exec"; 
+
+    const submitBtn = document.querySelector('#bug-details .submit-btn');
+    const originalText = submitBtn.innerText;
+    submitBtn.innerText = isAr ? 'جاري الإرسال...' : 'Sending...';
+    submitBtn.disabled = true;
+
+    try {
+        const formData = new URLSearchParams();
+        formData.append("plato_id", platoId);
+        formData.append("issue_type", bugType);
+        formData.append("description", bugDesc);
+        formData.append("ip", userIP);
+
+        const fetchPromise = fetch(scriptURL, { 
+            method: 'POST',
+            mode: "no-cors", 
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: formData.toString()
+        });
+        
+        const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 8000));
+        await Promise.race([fetchPromise, timeoutPromise]);
+        
+        safeSetStorage('last_bug_report', Date.now().toString());
+        safeSetSession('last_bug_report_session', Date.now().toString());
+
+        const toast = document.getElementById("toast");
+        toast.innerHTML = isAr ? `<i class="fa-solid fa-check"></i> تم إرسال البلاغ بنجاح` : `<i class="fa-solid fa-check"></i> Report Submitted Successfully`;
+        toast.className = "show"; 
+        setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000); 
+        hideBugForm();
+    } catch (err) {
+        const toast = document.getElementById("toast");
+        toast.innerHTML = isAr ? `<i class="fa-solid fa-xmark"></i> تعذر الإرسال: تأكد من اتصالك بالانترنت` : `<i class="fa-solid fa-xmark"></i> Network Error`;
+        toast.className = "show"; 
+        setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+    } finally { 
+        submitBtn.innerText = originalText; 
+        submitBtn.disabled = false; 
+    }
+}
         const serverThemes = {
             'english': { bg: 'var(--eng-bg)', text: 'var(--eng-text)', nameColor: 'var(--eng-name)', shadow: 'none', textStroke: 'var(--eng-text-stroke)', badgeGlow: 'var(--eng-badge-glow)', badgeBorder: '1px solid #ffffff', profileBorder: '2px solid #000000', profileGlow: 'var(--eng-profile-glow)' },
             'persian': { bg: '#C92C23', text: '#ffffff', nameColor: '#C92C23', shadow: 'none', badgeGlow: '0 2px 5px rgba(0,0,0,0.5)', badgeBorder: 'none', profileBorder: '2px solid rgba(255,255,255,0.2)', profileGlow: '0 0 15px #C92C23' },
