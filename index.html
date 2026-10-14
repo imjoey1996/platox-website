@@ -303,7 +303,7 @@
         .tour-card { padding: 20px; overflow: hidden; position: relative;}
         .tour-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary); box-shadow: 0 0 15px var(--btn-active-glow); }
         html[dir="ltr"] .tour-card::before { left: auto; right: 0; }
-        .tour-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; flex-wrap: gap: 10px;}
+        .tour-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;}
         .tour-title-box { display: flex; align-items: center; gap: 10px; }
         .tour-title { font-size: 1.15rem; font-weight: 900; color: var(--text-main); }
         .countdown-box { background: rgba(220, 38, 38, 0.15); border: 1px solid rgba(220, 38, 38, 0.4); color: #ef4444; padding: 4px 10px; border-radius: 4px; font-weight: bold; font-size: 14px; display: flex; align-items: center; gap: 6px; }
@@ -512,7 +512,7 @@
                 
                 <div style="background: rgba(0, 0, 0, 0.4); border: 1px dashed var(--glass-border); border-radius: 12px; padding: 14px 20px; margin-bottom: 25px; display: flex; align-items: center; justify-content: space-between; direction: ltr;">
                     <span style="color: var(--primary); font-family: 'Rajdhani', sans-serif; font-size: 18px; font-weight: 900;">yyy@platoxar.com</span>
-                    <button type="button" onclick="navigator.clipboard.writeText('yyy@platoxar.com'); showToast('تم نسخ البريد بنجاح!');" style="background: var(--primary); color: #fff; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 13px; font-family: 'Cairo', sans-serif;">
+                    <button type="button" onclick="navigator.clipboard.writeText('yyy@platoxar.com'); showToast(document.documentElement.lang === 'ar' ? 'تم نسخ البريد بنجاح!' : 'Email copied successfully!');" style="background: var(--primary); color: #fff; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 13px; font-family: 'Cairo', sans-serif;">
                         <i class="fa-solid fa-copy"></i> <span data-i18n="copy_btn">نسخ</span>
                     </button>
                 </div>
@@ -626,28 +626,28 @@
             <h2 class="section-title" data-i18n="links_title">مواقع ذات صلة</h2>
             <div class="links-grid">
                 <a href="https://platoapp.com/en" target="_blank" rel="noopener noreferrer" class="link-card glass-panel">
-                    <img src="https://i.postimg.cc/7PfX0Z91/IMG-4517.png" alt="Plato Web" class="link-brand-icon">
+                    <img src="https://i.postimg.cc/7PfX0Z91/IMG-4517.png" alt="Plato Web" class="link-brand-icon" loading="lazy">
                     <div class="link-info">
                         <span class="link-title num-font">Plato Web</span>
                         <span class="link-sub" data-i18n="link_plato_desc">الموقع الرسمي والأساسي للعبة بلاتو، ويضم المعلومات والخدمات الرئيسية المتعلقة باللعبة.</span>
                     </div>
                 </a>
                 <a href="https://platopedia.com/profilebuilder" target="_blank" rel="noopener noreferrer" class="link-card glass-panel">
-                    <img src="https://i.postimg.cc/W4GxRbCr/IMG-8300.png" alt="Platopedia" class="link-brand-icon">
+                    <img src="https://i.postimg.cc/W4GxRbCr/IMG-8300.png" alt="Platopedia" class="link-brand-icon" loading="lazy">
                     <div class="link-info">
                         <span class="link-title num-font" data-i18n="link_platopedia">Platopedia</span>
                         <span class="link-sub" data-i18n="link_platopedia_desc">موسوعة متخصصة في بلاتو، توفر معلومات شاملة حول العناصر المتاحة، إلى جانب خيارات تخصيص الملفات الشخصية ومتابعة تفاصيلها.</span>
                     </div>
                 </a>
                 <a href="https://werepedia.com/en" target="_blank" rel="noopener noreferrer" class="link-card glass-panel">
-                    <img src="https://i.postimg.cc/dQLnrV6B/IMG-4515.webp" alt="Werepedia" class="link-brand-icon">
+                    <img src="https://i.postimg.cc/dQLnrV6B/IMG-4515.webp" alt="Werepedia" class="link-brand-icon" loading="lazy">
                     <div class="link-info">
                         <span class="link-title num-font" data-i18n="link_werepedia">Werepedia</span>
                         <span class="link-sub" data-i18n="link_werepedia_desc">موقع متخصص في لعبة الذئب، يقدّم شرحًا مفصلًا للبطاقات والأدوار، بالإضافة إلى استراتيجيات ونصائح تساعد على تطوير أسلوب اللعب.</span>
                     </div>
                 </a>
                 <a href="https://platoapp.com/en/in-app/how-to-play/match3battle/monsterpedia" target="_blank" rel="noopener noreferrer" class="link-card glass-panel">
-                    <img src="https://i.postimg.cc/44mwVxPb/IMG-4516.png" alt="Monsterpedia" class="link-brand-icon">
+                    <img src="https://i.postimg.cc/44mwVxPb/IMG-4516.png" alt="Monsterpedia" class="link-brand-icon" loading="lazy">
                     <div class="link-info">
                         <span class="link-title num-font" data-i18n="link_monsterpedia">Monsterpedia</span>
                         <span class="link-sub" data-i18n="link_monsterpedia_desc">موسوعة متخصصة في لعبة الوحوش، تشرح محتوى اللعبة بالتفصيل.</span>
@@ -878,7 +878,6 @@
     </nav>
 
     <div id="toast"></div>
-
     <script>
         let cachedSheetRows = null;
         let newsCardsData = [];
@@ -898,7 +897,7 @@
 
         function showToast(msg) {
             const toast = document.getElementById("toast");
-            toast.innerHTML = `<i class="fa-solid fa-check"></i> ${msg}`;
+            toast.innerHTML = `<i class="fa-solid fa-check"></i> ${escapeHTML(msg)}`;
             toast.className = "show";
             setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2500);
         }
@@ -1022,7 +1021,8 @@
 
             if (currentLatestWeekly && currentLatestWeekly.id !== seenWeekly) {
                 hasNewExplore = true;
-                const safeTitle = escapeHTML(currentLatestWeekly.display);
+                const defaultWeeklyTitle = isAr ? 'عناصر جديدة' : 'New Items';
+                const safeTitle = escapeHTML(currentLatestWeekly.display || defaultWeeklyTitle);
                 html += `
                 <div class="notif-item" onclick="markSeenAndGo('weekly', '${currentLatestWeekly.id}', 'explore', 'weekly-showcase')">
                     <i class="fa-solid fa-gift" style="color:#a855f7;"></i> 
@@ -1040,8 +1040,8 @@
             notifContent.innerHTML = html;
 
             const bellDot = document.getElementById('nav-dot-bell');
-            const homeDot = document.getElementById('dot-home');
-            const exploreDot = document.getElementById('dot-explore');
+            const homeDot = document.getElementById('nav-dot-home') || document.getElementById('dot-home');
+            const exploreDot = document.getElementById('nav-dot-explore') || document.getElementById('dot-explore');
 
             if (hasNewHome || hasNewExplore) bellDot.classList.add('active-dot'); 
             else bellDot.classList.remove('active-dot');
@@ -1064,7 +1064,8 @@
         function copyAdminID(id) {
             navigator.clipboard.writeText(id).then(() => {
                 const toast = document.getElementById("toast");
-                toast.innerHTML = (document.documentElement.getAttribute('lang') === 'ar') ? `<i class="fa-solid fa-check"></i> تم النسخ: ${id}` : `<i class="fa-solid fa-check"></i> Copied: ${id}`;
+                const safeId = escapeHTML(id);
+                toast.innerHTML = (document.documentElement.getAttribute('lang') === 'ar') ? `<i class="fa-solid fa-check"></i> تم النسخ: ${safeId}` : `<i class="fa-solid fa-check"></i> Copied: ${safeId}`;
                 toast.className = "show";
                 setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2500);
             });
@@ -1109,17 +1110,18 @@
                 }
                 const bdayHTML = bdayText ? `<div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: var(--primary);"></i> <span>${bdayText}</span></div>` : '';
                 
-                const descText = currentLang === 'ar' && leader.desc.ar ? escapeHTML(leader.desc.ar) : escapeHTML(leader.desc.en);
+                const descText = currentLang === 'ar' && leader.desc.ar ? escapeHTML(leader.desc.ar) : escapeHTML(leader.desc.en || leader.desc.ar);
                 const descHTML = descText ? `<p class="leader-desc">${descText}</p>` : "";
                 
-                const cleanImg = leader.img ? escapeHTML(leader.img) : `https://ui-avatars.com/api/?name=${escapeHTML(leader.name)}&background=ffffff&color=000&bold=true`;
+                const safeName = escapeHTML(leader.name);
+                const cleanImg = leader.img ? escapeHTML(leader.img) : `https://ui-avatars.com/api/?name=${encodeURIComponent(leader.name)}&background=ffffff&color=000&bold=true`;
 
                 htmlStr += `
-                <div class="card glass-panel card-${escapeHTML(leader.name).toLowerCase()}" style="border-top: 2px solid rgba(255,255,255,0.5); border-bottom: 2px solid rgba(255,255,255,0.5); box-shadow: 0 -8px 20px rgba(255,255,255,0.2), 0 8px 20px rgba(255,255,255,0.2);">
-                    <img src="${cleanImg}" alt="${escapeHTML(leader.name)}">
-                    <div class="leader-name-box copy-admin-btn" data-id="${escapeHTML(leader.name)}" title="انسخ اليوزر">
+                <div class="card glass-panel card-${safeName.toLowerCase()}" style="border-top: 2px solid rgba(255,255,255,0.5); border-bottom: 2px solid rgba(255,255,255,0.5); box-shadow: 0 -8px 20px rgba(255,255,255,0.2), 0 8px 20px rgba(255,255,255,0.2);">
+                    <img src="${cleanImg}" alt="${safeName}" loading="lazy">
+                    <div class="leader-name-box copy-admin-btn" data-id="${safeName}" title="${currentLang === 'ar' ? 'انسخ اليوزر' : 'Copy ID'}">
                         <i class="fa-regular fa-copy leader-copy-icon"></i>
-                        <h3 class="leader-username num-font">${escapeHTML(leader.name)}</h3>
+                        <h3 class="leader-username num-font">${safeName}</h3>
                         <div class="server-badge" style="background: #ffffff; border: 1.5px solid #000000; box-shadow: 0 2px 5px rgba(0,0,0,0.5);">
                             <svg viewBox="0 0 54 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="21" cy="11" r="6" fill="#000000"/>
@@ -1146,8 +1148,10 @@
             
             globalLeadersData.forEach(leader => {
                 const sTheme = serverThemes[leader.server];
+                if (!sTheme) return;
+                const safeName = escapeHTML(leader.name);
                 const cleanImg = leader.img ? escapeHTML(leader.img) : '';
-                const imageSource = cleanImg ? cleanImg : `https://ui-avatars.com/api/?name=${escapeHTML(leader.name)}&background=${sTheme.nameColor.replace('#', '')}&color=fff&bold=true`;
+                const imageSource = cleanImg ? cleanImg : `https://ui-avatars.com/api/?name=${encodeURIComponent(leader.name)}&background=${sTheme.nameColor.replace('#', '')}&color=fff&bold=true`;
                 
                 let bdayText = "";
                 if (leader.birthday && (leader.birthday.en || leader.birthday.ar)) {
@@ -1157,7 +1161,7 @@
                 }
                 const bdayHTML = bdayText ? `<div class="birthday-badge num-font"><i class="fa-solid fa-cake-candles" style="color: var(--primary);"></i> <span>${bdayText}</span></div>` : "";
                 
-                const descText = leader.desc ? (currentLang === 'ar' && leader.desc.ar ? escapeHTML(leader.desc.ar) : escapeHTML(leader.desc.en)) : "";
+                const descText = leader.desc ? (currentLang === 'ar' && leader.desc.ar ? escapeHTML(leader.desc.ar) : escapeHTML(leader.desc.en || leader.desc.ar)) : "";
                 const descHTML = descText ? `<p class="leader-desc">${descText}</p>` : "";
                 
                 const badgeGlowStyle = sTheme.badgeGlow ? `box-shadow: ${sTheme.badgeGlow};` : `box-shadow: 0 2px 5px rgba(0,0,0,0.2);`;
@@ -1176,10 +1180,10 @@
 
                 htmlStr += `
                     <div class="global-leader glass-panel" data-server="${escapeHTML(leader.server)}" style="${cardGlowStyle}">
-                        <img src="${imageSource}" alt="${escapeHTML(leader.name)}" style="${profBorder}">
-                        <div class="leader-name-box copy-admin-btn" data-id="${escapeHTML(leader.name)}" title="انسخ اليوزر">
+                        <img src="${imageSource}" alt="${safeName}" style="${profBorder}" loading="lazy">
+                        <div class="leader-name-box copy-admin-btn" data-id="${safeName}" title="${currentLang === 'ar' ? 'انسخ اليوزر' : 'Copy ID'}">
                             <i class="fa-regular fa-copy leader-copy-icon"></i>
-                            <h3 class="leader-username num-font">${escapeHTML(leader.name)}</h3>
+                            <h3 class="leader-username num-font">${safeName}</h3>
                             <div class="server-badge" style="background: ${sTheme.bg}; ${badgeGlowStyle}${badgeBorder}">
                                 ${badgeSvg}
                             </div>
@@ -1193,6 +1197,7 @@
 
         function filterServer(serverName) {
             const theme = serverThemes[serverName];
+            if (!theme) return;
             document.querySelectorAll('.server-tab').forEach(tab => {
                 if(tab.dataset.target === serverName) {
                     tab.classList.add('active');
@@ -1365,6 +1370,15 @@
                     el.innerText = translations[lang][el.getAttribute('data-i18n')]; 
                 }
             });
+
+            const calcInput = document.getElementById('calcInput');
+            const calcResultCurr = document.getElementById('calcResultCurrency');
+            if (calcInput && translations[lang]) {
+                calcInput.placeholder = calcMode === 'coins' ? translations[lang].placeholderCoins : translations[lang].placeholderPips;
+            }
+            if (calcResultCurr && translations[lang]) {
+                calcResultCurr.innerText = calcMode === 'coins' ? translations[lang].currPips : translations[lang].currCoins;
+            }
             
             renderArabicLeaders(); 
             renderGlobalLeaders(); 
@@ -1392,10 +1406,10 @@
                 const fetchUrl = tourSheetURL + "?_nocache=" + cacheBuster;
 
                 const response = await fetch(fetchUrl, { cache: "no-store" });
-                if (!response.ok) throw new Error("فشل الاتصال بالشيت");
+                if (!response.ok) throw new Error("Network Error");
                 const data = await response.text();
                 
-                if (data.includes('<!DOCTYPE html>')) throw new Error("جوجل أرسلت استجابة غير صالحة");
+                if (data.includes('<!DOCTYPE html>')) throw new Error("Invalid Response");
 
                 const parsedData = parseCSV(data);
                 if(parsedData && parsedData.length > 1) {
@@ -1418,7 +1432,7 @@
                     renderDynamicData(); 
                     renderDailyTip();
                     updateNotificationsDropdown(); 
-                } else { throw new Error("بيانات غير مكتملة"); }
+                } else { throw new Error("Incomplete Data"); }
                 
             } catch (error) { 
                 const fallbackCache = safeGetStorage('plato_data_v3');
@@ -1444,9 +1458,9 @@
                 } else {
                     const isLtr = document.documentElement.getAttribute('lang') === 'en';
                     document.getElementById('tournaments-container').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);" data-i18n="no_tournaments">${isLtr ? "No tournaments at the moment." : "لا بطولات في الوقت الحالي."}</p>`;
-                    document.getElementById('spenders-container').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">بيانات الإنفاق غير متوفرة حالياً.</p>`;
-                    document.getElementById('newsSlider').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">تعذر الاتصال بالشبكة.</p>`;
-                    document.getElementById('tip-content').innerText = "لا توجد نصائح متوفرة حالياً.";
+                    document.getElementById('spenders-container').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">${isLtr ? "Spending data not available at the moment." : "بيانات الإنفاق غير متوفرة حالياً."}</p>`;
+                    document.getElementById('newsSlider').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">${isLtr ? "Network connection failed." : "تعذر الاتصال بالشبكة."}</p>`;
+                    document.getElementById('tip-content').innerText = isLtr ? "No tips available at the moment." : "لا توجد نصائح متوفرة حالياً.";
                     document.getElementById('oldest-players-container').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">${isLtr ? "Data not available at the moment." : "بيانات اللاعبين غير متوفرة حالياً."}</p>`;
                     document.getElementById('show-more-players').style.display = 'none';
                     document.getElementById('arabic-leaders-grid').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">${isLtr ? "Data not available at the moment." : "بيانات القادة غير متوفرة حالياً."}</p>`;
@@ -1461,7 +1475,7 @@
             if (validTips.length > 0 && randomTipIndex !== -1) {
                 const tip = validTips[randomTipIndex];
                 const displayTip = currentLang === 'ar' ? (tip.ar || tip.en) : (tip.en || tip.ar);
-                tipEl.innerText = escapeHTML(displayTip);
+                tipEl.innerText = displayTip;
             } else {
                 tipEl.innerText = currentLang === 'ar' ? "العمل بذكاء يختصر مسافات العمل بجهد." : "Work smarter, not harder.";
             }
@@ -1485,12 +1499,17 @@
             buildNewsHTML();
         }
         
-        function shareNews(title) {
+        function shareNews(index) {
+            const isAr = document.documentElement.getAttribute('lang') === 'ar';
+            const cols = newsCardsData[index];
+            const titleAr = cols ? (cols[2] || '').trim() : '';
+            const titleEn = cols ? (cols[4] || '').trim() : '';
+            const title = isAr ? titleAr : (titleEn || titleAr);
             if (navigator.share) {
                 navigator.share({ title: title, url: window.location.href }).catch(console.error);
             } else {
                 navigator.clipboard.writeText(window.location.href);
-                showToast(document.documentElement.lang === 'ar' ? "تم نسخ الرابط!" : "Link Copied!");
+                showToast(isAr ? "تم نسخ الرابط!" : "Link Copied!");
             }
         }
 
@@ -1511,7 +1530,7 @@
             let sliderHTML = ''; let dotsHTML = '';
 
             if(newsCardsData.length === 0) {
-                slider.innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">لا توجد أخبار حالياً.</p>`;
+                slider.innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">${isAr ? 'لا توجد أخبار حالياً.' : 'No news available at the moment.'}</p>`;
                 return;
             }
 
@@ -1554,7 +1573,7 @@
                         <p class="news-body">${displayBody}</p>
                         
                         <div style="display:flex; justify-content:flex-end; margin-top: auto; padding-top: 15px; border-top: 1px solid var(--glass-border);">
-                            <button class="nav-btn share-btn" style="padding: 6px 15px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius:8px;" onclick="shareNews('${displayTitle.replace(/'/g, "\\'")}')"><i class="fa-solid fa-share-nodes"></i></button>
+                            <button type="button" class="nav-btn share-btn" style="padding: 6px 15px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius:8px;" onclick="shareNews(${index})"><i class="fa-solid fa-share-nodes"></i></button>
                         </div>
                     </div>`;
                 dotsHTML += `<div class="dot ${index === 0 ? 'active' : ''}"></div>`;
@@ -1617,19 +1636,19 @@
             const firstRow = cachedSheetRows[0]; 
             if (firstRow) {
                 const videoUrl = firstRow[6] ? escapeHTML(firstRow[6].trim()) : ""; 
-                const weekName = escapeHTML(firstRow[7] ? firstRow[7].trim() : ""); 
+                const rawWeekName = firstRow[7] ? firstRow[7].trim() : ""; 
                 const vidEl = document.getElementById('weekly-video'); const showcaseSec = document.getElementById('weekly-showcase'); const showcaseDiv = document.getElementById('weekly-divider'); const weekNameEl = document.getElementById('weekly-week-name');
                 if (videoUrl) { 
                     if (vidEl.getAttribute('src') !== videoUrl) vidEl.src = videoUrl;
-                    if (weekName) { 
-                        weekNameEl.innerText = weekName; 
+                    if (rawWeekName) { 
+                        weekNameEl.innerText = rawWeekName; 
                         weekNameEl.style.display = 'block'; 
                     } else { 
                         weekNameEl.style.display = 'none'; 
                     }
                     currentLatestWeekly = { 
-                        id: 'weekly_' + hashCode(weekName + videoUrl),
-                        display: weekName || 'عناصر جديدة'
+                        id: 'weekly_' + hashCode(rawWeekName + videoUrl),
+                        display: rawWeekName
                     };
                     showcaseSec.style.display = 'flex'; if(showcaseDiv) showcaseDiv.style.display = 'flex';
                 } else { 
@@ -1655,13 +1674,13 @@
 
             cachedSheetRows.forEach((cols) => {
                 if(cols.length >= 24) {
-                    const lServer = escapeHTML(cols[22] ? cols[22].trim().toLowerCase() : "");
-                    const lName = escapeHTML(cols[23] ? cols[23].trim() : "");
-                    const lImg = escapeHTML(cols[24] ? cols[24].trim() : "");
-                    const lDescEn = escapeHTML(cols[25] ? cols[25].trim() : "");
-                    const lDescAr = escapeHTML(cols[26] ? cols[26].trim() : "");
-                    const lBdayEn = escapeHTML(cols[27] ? cols[27].trim() : "");
-                    const lBdayAr = escapeHTML(cols[28] ? cols[28].trim() : "");
+                    const lServer = cols[22] ? cols[22].trim().toLowerCase() : "";
+                    const lName = cols[23] ? cols[23].trim() : "";
+                    const lImg = cols[24] ? cols[24].trim() : "";
+                    const lDescEn = cols[25] ? cols[25].trim() : "";
+                    const lDescAr = cols[26] ? cols[26].trim() : "";
+                    const lBdayEn = cols[27] ? cols[27].trim() : "";
+                    const lBdayAr = cols[28] ? cols[28].trim() : "";
                     
                     if (lName && lServer) {
                         let leaderObj = {
@@ -1739,7 +1758,7 @@
                 else if (rankNum === '3') rankClass = 'rank-3';
 
                 const hiddenClass = index >= 3 ? 'hidden-player' : '';
-                const imgTag = player.img ? `<img src="${player.img}" class="list-img" alt="${player.user}" onerror="this.style.display='none'">` : ``;
+                const imgTag = player.img ? `<img src="${player.img}" class="list-img" alt="${player.user}" loading="lazy" onerror="this.style.display='none'">` : ``;
 
                 playersHTML += `
                     <div class="list-row glass-panel ${rankClass}${hiddenClass}">
@@ -1748,7 +1767,7 @@
                             ${imgTag}
                             <div class="list-name num-font">${player.user}</div>
                         </div>
-                        <div class="score-val num-font"><span>${player.baseDays}</span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">${isLtr ? 'Days' : 'يوم'}</span></div>
+                        <div class="score-val num-font"><span>${player.baseDays}</span> <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="th_days">${isLtr ? 'DAYS' : 'يوم'}</span></div>
                     </div>`;
             });
 
@@ -1785,7 +1804,7 @@
             sortedTournaments.forEach(tour => {
                 const displayName = currentLang === 'ar' ? tour.nameAr : (tour.nameEn || tour.nameAr);
                 const borderStyle = isLtr ? `border-left-color: var(--primary);` : `border-right-color: var(--primary);`;
-                const imgTag = tour.image ? `<img src="${tour.image}" class="entity-img" style="border-radius:8px; width:35px; height:35px; object-fit:cover;" onerror="this.style.display='none'">` : ``;
+                const imgTag = tour.image ? `<img src="${tour.image}" class="entity-img" style="border-radius:8px; width:35px; height:35px; object-fit:cover;" loading="lazy" onerror="this.style.display='none'">` : ``;
 
                 tourHTML += `
                     <div class="tour-card glass-panel" style="${borderStyle}">
@@ -1796,7 +1815,7 @@
                         <div class="tour-footer" style="margin-top: 15px;">
                             <div class="info-badge"><i class="fa-solid fa-gamepad"></i> <span>${tour.game}</span></div>
                             <div class="info-badge prize-badge"><i class="fa-solid fa-trophy"></i> <span class="num-font">${tour.prizeStr}</span></div>
-                            <div class="info-badge admin-copy-btn" data-id="${escapeHTML(tour.admin)}" title="انسخ اليوزر"><i class="fa-solid fa-copy"></i> <span class="num-font">${tour.admin}</span></div>
+                            <div class="info-badge admin-copy-btn" data-id="${tour.admin}" title="${isLtr ? 'Copy ID' : 'انسخ اليوزر'}"><i class="fa-solid fa-copy"></i> <span class="num-font">${tour.admin}</span></div>
                         </div>
                     </div>`;
             });
@@ -1816,7 +1835,7 @@
                 else if (rankNum === '3') { rankClass = 'rank-3'; color = '#cd7f32'; barBg = '#cd7f32'; }
 
                 let displayScore = group.total >= 1000000 ? (group.total / 1000000) + 'M' : (group.total >= 1000 ? (group.total / 1000) + 'K' : group.total);
-                const imgTag = group.image ? `<img src="${group.image}" class="list-img group-img" style="object-fit:cover;" onerror="this.style.display='none'">` : ``;
+                const imgTag = group.image ? `<img src="${group.image}" class="list-img group-img" style="object-fit:cover;" loading="lazy" onerror="this.style.display='none'">` : ``;
 
                 spendHTML += `
                     <div class="list-row glass-panel ${rankClass}">
@@ -1833,7 +1852,7 @@
             });
             
             if (tourHTML === '') tourHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);" data-i18n="no_tournaments">${isLtr ? "No tournaments at the moment." : "لا بطولات في الوقت الحالي."}</p>`;
-            if (spendHTML === '') spendHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">لم يتم تسجيل بيانات إنفاق حتى الآن.</p>`;
+            if (spendHTML === '') spendHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">${isLtr ? "No spending data recorded yet." : "لم يتم تسجيل بيانات إنفاق حتى الآن."}</p>`;
 
             tourContainer.innerHTML = tourHTML; spendContainer.innerHTML = spendHTML;
             activeTourTimers = Array.from(tourContainer.querySelectorAll('.sheet-timer')).map(el => ({ el: el, valSpan: el.querySelector('.countdown-val'), targetMs: parseInt(el.getAttribute('data-time')) }));
