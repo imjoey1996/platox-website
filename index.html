@@ -276,7 +276,7 @@
         .global-leader { width: 100%; padding: 20px 15px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px; transition: transform 0.2s; height: 100%; }
         .global-leader img { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.2); margin-bottom: 2px; }
         
-        .leader-name-box { display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 8px; cursor: pointer; margin-bottom: 4px; width: 100%; white-space: nowrap; flex-wrap: nowrap;}
+        .leader-name-box { display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 4px !important; cursor: pointer; margin-bottom: 4px; width: 100%; white-space: nowrap; flex-wrap: nowrap;}
         .leader-copy-icon { font-size: 12px; color: var(--text-muted); flex-shrink: 0;}
         
         .leader-username { color: var(--primary) !important; font-family: 'Rajdhani', 'Cairo', sans-serif !important; font-weight: 900 !important; margin: 0; flex-shrink: 1; overflow: hidden; text-overflow: ellipsis; text-shadow: none !important; -webkit-text-stroke: 0 !important; }
@@ -1121,6 +1121,7 @@
         };
 
         function renderArabicLeaders() {
+            if (!cachedSheetRows) return;
             const container = document.getElementById('arabic-leaders-grid');
             let htmlStr = '';
             const currentLang = document.documentElement.getAttribute('lang') || 'en';
@@ -1161,6 +1162,7 @@
         }
 
         function renderGlobalLeaders() {
+            if (!cachedSheetRows) return;
             const container = document.getElementById('global-leaders-grid');
             let htmlStr = '';
             const currentLang = document.documentElement.getAttribute('lang') || 'en';
@@ -2076,6 +2078,17 @@
                 nSlider.addEventListener('mouseleave', () => isDown = false); nSlider.addEventListener('mouseup', () => isDown = false);
                 nSlider.addEventListener('mousemove', (e) => { if (!isDown) return; e.preventDefault(); const x = e.pageX - nSlider.offsetLeft; const walk = (x - startX) * 2; nSlider.scrollLeft = sLeft - walk; });
             }
+
+            const currentLang = document.documentElement.getAttribute('lang') || 'en';
+            const loadMsg = currentLang === 'ar' ? 'جاري التحديث...' : 'Updating...';
+            const loaderHTML = `<div style="width:100%; text-align:center; padding: 40px 20px; color: var(--primary);"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:32px; margin-bottom:12px; filter: drop-shadow(0 0 10px var(--btn-active-glow));"></i><br><span data-i18n="pull_refresh" style="font-weight:900; font-size:15px; font-family: 'Cairo', 'Rajdhani', sans-serif; opacity: 0.8; animation: neon-flicker 2s infinite alternate;">${loadMsg}</span></div>`;
+
+            document.getElementById('newsSlider').innerHTML = loaderHTML;
+            document.getElementById('arabic-leaders-grid').innerHTML = loaderHTML;
+            document.getElementById('global-leaders-grid').innerHTML = loaderHTML;
+            document.getElementById('tournaments-container').innerHTML = loaderHTML;
+            document.getElementById('spenders-container').innerHTML = loaderHTML;
+            document.getElementById('oldest-players-container').innerHTML = loaderHTML;
 
             loadDynamicData();
 
