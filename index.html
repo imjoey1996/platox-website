@@ -1197,11 +1197,11 @@
             }
         }
 
-        function toggleStaffList() {
+                function toggleStaffList() {
             isStaffExpanded = !isStaffExpanded;
             const cards = document.querySelectorAll('#discord-staff-grid .staff-card');
             cards.forEach((card, idx) => {
-                if (idx >= 5) {
+                if (idx >= 3) {
                     card.classList.toggle('hidden-staff', !isStaffExpanded);
                 }
             });
@@ -1215,6 +1215,7 @@
 
             const currentLang = document.documentElement.getAttribute('lang') || 'en';
             const filtered = discordStaffData.filter(member => member.role === role);
+            const hasLimit = (role === 'trusted');
 
             const roleLabels = {
                 owners: 'OWNER',
@@ -1249,7 +1250,7 @@
                        </div>`
                     : '';
 
-                const hiddenClass = (idx >= 5 && !isStaffExpanded) ? ' hidden-staff' : '';
+                const hiddenClass = (hasLimit && idx >= 3 && !isStaffExpanded) ? ' hidden-staff' : '';
                 const delay = Math.min(idx * 40, 200);
                 htmlStr += `
                     <div class="staff-card glass-panel role-${member.role}${hiddenClass}" style="animation-delay: ${delay}ms;">
@@ -1268,7 +1269,7 @@
 
             container.innerHTML = htmlStr;
             if (toggleBtn) {
-                if (filtered.length > 5) {
+                if (hasLimit && filtered.length > 3) {
                     toggleBtn.style.display = 'inline-flex';
                     updateStaffToggleBtn();
                 } else {
@@ -1276,7 +1277,7 @@
                 }
             }
         }
-
+        
         function renderArabicLeaders() {
             if (!cachedSheetRows) return;
             const container = document.getElementById('arabic-leaders-grid');
