@@ -5,7 +5,7 @@
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://worldtimeapi.org https://timeapi.io https://docs.google.com https://script.google.com https://script.googleusercontent.com https://api.ipify.org; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline'; img-src 'self' data: https:; media-src https: 'self';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://docs.google.com https://script.google.com https://script.googleusercontent.com https://api.ipify.org; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline'; img-src 'self' data: https:; media-src https: 'self';">
     
     <title>PlatoX | مجتمع اللاعبين العرب</title>
     
@@ -78,7 +78,7 @@
 
         ::selection { background: var(--primary); color: var(--bg-main); text-shadow: none; }
 
-        button, a, input, textarea, .slider-controls, .nav-btn, .nav-label, .arrow-icon, .bottom-nav-item, .lang-btn, .fit-btn, .submit-btn, .cancel-btn {
+        button, a, input, textarea, .slider-controls, .nav-btn, .nav-label, .arrow-icon, .bottom-nav-item, .lang-btn, .fit-btn, .submit-btn, .cancel-btn, .staff-tab-btn {
             touch-action: manipulation !important; user-select: none; -webkit-user-select: none;
         }
         
@@ -93,7 +93,6 @@
         body { color: var(--text-main); font-family: 'Cairo', sans-serif; overflow-x: clip; width: 100%; background-color: transparent; position: relative; padding-bottom: calc(115px + env(safe-area-inset-bottom)); padding-top: env(safe-area-inset-top); -webkit-font-smoothing: antialiased; }
         html[dir="ltr"] body, .num-font, .navbar h1 { font-family: 'Rajdhani', sans-serif; }
 
-        /* خلفية ثابتة بتدرج لوني أنيق وبارز */
         .static-gaming-bg {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh; z-index: -3; pointer-events: none;
             background: linear-gradient(145deg, #2a2a2a 0%, #050505 45%, #1a1a1a 100%);
@@ -207,6 +206,7 @@
         [data-theme="light"] .dot { background: rgba(0,0,0,0.2); }
         
         .more-news-link { display: flex; justify-content: center; align-items: center; width: 100%; gap: 8px; color: var(--text-muted); text-decoration: none; transition: 0.2s; font-weight: 700; background: var(--bg-card); padding: 10px 24px; border-radius: 12px; border: 1px solid var(--glass-border); backdrop-filter: blur(5px); font-family: inherit; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; height: 42px;}
+        .more-news-link:hover { color: var(--primary); border-color: var(--primary); }
 
         .fit-btn { padding: 8px 18px; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; transition: 0.2s; font-family: inherit; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; width: fit-content; flex: none; white-space: nowrap; height: 38px;}
         .submit-btn, .cancel-btn { border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; transition: 0.2s; font-family: inherit; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; flex: 1; padding: 10px; white-space: nowrap; height: 42px;}
@@ -245,34 +245,165 @@
         
         .leader-username { color: var(--primary) !important; font-family: 'Rajdhani', 'Cairo', sans-serif !important; font-weight: 900 !important; margin: 0; flex-shrink: 1; overflow: hidden; text-overflow: ellipsis; text-shadow: none !important; -webkit-text-stroke: 0 !important; }
         
-       .server-badge { 
-    flex-shrink: 0; 
-    height: 16px;
-    margin: 0 !important; 
-    display: inline-flex; 
-    align-items: center; 
-    justify-content: center; 
-}
+        .server-badge { flex-shrink: 0; height: 16px; margin: 0 !important; display: inline-flex; align-items: center; justify-content: center; }
+        .card .server-badge img, .global-leader .server-badge img, .server-badge img { width: auto !important; height: 16px !important; max-height: 16px !important; border-radius: 0 !important; border: none !important; margin: 0 !important; padding: 0 !important; background: transparent !important; object-fit: contain !important; pointer-events: none; }
+        .server-badge img[alt="desi Badge"] { transform: scale(2.0) !important; margin: 0 6px !important; }
 
-.card .server-badge img,
-.global-leader .server-badge img,
-.server-badge img { 
-    width: auto !important; 
-    height: 16px !important;
-    max-height: 16px !important;
-    border-radius: 0 !important;
-    border: none !important;
-    margin: 0 !important; 
-    padding: 0 !important;
-    background: transparent !important;
-    object-fit: contain !important; 
-    pointer-events: none; 
-}
+        /* PlatoX Team on Discord */
+        @keyframes staffFadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .staff-tabs {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            width: 100%;
+            max-width: 380px;
+            padding: 5px;
+            margin-bottom: 25px;
+            border-radius: 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .staff-tab-btn {
+            flex: 1;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            padding: 9px 14px;
+            border-radius: 10px;
+            font-family: 'Rajdhani', 'Cairo', sans-serif;
+            font-size: 14.5px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+        .staff-tab-btn.active {
+            background: var(--primary);
+            color: var(--bg-main);
+            font-weight: 900;
+            box-shadow: 0 0 16px var(--btn-active-glow);
+        }
+        .staff-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 14px;
+            width: 100%;
+            max-width: 780px;
+        }
+        .staff-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 15px 16px;
+            border-radius: 14px;
+            opacity: 0;
+            animation: staffFadeIn 0.25s ease forwards;
+        }
+        .staff-card.role-owners {
+            border-inline-start: 3px solid var(--primary);
+        }
+        .staff-avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1.5px solid var(--glass-border);
+            flex-shrink: 0;
+        }
+        .staff-card.role-owners .staff-avatar {
+            border-color: var(--primary);
+            box-shadow: 0 0 12px var(--btn-active-glow);
+        }
+        .staff-info {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            min-width: 0;
+            flex: 1;
+            text-align: start;
+        }
+        .staff-top-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+        .staff-name {
+            font-size: 1.05rem;
+            font-weight: 900;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .staff-role-pill {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 10.5px;
+            font-weight: 900;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+        [data-theme="light"] .staff-role-pill {
+            background: rgba(0, 0, 0, 0.05);
+        }
+        .staff-card.role-owners .staff-role-pill {
+            background: var(--primary);
+            color: var(--bg-main);
+            border-color: var(--primary);
+        }
+        .staff-bio {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .staff-discord {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 3px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            width: fit-content;
+            max-width: 100%;
+            transition: color 0.2s ease;
+        }
+        .staff-discord:hover {
+            color: var(--primary);
+        }
+        .staff-discord span {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .staff-discord i.fa-copy {
+            font-size: 11px;
+            opacity: 0.7;
+        }
+        .staff-help-wrapper {
+            width: 100%;
+            max-width: 400px;
+            margin-top: 20px;
+        }
 
-.server-badge img[alt="desi Badge"] {
-    transform: scale(2.0) !important;
-    margin: 0 6px !important; 
-}
         .premium-list { width: 100%; max-width: 700px; display: flex; flex-direction: column; gap: 10px; position: relative; z-index: 2;}
         .list-row { padding: 15px; display: flex; align-items: center; gap: 15px; }
         .rank-num { font-size: 1.3rem; font-weight: 900; color: rgba(255,255,255,0.3); width: 30px; text-align: center; }
@@ -280,29 +411,8 @@
         .rank-1 .rank-num { color: #d4af37; text-shadow: 0 0 10px rgba(227, 179, 65, 0.5);} .rank-2 .rank-num { color: #cbd5e1; } .rank-3 .rank-num { color: #cd7f32; }
         .list-info { display: flex; align-items: center; gap: 12px; flex: 1; overflow: hidden; }
         .list-img { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 2px solid var(--glass-border); }
-        .group-img { border-radius: 6px; }
         .list-name { font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 1rem; }
-        .progress-container { flex: 1.5; display: flex; flex-direction: column; gap: 5px; justify-content: center;}
-        .progress-track { width: 100%; height: 6px; background: rgba(0,0,0,0.3); border-radius: 10px; overflow: hidden; }
-        [data-theme="light"] .progress-track { background: rgba(0,0,0,0.1); }
-        .progress-fill { height: 100%; border-radius: 10px; }
         .score-val { font-weight: 900; font-size: 1.1rem; }
-
-        .tournaments-grid { width: 100%; max-width: 750px; display: flex; flex-direction: column; gap: 15px; }
-        .tour-card { padding: 20px; overflow: hidden; position: relative;}
-        .tour-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary); box-shadow: 0 0 15px var(--btn-active-glow); }
-        html[dir="ltr"] .tour-card::before { left: auto; right: 0; }
-        .tour-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;}
-        .tour-title-box { display: flex; align-items: center; gap: 10px; }
-        .tour-title { font-size: 1.15rem; font-weight: 900; color: var(--text-main); }
-        .countdown-box { background: rgba(150, 150, 150, 0.1); border: 1px solid var(--glass-border); color: var(--text-main); padding: 4px 10px; border-radius: 4px; font-weight: bold; font-size: 14px; display: flex; align-items: center; gap: 6px; }
-        .tour-desc { color: rgba(255,255,255,0.6); line-height: 1.7; margin-bottom: 15px; font-size: 0.95rem; }
-        [data-theme="light"] .tour-desc { color: var(--text-muted); }
-        .tour-footer { display: flex; gap: 8px; flex-wrap: wrap; }
-        .info-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 5px 12px; border-radius: 4px; color: var(--text-main); font-weight: bold; font-size: 13px; backdrop-filter: blur(5px);}
-        [data-theme="light"] .info-badge { background: rgba(0,0,0,0.05); }
-        .prize-badge { border-color: rgba(227, 179, 65, 0.3); background: rgba(227, 179, 65, 0.1); color: #d4af37; }
-        .admin-copy-btn { cursor: pointer; }
 
         .links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; width: 100%; max-width: 850px; }
         .link-card { display: flex; align-items: center; gap: 15px; padding: 20px; text-decoration: none; color: var(--text-main); border-radius: 16px; position: relative; overflow: hidden; }
@@ -324,7 +434,7 @@
         [data-theme="light"] #toast { background: rgba(255, 255, 255, 0.95); color: #000; }
         #toast.show { visibility: visible; bottom: calc(95px + env(safe-area-inset-bottom)); opacity: 1; }
 
-        .hidden-player { display: none !important; }
+        .hidden-player, .hidden-staff { display: none !important; }
         
         .calc-input-wrapper { position: relative; width: 100%; }
         .calc-input-wrapper input {
@@ -373,6 +483,7 @@
             .grid-container { display: grid !important; grid-template-columns: 1fr !important; gap: 15px; width: 100%; }
             .global-leaders-grid { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 12px; width: 100%; } 
             .links-grid { display: grid !important; grid-template-columns: 1fr !important; gap: 12px; width: 100%; }
+            .staff-grid { grid-template-columns: 1fr !important; gap: 10px; }
             
             .card { padding: 30px 10px; width: 100%; }
             .global-leader { padding: 18px 10px; gap: 8px; }
@@ -380,7 +491,6 @@
             .leader-name-box h3 { font-size: 1.05rem; }
             
             .list-row { padding: 15px 10px; gap: 8px; } .rank-num { font-size: 1rem; width: 20px; } .list-img { width: 30px; height: 30px; } .list-name { font-size: 0.95rem; } .score-val { font-size: 1rem; }
-            .tour-card { padding: 20px 15px; } .tour-title { font-size: 1.05rem; } .tour-footer { flex-direction: column; gap: 8px; } .info-badge { width: 100%; justify-content: center; padding: 6px;}
             .server-tabs { flex-wrap: wrap !important; justify-content: center !important; gap: 10px; padding-bottom: 10px; }
             
             .notif-dropdown { position: fixed; top: 75px; right: 5vw; width: 90vw; max-width: 320px; }
@@ -591,7 +701,6 @@
                     </div>
                 </div>
             </div>
-            
         </section>
 
         <div class="cyber-divider"><div class="center-node"></div></div>
@@ -632,7 +741,6 @@
     </main>
 
     <main id="view-leaders" class="tab-view">
-        
         <section id="leaders-intro">
             <div class="glass-panel" style="width: 100%; max-width: 850px; padding: 30px; border-radius: 16px; margin-bottom: 5px;">
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
@@ -705,7 +813,6 @@
                         <i class="fa-solid fa-paper-plane"></i> <span data-i18n="feedback_btn">تقديم الاقتراحات والملاحظات</span>
                     </a>
                 </div>
-
             </div>
         </section>
 
@@ -755,20 +862,6 @@
 
         <div class="cyber-divider" id="weekly-divider" style="display: none;"><div class="center-node"></div></div>
 
-        <section id="tournaments">
-            <h2 class="section-title" data-i18n="tournaments_title">مركز البطولات</h2>
-            <div class="tournaments-grid" id="tournaments-container"></div>
-        </section>
-
-        <div class="cyber-divider"><div class="center-node"></div></div>
-
-        <section id="top-spending">
-            <h2 class="section-title" data-i18n="spending_title">ترتيب المجموعات الأكثر إنفاقًا</h2>
-            <div class="premium-list" id="spenders-container"></div>
-        </section>
-
-        <div class="cyber-divider"><div class="center-node"></div></div>
-
         <section id="plato-calculator">
             <h2 class="section-title" data-i18n="calc_title">الحاسبة الذكية</h2>
             <div class="glass-panel calc-wrapper" style="width: 100%; max-width: 550px; padding: 25px; border-radius: 16px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px;">
@@ -784,7 +877,7 @@
 
                 <div class="calc-input-wrapper">
                     <input type="text" inputmode="numeric" id="calcInput" class="num-font" placeholder="أدخل عدد الكوينز..." oninput="handleCalcInput(event)">
-                     <img src="https://i.postimg.cc/BvWmQBsP/IMG-0571.png" id="calcInputIcon" class="custom-input-icon" alt="icon">
+                    <img src="https://i.postimg.cc/BvWmQBsP/IMG-0571.png" id="calcInputIcon" class="custom-input-icon" alt="icon">
                 </div>
 
                 <div class="calc-display" style="background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01)); border: 1px solid var(--glass-border); border-radius: 14px; padding: 25px 15px; text-align: center; box-shadow: inset 0 0 10px rgba(0,0,0,0.4); min-height: 130px; display: flex; flex-direction: column; justify-content: center;">
@@ -798,10 +891,31 @@
 
         <div class="cyber-divider"><div class="center-node"></div></div>
 
+        <section id="discord-staff">
+            <h2 class="section-title" data-i18n="staff_title">فريق PlatoX على ديسكورد</h2>
+            <div class="staff-tabs" dir="ltr">
+                <button type="button" class="staff-tab-btn active" data-role="owners" onclick="filterStaff('owners')">Owners</button>
+                <button type="button" class="staff-tab-btn" data-role="admins" onclick="filterStaff('admins')">Admins</button>
+                <button type="button" class="staff-tab-btn" data-role="trusted" onclick="filterStaff('trusted')">Trusted</button>
+            </div>
+            <div class="staff-grid" id="discord-staff-grid"></div>
+            <button type="button" class="cancel-btn" id="show-more-staff" onclick="toggleStaffList()" style="margin-top: 15px; display: none; width: auto; padding: 8px 20px;">
+                <span data-i18n="show_more">عرض المزيد</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="staff-help-wrapper">
+                <a href="https://discord.com/channels/1476420629698711778/1476603091095916738" target="_blank" rel="noopener noreferrer" class="more-news-link">
+                    <i class="fa-brands fa-discord" style="color: var(--text-main);"></i>
+                    <span data-i18n="staff_help_btn">تحتاج مساعدة؟ اضغط هنا للتواصل مع الطاقم</span>
+                </a>
+            </div>
+        </section>
+
+        <div class="cyber-divider"><div class="center-node"></div></div>
+
         <section id="accounts">
             <h2 class="section-title" data-i18n="players_title">اللاعبين الاقدم</h2>
             <div class="premium-list" id="oldest-players-container"></div>
-            <button type="button" class="cancel-btn" id="show-more-players" onclick="showMorePlayers()" style="margin-top: 15px; display: none; width: auto; padding: 8px 20px;">
+            <button type="button" class="cancel-btn" id="show-more-players" onclick="togglePlayersList()" style="margin-top: 15px; display: none; width: auto; padding: 8px 20px;">
                 <span data-i18n="show_more">عرض المزيد</span> <i class="fa-solid fa-chevron-down"></i>
             </button>
         </section>
@@ -840,19 +954,19 @@
     <script>
         let cachedSheetRows = null;
         let newsCardsData = [];
-        let tournamentsList = [];
         let validTips = [];
         let globalLeadersData = []; 
         let arabicLeadersData = []; 
+        let discordStaffData = [];
+        let currentStaffRole = 'owners';
+        let isStaffExpanded = false;
+        let isPlayersExpanded = false;
         let randomTipIndex = -1;
-        
-        let activeTourTimers = [];
 
         let currentLatestNews = null;
-        let currentLatestTour = null;
         let currentLatestWeekly = null;
 
-        const tourSheetURL = "https://script.google.com/macros/s/AKfycbxzPhZs8IMZZVJqBj3-7saEgcb1tDth89raDjTJ9MNM6nEUIHlaq26JfVMmeNL27d0zJg/exec";
+        const sheetURL = "https://script.google.com/macros/s/AKfycbxzPhZs8IMZZVJqBj3-7saEgcb1tDth89raDjTJ9MNM6nEUIHlaq26JfVMmeNL27d0zJg/exec";
 
         function showToast(msg) {
             const toast = document.getElementById("toast");
@@ -948,7 +1062,6 @@
             let html = '';
 
             const seenNews = safeGetStorage('seen_news');
-            const seenTour = safeGetStorage('seen_tour');
             const seenWeekly = safeGetStorage('seen_weekly');
 
             let hasNewHome = false;
@@ -962,18 +1075,6 @@
                     <div class="notif-text-box">
                         <span class="notif-sub" style="color:#3b82f6;">${isAr ? 'تحديث جديد' : 'New Update'}</span>
                         <span class="notif-title">${isAr ? 'تم تحديث لوحة الأخبار' : 'News board updated'}</span>
-                    </div>
-                </div>`;
-            }
-
-            if (currentLatestTour && currentLatestTour.id !== seenTour) {
-                hasNewExplore = true;
-                html += `
-                <div class="notif-item" onclick="markSeenAndGo('tour', '${currentLatestTour.id}', 'explore', 'tournaments')">
-                    <i class="fa-solid fa-trophy" style="color:#eab308;"></i> 
-                    <div class="notif-text-box">
-                        <span class="notif-sub" style="color:#eab308;">${isAr ? 'تحديث البطولات' : 'Tournaments Update'}</span>
-                        <span class="notif-title">${isAr ? 'تم تعديل أو إضافة بطولات جديدة' : 'Tournaments list updated'}</span>
                     </div>
                 </div>`;
             }
@@ -1019,11 +1120,10 @@
             safeSetStorage('theme', newTheme);
             document.getElementById('theme-icon').className = newTheme === 'light' ? 'fa-solid fa-sun theme-toggle' : 'fa-solid fa-moon theme-toggle';
             
-            // Re-render to update global leaders borders depending on theme mode
             renderArabicLeaders();
             renderGlobalLeaders();
+            renderDiscordStaff(currentStaffRole);
             
-            // Re-render tabs if active
             const activeTab = document.querySelector('.server-tab.active');
             if(activeTab) filterServer(activeTab.dataset.target);
         }
@@ -1039,7 +1139,7 @@
         }
 
         document.addEventListener('click', (e) => {
-            const copyBtn = e.target.closest('.copy-admin-btn, .admin-copy-btn');
+            const copyBtn = e.target.closest('.copy-admin-btn');
             if (copyBtn) {
                 const id = copyBtn.getAttribute('data-id');
                 if (id) copyAdminID(id);
@@ -1077,12 +1177,111 @@
             'desi': 'https://i.postimg.cc/HWtKCfJW/IMG-8711.png'
         };
 
+        function filterStaff(role) {
+            currentStaffRole = role;
+            isStaffExpanded = false;
+            document.querySelectorAll('.staff-tab-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.role === role);
+            });
+            renderDiscordStaff(role);
+        }
+
+        function updateStaffToggleBtn() {
+            const btn = document.getElementById('show-more-staff');
+            if (!btn) return;
+            const isAr = document.documentElement.getAttribute('lang') === 'ar';
+            if (isStaffExpanded) {
+                btn.innerHTML = `<span data-i18n="show_less">${isAr ? 'إخفاء' : 'Show Less'}</span> <i class="fa-solid fa-chevron-up"></i>`;
+            } else {
+                btn.innerHTML = `<span data-i18n="show_more">${isAr ? 'عرض المزيد' : 'Show More'}</span> <i class="fa-solid fa-chevron-down"></i>`;
+            }
+        }
+
+        function toggleStaffList() {
+            isStaffExpanded = !isStaffExpanded;
+            const cards = document.querySelectorAll('#discord-staff-grid .staff-card');
+            cards.forEach((card, idx) => {
+                if (idx >= 5) {
+                    card.classList.toggle('hidden-staff', !isStaffExpanded);
+                }
+            });
+            updateStaffToggleBtn();
+        }
+
+        function renderDiscordStaff(role = currentStaffRole) {
+            const container = document.getElementById('discord-staff-grid');
+            const toggleBtn = document.getElementById('show-more-staff');
+            if (!container) return;
+
+            const currentLang = document.documentElement.getAttribute('lang') || 'en';
+            const filtered = discordStaffData.filter(member => member.role === role);
+
+            const roleLabels = {
+                owners: 'OWNER',
+                admins: 'ADMIN',
+                trusted: 'TRUSTED'
+            };
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<p style="grid-column: 1 / -1; text-align:center; width:100%; color: var(--text-muted); padding: 20px 0;">${currentLang === 'ar' ? 'لا يوجد أعضاء مضافين في هذا القسم حالياً.' : 'No staff members listed in this category yet.'}</p>`;
+                if (toggleBtn) toggleBtn.style.display = 'none';
+                return;
+            }
+
+            let htmlStr = '';
+            filtered.forEach((member, idx) => {
+                const safeName = escapeHTML(member.name);
+                const safeDiscord = escapeHTML(member.discord);
+                const rawBio = currentLang === 'ar'
+                    ? (member.bioAr || member.bioEn)
+                    : (member.bioEn || member.bioAr);
+                const safeBio = escapeHTML(rawBio);
+                const avatarSrc = member.img
+                    ? escapeHTML(member.img)
+                    : `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&background=1a1a1a&color=ffffff&bold=true`;
+
+                const bioHTML = safeBio ? `<div class="staff-bio">${safeBio}</div>` : '';
+                const discordHTML = safeDiscord
+                    ? `<div class="staff-discord copy-admin-btn" data-id="${safeDiscord}" title="${currentLang === 'ar' ? 'نسخ يوزر الديسكورد' : 'Copy Discord username'}">
+                            <i class="fa-brands fa-discord"></i>
+                            <span>${safeDiscord}</span>
+                            <i class="fa-regular fa-copy"></i>
+                       </div>`
+                    : '';
+
+                const hiddenClass = (idx >= 5 && !isStaffExpanded) ? ' hidden-staff' : '';
+                const delay = Math.min(idx * 40, 200);
+                htmlStr += `
+                    <div class="staff-card glass-panel role-${member.role}${hiddenClass}" style="animation-delay: ${delay}ms;">
+                        <img src="${avatarSrc}" alt="${safeName}" class="staff-avatar" loading="lazy">
+                        <div class="staff-info">
+                            <div class="staff-top-row">
+                                <span class="staff-name num-font">${safeName}</span>
+                                <span class="staff-role-pill">${roleLabels[member.role] || ''}</span>
+                            </div>
+                            ${bioHTML}
+                            ${discordHTML}
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = htmlStr;
+            if (toggleBtn) {
+                if (filtered.length > 5) {
+                    toggleBtn.style.display = 'inline-flex';
+                    updateStaffToggleBtn();
+                } else {
+                    toggleBtn.style.display = 'none';
+                }
+            }
+        }
+
         function renderArabicLeaders() {
             if (!cachedSheetRows) return;
             const container = document.getElementById('arabic-leaders-grid');
             let htmlStr = '';
             const currentLang = document.documentElement.getAttribute('lang') || 'en';
-            const sTheme = serverThemes['arabic'];
 
             arabicLeadersData.forEach(leader => {
                 let bdayText = "";
@@ -1204,7 +1403,9 @@
                 pull_refresh: "جاري التحديث...", menu_guidelines: "القوانين",
                 about_site_title: "نبذة عن الموقع",
                 about_site_desc: "مجتمع موثوق يُبقي اللاعبين على اطلاع وتواصل، ويوفر لهم الدعم من خلال أحدث أخبار بلاتو، الإرشادات المفيدة، موارد الإبلاغ، وكل ما يهم المجتمع.",
-                leaders_title: "القادة العرب", global_leaders_title: "قادة السيرفرات العالمية", news_board_title: "لوحة أخبار المجتمع", players_title: "اللاعبين الاقدم", spending_title: "ترتيب المجموعات الأكثر إنفاقًا", tournaments_title: "مركز البطولات",
+                leaders_title: "القادة العرب", global_leaders_title: "قادة السيرفرات العالمية", news_board_title: "لوحة أخبار المجتمع", players_title: "اللاعبين الاقدم",
+                staff_title: "فريق PlatoX على ديسكورد",
+                staff_help_btn: "تحتاج مساعدة؟ اضغط هنا للتواصل مع الطاقم",
                 bug_title: "تقديم بلاغ", bug_email_heading: "الإبلاغ المباشر عبر البريد", bug_email_desc: "إذا واجهتك أي ثغرة أو مشكلة تقنية، يمكنك مراسلتنا مباشرة عبر البريد الإلكتروني أدناه مع ذكر يوزرك ووصف المشكلة.", copy_btn: "نسخ", send_email_btn: "إرسال بريد إلكتروني",
                 who_are_leaders: "من هم القادة؟",
                 who_are_leaders_desc: "القادة هم الممثلون الرسميون للمجتمع ويعملون كحلقة وصل بين اللاعبين وفريق التطوير، للمساعدة في بناء بيئة ممتعة، آمنة، وعادلة للجميع.",
@@ -1222,15 +1423,12 @@
                 feedback_title: "آراء المجتمع",
                 feedback_desc: "مساحتك لمشاركة الأفكار والمقترحات حول اللعبة، وتقديم الملاحظات حول تجربتك في المجتمع، بما يسهم في تطوير المجتمع وتحسين تجربة اللاعبين.",
                 feedback_btn: "تقديم الاقتراحات والملاحظات",
-                join_us_title: "انضم إلينا",
-                join_us_desc: "إذا كانت لديكم بطولة في مجموعتكم ترغبون بإضافتها، أو تعتقدون أن حسابكم يستحق المنافسة ضمن أقدم الحسابات، أرسلوا لنا التفاصيل عبر الديسكورد من هنا.",
-                join_us_btn: "تواصل معنا",
                 tips_title: "نصائح", tips_loading: "جاري تحميل النصيحة...",
                 weekly_showcase_title: "عناصر الألعاب الأسبوعية",
                 weekly_showcase_desc: "استكشف احدث العناصر المتوفرة لهذا الاسبوع.",
                 news_newer: "الأحدث", news_older: "الأقدم",
                 discord_more: "للمزيد من الأخبار انضموا إلى الديسكورد",
-                th_player: "اللاعب", th_days: "يوم", show_more: "عرض المزيد",
+                th_player: "اللاعب", th_days: "يوم", show_more: "عرض المزيد", show_less: "إخفاء",
                 community_guide_title: "إرشادات المجتمع",
                 community_guide_sub: "لا يمكنك القيام بما يلي على بلاتو:",
                 comm_guide_1: "استغلال تطبيق بلاتو أو التشويش على تجربة مستخدم آخر.",
@@ -1244,21 +1442,17 @@
                 guide_4: "يُمنع التشجيع على العنف، إيذاء النفس، الانتحار، أو الكراهية ضد أي مجموعة.",
                 guide_5: "استخدم فقط لغة الخادم الذي تم اختياره.",
                 guide_warning: "قد يؤدي انتهاك هذه الإرشادات إلى تقييد الدردشة لمدة 4 ساعات أو اتخاذ إجراءات إشرافية إضافية (حظر دائم).",
-                
                 pfp_guide_title: "إرشادات الصورة الشخصية",
                 pfp_guide_1: "يُمنع المحتوى الإباحي أو الجنسي الصريح.",
                 pfp_guide_2: "يُمنع مشاهد الدم أو العنف الشديد.",
                 pfp_guide_3: "يُمنع خطاب الكراهية أو رموزه.",
                 pfp_guide_4: "يُمنع المضايقة أو كشف المعلومات الشخصية أو انتحال الشخصية.",
                 pfp_guide_5: "يُمنع محتوى إيذاء النفس أو الأنشطة غير القانونية.",
-                
                 links_title: "مواقع ذات صلة", link_platopedia: "Platopedia", link_werepedia: "Werepedia", link_monsterpedia: "Monsterpedia",
                 link_plato_desc: "الموقع الرسمي والأساسي للعبة بلاتو، ويضم المعلومات والخدمات الرئيسية المتعلقة باللعبة.",
                 link_platopedia_desc: "موسوعة متخصصة في بلاتو، توفر معلومات شاملة حول العناصر المتاحة، إلى جانب خيارات تخصيص الملفات الشخصية ومتابعة تفاصيلها.",
                 link_werepedia_desc: "موقع متخصص في لعبة الذئب، يقدّم شرحًا مفصلًا للبطاقات والأدوار، بالإضافة إلى استراتيجيات ونصائح تساعد على تطوير أسلوب اللعب.",
                 link_monsterpedia_desc: "موسوعة متخصصة في لعبة الوحوش، تشرح محتوى اللعبة بالتفصيل.",
-                no_tournaments: "لا بطولات في الوقت الحالي.",
-                
                 calc_title: "الحاسبة الذكية",
                 tabCoins: "كوينز",
                 tabPips: "بيبس",
@@ -1273,7 +1467,9 @@
                 pull_refresh: "Updating...", menu_guidelines: "GUIDELINES",
                 about_site_title: "About the Website",
                 about_site_desc: "A trusted community that keeps players informed, connected, and supported through the latest Plato news, helpful guidelines, reporting resources, and everything that matters to the community.",
-                leaders_title: "ARABIC LEADERS", global_leaders_title: "GLOBAL SERVERS LEADERS", news_board_title: "COMMUNITY NEWS BOARD", players_title: "OLDEST PLAYERS", spending_title: "TOP SPENDING GROUPS", tournaments_title: "TOURNAMENTS",
+                leaders_title: "ARABIC LEADERS", global_leaders_title: "GLOBAL SERVERS LEADERS", news_board_title: "COMMUNITY NEWS BOARD", players_title: "OLDEST PLAYERS",
+                staff_title: "PLATOX TEAM ON DISCORD",
+                staff_help_btn: "Need help? Click here to contact staff",
                 bug_title: "Bug Reporting", bug_email_heading: "Direct Email Support", bug_email_desc: "If you encounter any bug or technical issue, you can reach out to us directly via the email below with your ID and issue description.", copy_btn: "Copy", send_email_btn: "Send Email",
                 who_are_leaders: "Who are the Leaders?",
                 who_are_leaders_desc: "Leaders are official community representatives who act as a bridge between players and the development team, helping build a fun, safe, and fair environment for everyone.",
@@ -1291,15 +1487,12 @@
                 feedback_title: "Community Feedback",
                 feedback_desc: "A place to share your ideas and suggestions about the game, give feedback on your experience in the community, and help make the community a better place for everyone.",
                 feedback_btn: "Submit Feedback & Ideas",
-                join_us_title: "Join Us",
-                join_us_desc: "Have a tournament you'd like to add, or think your account belongs among the oldest? Send us the details on Discord here.",
-                join_us_btn: "Contact Us",
                 tips_title: "Tips", tips_loading: "Loading tip...",
                 weekly_showcase_title: "WEEKLY GAME ITEMS",
                 weekly_showcase_desc: "Explore the latest items available this week.",
                 news_newer: "NEWER", news_older: "OLDER",
                 discord_more: "For more news, join our Discord server",
-                th_player: "PLAYER", th_days: "DAYS", show_more: "Show More",
+                th_player: "PLAYER", th_days: "DAYS", show_more: "Show More", show_less: "Show Less",
                 community_guide_title: "Community Guidelines",
                 community_guide_sub: "You can't do the following on Plato:",
                 comm_guide_1: "Exploit Plato app or interfere with another user's experience.",
@@ -1313,21 +1506,17 @@
                 guide_4: "Do not encourage violence, self-harm, suicide, or hate against any group.",
                 guide_5: "Use only the language of the selected server.",
                 guide_warning: "Breaking these guidelines may result in a 4 hour chat restriction or further moderation action (permanent ban).",
-                
                 pfp_guide_title: "Profile Picture Guidelines",
                 pfp_guide_1: "No pornographic or sexually explicit content.",
                 pfp_guide_2: "No gore or extreme violence.",
                 pfp_guide_3: "No hate speech or symbols.",
                 pfp_guide_4: "No harassment, doxxing, or impersonation.",
                 pfp_guide_5: "No self-harm or illegal content.",
-                
                 links_title: "RELATED SITES", link_platopedia: "Platopedia", link_werepedia: "Werepedia", link_monsterpedia: "Monsterpedia",
                 link_plato_desc: "The official website for Plato, featuring the game's main services and information.",
                 link_platopedia_desc: "A Plato encyclopedia covering items and profile customization.",
                 link_werepedia_desc: "A Werewolf guide covering cards, roles, and gameplay strategies.",
                 link_monsterpedia_desc: "A Monster guide covering the game's content in detail.",
-                no_tournaments: "No tournaments at the moment.",
-
                 calc_title: "SMART CALCULATOR",
                 tabCoins: "Coins",
                 tabPips: "Pips",
@@ -1384,7 +1573,7 @@
         async function loadDynamicData(force = false) {
             try {
                 const cacheBuster = Math.floor(Math.random() * 100000000);
-                const fetchUrl = tourSheetURL + "?_nocache=" + cacheBuster;
+                const fetchUrl = sheetURL + "?_nocache=" + cacheBuster;
 
                 const response = await fetch(fetchUrl, { cache: "no-store" });
                 if (!response.ok) throw new Error("Network Error");
@@ -1438,8 +1627,8 @@
                     updateNotificationsDropdown(); 
                 } else {
                     const isLtr = document.documentElement.getAttribute('lang') === 'en';
-                    document.getElementById('tournaments-container').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);" data-i18n="no_tournaments">${isLtr ? "No tournaments at the moment." : "لا بطولات في الوقت الحالي."}</p>`;
-                    document.getElementById('spenders-container').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">${isLtr ? "Spending data not available at the moment." : "بيانات الإنفاق غير متوفرة حالياً."}</p>`;
+                    document.getElementById('discord-staff-grid').innerHTML = `<p style="grid-column: 1 / -1; text-align:center; width:100%; color: var(--text-muted);">${isLtr ? "Staff data not available at the moment." : "بيانات الطاقم غير متوفرة حالياً."}</p>`;
+                    document.getElementById('show-more-staff').style.display = 'none';
                     document.getElementById('newsSlider').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">${isLtr ? "Network connection failed." : "تعذر الاتصال بالشبكة."}</p>`;
                     document.getElementById('tip-content').innerText = isLtr ? "No tips available at the moment." : "لا توجد نصائح متوفرة حالياً.";
                     document.getElementById('oldest-players-container').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">${isLtr ? "Data not available at the moment." : "بيانات اللاعبين غير متوفرة حالياً."}</p>`;
@@ -1604,11 +1793,26 @@
             scrollTimeout = window.requestAnimationFrame(updateCarouselButtons);
         });
 
-        function showMorePlayers() {
-            document.querySelectorAll('.hidden-player').forEach(el => {
-                el.classList.remove('hidden-player');
+        function updatePlayersToggleBtn() {
+            const btn = document.getElementById('show-more-players');
+            if (!btn) return;
+            const isAr = document.documentElement.getAttribute('lang') === 'ar';
+            if (isPlayersExpanded) {
+                btn.innerHTML = `<span data-i18n="show_less">${isAr ? 'إخفاء' : 'Show Less'}</span> <i class="fa-solid fa-chevron-up"></i>`;
+            } else {
+                btn.innerHTML = `<span data-i18n="show_more">${isAr ? 'عرض المزيد' : 'Show More'}</span> <i class="fa-solid fa-chevron-down"></i>`;
+            }
+        }
+
+        function togglePlayersList() {
+            isPlayersExpanded = !isPlayersExpanded;
+            const rows = document.querySelectorAll('#oldest-players-container .list-row');
+            rows.forEach((row, idx) => {
+                if (idx >= 3) {
+                    row.classList.toggle('hidden-player', !isPlayersExpanded);
+                }
             });
-            document.getElementById('show-more-players').style.display = 'none';
+            updatePlayersToggleBtn();
         }
 
         function renderDynamicData() {
@@ -1638,22 +1842,42 @@
                 }
             }
 
-            const tourContainer = document.getElementById('tournaments-container');
-            const spendContainer = document.getElementById('spenders-container');
             const currentLang = document.documentElement.getAttribute('lang') || 'en';
             const isLtr = currentLang === 'en';
             
-            let nowTime = Date.now(); 
-            if (typeof getAccurateTime === "function") {
-                nowTime = getAccurateTime();
-            }
-
-            let groupsSpending = {}; tournamentsList = [];
             let oldestPlayersList = [];
             globalLeadersData = []; 
             arabicLeadersData = []; 
+            discordStaffData = [];
 
             cachedSheetRows.forEach((cols) => {
+                // PlatoX Team on Discord (Columns A-F)
+                if (cols.length >= 2) {
+                    const sRoleRaw = cols[0] ? cols[0].trim().toLowerCase() : "";
+                    const sName = cols[1] ? cols[1].trim() : "";
+                    const sDiscord = cols[2] ? cols[2].trim() : "";
+                    const sImg = cols[3] ? cols[3].trim() : "";
+                    const sBioEn = cols[4] ? cols[4].trim() : "";
+                    const sBioAr = cols[5] ? cols[5].trim() : "";
+
+                    let sRole = "";
+                    if (sRoleRaw === 'owner' || sRoleRaw === 'owners') sRole = 'owners';
+                    else if (sRoleRaw === 'admin' || sRoleRaw === 'admins') sRole = 'admins';
+                    else if (sRoleRaw === 'trusted') sRole = 'trusted';
+
+                    if (sRole && sName) {
+                        discordStaffData.push({
+                            role: sRole,
+                            name: sName,
+                            discord: sDiscord,
+                            img: sImg,
+                            bioEn: sBioEn,
+                            bioAr: sBioAr
+                        });
+                    }
+                }
+
+                // Leaders (Columns W-AC)
                 if(cols.length >= 24) {
                     const lServer = cols[22] ? cols[22].trim().toLowerCase() : "";
                     const lName = cols[23] ? cols[23].trim() : "";
@@ -1680,11 +1904,7 @@
                     }
                 }
 
-                if(cols.length < 2) return;
-                
-                const rawTimeStr = escapeHTML(cols[0] ? cols[0].trim() : ""); 
-                const nameAr = escapeHTML(cols[1] ? cols[1].trim() : "");
-                
+                // Oldest Players (Columns T-V)
                 if(cols.length >= 22) {
                     const pUser = escapeHTML(cols[19] ? cols[19].trim() : "");
                     const pImg = escapeHTML(cols[20] ? cols[20].trim() : "");
@@ -1694,34 +1914,9 @@
                         oldestPlayersList.push({ user: pUser, img: pImg, baseDays: pDays });
                     }
                 }
-
-                if (!nameAr) return;
-                
-                let targetTimeMs = NaN;
-                if (rawTimeStr) {
-                    let safeTimeStr = rawTimeStr.replace(/-/g, '/'); 
-                    if (!safeTimeStr.includes('+') && !safeTimeStr.toUpperCase().includes('GMT') && !safeTimeStr.toUpperCase().includes('Z')) safeTimeStr += ' GMT+0300';
-                    targetTimeMs = new Date(safeTimeStr).getTime();
-                }
-
-                const nameEn = escapeHTML(cols[2] ? cols[2].trim() : ""); 
-                const prizeStr = escapeHTML(cols[3] ? cols[3].trim() : ""); 
-                const game = escapeHTML(cols[4] ? cols[4].trim() : ""); 
-                const admin = escapeHTML(cols[5] ? cols[5].trim() : "");
-                const image = ""; 
-
-                let numValue = 0; let cleanStr = prizeStr.toUpperCase().replace(/[^0-9.K]/g, '');
-                if (cleanStr.includes('K')) numValue = parseFloat(cleanStr.replace('K', '')) * 1000; else numValue = parseFloat(cleanStr) || 0;
-
-                if (!groupsSpending[nameAr]) groupsSpending[nameAr] = { nameAr, nameEn, image, total: 0 };
-                groupsSpending[nameAr].total += numValue;
-
-                if (!isNaN(targetTimeMs)) {
-                    const diff = targetTimeMs - nowTime;
-                    if (diff > -1800000) tournamentsList.push({ targetTimeMs, nameAr, nameEn, image, prizeStr, game, admin, diff });
-                }
             });
 
+            renderDiscordStaff(currentStaffRole);
             renderArabicLeaders();
             renderGlobalLeaders();
             const activeTab = document.querySelector('.server-tab.active');
@@ -1738,7 +1933,7 @@
                 else if (rankNum === '2') rankClass = 'rank-2';
                 else if (rankNum === '3') rankClass = 'rank-3';
 
-                const hiddenClass = index >= 3 ? 'hidden-player' : '';
+                const hiddenClass = (index >= 3 && !isPlayersExpanded) ? ' hidden-player' : '';
                 const imgTag = player.img ? `<img src="${player.img}" class="list-img" alt="${player.user}" loading="lazy" onerror="this.style.display='none'">` : ``;
 
                 playersHTML += `
@@ -1756,89 +1951,17 @@
             const showMoreBtn = document.getElementById('show-more-players');
 
             if (playersHTML === '') {
-                playersContainer.innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);" data-i18n="no_tournaments">${isLtr ? "No data available." : "لا توجد بيانات حالياً."}</p>`;
+                playersContainer.innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">${isLtr ? "No data available." : "لا توجد بيانات حالياً."}</p>`;
                 showMoreBtn.style.display = 'none';
             } else {
                 playersContainer.innerHTML = playersHTML;
                 if (oldestPlayersList.length > 3) {
                     showMoreBtn.style.display = 'inline-flex';
-                    showMoreBtn.innerHTML = `<span data-i18n="show_more">${isLtr ? 'Show More' : 'عرض المزيد'}</span> <i class="fa-solid fa-chevron-down"></i>`;
+                    updatePlayersToggleBtn();
                 } else {
                     showMoreBtn.style.display = 'none';
                 }
             }
-
-            let upcomingTours = tournamentsList.filter(t => t.diff > 0).sort((a, b) => a.targetTimeMs - b.targetTimeMs);
-            if (tournamentsList.length > 0) {
-                const allToursHash = tournamentsList.map(t => t.nameAr + t.targetTimeMs + t.prizeStr + t.game + t.admin).join('|');
-                currentLatestTour = {
-                    id: 'tour_' + hashCode(allToursHash)
-                };
-            } else {
-                currentLatestTour = null;
-            }
-
-            let startedTours = tournamentsList.filter(t => t.diff <= 0).sort((a, b) => b.targetTimeMs - a.targetTimeMs);
-            let sortedTournaments = [...upcomingTours, ...startedTours];
-
-            let tourHTML = ''; 
-            sortedTournaments.forEach(tour => {
-                const displayName = currentLang === 'ar' ? tour.nameAr : (tour.nameEn || tour.nameAr);
-                const borderStyle = isLtr ? `border-left-color: var(--text-muted);` : `border-right-color: var(--text-muted);`;
-                const imgTag = tour.image ? `<img src="${tour.image}" class="entity-img" style="border-radius:8px; width:35px; height:35px; object-fit:cover;" loading="lazy" onerror="this.style.display='none'">` : ``;
-
-                tourHTML += `
-                    <div class="tour-card glass-panel" style="${borderStyle}">
-                        <div class="tour-header">
-                            <div class="tour-title-box">${imgTag}<div class="tour-title">${displayName}</div></div>
-                            <div class="countdown-box sheet-timer" data-time="${tour.targetTimeMs}"><i class="fa-regular fa-clock"></i> <span class="num-font countdown-val">00:00:00</span></div>
-                        </div>
-                        <div class="tour-footer" style="margin-top: 15px;">
-                            <div class="info-badge"><i class="fa-solid fa-gamepad"></i> <span>${tour.game}</span></div>
-                            <div class="info-badge prize-badge"><i class="fa-solid fa-trophy"></i> <span class="num-font">${tour.prizeStr}</span></div>
-                            <div class="info-badge admin-copy-btn" data-id="${tour.admin}" title="${isLtr ? 'Copy ID' : 'انسخ اليوزر'}"><i class="fa-solid fa-copy"></i> <span class="num-font">${tour.admin}</span></div>
-                        </div>
-                    </div>`;
-            });
-
-            let sortedGroups = Object.values(groupsSpending).sort((a, b) => b.total - a.total).slice(0, 3);
-            let highestTotal = sortedGroups.length > 0 ? sortedGroups[0].total : 1;
-
-            let spendHTML = ''; 
-            sortedGroups.forEach((group, index) => {
-                const displayName = currentLang === 'ar' ? group.nameAr : (group.nameEn || group.nameAr);
-                const rankNum = (index + 1).toString(); const rank = rankNum.padStart(2, '0');
-                const percent = Math.min(100, Math.max(5, (group.total / highestTotal) * 100));
-
-                let rankClass = '', color = 'var(--text-muted)', barBg = 'rgba(255,255,255,0.4)';
-                if (rankNum === '1') { rankClass = 'rank-1'; color = '#d4af37'; barBg = '#d4af37'; }
-                else if (rankNum === '2') { rankClass = 'rank-2'; color = '#cbd5e1'; barBg = 'silver'; }
-                else if (rankNum === '3') { rankClass = 'rank-3'; color = '#cd7f32'; barBg = '#cd7f32'; }
-
-                let displayScore = group.total >= 1000000 ? (group.total / 1000000) + 'M' : (group.total >= 1000 ? (group.total / 1000) + 'K' : group.total);
-                const imgTag = group.image ? `<img src="${group.image}" class="list-img group-img" style="object-fit:cover;" loading="lazy" onerror="this.style.display='none'">` : ``;
-
-                spendHTML += `
-                    <div class="list-row glass-panel ${rankClass}">
-                        <div class="rank-num num-font">${rank}</div>
-                        <div class="list-info">
-                            ${imgTag}
-                            <div class="progress-container">
-                                <div class="list-name">${displayName}</div>
-                                <div class="progress-track"><div class="progress-fill" style="width: ${percent}%; background: ${barBg};"></div></div>
-                            </div>
-                        </div>
-                        <div class="score-val num-font" style="color: ${color};">${displayScore}</div>
-                    </div>`;
-            });
-            
-            if (tourHTML === '') tourHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);" data-i18n="no_tournaments">${isLtr ? "No tournaments at the moment." : "لا بطولات في الوقت الحالي."}</p>`;
-            if (spendHTML === '') spendHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">${isLtr ? "No spending data recorded yet." : "لم يتم تسجيل بيانات إنفاق حتى الآن."}</p>`;
-
-            tourContainer.innerHTML = tourHTML; spendContainer.innerHTML = spendHTML;
-            activeTourTimers = Array.from(tourContainer.querySelectorAll('.sheet-timer')).map(el => ({ el: el, valSpan: el.querySelector('.countdown-val'), targetMs: parseInt(el.getAttribute('data-time')) }));
-            
-            if (typeof updateSheetTimers === "function") updateSheetTimers(); 
         }
 
         let ptrStartX = 0, ptrStartY = 0, ptrCurrentY = 0, isPulling = false, isHorizontal = false;
@@ -1862,39 +1985,6 @@
             isPulling = false; let pull = ptrCurrentY - ptrStartY;
             if(pull > 80 && window.scrollY <= 5 && !isHorizontal) { ptrEl.classList.add('refreshing'); ptrEl.style.transform = 'translateY(0)'; setTimeout(() => { window.location.reload(true); }, 400); } else { ptrEl.style.transform = 'translateY(-100%)'; }
         }, {passive: true});
-
-        let serverTimeOffset = 0;
-
-        async function syncRealTime() {
-            try {
-                const res = await fetch("https://worldtimeapi.org/api/timezone/Asia/Baghdad");
-                const data = await res.json();
-                const serverTime = new Date(data.datetime).getTime();
-                serverTimeOffset = serverTime - Date.now();
-            } catch(e) {
-                serverTimeOffset = 0;
-            }
-        }
-
-        function getAccurateTime() {
-            return Date.now() + serverTimeOffset;
-        }
-
-        function updateSheetTimers() {
-            const now = getAccurateTime();
-            activeTourTimers.forEach(timer => {
-                const diff = timer.targetMs - now;
-                if (diff <= 0) {
-                    timer.valSpan.innerText = "00:00:00";
-                    timer.el.style.color = "var(--text-muted)"; 
-                } else {
-                    const h = Math.floor(diff / 3600000).toString().padStart(2, '0');
-                    const m = Math.floor((diff % 3600000) / 60000).toString().padStart(2, '0');
-                    const s = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');
-                    timer.valSpan.innerText = `${h}:${m}:${s}`;
-                }
-            });
-        }
 
         let calcMode = 'coins'; 
         let calcAnimationReq;
@@ -2014,7 +2104,6 @@
             let targetShadow = '';
 
             if (calcMode === 'coins') {
-                // Input is Coins, Output is Pips -> Blue color
                 let estimatedPips = val / 450; 
                 currentActualRate = getDynamicRate(estimatedPips);
                 targetValue = val / currentActualRate;
@@ -2022,7 +2111,6 @@
                 targetColor = '#3b82f6';
                 targetShadow = '0 0 25px rgba(59, 130, 246, 0.4)';
             } else {
-                // Input is Pips, Output is Coins -> Yellow color
                 currentActualRate = getDynamicRate(val);
                 targetValue = Math.round(val * currentActualRate);
                 isResultFloat = false;
@@ -2049,13 +2137,12 @@
 
             const currentLang = document.documentElement.getAttribute('lang') || 'en';
             const loadMsg = currentLang === 'ar' ? 'جاري التحديث...' : 'Updating...';
-            const loaderHTML = `<div style="width:100%; text-align:center; padding: 40px 20px; color: var(--primary);"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:32px; margin-bottom:12px; filter: drop-shadow(0 0 10px var(--btn-active-glow));"></i><br><span data-i18n="pull_refresh" style="font-weight:900; font-size:15px; font-family: 'Cairo', 'Rajdhani', sans-serif; opacity: 0.8;">${loadMsg}</span></div>`;
+            const loaderHTML = `<div style="grid-column: 1 / -1; width:100%; text-align:center; padding: 40px 20px; color: var(--primary);"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:32px; margin-bottom:12px; filter: drop-shadow(0 0 10px var(--btn-active-glow));"></i><br><span data-i18n="pull_refresh" style="font-weight:900; font-size:15px; font-family: 'Cairo', 'Rajdhani', sans-serif; opacity: 0.8;">${loadMsg}</span></div>`;
 
             document.getElementById('newsSlider').innerHTML = loaderHTML;
             document.getElementById('arabic-leaders-grid').innerHTML = loaderHTML;
             document.getElementById('global-leaders-grid').innerHTML = loaderHTML;
-            document.getElementById('tournaments-container').innerHTML = loaderHTML;
-            document.getElementById('spenders-container').innerHTML = loaderHTML;
+            document.getElementById('discord-staff-grid').innerHTML = loaderHTML;
             document.getElementById('oldest-players-container').innerHTML = loaderHTML;
 
             loadDynamicData();
@@ -2086,11 +2173,6 @@
                     switchView(e.state.view, null, false);
                 }
             });
-
-            if (typeof syncRealTime === "function") {
-                syncRealTime().then(() => { if (typeof updateSheetTimers === "function") updateSheetTimers(); });
-                setInterval(updateSheetTimers, 1000);
-            }
 
             document.documentElement.classList.add('loaded');
         });
