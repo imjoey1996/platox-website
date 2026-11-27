@@ -434,7 +434,7 @@
         [data-theme="light"] #toast { background: rgba(255, 255, 255, 0.95); color: #000; }
         #toast.show { visibility: visible; bottom: calc(95px + env(safe-area-inset-bottom)); opacity: 1; }
 
-        .hidden-player, .hidden-staff { display: none !important; }
+        .hidden-player { display: none !important; }
         
         .calc-input-wrapper { position: relative; width: 100%; }
         .calc-input-wrapper input {
@@ -896,12 +896,8 @@
             <div class="staff-tabs" dir="ltr">
                 <button type="button" class="staff-tab-btn active" data-role="owners" onclick="filterStaff('owners')">Owners</button>
                 <button type="button" class="staff-tab-btn" data-role="admins" onclick="filterStaff('admins')">Admins</button>
-                <button type="button" class="staff-tab-btn" data-role="trusted" onclick="filterStaff('trusted')">Trusted</button>
             </div>
             <div class="staff-grid" id="discord-staff-grid"></div>
-            <button type="button" class="cancel-btn" id="show-more-staff" onclick="toggleStaffList()" style="margin-top: 15px; display: none; width: auto; padding: 8px 20px;">
-                <span data-i18n="show_more">عرض المزيد</span> <i class="fa-solid fa-chevron-down"></i>
-            </button>
             <div class="staff-help-wrapper">
                 <a href="https://discord.com/channels/1476420629698711778/1476603091095916738" target="_blank" rel="noopener noreferrer" class="more-news-link">
                     <i class="fa-brands fa-discord" style="color: var(--text-main);"></i>
@@ -959,7 +955,6 @@
         let arabicLeadersData = []; 
         let discordStaffData = [];
         let currentStaffRole = 'owners';
-        let isStaffExpanded = false;
         let isPlayersExpanded = false;
         let randomTipIndex = -1;
 
@@ -1179,53 +1174,26 @@
 
         function filterStaff(role) {
             currentStaffRole = role;
-            isStaffExpanded = false;
             document.querySelectorAll('.staff-tab-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.role === role);
             });
             renderDiscordStaff(role);
         }
 
-        function updateStaffToggleBtn() {
-            const btn = document.getElementById('show-more-staff');
-            if (!btn) return;
-            const isAr = document.documentElement.getAttribute('lang') === 'ar';
-            if (isStaffExpanded) {
-                btn.innerHTML = `<span data-i18n="show_less">${isAr ? 'إخفاء' : 'Show Less'}</span> <i class="fa-solid fa-chevron-up"></i>`;
-            } else {
-                btn.innerHTML = `<span data-i18n="show_more">${isAr ? 'عرض المزيد' : 'Show More'}</span> <i class="fa-solid fa-chevron-down"></i>`;
-            }
-        }
-
-                function toggleStaffList() {
-            isStaffExpanded = !isStaffExpanded;
-            const cards = document.querySelectorAll('#discord-staff-grid .staff-card');
-            cards.forEach((card, idx) => {
-                if (idx >= 3) {
-                    card.classList.toggle('hidden-staff', !isStaffExpanded);
-                }
-            });
-            updateStaffToggleBtn();
-        }
-
         function renderDiscordStaff(role = currentStaffRole) {
             const container = document.getElementById('discord-staff-grid');
-            const toggleBtn = document.getElementById('show-more-staff');
             if (!container) return;
 
             const currentLang = document.documentElement.getAttribute('lang') || 'en';
             const filtered = discordStaffData.filter(member => member.role === role);
-            const hasLimit = (role === 'trusted');
 
             const roleLabels = {
                 owners: 'OWNER',
-                admins: 'ADMIN',
-                trusted: 'TRUSTED'
+                admins: 'ADMIN'
             };
 
             if (filtered.length === 0) {
                 container.innerHTML = `<p style="grid-column: 1 / -1; text-align:center; width:100%; color: var(--text-muted); padding: 20px 0;">${currentLang === 'ar' ? 'لا يوجد أعضاء مضافين في هذا القسم حالياً.' : 'No staff members listed in this category yet.'}</p>`;
-                if (toggleBtn) toggleBtn.style.display = 'none';
                 return;
             }
 
@@ -1250,10 +1218,9 @@
                        </div>`
                     : '';
 
-                const hiddenClass = (hasLimit && idx >= 3 && !isStaffExpanded) ? ' hidden-staff' : '';
                 const delay = Math.min(idx * 40, 200);
                 htmlStr += `
-                    <div class="staff-card glass-panel role-${member.role}${hiddenClass}" style="animation-delay: ${delay}ms;">
+                    <div class="staff-card glass-panel role-${member.role}" style="animation-delay: ${delay}ms;">
                         <img src="${avatarSrc}" alt="${safeName}" class="staff-avatar" loading="lazy">
                         <div class="staff-info">
                             <div class="staff-top-row">
@@ -1268,14 +1235,6 @@
             });
 
             container.innerHTML = htmlStr;
-            if (toggleBtn) {
-                if (hasLimit && filtered.length > 3) {
-                    toggleBtn.style.display = 'inline-flex';
-                    updateStaffToggleBtn();
-                } else {
-                    toggleBtn.style.display = 'none';
-                }
-            }
         }
         
         function renderArabicLeaders() {
@@ -1629,7 +1588,6 @@
                 } else {
                     const isLtr = document.documentElement.getAttribute('lang') === 'en';
                     document.getElementById('discord-staff-grid').innerHTML = `<p style="grid-column: 1 / -1; text-align:center; width:100%; color: var(--text-muted);">${isLtr ? "Staff data not available at the moment." : "بيانات الطاقم غير متوفرة حالياً."}</p>`;
-                    document.getElementById('show-more-staff').style.display = 'none';
                     document.getElementById('newsSlider').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">${isLtr ? "Network connection failed." : "تعذر الاتصال بالشبكة."}</p>`;
                     document.getElementById('tip-content').innerText = isLtr ? "No tips available at the moment." : "لا توجد نصائح متوفرة حالياً.";
                     document.getElementById('oldest-players-container').innerHTML = `<p style="text-align:center; width:100%; color: var(--text-muted);">${isLtr ? "Data not available at the moment." : "بيانات اللاعبين غير متوفرة حالياً."}</p>`;
@@ -1864,7 +1822,6 @@
                     let sRole = "";
                     if (sRoleRaw === 'owner' || sRoleRaw === 'owners') sRole = 'owners';
                     else if (sRoleRaw === 'admin' || sRoleRaw === 'admins') sRole = 'admins';
-                    else if (sRoleRaw === 'trusted') sRole = 'trusted';
 
                     if (sRole && sName) {
                         discordStaffData.push({
